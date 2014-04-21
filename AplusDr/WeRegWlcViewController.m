@@ -133,6 +133,7 @@ UITextField * user_password_input;
 - (void)send_login:(id)sender {
     NSLog(@"%@ %@", user_phone_input.text, user_password_input.text);
     if (![self checkUserRights]) return;
+    we_logined = true;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -171,6 +172,8 @@ UITextField * user_password_input;
             NSString *paraString = @"";
             NSData *DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:paraString];
             we_avatar = [UIImage imageWithData:DataResponse];
+            we_truename = [WeAppDelegate toString:[response objectForKey:@"trueName"]];
+            we_idnum = [WeAppDelegate toString:[response objectForKey:@"idnum"]];
             return YES;
         }
         if ([result isEqualToString:@"2"]) {

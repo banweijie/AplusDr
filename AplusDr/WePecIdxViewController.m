@@ -29,23 +29,6 @@
                 case 0:
                     [self performSegueWithIdentifier:@"PecIdx_pushto_PecPea" sender:self];
                     break;
-                case 1:
-                    [self performSegueWithIdentifier:@"PecIdx2PecCai" sender:self];
-                    break;
-                case 2:
-                    [self performSegueWithIdentifier:@"PecIdx2PecDcl" sender:self];
-                default:
-                    break;
-            }
-            return nil;
-            break;
-        case 1:
-            switch (path.row) {
-                case 0:
-                    [self performSegueWithIdentifier:@"push_to_PecBus" sender:self];
-                    break;
-                case 1:
-                    [self performSegueWithIdentifier:@"push_to_PecNot" sender:self];
                 default:
                     break;
             }
@@ -158,20 +141,6 @@
                     cell.textLabel.text = @"我的余额";
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
-                    cell.imageView.image = [UIImage imageNamed:@"me-worksetting"];
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case 2:
-            switch (indexPath.row) {
-                case 0:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.textLabel.text = @"我的余额";
-                    cell.textLabel.font = We_font_textfield_zh_cn;
-                    cell.textLabel.textColor = We_foreground_black_general;
                     cell.imageView.image = [UIImage imageNamed:@"me-balance"];
                     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                     break;
@@ -179,7 +148,7 @@
                     break;
             }
             break;
-        case 3:
+        case 2:
             switch (indexPath.row) {
                 case 0:
                     cell.contentView.backgroundColor = We_background_cell_general;
@@ -201,7 +170,7 @@
                     break;
             }
             break;
-        case 4:
+        case 3:
             switch (indexPath.row) {
                 case 0:
                     cell.contentView.backgroundColor = We_background_cell_general;
@@ -215,7 +184,7 @@
                     break;
             }
             break;
-        case 5:
+        case 4:
             switch (indexPath.row) {
                 case 0:
                     cell.contentView.backgroundColor = We_background_cell_general;

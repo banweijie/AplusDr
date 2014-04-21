@@ -51,6 +51,8 @@ NSString * we_email;
 NSString * we_phone;
 NSString * we_name;
 NSString * we_gender;
+NSString * we_idnum;
+NSString * we_truename;
 UIImage * we_avatar;
 
 NSMutableArray * user_exps;
@@ -87,6 +89,6 @@ NSMutableArray * user_exps;
 #define We_init_textFieldInCell_general(tf, _text, _font) tf = [[UITextField alloc] initWithFrame:We_frame_textFieldInCell_general];tf.text = _text;tf.font = _font;tf.textAlignment = NSTextAlignmentRight;tf.delegate = self;
 #define We_init_textFieldInCell_pholder(tf, _text, _font) tf = [[UITextField alloc] initWithFrame:We_frame_textFieldInCell_general];tf.placeholder = _text;tf.font = _font;tf.textAlignment = NSTextAlignmentRight;tf.delegate = self;
 
-#define We_init_labelInCell_general(lb, _text, _font) lb = [[UILabel alloc] initWithFrame:We_frame_labelInCell_general];lb.text = _text;lb.font = _font;lb.textAlignment = NSTextAlignmentRight;
+#define We_init_labelInCell_general(lb, _text, _font) lb = [[UILabel alloc] initWithFrame:We_frame_labelInCell_general];lb.text = _text;lb.font = _font;lb.textColor = We_foreground_gray_general; lb.textAlignment = NSTextAlignmentRight;
 
 #define We_init_textView_huge(tf, _text, _font) tf = [[UITextView alloc] initWithFrame:We_frame_textView_huge];tf.text = _text;tf.font = _font;tf.textAlignment = NSTextAlignmentLeft;tf.delegate = self;tf.scrollEnabled = NO;

@@ -12,8 +12,8 @@
 @interface WePecPeaViewController () {
     UITableView * sys_tableView;
     
-    UITextField * user_name_input;
-    UILabel * user_gender_label;
+    UITextField * user_nickname_input;
+    
     UILabel * user_phone_label;
     UIImageView * user_avatar_imageView;
 }
@@ -111,11 +111,15 @@
             actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
             [actionSheet showInView:self.view];
         }
-        if (path.row == 2) {
-            [self performSegueWithIdentifier:@"PecPea_pushto_SelGen" sender:self];
+        if (path.row == 1) {
+            //[self performSegueWithIdentifier:@"PecPea_pushto_SelGen" sender:self];
+            [user_nickname_input becomeFirstResponder];
         }
     }
     if (path.section == 1) {
+        if (path.row == 0) {
+            
+        }
         if (path.row == 1) {
             if ([self changePassword]) {
                 we_vericode_type = @"ModifyPassword";
@@ -165,14 +169,13 @@
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 3;
+            return 2;
             break;
         case 1:
             return 2;
             break;
         case 2:
             return 1;
-            break;
         default:
             return 0;
     }
@@ -196,18 +199,10 @@
                     break;
                 case 1:
                     cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.textLabel.text = @"真实姓名";
+                    cell.textLabel.text = @"昵称";
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
-                    [cell addSubview:user_name_input];
-                    break;
-                case 2:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.textLabel.text = @"性别";
-                    cell.textLabel.font = We_font_textfield_zh_cn;
-                    cell.textLabel.textColor = We_foreground_black_general;
-                    [cell addSubview:user_gender_label];
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                    [cell addSubview:user_nickname_input];
                     break;
                 default:
                     break;
@@ -228,14 +223,6 @@
                     cell.textLabel.text = @"修改密码";
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                    break;
-                case 2:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.textLabel.text = @"性别";
-                    cell.textLabel.font = We_font_textfield_zh_cn;
-                    cell.textLabel.textColor = We_foreground_black_general;
-                    [cell addSubview:user_gender_label];
                     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                     break;
                 default:
@@ -278,7 +265,6 @@
 }
 
 - (void)user_save_onpress:(id)sender {
-    if (![self updateDoctorInfo]) return;
     if (![self updateUserInfo]) return;
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -288,7 +274,7 @@
     NSData * imageData = UIImageJPEGRepresentation(image, 1.0);
     NSString * encodedString = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     encodedString = [encodedString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-    //NSDataBase64Encoding64CharacterLineLength
+    
     NSString *errorMessage = @"发送失败，请检查网络";
     NSString *urlString = @"http://115.28.222.1/yijiaren/user/updateAvatar.action";
     NSString *parasString = [NSString stringWithFormat:@"dataString=%@&smallData=%@", encodedString, encodedString];
@@ -300,46 +286,6 @@
         if ([result isEqualToString:@"1"]) {
             NSLog(@"%@", HTTPResponse);
             we_avatar = image;
-            return YES;
-        }
-        if ([result isEqualToString:@"2"]) {
-            NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-            NSEnumerator *enumerator = [fields keyEnumerator];
-            id key;
-            while ((key = [enumerator nextObject])) {
-                NSString * tmp1 = [fields objectForKey:key];
-                if (tmp1 != NULL) errorMessage = tmp1;
-            }
-        }
-        if ([result isEqualToString:@"3"]) {
-            errorMessage = [HTTPResponse objectForKey:@"info"];
-        }
-        if ([result isEqualToString:@"4"]) {
-            errorMessage = [HTTPResponse objectForKey:@"info"];
-        }
-    }
-    UIAlertView *notPermitted = [[UIAlertView alloc]
-                                 initWithTitle:@"保存失败"
-                                 message:errorMessage
-                                 delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-    [notPermitted show];
-    return NO;
-}
-
-- (BOOL)updateDoctorInfo {
-    NSString *errorMessage = @"发送失败，请检查网络";
-    NSString *urlString = @"http://115.28.222.1/yijiaren/doctor/updateInfo.action";
-    NSString *parasString = [NSString stringWithFormat:@"gender=%@", we_pea_gender];
-    NSData * DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:parasString];
-    
-    if (DataResponse != NULL) {
-        NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
-        NSString *result = [HTTPResponse objectForKey:@"result"];
-        result = [NSString stringWithFormat:@"%@", result];
-        if ([result isEqualToString:@"1"]) {
-            we_gender = we_pea_gender;
             return YES;
         }
         if ([result isEqualToString:@"2"]) {
@@ -410,7 +356,7 @@
 - (BOOL)updateUserInfo {
     NSString *errorMessage = @"发送失败，请检查网络";
     NSString *urlString = @"http://115.28.222.1/yijiaren/user/updateInfo.action";
-    NSString *parasString = [NSString stringWithFormat:@"name=%@", user_name_input.text];
+    NSString *parasString = [NSString stringWithFormat:@"name=%@", user_nickname_input.text];
     NSData * DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:parasString];
     
     if (DataResponse != NULL) {
@@ -418,7 +364,7 @@
         NSString *result = [HTTPResponse objectForKey:@"result"];
         result = [NSString stringWithFormat:@"%@", result];
         if ([result isEqualToString:@"1"]) {
-            we_name = user_name_input.text;
+            we_name = user_nickname_input.text;
             return YES;
         }
         if ([result isEqualToString:@"2"]) {
@@ -458,9 +404,8 @@
     we_pea_gender = we_gender;
     
     We_init_labelInCell_general(user_phone_label, we_phone, We_font_textfield_zh_cn)
-    We_init_labelInCell_general(user_gender_label, [WeAppDelegate transitionGenderFromChar:we_pea_gender], We_font_textfield_zh_cn)
-    We_init_textFieldInCell_pholder(user_name_input, @"尚未设置姓名", We_font_textfield_zh_cn);
-    user_name_input.text = we_name;
+    We_init_textFieldInCell_pholder(user_nickname_input, @"尚未设置昵称", We_font_textfield_zh_cn);
+    user_nickname_input.text = we_name;
     
     user_avatar_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(242, 10, 70, 70)];
     user_avatar_imageView.image = we_avatar;
@@ -475,7 +420,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    user_gender_label.text = [WeAppDelegate transitionGenderFromChar:we_pea_gender];
     [sys_tableView reloadData];
     [super viewWillAppear:animated];
 }
