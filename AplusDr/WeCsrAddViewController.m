@@ -9,7 +9,6 @@
 #import "WeCsrAddViewController.h"
 #import "WeAppDelegate.h"
 #import "PAImageView.h"
-#import "ILTranslucentView.h"
 
 @interface WeCsrAddViewController () {
     UITableView * sys_tableView;
@@ -91,7 +90,7 @@
             [cell.contentView addSubview:l2];
             // avatar
             avatarView = [[PAImageView alloc]initWithFrame:CGRectMake(15, 9, 48, 48) backgroundProgressColor:[UIColor clearColor] progressColor:[UIColor lightGrayColor]];
-            [avatarView setImageURL:yijiarenAvatarUrl(doctorList[indexPath.section][@"avatar"]) successCompletion:nil];
+            [avatarView setImageURL:yijiarenAvatarUrl(doctorList[indexPath.section][@"avatar"]) placeholder:nil successCompletion:nil];
             [cell.contentView addSubview:avatarView];
             break;
         case 1:

@@ -110,7 +110,7 @@
             [cell.contentView addSubview:l2];
             // avatar
             avatarView = [[PAImageView alloc]initWithFrame:CGRectMake(15, 9, 48, 48) backgroundProgressColor:[UIColor clearColor] progressColor:[UIColor lightGrayColor]];
-            [avatarView setImageURL:yijiarenAvatarUrl(doctorP[@"avatar"]) successCompletion:nil];
+            [avatarView setImageURL:yijiarenAvatarUrl(doctorP[@"avatar"]) placeholder:nil successCompletion:nil];
             [cell.contentView addSubview:avatarView];
             break;
         case 1:

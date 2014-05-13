@@ -290,7 +290,6 @@
         result = [NSString stringWithFormat:@"%@", result];
         if ([result isEqualToString:@"1"]) {
             [WeAppDelegate refreshUserData];
-            
             return YES;
         }
         if ([result isEqualToString:@"2"]) {

@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <AFNetworking.h>
 
+#import "WeUser.h"
+
 @interface WeAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+//@property (strong, atomic) WeUser * currentUser;
+
 + (id)toArrayOrNSDictionary:(NSData *)jsonData;
 + (NSData *)sendPhoneNumberToServer:(NSString *)urlString paras:(NSString *)parasString;
 //+ (NSData *)post:(NSString *)urlString paras:(NSString *)parasString;
@@ -26,9 +30,12 @@
 + (NSString *)transition:(NSString *)code asin:(NSString *)type;
 + (NSString *)transitionToDateFromSecond:(long long)s;
 + (void)refreshUserData;
+
 @end
 
 // Global Variables
+WeUser * currentUser;
+
 NSUserDefaults * userDefaults;
 
 BOOL we_logined;
@@ -101,6 +108,18 @@ NSMutableDictionary * we_sectionList;
 @end
 
 #define refreshInterval 5
+
+typedef enum _WeTargetView
+{
+    targetViewNone = 0,
+    targetViewPersonalCenter = 1,
+    targetViewConsultingRoom = 2
+} weTargetView;
+
+weTargetView we_targetView;
+
+#define weTabBarIdConsultingRoom 1
+#define weTabBarIdPersonalCenter 3
 
 
 #define yijiarenServer @"http://115.28.222.1/yijiaren"

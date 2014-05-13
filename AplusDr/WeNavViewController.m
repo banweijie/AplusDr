@@ -1,19 +1,18 @@
 //
-//  WePecNavViewController.m
-//  We_Doc
+//  WeNavViewController.m
+//  AplusDr
 //
-//  Created by WeDoctor on 14-4-13.
+//  Created by WeDoctor on 14-5-14.
 //  Copyright (c) 2014年 ___PKU___. All rights reserved.
 //
 
-#import "WePecNavViewController.h"
-#import "WeAppDelegate.h"
+#import "WeNavViewController.h"
 
-@interface WePecNavViewController ()
+@interface WeNavViewController ()
 
 @end
 
-@implementation WePecNavViewController
+@implementation WeNavViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,6 +44,12 @@
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 /*

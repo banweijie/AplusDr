@@ -21,7 +21,18 @@
  UITableView dataSource & delegate interfaces
  */
 // 欲选中某个Cell触发的事件
+// 调整格子的透明度
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.alpha = We_alpha_cell_general;;
+    cell.opaque = YES;
+}
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
+{
+    [tv deselectRowAtIndexPath:path animated:YES];
+    return path;
+}
+// 选中某个Cell触发的事件
+- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     switch (path.section) {
         case 0:
@@ -32,16 +43,10 @@
                 default:
                     break;
             }
-            return nil;
             break;
         default:
             break;
     }
-    return path;
-}
-// 选中某个Cell触发的事件
-- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
-{
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -52,6 +57,7 @@
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) return 20 + 64;
     return 20;
 }
 // 询问每个段落的头部标题
@@ -127,7 +133,9 @@
                     l2.font = We_font_textfield_zh_cn;
                     [cell.contentView addSubview:l2];
                     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 70, 70)];
-                    imageView.image = we_avatar;
+                    imageView.image = currentUser.avatar;
+                    imageView.layer.cornerRadius = imageView.frame.size.height / 2;
+                    imageView.clipsToBounds = YES;
                     [cell.contentView addSubview:imageView];
                     break;
                 default:
@@ -242,7 +250,7 @@
     [self.view addSubview:bg];
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
@@ -252,7 +260,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     if (!we_logined) [self segue_to_RegWlc:nil];
+    
     [sys_tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
