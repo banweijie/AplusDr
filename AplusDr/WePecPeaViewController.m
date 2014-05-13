@@ -11,10 +11,6 @@
 
 @interface WePecPeaViewController () {
     UITableView * sys_tableView;
-    
-    UITextField * user_nickname_input;
-    
-    UILabel * user_phone_label;
     UIImageView * user_avatar_imageView;
 }
 
@@ -128,8 +124,7 @@
             [actionSheet showInView:self.view];
         }
         if (path.row == 1) {
-            //[self performSegueWithIdentifier:@"PecPea_pushto_SelGen" sender:self];
-            [user_nickname_input becomeFirstResponder];
+            [self performSegueWithIdentifier:@"PecPea_pushto_InpNam" sender:self];
         }
     }
     if (path.section == 1) {
@@ -203,7 +198,7 @@
     static NSString *MyIdentifier = @"MyReuseIdentifier";
     UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
     }
     switch (indexPath.section) {
         case 0:
@@ -220,7 +215,10 @@
                     cell.textLabel.text = @"昵称";
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
-                    [cell addSubview:user_nickname_input];
+                    cell.detailTextLabel.text = currentUser.userName;
+                    cell.detailTextLabel.font = We_font_textfield_zh_cn;
+                    cell.detailTextLabel.textColor = We_foreground_gray_general;
+                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                     break;
                 default:
                     break;
@@ -233,7 +231,9 @@
                     cell.textLabel.text = @"手机号";
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
-                    [cell.contentView addSubview:user_phone_label];
+                    cell.detailTextLabel.text = currentUser.userPhone;
+                    cell.detailTextLabel.font = We_font_textfield_en_us;
+                    cell.detailTextLabel.textColor = We_foreground_gray_general;
                     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                     break;
                 case 1:
@@ -250,7 +250,7 @@
         case 2:
             switch (indexPath.row) {
                 case 0:
-                    cell.contentView.backgroundColor = We_background_red_tableviewcell;
+                    cell.contentView.backgroundColor = We_foreground_red_general;
                     cell.textLabel.text = @"退出登录";
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_white_general;
@@ -280,11 +280,6 @@
 {
     [textField resignFirstResponder];
     return true;
-}
-
-- (void)user_save_onpress:(id)sender {
-    if (![self updateUserInfo]) return;
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (BOOL)updateAvatar:(UIImage *)image {
@@ -363,47 +358,7 @@
         }
     }
     UIAlertView *notPermitted = [[UIAlertView alloc]
-                                 initWithTitle:@"保存失败"
-                                 message:errorMessage
-                                 delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-    [notPermitted show];
-    return NO;
-}
-
-- (BOOL)updateUserInfo {
-    NSString *errorMessage = @"发送失败，请检查网络";
-    NSString *urlString = @"http://115.28.222.1/yijiaren/user/updateInfo.action";
-    NSString *parasString = [NSString stringWithFormat:@"name=%@", user_nickname_input.text];
-    NSData * DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:parasString];
-    
-    if (DataResponse != NULL) {
-        NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
-        NSString *result = [HTTPResponse objectForKey:@"result"];
-        result = [NSString stringWithFormat:@"%@", result];
-        if ([result isEqualToString:@"1"]) {
-            we_name = user_nickname_input.text;
-            return YES;
-        }
-        if ([result isEqualToString:@"2"]) {
-            NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-            NSEnumerator *enumerator = [fields keyEnumerator];
-            id key;
-            while ((key = [enumerator nextObject])) {
-                NSString * tmp1 = [fields objectForKey:key];
-                if (tmp1 != NULL) errorMessage = tmp1;
-            }
-        }
-        if ([result isEqualToString:@"3"]) {
-            errorMessage = [HTTPResponse objectForKey:@"info"];
-        }
-        if ([result isEqualToString:@"4"]) {
-            errorMessage = [HTTPResponse objectForKey:@"info"];
-        }
-    }
-    UIAlertView *notPermitted = [[UIAlertView alloc]
-                                 initWithTitle:@"保存失败"
+                                 initWithTitle:@"申请失败"
                                  message:errorMessage
                                  delegate:nil
                                  cancelButtonTitle:@"OK"
@@ -416,15 +371,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(user_save_onpress:)];
-    self.navigationItem.rightBarButtonItem = user_save;
-    
-    we_pea_gender = we_gender;
-    
-    We_init_labelInCell_general(user_phone_label, we_phone, We_font_textfield_zh_cn)
-    We_init_textFieldInCell_pholder(user_nickname_input, @"尚未设置昵称", We_font_textfield_zh_cn);
-    user_nickname_input.text = we_name;
     
     user_avatar_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(242, 10, 70, 70)];
     user_avatar_imageView.image = currentUser.avatar;

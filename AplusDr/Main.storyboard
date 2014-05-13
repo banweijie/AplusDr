@@ -146,8 +146,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="个人账号" id="QO4-lE-gN8"/>
                     <connections>
-                        <segue destination="QcZ-h7-BrQ" kind="push" identifier="PecPea_pushto_SelGen" id="o1D-ln-kHi"/>
                         <segue destination="djG-Ww-epg" kind="push" identifier="PecPea_pushto_RegIvc" id="gWA-BA-tfi"/>
+                        <segue destination="olJ-9l-dU8" kind="push" identifier="PecPea_pushto_InpNam" id="lwk-jV-uAm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NbQ-1r-c28" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -236,24 +236,24 @@
             </objects>
             <point key="canvasLocation" x="5669" y="47"/>
         </scene>
-        <!--We Sel Gen View Controller-->
-        <scene sceneID="JKg-z8-5Nn">
+        <!--We Inp Nam View Controller-->
+        <scene sceneID="vqH-w4-Mvi">
             <objects>
-                <viewController id="QcZ-h7-BrQ" customClass="WeSelGenViewController" sceneMemberID="viewController">
+                <viewController id="olJ-9l-dU8" customClass="WeInpNamViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qpJ-3d-7Pe"/>
-                        <viewControllerLayoutGuide type="bottom" id="i1c-Ka-DVC"/>
+                        <viewControllerLayoutGuide type="top" id="KWh-Js-iNT"/>
+                        <viewControllerLayoutGuide type="bottom" id="bpN-Ab-vyI"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="agk-a6-3xO">
+                    <view key="view" contentMode="scaleToFill" id="zHg-8x-jeZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ngV-K8-xKe"/>
+                    <navigationItem key="navigationItem" id="iLw-jG-8lh"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CHD-d2-IhT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KNV-0s-Rhy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4880" y="-956"/>
+            <point key="canvasLocation" x="4829" y="-964"/>
         </scene>
         <!--We Pec Vctf View Controller - 职业证书-->
         <scene sceneID="ybT-oe-khw">
@@ -347,36 +347,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="首页" id="Bfm-mW-1KY">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="xnF-5I-ELf">
-                            <connections>
-                                <segue destination="RNG-Rj-9Vl" kind="push" id="YWw-Bi-ERQ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="首页" id="Bfm-mW-1KY"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aCp-4c-zUy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1149" y="2216"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="9Ea-w1-hhx">
-            <objects>
-                <viewController id="RNG-Rj-9Vl" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="EnQ-xa-LDg"/>
-                        <viewControllerLayoutGuide type="bottom" id="Dod-i8-wb9"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="BWB-9d-JNE">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="iE6-Xf-Zwf"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="URZ-EQ-ob4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1708" y="2199"/>
         </scene>
         <!--We Csr Idx View Controller - 咨询室-->
         <scene sceneID="0Sn-tC-NUq">
@@ -571,6 +546,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="HKx-Fi-tgM"/>
+        <segue reference="gWA-BA-tfi"/>
     </inferredMetricsTieBreakers>
 </document>
