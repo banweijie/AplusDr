@@ -16,7 +16,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    currentUser = [[WeUser alloc] init];
+    currentUser = nil;
     
     we_logined = NO;
     we_targetTabId = 0;
@@ -218,7 +218,7 @@
     NSString * paraString = @"";
     NSData * DataResponse = [WeAppDelegate postToServer:urlString withParas:paraString];
     
-    NSString * errorMessage = @"连接服务器失败，暂时使用本地缓存数据";
+    NSString * errorMessage = @"连接服务器失败";
     if (DataResponse != NULL) {
         NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
         NSString *result = [HTTPResponse objectForKey:@"result"];
@@ -244,6 +244,10 @@
             we_gender = [WeAppDelegate toString:[response objectForKey:@"gender"]];
             we_status = [WeAppDelegate toString:[response objectForKey:@"status"]];
             we_avatarPath = [WeAppDelegate toString:[response objectForKey:@"avatar"]];
+            
+            // send a request to get the avatar picture
+            
+            
             we_groupIntro = [WeAppDelegate toString:[response objectForKey:@"groupIntro"]];
             we_doctorId = [WeAppDelegate toString:[response objectForKey:@"id"]];
             
@@ -343,7 +347,6 @@
                      NSString * doctorId = [WeAppDelegate toString:we_doctorList[i][@"doctor"][@"id"]];
                      we_doctors[doctorId] = we_doctorList[i][@"doctor"];
                  }
-                 //NSLog(@"we_doctors : %lu", (unsigned long)[we_doctors count]);
                  return;
              }
              if ([result isEqualToString:@"2"]) {

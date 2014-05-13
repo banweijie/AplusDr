@@ -272,6 +272,7 @@
     NSLog(@"%@ %@", user_phone_input.text, user_password_input.text);
     if (![self checkUserRights]) return;
     we_logined = YES;
+    currentUser = [[WeUser alloc] init];
     we_targetTabId = 3;
     [self dismissViewControllerAnimated:YES completion:nil];
 }

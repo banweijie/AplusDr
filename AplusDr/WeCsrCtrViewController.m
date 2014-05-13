@@ -145,7 +145,6 @@
         doctorAvatar = image;
         [self refreshDoctorAvatar:image];
     } failure:nil];
-    [self.view addSubview:tmpImageView];
     
     UIImageView * tmpImageView1 = [[UIImageView alloc] init];
     [tmpImageView1 setImageWithURLRequest: [NSURLRequest requestWithURL:[NSURL URLWithString:yijiarenAvatarUrl(we_avatarPath)]] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AFNetworking.h>
+#import <UIImageView+AFNetworking.h>
 
 #import "WeUser.h"
 
