@@ -12,6 +12,7 @@
 
 @property(strong, nonatomic) NSString * userId;
 @property(strong, nonatomic) UIImage * avatar;
+@property(strong, nonatomic) NSString * userName;
 
 - (id)init;
 - (id)initWithUserId:(NSString *)_userId;

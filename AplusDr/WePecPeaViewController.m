@@ -99,6 +99,11 @@
  [AREA]
  UITableView dataSource & delegate interfaces
  */
+// 调整格子的透明度
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.alpha = We_alpha_cell_general;;
+    cell.opaque = YES;
+}
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
@@ -420,6 +425,8 @@
     
     user_avatar_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(242, 10, 70, 70)];
     user_avatar_imageView.image = currentUser.avatar;
+    user_avatar_imageView.layer.cornerRadius = user_avatar_imageView.frame.size.height / 2;
+    user_avatar_imageView.clipsToBounds = YES;
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];

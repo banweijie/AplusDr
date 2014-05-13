@@ -12,7 +12,7 @@
 
 @synthesize avatar;
 @synthesize userId;
-
+@synthesize userName;
 
 - (id)init {
     userId = @"NotLogined";
