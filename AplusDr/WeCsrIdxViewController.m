@@ -188,20 +188,6 @@
     [self.view addSubview:sys_tableView];
     
     sys_refreshTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(refreshData:) userInfo:nil repeats:YES];
-    
-    UIImageView * tmpImageView = [[UIImageView alloc] init];
-    NSLog(@"%@", yijiarenAvatarUrl(we_avatarPath));
-    [tmpImageView
-     setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:yijiarenAvatarUrl(we_avatarPath)]]
-     placeholderImage:nil
-     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-         currentUser.avatar = image;
-         NSLog(@"Accquire user's avatar successed, user's avatar has been changed.");
-     }
-     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-         NSLog(@"Accquire user's avatar failed. error log : %@", error);
-     }];
-    [self.view addSubview:tmpImageView];
     [self refreshData:self];
 }
 

@@ -31,7 +31,7 @@
 + (NSString *)transition:(NSString *)code asin:(NSString *)type;
 + (NSString *)transitionToDateFromSecond:(long long)s;
 + (void)refreshUserData;
-
++ (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success;
 @end
 
 // Global Variables

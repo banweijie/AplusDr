@@ -244,9 +244,10 @@
             we_gender = [WeAppDelegate toString:[response objectForKey:@"gender"]];
             we_status = [WeAppDelegate toString:[response objectForKey:@"status"]];
             we_avatarPath = [WeAppDelegate toString:[response objectForKey:@"avatar"]];
-            
-            // send a request to get the avatar picture
-            
+            [self DownloadImageWithURL:yijiarenAvatarUrl(we_avatarPath) successCompletion:^(id image) {
+                currentUser.avatar = image;
+                NSLog(@"Download Image(%@) succeed, user' avatar has been changed.", we_avatarPath);
+            }];
             
             we_groupIntro = [WeAppDelegate toString:[response objectForKey:@"groupIntro"]];
             we_doctorId = [WeAppDelegate toString:[response objectForKey:@"id"]];
@@ -383,6 +384,18 @@
              [notPermitted show];
          }
      ];
+}
+
++ (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success {
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
+    AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) success(responseObject);
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"DownloadImageWithURL error: %@", error);
+     }];
+    [requestOperation start];
 }
 @end
 
