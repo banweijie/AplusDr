@@ -247,7 +247,7 @@
             [currentUser setAvatarPath:[WeAppDelegate toString:[response objectForKey:@"avatar"]]];
             [self DownloadImageWithURL:yijiarenAvatarUrl(currentUser.avatarPath) successCompletion:^(id image) {
                 currentUser.avatar = image;
-                NSLog(@"Download Image(%@) succeed, user' avatar has been changed.", we_avatarPath);
+                NSLog(@"Download Image(%@) succeed, user' avatar has been changed.", currentUser.avatarPath);
             }];
             
             we_groupIntro = [WeAppDelegate toString:[response objectForKey:@"groupIntro"]];

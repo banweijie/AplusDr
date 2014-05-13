@@ -113,8 +113,9 @@ NSMutableDictionary * we_sectionList;
 typedef enum _WeTargetView
 {
     targetViewNone = 0,
-    targetViewPersonalCenter = 1,
-    targetViewConsultingRoom = 2
+    targetViewMainPage = 1,
+    targetViewPersonalCenter = 2,
+    targetViewConsultingRoom = 3,
 } weTargetView;
 
 weTargetView we_targetView;

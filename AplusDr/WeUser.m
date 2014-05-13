@@ -19,6 +19,7 @@
 - (id)init {
     userId = @"NotLogined";
     avatar = [UIImage imageNamed:@"defaultAvatar"];
+    avatarPath = @"";
     return self;
 }
 

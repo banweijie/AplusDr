@@ -30,12 +30,12 @@
 }
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
-    [tv deselectRowAtIndexPath:path animated:YES];
     return path;
 }
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
+    [tv deselectRowAtIndexPath:path animated:YES];
     switch (path.section) {
         case 0:
             switch (path.row) {
@@ -267,6 +267,13 @@
 
 - (void)refreshData:(id)sender {
     [sys_tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (we_targetView == targetViewMainPage) [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
+    if (we_targetView == targetViewConsultingRoom) [self.tabBarController setSelectedIndex:weTabBarIdConsultingRoom];
+    if (we_targetView == targetViewPersonalCenter) we_targetView = targetViewNone;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -274,6 +274,8 @@
     we_logined = YES;
     currentUser = [[WeUser alloc] init];
     we_targetTabId = 3;
+    [WeAppDelegate refreshUserData];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -290,7 +292,6 @@
         NSString *result = [HTTPResponse objectForKey:@"result"];
         result = [NSString stringWithFormat:@"%@", result];
         if ([result isEqualToString:@"1"]) {
-            [WeAppDelegate refreshUserData];
             return YES;
         }
         if ([result isEqualToString:@"2"]) {
