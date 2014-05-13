@@ -243,6 +243,7 @@
             we_name = [WeAppDelegate toString:[response objectForKey:@"name"]];
             we_gender = [WeAppDelegate toString:[response objectForKey:@"gender"]];
             we_status = [WeAppDelegate toString:[response objectForKey:@"status"]];
+            
             we_avatarPath = [WeAppDelegate toString:[response objectForKey:@"avatar"]];
             [self DownloadImageWithURL:yijiarenAvatarUrl(we_avatarPath) successCompletion:^(id image) {
                 currentUser.avatar = image;

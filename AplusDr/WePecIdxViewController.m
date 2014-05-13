@@ -68,8 +68,6 @@
 }
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
-    //if (section == 1) return 30;
-    if (section == [self numberOfSectionsInTableView:tv] - 1) return 100;
     return 10;
 }
 // 询问每个段落的尾部标题
@@ -257,6 +255,7 @@
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
+    sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
     
     // 页面刷新定时器

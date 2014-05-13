@@ -211,8 +211,6 @@
 				9026EF111904EEFC00CE4A7A /* Customs */,
 				9026EEB51904EE5500CE4A7A /* WeAppDelegate.h */,
 				9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */,
-				9026EEB71904EE5500CE4A7A /* WeTabBarViewController.h */,
-				9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */,
 				9026EF121904EF1600CE4A7A /* MainPage */,
 				9026EF131904EF2800CE4A7A /* Register */,
 				9026EF141904EF8300CE4A7A /* PersonalCenter */,
@@ -272,6 +270,8 @@
 				907D5B36192014230006EAE0 /* WeViewController.m */,
 				90F0CE6F19229973006A4605 /* WeNavViewController.h */,
 				90F0CE7019229973006A4605 /* WeNavViewController.m */,
+				9026EEB71904EE5500CE4A7A /* WeTabBarViewController.h */,
+				9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */,
 			);
 			name = Customs;
 			sourceTree = "<group>";

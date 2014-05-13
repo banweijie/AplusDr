@@ -328,9 +328,7 @@
     [self performSegueWithIdentifier:@"wlc2ipn" sender:self];
 }
 - (void)segue_to_MapIdx:(id)sender {
-    NSLog(@"segue~~:");
-    we_targetTabId = 0;
-    //[self performSegueWithIdentifier:@"RegWlc2TabBar" sender:self];
+    we_targetView = targetViewNone;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

@@ -49,11 +49,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    if (we_targetTabId != -1) {
-        NSLog(@"%d", we_targetTabId);
-        [self.tabBarController setSelectedIndex:2];
-        we_targetTabId = -1;
-    }
     
     self.tabBar.selectedImageTintColor = We_foreground_red_general;
     
@@ -65,6 +60,7 @@
     tmp2.selectedImage = [UIImage imageNamed:@"tab-crowdfunding-selected"];
     UITabBarItem * tmp3 = [self.tabBar.items objectAtIndex:3];
     tmp3.selectedImage = [UIImage imageNamed:@"tab-me-selected"];
+    
     [super viewWillAppear:animated];
 }
 

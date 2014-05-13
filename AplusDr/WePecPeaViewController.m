@@ -34,7 +34,17 @@
 - (void)imageCropperDidCancel:(VPImageCropperViewController *)cropperViewController {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
+// Action Sheet 按钮样式
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
+{
+    for (UIView *subview in actionSheet.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton *)subview;
+            [button setTitleColor:We_foreground_red_general forState:UIControlStateNormal];
+            button.titleLabel.font = We_font_textfield_zh_cn;
+        }
+    }
+}
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         // 拍照
@@ -95,6 +105,7 @@
     //    if (path.section == 0 && path.row == 0) [user_exp_startyear becomeFirstResponder];
     return path;
 }
+
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
@@ -408,7 +419,7 @@
     user_nickname_input.text = we_name;
     
     user_avatar_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(242, 10, 70, 70)];
-    user_avatar_imageView.image = we_avatar;
+    user_avatar_imageView.image = currentUser.avatar;
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
