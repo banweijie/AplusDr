@@ -285,12 +285,18 @@
     [sys_userAgreement_demo_button addTarget:self action:@selector(checkForUserAgreement:) forControlEvents:UIControlEventTouchUpInside];
     [sys_userAgreement_demo addSubview:sys_userAgreement_demo_button];
     
-    // tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 700) style:UITableViewStyleGrouped];
+    // Background
+    UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
+    bg.image = [UIImage imageNamed:@"Background-2"];
+    bg.contentMode = UIViewContentModeCenter;
+    [self.view addSubview:bg];
+    
+    // sys_tableView
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
-    sys_tableView.backgroundColor = We_background_general;
+    sys_tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:sys_tableView];
 }
 - (void)didReceiveMemoryWarning

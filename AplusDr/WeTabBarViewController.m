@@ -15,8 +15,17 @@
 
 @implementation WeTabBarViewController
 
-
-extern int we_targetTabId;
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if (viewController == [tabBarController.viewControllers objectAtIndex:3] && !we_logined) {
+        [self performSegueWithIdentifier:@"TabBar_Modalto_RegWlc" sender:self];
+        return NO;
+    }
+    if (viewController == [tabBarController.viewControllers objectAtIndex:1] && !we_logined) {
+        [self performSegueWithIdentifier:@"TabBar_Modalto_RegWlc" sender:self];
+        return NO;
+    }
+    return YES;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,6 +40,7 @@ extern int we_targetTabId;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     NSLog(@"tab bar view did load at index %d", we_targetTabId);
+    //self.tabBar.delegate = self;
     //[self setSelectedIndex:we_targetTabId];
 }
 - (void)viewDidAppear:(BOOL)animated {
@@ -49,6 +59,16 @@ extern int we_targetTabId;
     UITabBarItem * tmp3 = [self.tabBar.items objectAtIndex:3];
     tmp3.selectedImage = [UIImage imageNamed:@"tab-me-selected"];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (we_targetTabId != -1) {
+        NSLog(@"%d", we_targetTabId);
+        [self.tabBarController setSelectedIndex:2];
+        we_targetTabId = -1;
+    }
+    [super viewWillAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -56,14 +76,14 @@ extern int we_targetTabId;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

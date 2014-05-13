@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="mjn-6U-QSO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="mjn-6U-QSO">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -123,7 +123,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="个人中心" id="nGE-68-ckl"/>
                     <connections>
-                        <segue destination="ZGO-u0-7yk" kind="modal" identifier="PecIdx2RegWlc" id="NZg-3l-cVs"/>
                         <segue destination="2wj-qs-N0e" kind="push" identifier="PecIdx2PecCai" id="IyT-w9-o82"/>
                         <segue destination="h4F-uG-5Ot" kind="push" identifier="PecIdx_pushto_PecPea" id="nfF-Tb-3fz"/>
                     </connections>
@@ -290,6 +289,7 @@
                         <segue destination="G9f-X1-J9c" kind="relationship" relationship="viewControllers" id="tXO-bP-Iow"/>
                         <segue destination="FbH-Go-jOX" kind="relationship" relationship="viewControllers" id="gV7-Zh-poc"/>
                         <segue destination="bHV-1f-jWO" kind="relationship" relationship="viewControllers" id="Pfd-v9-efB"/>
+                        <segue destination="ZGO-u0-7yk" kind="modal" identifier="TabBar_Modalto_RegWlc" id="kGw-7E-Cpt"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zbq-rB-hT1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -334,10 +334,10 @@
             </objects>
             <point key="canvasLocation" x="1152" y="1504"/>
         </scene>
-        <!--View Controller - 首页-->
+        <!--We Map Idx View Controller - 首页-->
         <scene sceneID="W7F-be-9tS">
             <objects>
-                <viewController id="ae2-c6-YeX" sceneMemberID="viewController">
+                <viewController id="ae2-c6-YeX" customClass="WeMapIdxViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Siw-kl-HU3"/>
                         <viewControllerLayoutGuide type="bottom" id="ure-ov-wEf"/>
@@ -353,10 +353,10 @@
             </objects>
             <point key="canvasLocation" x="1149" y="2216"/>
         </scene>
-        <!--View Controller-->
+        <!--We Csr Idx View Controller - 咨询室-->
         <scene sceneID="0Sn-tC-NUq">
             <objects>
-                <viewController id="jlN-QD-fTq" sceneMemberID="viewController">
+                <viewController id="jlN-QD-fTq" customClass="WeCsrIdxViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QGX-h2-BhN"/>
                         <viewControllerLayoutGuide type="bottom" id="J3N-EO-ur8"/>
@@ -366,11 +366,97 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="JJT-vb-nXs"/>
+                    <navigationItem key="navigationItem" title="咨询室" id="JJT-vb-nXs"/>
+                    <connections>
+                        <segue destination="DNY-Te-1WE" kind="push" identifier="CsrIdx_pushto_CsrAdd" id="knQ-mL-c44"/>
+                        <segue destination="JdC-Td-7qw" kind="push" identifier="CsrIdx_pushto_CsrCtr" id="YJw-CX-Oxo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uad-bp-ueb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1152" y="2976"/>
+        </scene>
+        <!--We Csr Ctr View Controller-->
+        <scene sceneID="EdS-0V-om2">
+            <objects>
+                <viewController id="JdC-Td-7qw" customClass="WeCsrCtrViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OyW-CK-n0i"/>
+                        <viewControllerLayoutGuide type="bottom" id="emY-tD-Bqc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vZl-qB-Ht8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="77B-Tx-Xl1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iRo-yW-zWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1711" y="3707"/>
+        </scene>
+        <!--We Csr Add View Controller - 添加保健医-->
+        <scene sceneID="ohm-XK-XOF">
+            <objects>
+                <viewController id="DNY-Te-1WE" customClass="WeCsrAddViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="S6M-nz-62Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="KAx-uC-7hG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gXR-7d-QEx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="添加保健医" id="2en-Du-crf"/>
+                    <connections>
+                        <segue destination="EQU-dN-USK" kind="push" identifier="CsrAdd_pushto_CsrDci" id="ZTK-bg-UFf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jNK-hP-lak" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1711" y="2976"/>
+        </scene>
+        <!--We Csr Dci View Controller-->
+        <scene sceneID="AN5-c4-1DT">
+            <objects>
+                <viewController id="EQU-dN-USK" customClass="WeCsrDciViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="t4b-PY-NGq"/>
+                        <viewControllerLayoutGuide type="bottom" id="M82-kO-vKM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sPH-mS-QtK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="KiI-Tf-zWR"/>
+                    <connections>
+                        <segue destination="COc-h2-Tev" kind="modal" identifier="CsrDci_pushto_CsrCos" id="Qqh-cl-efj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ePC-Eo-yEo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2227" y="2977"/>
+        </scene>
+        <!--We Csr Cos View Controller - 发起咨询-->
+        <scene sceneID="b0m-ye-ype">
+            <objects>
+                <viewController id="qps-oL-IfU" customClass="WeCsrCosViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O7R-rb-rke"/>
+                        <viewControllerLayoutGuide type="bottom" id="UFk-B6-cvJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZnO-W5-Nw6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="发起咨询" id="KiJ-Nx-yoR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hii-VN-xGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3275" y="2969"/>
         </scene>
         <!--Navigation Controller - 众筹项目-->
         <scene sceneID="grl-Bt-DYQ">
@@ -410,10 +496,10 @@
             </objects>
             <point key="canvasLocation" x="623" y="2216"/>
         </scene>
-        <!--Navigation Controller - 咨询室-->
+        <!--We Csr Nav View Controller - 咨询室-->
         <scene sceneID="vRA-4K-jvF">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G9f-X1-J9c" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G9f-X1-J9c" customClass="WeCsrNavViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="咨询室" image="tab-chatroom" id="1TI-ob-JSf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xeC-pU-Tq7">
@@ -428,6 +514,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nn3-y8-Ln6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="613" y="2976"/>
+        </scene>
+        <!--We Csr Nav View Controller-->
+        <scene sceneID="MYl-XM-wDU">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="COc-h2-Tev" customClass="WeCsrNavViewController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5ud-BK-6rU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qps-oL-IfU" kind="relationship" relationship="rootViewController" id="RVJ-ci-w7Z"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vac-Gy-5TH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2749" y="2969"/>
         </scene>
     </scenes>
     <resources>

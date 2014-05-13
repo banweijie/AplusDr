@@ -267,13 +267,14 @@ extern int we_targetTabId;
         if ([result isEqualToString:@"1"]) {
             NSDictionary * response = [HTTPResponse objectForKey:@"response"];
             NSLog(@"%@", response);
+            /*
             we_notice = [WeAppDelegate toString:[response objectForKey:@"notice"]];
             we_consultPrice = [WeAppDelegate toString:[response objectForKey:@"consultPrice"]];
             we_plusPrice = [WeAppDelegate toString:[response objectForKey:@"plusPrice"]];
             we_maxResponseGap = [WeAppDelegate toString:[response objectForKey:@"maxResponseGap"]];
             we_workPeriod = [WeAppDelegate toString:[response objectForKey:@"workPeriod"]];
             we_workPeriod_save = [NSString stringWithString:we_workPeriod];
-            we_hospital = [WeAppDelegate toString:[[response objectForKey:@"hospital"] objectForKey:@"name"]];
+            we_hospital = [response objectForKey:@"hospital"] objectForKey:@"name"]];
             we_section = [WeAppDelegate toString:[[response objectForKey:@"section"] objectForKey:@"text"]];
             we_title = [WeAppDelegate toString:[response objectForKey:@"title"]];
             we_category = [WeAppDelegate toString:[response objectForKey:@"category"]];
@@ -282,7 +283,7 @@ extern int we_targetTabId;
             we_email = [WeAppDelegate toString:[response objectForKey:@"email"]];
             we_phone = [WeAppDelegate toString:[response objectForKey:@"phone"]];
             we_name = [WeAppDelegate toString:[response objectForKey:@"name"]];
-            we_gender = [WeAppDelegate toString:[response objectForKey:@"gender"]];
+            we_gender = [WeAppDelegate toString:[response objectForKey:@"gender"]];*/
             return YES;
         }
         if ([result isEqualToString:@"2"]) {
@@ -347,12 +348,18 @@ extern int we_targetTabId;
     [user_repeatPassword_input addTarget:self action:@selector(resignFirstResponder:) forControlEvents:UIControlEventEditingDidEndOnExit];
     
     
+    // Background
+    UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
+    bg.image = [UIImage imageNamed:@"Background-2"];
+    bg.contentMode = UIViewContentModeCenter;
+    [self.view addSubview:bg];
+    
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 700) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
-    sys_tableView.backgroundColor = We_background_general;
+    sys_tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:sys_tableView];
 }
 
