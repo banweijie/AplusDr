@@ -119,6 +119,7 @@ typedef enum _WeTargetView
 
 weTargetView we_targetView;
 
+#define weTabBarIdMainPage 0
 #define weTabBarIdConsultingRoom 1
 #define weTabBarIdPersonalCenter 3
 

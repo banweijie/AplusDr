@@ -121,17 +121,20 @@
                 case 0:
                     cell.contentView.backgroundColor = We_background_cell_general;
                     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                    // 用户名
                     l1 = [[UILabel alloc] initWithFrame:CGRectMake(90, 20, 240, 25)];
-                    l1.text = we_name;
-                    if ([l1.text isEqualToString:@""]) l1.text = @"尚未设置名称";
+                    if ([currentUser.userName isEqualToString:@""]) l1.text = @"尚未设置名称";
+                    else l1.text = currentUser.userName;
                     l1.font = We_font_textfield_zh_cn;
                     l1.textColor = We_foreground_black_general;
                     [cell.contentView addSubview:l1];
+                    // 手机号
                     l2 = [[UILabel alloc] initWithFrame:CGRectMake(90, 45, 240, 25)];
-                    l2.text = we_phone;
+                    l2.text = currentUser.userPhone;
                     l2.textColor = We_foreground_gray_general;
                     l2.font = We_font_textfield_zh_cn;
                     [cell.contentView addSubview:l2];
+                    // 头像
                     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 70, 70)];
                     imageView.image = currentUser.avatar;
                     imageView.layer.cornerRadius = imageView.frame.size.height / 2;

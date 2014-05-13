@@ -145,6 +145,8 @@
     }
     if (path.section == 2) {
         we_logined = NO;
+        currentUser = nil;
+        [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
@@ -301,7 +303,8 @@
         result = [NSString stringWithFormat:@"%@", result];
         if ([result isEqualToString:@"1"]) {
             NSLog(@"%@", HTTPResponse);
-            we_avatar = image;
+            [currentUser setAvatarPath:[WeAppDelegate toString:[HTTPResponse objectForKey:@"response"]]];
+            [currentUser setAvatar:image];
             return YES;
         }
         if ([result isEqualToString:@"2"]) {

@@ -11,8 +11,11 @@
 @interface WeUser : NSObject
 
 @property(strong, nonatomic) NSString * userId;
-@property(strong, nonatomic) UIImage * avatar;
+@property(strong, nonatomic) NSString * avatarPath;
 @property(strong, nonatomic) NSString * userName;
+@property(strong, nonatomic) NSString * userPhone;
+
+@property(strong, nonatomic) UIImage * avatar;
 
 - (id)init;
 - (id)initWithUserId:(NSString *)_userId;

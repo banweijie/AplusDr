@@ -239,12 +239,13 @@
             we_skills = [WeAppDelegate toString:[response objectForKey:@"skills"]];
             we_degree = [WeAppDelegate toString:[response objectForKey:@"degree"]];
             we_email = [WeAppDelegate toString:[response objectForKey:@"email"]];
-            we_phone = [WeAppDelegate toString:[response objectForKey:@"phone"]];
             we_gender = [WeAppDelegate toString:[response objectForKey:@"gender"]];
             we_status = [WeAppDelegate toString:[response objectForKey:@"status"]];
             
+            [currentUser setUserPhone:[WeAppDelegate toString:[response objectForKey:@"phone"]]];
             [currentUser setUserName:[WeAppDelegate toString:[response objectForKey:@"name"]]];
-            [self DownloadImageWithURL:yijiarenAvatarUrl([WeAppDelegate toString:[response objectForKey:@"avatar"]]) successCompletion:^(id image) {
+            [currentUser setAvatarPath:[WeAppDelegate toString:[response objectForKey:@"avatar"]]];
+            [self DownloadImageWithURL:yijiarenAvatarUrl(currentUser.avatarPath) successCompletion:^(id image) {
                 currentUser.avatar = image;
                 NSLog(@"Download Image(%@) succeed, user' avatar has been changed.", we_avatarPath);
             }];

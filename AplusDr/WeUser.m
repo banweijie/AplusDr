@@ -11,8 +11,10 @@
 @implementation WeUser
 
 @synthesize avatar;
+@synthesize avatarPath;
 @synthesize userId;
 @synthesize userName;
+@synthesize userPhone;
 
 - (id)init {
     userId = @"NotLogined";
