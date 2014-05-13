@@ -9,7 +9,9 @@
 #import "WePecIdxViewController.h"
 #import "WeAppDelegate.h"
 
-@interface WePecIdxViewController ()
+@interface WePecIdxViewController () {
+    NSTimer * sys_refreshTimer;
+}
 @end
 
 @implementation WePecIdxViewController {
@@ -256,6 +258,13 @@
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:sys_tableView];
+    
+    // 页面刷新定时器
+    sys_refreshTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(refreshData:) userInfo:nil repeats:YES];
+}
+
+- (void)refreshData:(id)sender {
+    [sys_tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
