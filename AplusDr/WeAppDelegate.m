@@ -343,12 +343,27 @@
              NSString *result = [HTTPResponse objectForKey:@"result"];
              result = [NSString stringWithFormat:@"%@", result];
              if ([result isEqualToString:@"1"]) {
-                 we_doctors = [[NSMutableDictionary alloc] init];
-                 NSArray * we_doctorList = [HTTPResponse objectForKey:@"response"];
-                 for (int i = 0; i < [we_doctorList count]; i++) {
-                     NSString * doctorId = [WeAppDelegate toString:we_doctorList[i][@"doctor"][@"id"]];
-                     we_doctors[doctorId] = we_doctorList[i][@"doctor"];
+                 NSMutableDictionary * newfavorDoctors = [[NSMutableDictionary alloc] init];
+                 NSArray * favorDoctorList = [HTTPResponse objectForKey:@"response"];
+                 for (int i = 0; i < [favorDoctorList count]; i++) {
+                     WeFavorDoctor * newDoctor = favorDoctors[[WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"id"]]];
+                     if (newDoctor == NULL) newDoctor = [[WeFavorDoctor alloc] init];
+                     newDoctor.userId = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"id"]];
+                     newDoctor.userName = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"name"]];
+                     newDoctor.title = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"title"]];
+                     newDoctor.category = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"category"]];
+                     newDoctor.hospitalName = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"hospital"][@"name"]];
+                     newDoctor.sectionName = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"section"][@"text"]];
+                     if (![newDoctor.avatarPath isEqualToString:[WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"avatar"]]]) {
+                         newDoctor.avatarPath = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"avatar"]];
+                         [self DownloadImageWithURL:yijiarenAvatarUrl(newDoctor.avatarPath) successCompletion:^(id image) {
+                             newDoctor.avatar = image;
+                             NSLog(@"Download Image(%@) succeed, doctor' avatar has been changed.", newDoctor.avatarPath);
+                         }];
+                     }
+                     newfavorDoctors[newDoctor.userId] = newDoctor;
                  }
+                 favorDoctors = newfavorDoctors;
                  return;
              }
              if ([result isEqualToString:@"2"]) {
@@ -396,6 +411,18 @@
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          NSLog(@"DownloadImageWithURL error: %@", error);
      }];
+    [requestOperation start];
+}
+
+- (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success {
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
+    AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"DownloadImageWithURL error: %@", error);
+    }];
     [requestOperation start];
 }
 @end

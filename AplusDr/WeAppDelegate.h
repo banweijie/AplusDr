@@ -11,6 +11,8 @@
 #import <UIImageView+AFNetworking.h>
 
 #import "WeUser.h"
+#import "WeDoctor.h"
+#import "WeFavorDoctor.h"
 
 @interface WeAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -36,6 +38,7 @@
 
 // Global Variables
 WeUser * currentUser;
+NSMutableDictionary * favorDoctors;
 
 NSUserDefaults * userDefaults;
 

@@ -50,6 +50,8 @@
 		90F0CE6519228CEF006A4605 /* WeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE6419228CEF006A4605 /* WeUser.m */; };
 		90F0CE7119229973006A4605 /* WeNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE7019229973006A4605 /* WeNavViewController.m */; };
 		90F0CE741922CF55006A4605 /* WeInpNamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE731922CF55006A4605 /* WeInpNamViewController.m */; };
+		90F0CE771922D711006A4605 /* WeDoctor.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE761922D711006A4605 /* WeDoctor.m */; };
+		90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE791922D854006A4605 /* WeFavorDoctor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +142,10 @@
 		90F0CE7019229973006A4605 /* WeNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeNavViewController.m; sourceTree = "<group>"; };
 		90F0CE721922CF55006A4605 /* WeInpNamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeInpNamViewController.h; sourceTree = "<group>"; };
 		90F0CE731922CF55006A4605 /* WeInpNamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeInpNamViewController.m; sourceTree = "<group>"; };
+		90F0CE751922D711006A4605 /* WeDoctor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeDoctor.h; sourceTree = "<group>"; };
+		90F0CE761922D711006A4605 /* WeDoctor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeDoctor.m; sourceTree = "<group>"; };
+		90F0CE781922D854006A4605 /* WeFavorDoctor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFavorDoctor.h; sourceTree = "<group>"; };
+		90F0CE791922D854006A4605 /* WeFavorDoctor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFavorDoctor.m; sourceTree = "<group>"; };
 		B7BF13CDE3A84113994A769D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -376,6 +382,10 @@
 			children = (
 				90F0CE6319228CEF006A4605 /* WeUser.h */,
 				90F0CE6419228CEF006A4605 /* WeUser.m */,
+				90F0CE751922D711006A4605 /* WeDoctor.h */,
+				90F0CE761922D711006A4605 /* WeDoctor.m */,
+				90F0CE781922D854006A4605 /* WeFavorDoctor.h */,
+				90F0CE791922D854006A4605 /* WeFavorDoctor.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -525,8 +535,10 @@
 				9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */,
 				907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */,
 				907D5B681920D9DA0006EAE0 /* UIBubbleHeaderTableViewCell.m in Sources */,
+				90F0CE771922D711006A4605 /* WeDoctor.m in Sources */,
 				907D5B37192014230006EAE0 /* WeViewController.m in Sources */,
 				907D5B691920D9DA0006EAE0 /* UIBubbleTableView.m in Sources */,
+				90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */,
 				90F0CE61192234E8006A4605 /* WeMapIdxViewController.m in Sources */,
 				90F0CE7119229973006A4605 /* WeNavViewController.m in Sources */,
 				90F0CE741922CF55006A4605 /* WeInpNamViewController.m in Sources */,
