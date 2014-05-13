@@ -26,6 +26,11 @@
  [AREA]
  UITableView dataSource & delegate interfaces
  */
+// 调整格子的透明度
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.alpha = We_alpha_cell_general;;
+    cell.opaque = YES;
+}
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
@@ -54,6 +59,7 @@
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) return 20 + 64;
     return 20;
 }
 // 询问每个段落的头部标题
@@ -62,8 +68,7 @@
 }
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
-    if (section == 1) return 30;
-    return 0;
+    return 10;
 }
 // 询问每个段落的尾部标题
 - (NSString *)tableView:(UITableView *)tv titleForFooterInSection:(NSInteger)section {
@@ -236,11 +241,12 @@
     [self.view addSubview:bg];
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
+    sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
     
 }

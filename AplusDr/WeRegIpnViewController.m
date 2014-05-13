@@ -17,8 +17,6 @@
 @implementation WeRegIpnViewController
 {
     UITextField * user_phone_input;
-    UITextField * user_veriCode_input;
-    UIImage * sys_veriCode_image;
     UIButton * sys_nextStep_button;
     UIView * sys_userAgreement_demo;
     UITableView * sys_tableView;
@@ -26,15 +24,14 @@
 }
 
 /*
-    [AREA]
-        Variables
-*/
-
-
-/*
     [AREA] 
         UITableView dataSource & delegate interfaces
 */
+// 调整格子的透明度
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.alpha = We_alpha_cell_general;;
+    cell.opaque = YES;
+}
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
@@ -48,7 +45,6 @@
 {
     if (path.section == 1 && path.row == 0) {
         count ++;
-        if (!self.checkVeriCode) return;
         if (!self.sendVeriCode) return;
         we_vericode_type = @"NewPassword";
         we_phone_onReg = user_phone_input.text;
@@ -59,9 +55,14 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return @"";
 }
+// 询问每个段落的头部高度
+- (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) return 20 + 64;
+    return 20;
+}
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 30;
+    return 10;
 }
 // 询问每个段落的尾部
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -76,7 +77,7 @@
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) return 2;
+    if (section == 0) return 1;
     if (section == 1) return 1;
     return 0;
 }
@@ -96,12 +97,6 @@
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             [cell addSubview:user_phone_input];
         }
-        if (indexPath.row == 1) {
-            cell.contentView.backgroundColor = We_background_cell_general;
-            cell.imageView.image = sys_veriCode_image;
-            cell.imageView.transform = CGAffineTransformMakeScale(0.3, 0.3);
-            [cell addSubview:user_veriCode_input];
-        }
     }
     if (indexPath.section == 1) {
         cell.contentView.backgroundColor = We_background_red_tableviewcell;
@@ -118,10 +113,6 @@
     [AREA]
         Actions of all views
 */
-- (void)user_phone_input_return:(id)sender {
-    NSLog(@"user_phone_input_return:");
-    [user_veriCode_input becomeFirstResponder];
-}
 - (void)resignFirstResponder:(id)sender {
     NSLog(@"resignFirstResponder:");
     [sender resignFirstResponder];
@@ -137,54 +128,6 @@
     [AREA]
         Functional
 */
-- (BOOL) checkVeriCode {
-    NSLog(@"checkVeriCode");
-    NSString *errorMessege = @"无法连接网络，请重试";
-    NSString *urlString = @"http://115.28.222.1/yijiaren/user/checkImageCode.action";
-    NSString *paraString = [NSString stringWithFormat:@"imageCode=%@", user_veriCode_input.text];
-    NSData *DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:paraString];
-    if (DataResponse != NULL) {
-        NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
-        NSString *result = [HTTPResponse objectForKey:@"result"];
-        result = [NSString stringWithFormat:@"%@", result];
-        if ([result isEqualToString:@"1"]) {
-            return YES;
-        }
-        else {
-            if ([result isEqualToString:@"2"]) {
-                NSString *fields = [HTTPResponse objectForKey:@"fields"];
-                if (fields != NULL) errorMessege = [[HTTPResponse objectForKey:@"fields"] objectForKey:@"phone"];
-            }
-            if ([result isEqualToString:@"3"]) {
-                errorMessege = [HTTPResponse objectForKey:@"info"];
-            }
-            if ([result isEqualToString:@"4"]) {
-                errorMessege = [HTTPResponse objectForKey:@"info"];
-            }
-        }
-    }
-    // alert error messege
-    UIAlertView *notPermitted = [[UIAlertView alloc]
-                                 initWithTitle:@"验证图形验证码失败"
-                                 message:errorMessege
-                                 delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-    [notPermitted show];
-    
-    // refresh veri code
-    urlString = @"http://115.28.222.1/yijiaren/user/getImageCode.action";
-    paraString = @"";
-    DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:paraString];
-    sys_veriCode_image = [UIImage imageWithData:DataResponse];
-    
-    // clear veri code input
-    user_veriCode_input.text = @"";
-    
-    // refresh table
-    [sys_tableView reloadData];
-    return NO;
-}
 - (BOOL) sendVeriCode
 {
     NSLog(@"sendVeriCode");
@@ -245,21 +188,6 @@
     user_phone_input.font = We_font_textfield_zh_cn;
     user_phone_input.autocorrectionType = UITextAutocorrectionTypeNo;
     [user_phone_input setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [user_phone_input addTarget:self action:@selector(user_phone_input_return:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    
-    // user_veriCode_input init
-    user_veriCode_input = [[UITextField alloc] initWithFrame:CGRectMake(100, 9, 220, 30)];
-    user_veriCode_input.placeholder = @"请输入左边图形中的字母";
-    user_veriCode_input.font = We_font_textfield_zh_cn;
-    user_veriCode_input.autocorrectionType = UITextAutocorrectionTypeNo;
-    [user_veriCode_input setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [user_veriCode_input addTarget:self action:@selector(resignFirstResponder:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    
-    // sys_veriCode_image init
-    NSString *urlString = @"http://115.28.222.1/yijiaren/user/getImageCode.action";
-    NSString *paraString = @"";
-    NSData *DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:paraString];
-    sys_veriCode_image = [UIImage imageWithData:DataResponse];
     
     // sys_nextStep_button init
     sys_nextStep_button = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -292,11 +220,12 @@
     [self.view addSubview:bg];
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
+    sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
 }
 - (void)didReceiveMemoryWarning

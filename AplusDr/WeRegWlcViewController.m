@@ -75,7 +75,6 @@
     if (section == 0) return 230 - (568 - self.view.frame.size.height);
     if (section == 1) return 2;
     if (section == 2) return 37;
-    if (section == [self numberOfSectionsInTableView:tv] - 1) return 300;
     return 10;
 }
 // 询问每个段落的尾部标题
@@ -240,12 +239,12 @@
     self.navigationItem.leftBarButtonItem = user_cancel;
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
-    sys_tableView.scrollEnabled = NO;
+    sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
 }
 

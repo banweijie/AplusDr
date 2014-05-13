@@ -116,6 +116,7 @@ typedef enum _WeTargetView
     targetViewMainPage = 1,
     targetViewPersonalCenter = 2,
     targetViewConsultingRoom = 3,
+    targetViewPersonalAccount = 4
 } weTargetView;
 
 weTargetView we_targetView;

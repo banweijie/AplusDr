@@ -25,6 +25,11 @@ extern int we_targetTabId;
  [AREA]
  UITableView dataSource & delegate interfaces
  */
+// 调整格子的透明度
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.alpha = We_alpha_cell_general;;
+    cell.opaque = YES;
+}
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
@@ -43,6 +48,9 @@ extern int we_targetTabId;
             if (![self submitPassword]) return;
             if (![self checkUserRights]) return;
             we_logined = YES;
+            we_targetView = targetViewPersonalAccount;
+            currentUser = [[WeUser alloc] init];
+            [WeAppDelegate refreshUserData];
         }
         else
         if ([we_vericode_type isEqualToString:@"ModifyPassword"]) {
@@ -56,6 +64,7 @@ extern int we_targetTabId;
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) return 20 + 64;
     return 20;
 }
 // 询问每个段落的头部标题
@@ -65,7 +74,7 @@ extern int we_targetTabId;
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
     //if (section == 1) return 30;
-    return 0;
+    return 10;
 }
 // 询问每个段落的尾部标题
 - (NSString *)tableView:(UITableView *)tv titleForFooterInSection:(NSInteger)section {
@@ -267,23 +276,6 @@ extern int we_targetTabId;
         if ([result isEqualToString:@"1"]) {
             NSDictionary * response = [HTTPResponse objectForKey:@"response"];
             NSLog(@"%@", response);
-            /*
-            we_notice = [WeAppDelegate toString:[response objectForKey:@"notice"]];
-            we_consultPrice = [WeAppDelegate toString:[response objectForKey:@"consultPrice"]];
-            we_plusPrice = [WeAppDelegate toString:[response objectForKey:@"plusPrice"]];
-            we_maxResponseGap = [WeAppDelegate toString:[response objectForKey:@"maxResponseGap"]];
-            we_workPeriod = [WeAppDelegate toString:[response objectForKey:@"workPeriod"]];
-            we_workPeriod_save = [NSString stringWithString:we_workPeriod];
-            we_hospital = [response objectForKey:@"hospital"] objectForKey:@"name"]];
-            we_section = [WeAppDelegate toString:[[response objectForKey:@"section"] objectForKey:@"text"]];
-            we_title = [WeAppDelegate toString:[response objectForKey:@"title"]];
-            we_category = [WeAppDelegate toString:[response objectForKey:@"category"]];
-            we_skills = [WeAppDelegate toString:[response objectForKey:@"skills"]];
-            we_degree = [WeAppDelegate toString:[response objectForKey:@"degree"]];
-            we_email = [WeAppDelegate toString:[response objectForKey:@"email"]];
-            we_phone = [WeAppDelegate toString:[response objectForKey:@"phone"]];
-            we_name = [WeAppDelegate toString:[response objectForKey:@"name"]];
-            we_gender = [WeAppDelegate toString:[response objectForKey:@"gender"]];*/
             return YES;
         }
         if ([result isEqualToString:@"2"]) {
@@ -355,11 +347,12 @@ extern int we_targetTabId;
     [self.view addSubview:bg];
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
+    sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
 }
 
