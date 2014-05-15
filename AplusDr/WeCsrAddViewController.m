@@ -14,6 +14,7 @@
     UITableView * sys_tableView;
     NSArray * doctorList;
     UISearchBar * searchBar;
+    UITextField * user_searchContent_input;
 }
 
 @end
@@ -130,7 +131,7 @@
     [self refreshDoctorList:self];
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 144, 310, 568 - 144 - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 64 + 85, 310, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height - 64 - 85) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
@@ -138,17 +139,39 @@
     sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
     
-    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 104, 320, 40)];
+    UIImageView * barBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, 320, 85)];
+    barBackground.image = [UIImage imageNamed:@"bar"];
+    [self.view addSubview:barBackground];
+    
+    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 104, 320, 45)];
     searchBar.placeholder = @"搜索";
-    searchBar.backgroundColor = [UIColor clearColor];
+    //searchBar.barTintColor = [UIColor colorWithRed:225 / 255.0 green:224 / 255.0 blue:219 / 255.0 alpha:1.0];
+    // transparency for UISearchBar
+    searchBar.translucent = YES;
+    searchBar.backgroundImage = [UIImage new];
+    searchBar.scopeBarBackgroundImage = [UIImage new];
+    //searchBar.layer.borderWidth = 0.5f;
+    //searchBar.layer.borderColor = [UIColor colorWithRed:206 / 255.0 green:187 / 255.0 blue:181 / 255.0 alpha:1.0];
+    //[searchBar.layer ]
     [searchBar setTranslucent:YES];// 设置是否透明
     //[searchBar setShowsCancelButton:YES animated:YES];
 
+    /* UIImageView * searchImage = [[UIImageView alloc] initWithFrame:(5, 5, 16, 16)];
+    searchImage.image = [UIImage imageNamed:<#(NSString *)#>]
+    
+    user_searchContent_input = [[UITextField alloc] initWithFrame:CGRectMake(10, 120, 300, 26)];
+    [user_searchContent_input setLeftViewMode:UITextFieldViewModeAlways]
+    user_searchContent_input.leftView =
+    user_searchContent_input.backgroundColor = [UIColor whiteColor];
+    user_searchContent_input.font = We_font_textfield_zh_cn;
+    user_searchContent_input.clipsToBounds = YES;
+    user_searchContent_input.layer.cornerRadius = 3.0f;
+    [self.view addSubview:user_searchContent_input];*/
     
     //myView.backgroundColor = [UIColor clearColor];
     UIToolbar* bgToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 450)];
     bgToolbar.barStyle = UIBarStyleDefault;
-    bgToolbar.backgroundColor = [UIColor clearColor];
+    bgToolbar.backgroundColor = [UIColor colorWithRed:225 / 255.0 green:224 / 255.0 blue:219 / 255.0 alpha:1.0];
     [bgToolbar setBackgroundImage:[UIImage new]
                   forToolbarPosition:UIToolbarPositionAny
                           barMetrics:UIBarMetricsDefault];

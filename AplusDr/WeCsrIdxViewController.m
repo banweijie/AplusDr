@@ -10,6 +10,7 @@
 #import "PAImageView.h"
 #import "WeAppDelegate.h"
 #import <AFNetworking.h>
+#import <UIImageView+AFNetworking.h>
 
 @interface WeCsrIdxViewController () {
     UITableView * sys_tableView;
@@ -105,6 +106,7 @@
         // avatar
         UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 9, 48, 48)];
         avatarView.image = doctor.avatar;
+        //[avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(doctor.avatarPath)]];
         avatarView.layer.cornerRadius = avatarView.frame.size.height / 2;
         avatarView.clipsToBounds = YES;
         [cell.contentView addSubview:avatarView];
