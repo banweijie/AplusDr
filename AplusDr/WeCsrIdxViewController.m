@@ -192,9 +192,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    /*if (we_targetView == targetViewMainPage) [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
+    if (we_targetView == targetViewMainPage) [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
     if (we_targetView == targetViewConsultingRoom) we_targetView = targetViewNone;
-    if (we_targetView == targetViewPersonalCenter) [self.tabBarController setSelectedIndex:weTabBarIdPersonalCenter];*/
+    if (we_targetView == targetViewPersonalCenter) [self.tabBarController setSelectedIndex:weTabBarIdPersonalCenter];
 }
 - (void)didReceiveMemoryWarning
 {
