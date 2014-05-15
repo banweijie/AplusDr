@@ -17,9 +17,8 @@
     UIBubbleTableView * bubbletTableView;
     NSMutableArray * bubbleData;
     NSTimer * timer;
-    UIImage * patientAvatar;
-    UIImage * doctorAvatar;
     UITextField * inputTextField;
+    NSInteger currentCount;
 }
 
 @end
@@ -35,40 +34,22 @@
     return self;
 }
 
-- (void)refreshPatientAvatar:(UIImage *) avatar {
-    for (int i = 0; i < [bubbleData count]; i++) {
-        NSBubbleData * bd = bubbleData[i];
-        if (bd.type == BubbleTypeMine) {
-            bd.avatar = avatar;
-        }
-    }
-    [bubbletTableView reloadData];
-}
-
-- (void)refreshDoctorAvatar:(UIImage *) avatar {
-    for (int i = 0; i < [bubbleData count]; i++) {
-        NSBubbleData * bd = bubbleData[i];
-        if (bd.type == BubbleTypeSomeoneElse) {
-            bd.avatar = avatar;
-        }
-    }
-    [bubbletTableView reloadData];
-}
-
 - (void)refreshMessage:(id)sender {
     bubbleData = [[NSMutableArray alloc] init];
     //NSLog(@"!!! %@ %@", we_messagesWithPatient, we_patient_chating);
     NSLog(@"%ul", [we_messagesWithDoctor[we_doctorChating] count]);
+    if ([we_messagesWithDoctor[we_doctorChating] count] == currentCount) return;
+    currentCount = [we_messagesWithDoctor[we_doctorChating] count];
     for (int i = 0; i < [we_messagesWithDoctor[we_doctorChating] count]; i++) {
         long long t = [we_messagesWithDoctor[we_doctorChating][i][@"time"] longLongValue] / 100;
         NSBubbleData * bubble ;
         if ([[NSString stringWithFormat:@"%@", we_messagesWithDoctor[we_doctorChating][i][@"senderId"]] isEqualToString:we_doctorChating]) {
             bubble = [NSBubbleData dataWithText:we_messagesWithDoctor[we_doctorChating][i][@"content"] date:[NSDate dateWithTimeIntervalSince1970:t] type:BubbleTypeSomeoneElse];
-            bubble.avatar = doctorAvatar;
+            bubble.avatar = [(WeFavorDoctor *)favorDoctors[we_doctorChating] avatar];
         }
         else {
             bubble = [NSBubbleData dataWithText:we_messagesWithDoctor[we_doctorChating][i][@"content"] date:[NSDate dateWithTimeIntervalSince1970:t] type:BubbleTypeMine];
-            bubble.avatar = patientAvatar;
+            bubble.avatar = currentUser.avatar;
         }
         [bubbleData addObject:bubble];
     }
@@ -137,21 +118,7 @@
     // Do any additional setup after loading the view.
     
     we_doctorChating = [NSString stringWithFormat:@"%@", we_doctorChating];
-    
-    // Setup freshings
-    UIImageView * tmpImageView = [[UIImageView alloc] init];
-    NSLog(@"%@", yijiarenAvatarUrl(we_doctors[we_doctorChating][@"avatar"]));
-    [tmpImageView setImageWithURLRequest: [NSURLRequest requestWithURL:[NSURL URLWithString:yijiarenAvatarUrl(we_doctors[we_doctorChating][@"avatar"])]] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        doctorAvatar = image;
-        [self refreshDoctorAvatar:image];
-    } failure:nil];
-    
-    UIImageView * tmpImageView1 = [[UIImageView alloc] init];
-    [tmpImageView1 setImageWithURLRequest: [NSURLRequest requestWithURL:[NSURL URLWithString:yijiarenAvatarUrl(we_avatarPath)]] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        patientAvatar = image;
-        [self refreshPatientAvatar:image];
-    } failure:nil];
-    
+
     // Setup Timer
     timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(refreshMessage:) userInfo:nil repeats:YES];
     
@@ -162,7 +129,7 @@
     [self.view addSubview:bg];
     
     // Title
-    self.navigationItem.title = we_doctors[we_doctorChating][@"name"];
+    self.navigationItem.title = ((WeFavorDoctor *) favorDoctors[we_doctorChating]).userName;
     
     // Invisible of tab bar
     [self setExtendedLayoutIncludesOpaqueBars:YES];

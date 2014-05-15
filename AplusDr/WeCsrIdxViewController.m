@@ -15,6 +15,7 @@
     UITableView * sys_tableView;
     NSTimer * sys_refreshTimer;
     NSMutableArray * orderedIdOfDoctor;
+    BOOL selecting;
 }
 
 @end
@@ -57,7 +58,7 @@
 }
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
-    return 10;
+    return 1;
 }
 // 询问每个段落的尾部标题
 - (NSString *)tableView:(UITableView *)tv titleForFooterInSection:(NSInteger)section {
@@ -78,18 +79,10 @@
 }
 // 询问每个具体条目的内容
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell * cell;
-    if (indexPath.row == 1) {
-        cell = [tv dequeueReusableCellWithIdentifier:@"Value2"];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"Value2"];
-        }
-    }
-    else {
-        cell = [tv dequeueReusableCellWithIdentifier:@"Value1"];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Value1"];
-        }
+    static NSString *MyIdentifier = @"MyReuseIdentifier";
+    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
     }
     [[cell imageView] setContentMode:UIViewContentModeCenter];
     
@@ -118,11 +111,11 @@
     }
     if (indexPath.row == 1) {
         cell.imageView.image = [UIImage imageNamed:@"tab-crowdfunding"];
-        cell.textLabel.text = @"众筹项目名称众筹项目名称";
-        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.text = @"￥10,000已筹 / 52赞";
+        cell.textLabel.font = We_font_textfield_small_zh_cn;
         cell.textLabel.textColor = We_foreground_gray_general;
-        cell.detailTextLabel.text = @"￥10,000已筹 / 52赞";
-        cell.detailTextLabel.font = We_font_textfield_zh_cn;
+        cell.detailTextLabel.text = @"众筹项目名称众筹项目名称";
+        cell.detailTextLabel.font = We_font_textfield_small_zh_cn;
         cell.detailTextLabel.textColor = We_foreground_black_general;
     }
     if (indexPath.row == 2) {
@@ -141,8 +134,8 @@
             cell.textLabel.text = [NSString stringWithFormat:@"尚未处理此类型(%@)的消息:%@", lastMsg[@"type"], lastMsg[@"content"]];
         }
         cell.detailTextLabel.text = [WeAppDelegate transitionToDateFromSecond:[lastMsg[@"time"] longLongValue]];
-        cell.textLabel.font = We_font_textfield_zh_cn;
-        cell.detailTextLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.font = We_font_textfield_small_zh_cn;
+        cell.detailTextLabel.font = We_font_textfield_small_zh_cn;
     }
     return cell;
 }
@@ -180,7 +173,7 @@
     self.navigationItem.rightBarButtonItem = user_save;
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 0, 310, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, 300, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
@@ -199,9 +192,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (we_targetView == targetViewMainPage) [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
+    /*if (we_targetView == targetViewMainPage) [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
     if (we_targetView == targetViewConsultingRoom) we_targetView = targetViewNone;
-    if (we_targetView == targetViewPersonalCenter) [self.tabBarController setSelectedIndex:weTabBarIdPersonalCenter];
+    if (we_targetView == targetViewPersonalCenter) [self.tabBarController setSelectedIndex:weTabBarIdPersonalCenter];*/
 }
 - (void)didReceiveMemoryWarning
 {

@@ -29,23 +29,31 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
     bg.image = [UIImage imageNamed:@"Background-2"];
     bg.contentMode = UIViewContentModeCenter;
     [self.view addSubview:bg];
 //    if (we_targetView == targetViewNone) [self.tabBarController setSelectedIndex:0];
+    
+    UIActivityIndicatorView * tmp = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    tmp.backgroundColor = [UIColor blackColor];
+    [tmp setFrame:CGRectMake(0, 0, 320, 568)];
+    [tmp setAlpha:0.5];
+    [self.view addSubview:tmp];
+    [tmp startAnimating];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+    [super viewDidAppear:NO];
     if (we_targetView == targetViewMainPage) we_targetView = targetViewNone;
     if (we_targetView == targetViewConsultingRoom) [self.tabBarController setSelectedIndex:weTabBarIdConsultingRoom];
     if (we_targetView == targetViewPersonalCenter) [self.tabBarController setSelectedIndex:weTabBarIdPersonalCenter];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+    [super viewWillAppear:NO];
 }
 
 - (void)didReceiveMemoryWarning

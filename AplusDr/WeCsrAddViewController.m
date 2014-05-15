@@ -94,7 +94,7 @@
             [cell.contentView addSubview:avatarView];
             break;
         case 1:
-            cell.imageView.image = [UIImage imageNamed:@"tab-crowdfunding"];
+            cell.imageView.image = [UIImage imageNamed:@"docinfo-crowdfunding"];
             cell.textLabel.text = @"众筹项目名称";
             cell.textLabel.font = We_font_textfield_small_zh_cn;
             cell.textLabel.textColor = We_foreground_black_general;

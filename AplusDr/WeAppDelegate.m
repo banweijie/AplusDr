@@ -381,23 +381,10 @@
              if ([result isEqualToString:@"4"]) {
                  errorMessage = [HTTPResponse objectForKey:@"info"];
              }
-             UIAlertView *notPermitted = [[UIAlertView alloc]
-                                          initWithTitle:@"获取病人列表失败"
-                                          message:errorMessage
-                                          delegate:nil
-                                          cancelButtonTitle:@"确定"
-                                          otherButtonTitles:nil];
-             [notPermitted show];
+             NSLog(@"Error: %@", errorMessage);
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
-             UIAlertView *notPermitted = [[UIAlertView alloc]
-                                          initWithTitle:@"获取病人列表失败"
-                                          message:@"未能连接服务器，请重试"
-                                          delegate:nil
-                                          cancelButtonTitle:@"确定"
-                                          otherButtonTitles:nil];
-             [notPermitted show];
          }
      ];
 }

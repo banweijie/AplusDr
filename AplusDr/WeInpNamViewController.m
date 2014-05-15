@@ -163,7 +163,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    We_init_textFieldInCell_forInput(user_name_input, we_name, @"", We_font_textfield_zh_cn)
+    We_init_textFieldInCell_forInput(user_name_input, currentUser.userName, @"", We_font_textfield_zh_cn)
 
     // save button
     UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(user_save_onpress:)];
