@@ -110,16 +110,16 @@
         [cell.contentView addSubview:avatarView];
     }
     if (indexPath.row == 1) {
-        cell.imageView.image = [UIImage imageNamed:@"tab-crowdfunding"];
-        cell.textLabel.text = @"￥10,000已筹 / 52赞";
+        cell.imageView.image = [UIImage imageNamed:@"docinfo-crowdfunding"];
+        cell.textLabel.text = @"众筹项目名称";
         cell.textLabel.font = We_font_textfield_small_zh_cn;
         cell.textLabel.textColor = We_foreground_gray_general;
-        cell.detailTextLabel.text = @"众筹项目名称众筹项目名称";
+        cell.detailTextLabel.text = @"￥10,000已筹 / 52赞";
         cell.detailTextLabel.font = We_font_textfield_small_zh_cn;
         cell.detailTextLabel.textColor = We_foreground_black_general;
     }
     if (indexPath.row == 2) {
-        cell.imageView.image = [UIImage imageNamed:@"me-worksetting"];
+        cell.imageView.image = [UIImage imageNamed:@"docinfo-chatroom"];
         NSDictionary * lastMsg = [we_messagesWithDoctor[orderedIdOfDoctor[indexPath.section]] lastObject];
         if ([lastMsg[@"type"] isEqualToString:@"C"]) {
             long long restSecond = [we_maxResponseGap intValue] * 3600 - (long long) (([[NSDate date] timeIntervalSince1970] - [[WeAppDelegate toString:lastMsg[@"time"]] longLongValue] / 100));

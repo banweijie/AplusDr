@@ -211,7 +211,6 @@
 			children = (
 				90F0CE6219228C97006A4605 /* Model */,
 				907D5B5B1920D9C50006EAE0 /* UIBubbleTableView */,
-				907D5B531920C8590006EAE0 /* Images.xcassets */,
 				907D5B43192017260006EAE0 /* PAImageView */,
 				9026EF101904EEEF00CE4A7A /* VPImageCropper */,
 				9026EF111904EEFC00CE4A7A /* Customs */,
@@ -222,6 +221,7 @@
 				9026EF141904EF8300CE4A7A /* PersonalCenter */,
 				907D5B42192016580006EAE0 /* ConsultingRoom */,
 				9026EEEF1904EE5500CE4A7A /* Main.storyboard */,
+				907D5B531920C8590006EAE0 /* Images.xcassets */,
 				9026EE201904E8A700CE4A7A /* Supporting Files */,
 			);
 			path = AplusDr;
