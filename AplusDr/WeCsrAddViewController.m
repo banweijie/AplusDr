@@ -50,7 +50,7 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
-    we_doctorViewing = doctorList[path.section];
+    doctorViewing = doctorList[path.section];
     [self performSegueWithIdentifier:@"CsrAdd_pushto_CsrDci" sender:self];
     [tv deselectRowAtIndexPath:path animated:YES];
 }
@@ -218,15 +218,7 @@
              if ([result isEqualToString:@"1"]) {
                  NSLog(@"%@", HTTPResponse[@"response"]);
                  for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
-                     WeDoctor * doctor = [[WeDoctor alloc] init];
-                     [doctor setHospitalName:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"hospital"][@"name"]]];
-                     [doctor setSectionName:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"section"][@"text"]]];
-                     [doctor setCategory:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"category"]]];
-                     [doctor setTitle:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"title"]]];
-                     [doctor setUserId:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"id"]]];
-                     [doctor setAvatarPath:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"avatar"]]];
-                     [doctor setUserName:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"name"]]];
-                     [doctor setUserPhone:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"phone"]]];
+                     WeDoctor * doctor = [[WeDoctor alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];
                      [doctorList addObject:doctor];
                  }
                  if ([HTTPResponse[@"info"] integerValue] == [doctorList count]) hasMore = NO;
@@ -272,15 +264,7 @@
                  NSLog(@"%@", HTTPResponse[@"response"]);
                  doctorList = [[NSMutableArray alloc] init];
                  for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
-                     WeDoctor * doctor = [[WeDoctor alloc] init];
-                     [doctor setHospitalName:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"hospital"][@"name"]]];
-                     [doctor setSectionName:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"section"][@"text"]]];
-                     [doctor setCategory:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"category"]]];
-                     [doctor setTitle:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"title"]]];
-                     [doctor setUserId:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"id"]]];
-                     [doctor setAvatarPath:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"avatar"]]];
-                     [doctor setUserName:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"name"]]];
-                     [doctor setUserPhone:[WeAppDelegate toString:HTTPResponse[@"response"][i][@"phone"]]];
+                     WeDoctor * doctor = [[WeDoctor alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];
                      [doctorList addObject:doctor];
                  }
                  if ([HTTPResponse[@"info"] integerValue] == [doctorList count]) hasMore = NO;

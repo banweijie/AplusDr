@@ -38,7 +38,7 @@
 
 // Global Variables
 WeUser * currentUser;
-WeDoctor * we_doctorViewing;
+WeDoctor * doctorViewing;
 NSMutableDictionary * favorDoctors;
 
 NSUserDefaults * userDefaults;

@@ -93,7 +93,7 @@
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
                     
-                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@元/次", we_doctorViewing[@"consultPrice"]];
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@元/次", doctorViewing.consultPrice];
                     cell.detailTextLabel.font = We_font_textfield_zh_cn;
                     cell.detailTextLabel.textColor = We_foreground_black_general;
                     break;
@@ -104,7 +104,7 @@
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
                     
-                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@小时", we_doctorViewing[@"maxResponseGap"]];
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@小时", doctorViewing.maxResponseGap];
                     cell.detailTextLabel.font = We_font_textfield_zh_cn;
                     cell.detailTextLabel.textColor = We_foreground_black_general;
                     break;

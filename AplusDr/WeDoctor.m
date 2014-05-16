@@ -28,9 +28,11 @@
     [self setHospitalName:[NSString stringWithFormat:@"%@", info[@"hospital"][@"name"]]];
     [self setSectionName:[NSString stringWithFormat:@"%@", info[@"section"][@"text"]]];
     [self setTitle:[NSString stringWithFormat:@"%@", info[@"title"]]];
+    [self setCategory:[NSString stringWithFormat:@"%@", info[@"category"]]];
     [self setUserId:[NSString stringWithFormat:@"%@", info[@"id"]]];
     [self setUserName:[NSString stringWithFormat:@"%@", info[@"name"]]];
     [self setUserPhone:[NSString stringWithFormat:@"%@", info[@"phone"]]];
+    [self setAvatarPath:[NSString stringWithFormat:@"%@", info[@"avatar"]]];
     [self setNotice:[NSString stringWithFormat:@"%@", info[@"notice"]]];
     [self setGroupIntro:[NSString stringWithFormat:@"%@", info[@"groupIntro"]]];
     [self setConsultPrice:[NSString stringWithFormat:@"%@", info[@"consultingPrice"]]];
@@ -39,6 +41,7 @@
     [self setGender:[NSString stringWithFormat:@"%@", info[@"gender"]]];
     [self setMaxResponseGap:[NSString stringWithFormat:@"%@", info[@"maxResponseGap"]]];
     [self setPlusPrice:[NSString stringWithFormat:@"%@", info[@"plusPrice"]]];
+    [self setWorkPeriod:[NSString stringWithFormat:@"%@", info[@"workPeriod"]]];
     return self;
 }
 
