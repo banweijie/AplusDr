@@ -14,5 +14,32 @@
 @synthesize category;
 @synthesize hospitalName;
 @synthesize sectionName;
+@synthesize workPeriod;
+@synthesize notice;
+@synthesize groupIntro;
+@synthesize consultPrice;
+@synthesize degree;
+@synthesize email;
+@synthesize gender;
+@synthesize maxResponseGap;
+@synthesize plusPrice;
+
+- (WeDoctor *)initWithNSDictionary:(NSDictionary *)info {
+    [self setHospitalName:[NSString stringWithFormat:@"%@", info[@"hospital"][@"name"]]];
+    [self setSectionName:[NSString stringWithFormat:@"%@", info[@"section"][@"text"]]];
+    [self setTitle:[NSString stringWithFormat:@"%@", info[@"title"]]];
+    [self setUserId:[NSString stringWithFormat:@"%@", info[@"id"]]];
+    [self setUserName:[NSString stringWithFormat:@"%@", info[@"name"]]];
+    [self setUserPhone:[NSString stringWithFormat:@"%@", info[@"phone"]]];
+    [self setNotice:[NSString stringWithFormat:@"%@", info[@"notice"]]];
+    [self setGroupIntro:[NSString stringWithFormat:@"%@", info[@"groupIntro"]]];
+    [self setConsultPrice:[NSString stringWithFormat:@"%@", info[@"consultingPrice"]]];
+    [self setDegree:[NSString stringWithFormat:@"%@", info[@"degree"]]];
+    [self setEmail:[NSString stringWithFormat:@"%@", info[@"email"]]];
+    [self setGender:[NSString stringWithFormat:@"%@", info[@"gender"]]];
+    [self setMaxResponseGap:[NSString stringWithFormat:@"%@", info[@"maxResponseGap"]]];
+    [self setPlusPrice:[NSString stringWithFormat:@"%@", info[@"plusPrice"]]];
+    return self;
+}
 
 @end

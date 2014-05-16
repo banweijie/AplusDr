@@ -38,6 +38,7 @@
 
 // Global Variables
 WeUser * currentUser;
+WeDoctor * we_doctorViewing;
 NSMutableDictionary * favorDoctors;
 
 NSUserDefaults * userDefaults;
@@ -54,7 +55,6 @@ NSString * we_wkp_typeOfPeriod;
 NSString * we_pea_gender;
 NSString * we_doctorChating;
 
-NSDictionary * we_doctorViewing;
 NSMutableDictionary * we_avatars;
 NSMutableDictionary * we_doctors;
 NSMutableDictionary * we_messagesWithDoctor;

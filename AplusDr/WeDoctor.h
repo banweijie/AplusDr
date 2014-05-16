@@ -14,5 +14,16 @@
 @property(strong, nonatomic) NSString * category;
 @property(strong, nonatomic) NSString * hospitalName;
 @property(strong, nonatomic) NSString * sectionName;
+@property(strong, nonatomic) NSString * workPeriod;
+@property(strong, nonatomic) NSString * notice;
+@property(strong, nonatomic) NSString * groupIntro;
+@property(strong, nonatomic) NSString * consultPrice;
+@property(strong, nonatomic) NSString * degree;
+@property(strong, nonatomic) NSString * email;
+@property(strong, nonatomic) NSString * gender;
+@property(strong, nonatomic) NSString * maxResponseGap;
+@property(strong, nonatomic) NSString * plusPrice;
+
+- (WeDoctor *)initWithNSDictionary:(NSDictionary *)info;
 
 @end
