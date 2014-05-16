@@ -171,7 +171,7 @@
     bg.contentMode = UIViewContentModeCenter;
     [self.view addSubview:bg];
     
-    UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me-appointment"] style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
+    UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chatroom-adddoctor"] style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
     self.navigationItem.rightBarButtonItem = user_save;
     
     // sys_tableView
