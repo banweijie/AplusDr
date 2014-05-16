@@ -11,3 +11,13 @@
 @interface WeCsrAddViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end
+
+NSString * condition_province;
+NSString * condition_city;
+NSString * condition_hospitalId;
+NSString * condition_topSectionId;
+NSString * condition_sectionId;
+NSString * condition_category;
+NSString * condition_title;
+NSString * condition_recommand;
+NSString * condition_order;

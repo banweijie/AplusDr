@@ -52,6 +52,7 @@
 		90F0CE741922CF55006A4605 /* WeInpNamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE731922CF55006A4605 /* WeInpNamViewController.m */; };
 		90F0CE771922D711006A4605 /* WeDoctor.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE761922D711006A4605 /* WeDoctor.m */; };
 		90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE791922D854006A4605 /* WeFavorDoctor.m */; };
+		90F0CE7D1926C86F006A4605 /* WeCsrSelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE7C1926C86F006A4605 /* WeCsrSelViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +147,8 @@
 		90F0CE761922D711006A4605 /* WeDoctor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeDoctor.m; sourceTree = "<group>"; };
 		90F0CE781922D854006A4605 /* WeFavorDoctor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFavorDoctor.h; sourceTree = "<group>"; };
 		90F0CE791922D854006A4605 /* WeFavorDoctor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFavorDoctor.m; sourceTree = "<group>"; };
+		90F0CE7B1926C86F006A4605 /* WeCsrSelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelViewController.h; sourceTree = "<group>"; };
+		90F0CE7C1926C86F006A4605 /* WeCsrSelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelViewController.m; sourceTree = "<group>"; };
 		B7BF13CDE3A84113994A769D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -342,6 +345,8 @@
 				907D5B591920D9AD0006EAE0 /* WeCsrCtrViewController.m */,
 				907D5B4719201CF20006EAE0 /* WeCsrAddViewController.h */,
 				907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */,
+				90F0CE7B1926C86F006A4605 /* WeCsrSelViewController.h */,
+				90F0CE7C1926C86F006A4605 /* WeCsrSelViewController.m */,
 				907D5B4A19202BC10006EAE0 /* WeCsrDciViewController.h */,
 				907D5B4B19202BC10006EAE0 /* WeCsrDciViewController.m */,
 				907D5B551920CD4B0006EAE0 /* WeCsrCosViewController.h */,
@@ -529,6 +534,7 @@
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
 				9026EEF01904EE5500CE4A7A /* VPImageCropperViewController.m in Sources */,
+				90F0CE7D1926C86F006A4605 /* WeCsrSelViewController.m in Sources */,
 				9026EEF61904EE5500CE4A7A /* WeRegWlcViewController.m in Sources */,
 				9026EEF51904EE5500CE4A7A /* WeRegNavViewController.m in Sources */,
 				9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */,
