@@ -201,7 +201,7 @@
         //NSLog(@"%@", HTTPResponse);
         we_codings = HTTPResponse[@"codings"];
         we_imagePaths = HTTPResponse[@"imagePaths"];
-        NSLog(@"%@", we_codings);
+        //NSLog(@"%@", we_codings);
         return;
     }
     UIAlertView *notPermitted = [[UIAlertView alloc]
@@ -225,7 +225,7 @@
         result = [NSString stringWithFormat:@"%@", result];
         if ([result isEqualToString:@"1"]) {
             NSDictionary * response = [HTTPResponse objectForKey:@"response"];
-            NSLog(@"%@", response);
+            //NSLog(@"%@", response);
             we_notice = [WeAppDelegate toString:[response objectForKey:@"notice"]];
             we_consultPrice = [WeAppDelegate toString:[response objectForKey:@"consultPrice"]];
             we_plusPrice = [WeAppDelegate toString:[response objectForKey:@"plusPrice"]];
@@ -347,10 +347,10 @@
              if ([result isEqualToString:@"1"]) {
                  favorDoctors = [[NSMutableDictionary alloc] init];
                  NSArray * favorDoctorList = HTTPResponse[@"response"];
-                 NSLog(@"%@", favorDoctorList);
+                 ///NSLog(@"%@", favorDoctorList);
                  for (int i = 0; i < [favorDoctorList count]; i++) {
                      WeFavorDoctor * newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorList[i][@"doctor"]];
-                     NSLog(@"%d %@ %@", i, newDoctor.userId, favorDoctorList[i]);
+                     //NSLog(@"%d %@ %@", i, newDoctor.userId, favorDoctorList[i]);
                      favorDoctors[newDoctor.userId] = newDoctor;
                  }
                  return;
