@@ -34,6 +34,7 @@
 + (NSString *)transitionToDateFromSecond:(long long)s;
 + (void)refreshUserData;
 + (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success;
++ (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month;
 @end
 
 // Global Variables

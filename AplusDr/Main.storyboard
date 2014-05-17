@@ -500,6 +500,7 @@
                     <navigationItem key="navigationItem" id="KiI-Tf-zWR"/>
                     <connections>
                         <segue destination="COc-h2-Tev" kind="modal" identifier="CsrDci_pushto_CsrCos" id="Qqh-cl-efj"/>
+                        <segue destination="Lsn-oc-eht" kind="modal" identifier="CsrDci_pushto_CsrJia" id="Nid-is-Peh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ePC-Eo-yEo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -701,6 +702,25 @@
             </objects>
             <point key="canvasLocation" x="2733" y="3697"/>
         </scene>
+        <!--We Csr Jia View Controller - 申请加号-->
+        <scene sceneID="qiP-eM-o6Z">
+            <objects>
+                <viewController id="9XL-cu-NrK" customClass="WeCsrJiaViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uW7-XH-Zyb"/>
+                        <viewControllerLayoutGuide type="bottom" id="PBd-pB-Fkj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NBl-vS-J3B">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="申请加号" id="d1R-lH-A6p"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BiJ-BR-Gj0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3259" y="4499"/>
+        </scene>
         <!--We Csr Nav View Controller-->
         <scene sceneID="XIu-KR-3wz">
             <objects>
@@ -718,6 +738,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DI4-Ie-MFI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2213" y="2247"/>
+        </scene>
+        <!--We Csr Nav View Controller-->
+        <scene sceneID="6HS-EQ-VOi">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Lsn-oc-eht" customClass="WeCsrNavViewController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="IJo-MU-sKa"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KtE-o9-mPx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9XL-cu-NrK" kind="relationship" relationship="rootViewController" id="Bl7-j2-y7w"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jFq-5q-Ux7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2733" y="4499"/>
         </scene>
     </scenes>
     <resources>

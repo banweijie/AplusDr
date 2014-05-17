@@ -13,6 +13,17 @@
     NSTimer * timer1;
 }
 
++ (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month {
+    if (month == 2) {
+        if (year % 400 == 0) return 29;
+        if (year % 100 == 0) return 28;
+        if (year % 4 == 0) return 29;
+        return 28;
+    }
+    if (month == 4 || month == 6 || month == 9 || month == 11) return 30;
+    return 31;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.

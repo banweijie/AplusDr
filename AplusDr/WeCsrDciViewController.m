@@ -13,7 +13,7 @@
     UITableView * sys_tableView_0;
     UITableView * sys_tableView_1;
     UITableView * sys_tableView_2;
-    UIView * tableViews;
+    UIScrollView * tableViews;
     UIView * controlPanel;
     UIButton * panel0;
     UIButton * panel1;
@@ -26,6 +26,7 @@
     
     NSString * notice;
     NSString * groupIntro;
+    BOOL scrolling;
 }
 
 @end
@@ -244,17 +245,15 @@
             break;
     }
     
-    CGRect rect = tableViews.frame;
-    rect.origin.x -= (targetPanel - selectPanel) * 320;
-    tableViews.frame = rect;
-    
-    rect = selectSign.frame;
+    CGRect rect = selectSign.frame;
     rect.origin.x += (targetPanel - selectPanel) * 100;
     selectSign.frame = rect;
     
     selectPanel = targetPanel;
     
     [UIView commitAnimations];
+    
+    [tableViews scrollRectToVisible:CGRectMake(320 * targetPanel, 0, 320, tableViews.frame.size.height) animated:YES];
 }
 
 - (void)transferTo0:(id)sender {
@@ -270,6 +269,10 @@
 }
 
 - (void)press:(id)sender {
+}
+
+- (void)appointing:(id)sender {
+    [self performSegueWithIdentifier:@"CsrDci_pushto_CsrJia" sender:self];
 }
 
 - (void)consulting:(id)sender {
@@ -310,6 +313,11 @@
                                  cancelButtonTitle:@"OK"
                                  otherButtonTitles:nil];
     [notPermitted show];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    scrolling = NO;
+    NSLog(@"!!!!!!!!!!");
 }
 
 - (void)viewDidLoad
@@ -359,10 +367,13 @@
     sys_tableView_2.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     
     // tableViews
-    tableViews = [[UIView alloc] initWithFrame:CGRectMake(0, 154, 960, 578 - 154)];
+    tableViews = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 154, 320, 578 - 154)];
+    tableViews.contentSize = CGSizeMake(960, 568 - 154);
     [tableViews addSubview:sys_tableView_0];
     [tableViews addSubview:sys_tableView_1];
     [tableViews addSubview:sys_tableView_2];
+    tableViews.pagingEnabled = YES;
+    tableViews.delegate = self;
     
     // controlPanel
     selectPanel = 0;
@@ -395,7 +406,7 @@
     button2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [button2 setFrame:CGRectMake(231, 2, 89, 48)];
     [button2 setTitle:@"申请加号" forState:UIControlStateNormal];
-    [button2 addTarget:self action:@selector(transferTo0:) forControlEvents:UIControlEventTouchUpInside];
+    [button2 addTarget:self action:@selector(appointing:) forControlEvents:UIControlEventTouchUpInside];
     button2.tintColor = We_foreground_white_general;
     button2.backgroundColor = [UIColor colorWithRed:90 / 255.0 green:41 / 255.0 blue:45 / 255.0 alpha:1.0];
     button2.titleLabel.font = We_font_textfield_zh_cn;

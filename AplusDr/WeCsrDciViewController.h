@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WeCsrDciViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface WeCsrDciViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIScrollViewDelegate>
 
 @end

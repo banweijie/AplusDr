@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E50538D81C24E6FA4893A80 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889390EBA434F5EA5AF2361 /* libPods.a */; };
+		90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */; };
 		9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE191904E8A700CE4A7A /* Foundation.framework */; };
 		9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */; };
 		9026EE1E1904E8A700CE4A7A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE1D1904E8A700CE4A7A /* UIKit.framework */; };
@@ -74,6 +75,8 @@
 
 /* Begin PBXFileReference section */
 		7889390EBA434F5EA5AF2361 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrJiaViewController.h; sourceTree = "<group>"; };
+		90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrJiaViewController.m; sourceTree = "<group>"; };
 		9026EE161904E8A700CE4A7A /* AplusDr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AplusDr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9026EE191904E8A700CE4A7A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -198,6 +201,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		90266C3919276CB200478A89 /* Selection */ = {
+			isa = PBXGroup;
+			children = (
+				90F0CE7B1926C86F006A4605 /* WeCsrSelViewController.h */,
+				90F0CE7C1926C86F006A4605 /* WeCsrSelViewController.m */,
+				90F0CE7E1926D0CA006A4605 /* WeCsrSelAreaViewController.h */,
+				90F0CE7F1926D0CA006A4605 /* WeCsrSelAreaViewController.m */,
+				90F0CE811926F820006A4605 /* WeCsrSelArea2ViewController.h */,
+				90F0CE821926F820006A4605 /* WeCsrSelArea2ViewController.m */,
+				90F0CE841926FE68006A4605 /* WeCsrSelHosViewController.h */,
+				90F0CE851926FE68006A4605 /* WeCsrSelHosViewController.m */,
+				90F0CE87192710C1006A4605 /* WeCsrSelSecViewController.h */,
+				90F0CE88192710C1006A4605 /* WeCsrSelSecViewController.m */,
+				90F0CE8A19271226006A4605 /* WeCsrSelSec2ViewController.h */,
+				90F0CE8B19271226006A4605 /* WeCsrSelSec2ViewController.m */,
+				90F0CE8D19271794006A4605 /* WeCsrSelCatViewController.h */,
+				90F0CE8E19271794006A4605 /* WeCsrSelCatViewController.m */,
+				90F0CE90192717AC006A4605 /* WeCsrSelTilViewController.h */,
+				90F0CE91192717AC006A4605 /* WeCsrSelTilViewController.m */,
+			);
+			name = Selection;
+			sourceTree = "<group>";
+		};
 		9026EE0D1904E8A700CE4A7A = {
 			isa = PBXGroup;
 			children = (
@@ -366,26 +392,13 @@
 				907D5B591920D9AD0006EAE0 /* WeCsrCtrViewController.m */,
 				907D5B4719201CF20006EAE0 /* WeCsrAddViewController.h */,
 				907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */,
-				90F0CE7B1926C86F006A4605 /* WeCsrSelViewController.h */,
-				90F0CE7C1926C86F006A4605 /* WeCsrSelViewController.m */,
-				90F0CE7E1926D0CA006A4605 /* WeCsrSelAreaViewController.h */,
-				90F0CE7F1926D0CA006A4605 /* WeCsrSelAreaViewController.m */,
-				90F0CE811926F820006A4605 /* WeCsrSelArea2ViewController.h */,
-				90F0CE821926F820006A4605 /* WeCsrSelArea2ViewController.m */,
-				90F0CE841926FE68006A4605 /* WeCsrSelHosViewController.h */,
-				90F0CE851926FE68006A4605 /* WeCsrSelHosViewController.m */,
-				90F0CE87192710C1006A4605 /* WeCsrSelSecViewController.h */,
-				90F0CE88192710C1006A4605 /* WeCsrSelSecViewController.m */,
-				90F0CE8A19271226006A4605 /* WeCsrSelSec2ViewController.h */,
-				90F0CE8B19271226006A4605 /* WeCsrSelSec2ViewController.m */,
-				90F0CE8D19271794006A4605 /* WeCsrSelCatViewController.h */,
-				90F0CE8E19271794006A4605 /* WeCsrSelCatViewController.m */,
-				90F0CE90192717AC006A4605 /* WeCsrSelTilViewController.h */,
-				90F0CE91192717AC006A4605 /* WeCsrSelTilViewController.m */,
+				90266C3919276CB200478A89 /* Selection */,
 				907D5B4A19202BC10006EAE0 /* WeCsrDciViewController.h */,
 				907D5B4B19202BC10006EAE0 /* WeCsrDciViewController.m */,
 				907D5B551920CD4B0006EAE0 /* WeCsrCosViewController.h */,
 				907D5B561920CD4B0006EAE0 /* WeCsrCosViewController.m */,
+				90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */,
+				90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */,
 			);
 			name = ConsultingRoom;
 			sourceTree = "<group>";
@@ -597,6 +610,7 @@
 				9026EEF21904EE5500CE4A7A /* WeAppDelegate.m in Sources */,
 				90F0CE8C19271226006A4605 /* WeCsrSelSec2ViewController.m in Sources */,
 				9026EEF41904EE5500CE4A7A /* WeMapNavController.m in Sources */,
+				90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */,
 				907D5B571920CD4B0006EAE0 /* WeCsrCosViewController.m in Sources */,
 				90F0CE89192710C1006A4605 /* WeCsrSelSecViewController.m in Sources */,
 				9026EE261904E8A700CE4A7A /* main.m in Sources */,
@@ -677,7 +691,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -709,7 +723,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -726,7 +740,7 @@
 				INFOPLIST_FILE = "AplusDr/AplusDr-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -742,7 +756,7 @@
 				INFOPLIST_FILE = "AplusDr/AplusDr-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
