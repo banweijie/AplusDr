@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WeCsrAddViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface WeCsrAddViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 @end
 

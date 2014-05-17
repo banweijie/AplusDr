@@ -74,7 +74,7 @@ NSString * selection_sectionId;
 NSString * selection_category;
 NSString * selection_title;
 NSString * selection_recommend;
-
+NSString * selection_keyword;
 
 BOOL we_logined;
 int we_targetTabId;

@@ -18,6 +18,7 @@
     UIView * loadingViewContainer;
     UIActivityIndicatorView * loadingView;
     UIActivityIndicatorView * sys_pendingView;
+    UIButton * coverButton;
     BOOL hasMore;
     BOOL isWaiting;
 }
@@ -167,6 +168,27 @@
     selection_category = @"<null>";
     selection_title = @"<null>";
     selection_recommend = @"<null>";
+    selection_keyword = @"<null>";
+}
+
+- (void)coverButtonOnPress:(id)sender {
+    [searchBar resignFirstResponder];
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    coverButton.hidden = NO;
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
+    coverButton.hidden = YES;
+    return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)sbar {
+    selection_keyword = sbar.text;
+    [searchBar resignFirstResponder];
+    [self initialDoctorList:self];
 }
 
 - (void)viewDidLoad
@@ -239,6 +261,15 @@
     searchBar.backgroundImage = [UIImage new];
     searchBar.scopeBarBackgroundImage = [UIImage new];
     [searchBar setTranslucent:YES];
+    searchBar.delegate = self;
+    
+    // cover button
+    coverButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    coverButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    coverButton.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
+    [coverButton addTarget:self action:@selector(coverButtonOnPress:) forControlEvents:UIControlEventTouchUpInside];
+    coverButton.hidden = YES;
+    [self.view addSubview:coverButton];
     
     [self.view addSubview:searchBar];
 }
@@ -269,6 +300,7 @@
     if (![selection_category isEqualToString:@"<null>"]) parameters[@"category"] = selection_category;
     if (![selection_title isEqualToString:@"<null>"]) parameters[@"title"] = selection_title;
     if (![selection_recommend isEqualToString:@"<null>"]) parameters[@"recommend"] = selection_recommend;
+    if (![selection_keyword isEqualToString:@"<null>"]) parameters[@"conditions.words"] = selection_keyword;
     
     NSLog(@"queryMore %@", parameters);
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
@@ -325,7 +357,7 @@
     if (![selection_category isEqualToString:@"<null>"]) parameters[@"conditions.category"] = selection_category;
     if (![selection_title isEqualToString:@"<null>"]) parameters[@"conditions.title"] = selection_title;
     if (![selection_recommend isEqualToString:@"<null>"]) parameters[@"conditions.recommend"] = selection_recommend;
-    
+    if (![selection_keyword isEqualToString:@"<null>"]) parameters[@"conditions.words"] = selection_keyword;
     NSLog(@"initial %@", parameters);
     
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
