@@ -25,5 +25,6 @@
 @property(strong, nonatomic) NSString * plusPrice;
 
 - (WeDoctor *)initWithNSDictionary:(NSDictionary *)info;
+- (void)setWithNSDictionary:(NSDictionary *)info;
 
 @end

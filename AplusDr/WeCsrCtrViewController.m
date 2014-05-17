@@ -59,6 +59,7 @@
 
 - (void)sendMessage:(id)sender {
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager GET:yijiarenUrl(@"message", @"postMsg") parameters:@{@"m.receiverId":we_doctorChating, @"m.content":inputTextField.text, @"m.type":@"T"}
          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
              NSString * errorMessage;

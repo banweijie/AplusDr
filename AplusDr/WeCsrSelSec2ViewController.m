@@ -114,6 +114,7 @@
 - (void)querySectionList:(id)sender {
     NSDictionary * parameters = @{@"parentId":condition_topSectionId_tmp};
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager GET:yijiarenUrl(@"data", @"listSections") parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
              NSString * errorMessage;

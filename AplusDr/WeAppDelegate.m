@@ -291,6 +291,7 @@
     NSLog(@"refreshMessage(lastMessageId = %@)", [userDefaults stringForKey:@"lastMessageId"]);
     
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSDictionary * parameters = @{@"lastMessageId":[userDefaults stringForKey:@"lastMessageId"]};
     [manager GET:yijiarenUrl(@"message", @"getMsg") parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
@@ -336,6 +337,7 @@
 - (void)refreshDoctorList:(id)sender {
     if (!we_logined) return;
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager GET:yijiarenUrl(@"patient", @"listFavorDoctors") parameters:nil
          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
              NSString * errorMessage;
@@ -343,21 +345,14 @@
              NSString *result = [HTTPResponse objectForKey:@"result"];
              result = [NSString stringWithFormat:@"%@", result];
              if ([result isEqualToString:@"1"]) {
-                 NSMutableDictionary * newfavorDoctors = [[NSMutableDictionary alloc] init];
-                 NSArray * favorDoctorList = [HTTPResponse objectForKey:@"response"];
+                 favorDoctors = [[NSMutableDictionary alloc] init];
+                 NSArray * favorDoctorList = HTTPResponse[@"response"];
+                 NSLog(@"%@", favorDoctorList);
                  for (int i = 0; i < [favorDoctorList count]; i++) {
-                     WeFavorDoctor * newDoctor = favorDoctors[[WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"id"]]];
-                     if (newDoctor == NULL) newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorList[i][@"doctor"]];
-                     if (![newDoctor.avatarPath isEqualToString:[WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"avatar"]]]) {
-                         newDoctor.avatarPath = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"avatar"]];
-                         [self DownloadImageWithURL:yijiarenAvatarUrl(newDoctor.avatarPath) successCompletion:^(id image) {
-                             newDoctor.avatar = image;
-                             NSLog(@"Download Image(%@) succeed, doctor' avatar has been changed.", newDoctor.avatarPath);
-                         }];
-                     }
-                     newfavorDoctors[newDoctor.userId] = newDoctor;
+                     WeFavorDoctor * newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorList[i][@"doctor"]];
+                     NSLog(@"%d %@ %@", i, newDoctor.userId, favorDoctorList[i]);
+                     favorDoctors[newDoctor.userId] = newDoctor;
                  }
-                 favorDoctors = newfavorDoctors;
                  return;
              }
              if ([result isEqualToString:@"2"]) {
