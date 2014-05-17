@@ -436,6 +436,7 @@
                         <segue destination="Nrx-Lt-d7t" kind="push" identifier="CsrSel_pushto_CsrSelArea" id="zC0-uP-AHH"/>
                         <segue destination="wzu-ry-s6j" kind="push" identifier="CsrSel_pushto_CsrSelHos" id="kpu-VC-hRJ"/>
                         <segue destination="udq-w1-zV8" kind="push" identifier="CsrSel_pushto_CsrSelSec" id="nDN-T9-38h"/>
+                        <segue destination="F1i-BM-JEq" kind="push" identifier="CsrSel_pushto_CsrSelCat" id="k9w-vl-f4y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oDA-Lh-1L2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -523,6 +524,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hii-VN-xGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3275" y="3707"/>
+        </scene>
+        <!--We Csr Sel Cat View Controller - 选择类别-->
+        <scene sceneID="ehb-kk-rkq">
+            <objects>
+                <viewController id="F1i-BM-JEq" customClass="WeCsrSelCatViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nzf-Yr-wFk"/>
+                        <viewControllerLayoutGuide type="bottom" id="CI5-RX-Kk8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="maR-HZ-zo0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="选择类别" id="5A8-ds-Ccp"/>
+                    <connections>
+                        <segue destination="cpX-01-MBf" kind="push" identifier="CsrSelCat_pushto_CsrSelTil" id="rNL-P1-Lvq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x3E-Ve-JGA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3805" y="3707"/>
+        </scene>
+        <!--We Csr Sel Til View Controller - 选择职称-->
+        <scene sceneID="Iky-Ef-MUL">
+            <objects>
+                <viewController id="cpX-01-MBf" customClass="WeCsrSelTilViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LLe-tN-Ql9"/>
+                        <viewControllerLayoutGuide type="bottom" id="DFa-Bt-Fhn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yX4-o7-yOk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="选择职称" id="5pW-nx-2aK"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9pJ-Na-44C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4361" y="3711"/>
         </scene>
         <!--Navigation Controller - 众筹项目-->
         <scene sceneID="grl-Bt-DYQ">

@@ -60,6 +60,7 @@ NSString * condition_topSectionName_tmp;
 NSString * condition_sectionId;
 NSString * condition_sectionName;
 NSString * condition_category;
+NSString * condition_category_tmp;
 NSString * condition_title;
 NSString * condition_recommand;
 NSString * condition_order;

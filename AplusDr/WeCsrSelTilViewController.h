@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeAppDelegate.h"
 
-@interface WeCsrSelTilViewController : UIViewController
+@interface WeCsrSelTilViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

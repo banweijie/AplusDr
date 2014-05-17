@@ -42,7 +42,7 @@
         [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelSec" sender:self];
     }
     if (path.section == 0 && path.row == 3) {
-        [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelTit" sender:self];
+        [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelCat" sender:self];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
