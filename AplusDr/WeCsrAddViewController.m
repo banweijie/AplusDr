@@ -17,6 +17,7 @@
     UITextField * user_searchContent_input;
     UIView * loadingViewContainer;
     UIActivityIndicatorView * loadingView;
+    UIActivityIndicatorView * sys_pendingView;
     BOOL hasMore;
     BOOL isWaiting;
 }
@@ -157,6 +158,17 @@
     [self performSegueWithIdentifier:@"CsrAdd_pushto_CsrSel" sender:self];
 }
 
+- (void)clearSelectionCondition {
+    selection_provinceId = @"<null>";
+    selection_cityId = @"<null>";
+    selection_hospitalId = @"<null>";
+    selection_topSectionId = @"<null>";
+    selection_sectionId = @"<null>";
+    selection_category = @"<null>";
+    selection_title = @"<null>";
+    selection_recommend = @"<null>";
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -170,7 +182,10 @@
     
     // get doctor list
     hasMore = YES;
+    isWaiting = NO;
+    [self clearSelectionCondition];
     [self initialDoctorList:self];
+    
     
     // sys_tableView
     sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 64 + 85, 310, self.view.frame.size.height - 64 - 85) style:UITableViewStyleGrouped];
@@ -208,6 +223,15 @@
     [selectButton addTarget:self action:@selector(selection:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:selectButton];
     
+    
+    // sys_pendingView
+    sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    [sys_pendingView setAlpha:1.0];
+    [sys_pendingView startAnimating];
+    [self.view addSubview:sys_pendingView];
+    
     // search bar
     searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 104, 320, 45)];
     searchBar.placeholder = @"搜索";
@@ -219,6 +243,15 @@
     [self.view addSubview:searchBar];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (selection_changed) {
+        selection_changed = false;
+        [sys_pendingView startAnimating];
+        [self initialDoctorList:self];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -226,22 +259,33 @@
 }
 
 - (void)queryMoreDoctors:(id)sender {
-    NSDictionary * parameters = @{@"from":[NSString stringWithFormat:@"%d", [doctorList count]]};
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"from":[NSString stringWithFormat:@"%d", [doctorList count]]}];
+    NSLog(@"%@", selection_provinceId);
+    if (![selection_provinceId isEqualToString:@"<null>"]) parameters[@"provinceId"] = selection_provinceId;
+    if (![selection_cityId isEqualToString:@"<null>"]) parameters[@"cityId"] = selection_cityId;
+    if (![selection_hospitalId isEqualToString:@"<null>"]) parameters[@"hospitalId"] = selection_hospitalId;
+    if (![selection_topSectionId isEqualToString:@"<null>"]) parameters[@"topSectionId"] = selection_topSectionId;
+    if (![selection_sectionId isEqualToString:@"<null>"]) parameters[@"sectionId"] = selection_sectionId;
+    if (![selection_category isEqualToString:@"<null>"]) parameters[@"category"] = selection_category;
+    if (![selection_title isEqualToString:@"<null>"]) parameters[@"title"] = selection_title;
+    if (![selection_recommend isEqualToString:@"<null>"]) parameters[@"recommend"] = selection_recommend;
+    
+    NSLog(@"queryMore %@", parameters);
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     [manager GET:yijiarenUrl(@"patient", @"searchDoctors") parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
              NSString * errorMessage;
              NSString *result = [HTTPResponse objectForKey:@"result"];
              result = [NSString stringWithFormat:@"%@", result];
-             NSLog(@"Total amount : %@", HTTPResponse[@"info"]);
+             //NSLog(@"Total amount : %@", HTTPResponse[@"info"]);
              if ([result isEqualToString:@"1"]) {
-                 NSLog(@"%@", HTTPResponse[@"response"]);
+                 //NSLog(@"%@", HTTPResponse[@"response"]);
                  for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
                      WeDoctor * doctor = [[WeDoctor alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];
                      [doctorList addObject:doctor];
                  }
                  if ([HTTPResponse[@"info"] integerValue] == [doctorList count]) hasMore = NO;
-                 NSLog(@"%d", [HTTPResponse[@"info"] integerValue]);
+                 //NSLog(@"%d", [HTTPResponse[@"info"] integerValue]);
                  [sys_tableView reloadData];
                  isWaiting = NO;
                  return;
@@ -271,23 +315,36 @@
 }
 
 - (void)initialDoctorList:(id)sender {
-    NSDictionary * parameters = @{};
+    NSMutableDictionary * parameters = [[NSMutableDictionary alloc] init];
+    NSLog(@"%@", selection_provinceId);
+    if (![selection_provinceId isEqualToString:@"<null>"]) parameters[@"conditions.provinceId"] = selection_provinceId;
+    if (![selection_cityId isEqualToString:@"<null>"]) parameters[@"conditions.cityId"] = selection_cityId;
+    if (![selection_hospitalId isEqualToString:@"<null>"]) parameters[@"conditions.hospitalId"] = selection_hospitalId;
+    if (![selection_topSectionId isEqualToString:@"<null>"]) parameters[@"conditions.topSectionId"] = selection_topSectionId;
+    if (![selection_sectionId isEqualToString:@"<null>"]) parameters[@"conditions.sectionId"] = selection_sectionId;
+    if (![selection_category isEqualToString:@"<null>"]) parameters[@"conditions.category"] = selection_category;
+    if (![selection_title isEqualToString:@"<null>"]) parameters[@"conditions.title"] = selection_title;
+    if (![selection_recommend isEqualToString:@"<null>"]) parameters[@"conditions.recommend"] = selection_recommend;
+    
+    NSLog(@"initial %@", parameters);
+    
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     [manager GET:yijiarenUrl(@"patient", @"searchDoctors") parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
              NSString * errorMessage;
              NSString *result = [HTTPResponse objectForKey:@"result"];
              result = [NSString stringWithFormat:@"%@", result];
-             NSLog(@"Total amount : %@", HTTPResponse[@"info"]);
+             //NSLog(@"Total amount : %@", HTTPResponse[@"info"]);
              if ([result isEqualToString:@"1"]) {
-                 NSLog(@"%@", HTTPResponse[@"response"]);
+                 //NSLog(@"%@", HTTPResponse[@"response"]);
                  doctorList = [[NSMutableArray alloc] init];
                  for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
                      WeDoctor * doctor = [[WeDoctor alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];
                      [doctorList addObject:doctor];
                  }
                  if ([HTTPResponse[@"info"] integerValue] == [doctorList count]) hasMore = NO;
-                 NSLog(@"%d", [HTTPResponse[@"info"] integerValue]);
+                 //NSLog(@"%d", [HTTPResponse[@"info"] integerValue]);
+                 [sys_pendingView stopAnimating];
                  [sys_tableView reloadData];
                  return;
              }

@@ -25,7 +25,7 @@
 @synthesize plusPrice;
 
 - (WeDoctor *)initWithNSDictionary:(NSDictionary *)info {
-    [self setHospitalName:[NSString stringWithFormat:@"%@", info[@"hospital"][@"name"]]];
+    [self setHospitalName:[NSString stringWithFormat:@"%@", info[@"hospital"][@"text"]]];
     [self setSectionName:[NSString stringWithFormat:@"%@", info[@"section"][@"text"]]];
     [self setTitle:[NSString stringWithFormat:@"%@", info[@"title"]]];
     [self setCategory:[NSString stringWithFormat:@"%@", info[@"category"]]];

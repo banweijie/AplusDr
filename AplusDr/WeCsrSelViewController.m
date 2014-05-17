@@ -10,6 +10,7 @@
 
 @interface WeCsrSelViewController () {
     UITableView * sys_tableView;
+    UISwitch * sys_recommand_switch;
 }
 
 @end
@@ -43,6 +44,19 @@
     }
     if (path.section == 0 && path.row == 3) {
         [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelCat" sender:self];
+    }
+    if (path.section == 1 && path.row == 0) {
+        selection_provinceId = condition_provinceId;
+        selection_cityId = condition_cityId;
+        selection_hospitalId = condition_hospitalId;
+        selection_topSectionId = condition_topSectionId;
+        selection_sectionId = condition_sectionId;
+        selection_category = condition_category;
+        selection_title = condition_title;
+        if (sys_recommand_switch.on) selection_recommend = @"true";
+        else selection_recommend = @"false";
+        selection_changed = YES;;
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
@@ -147,18 +161,24 @@
         cell.textLabel.text = @"职称";
         cell.detailTextLabel.font = We_font_textfield_zh_cn;
         cell.detailTextLabel.textColor = We_foreground_gray_general;
-        if ([condition_title isEqualToString:@"<null>"]) {
+        if ([condition_category isEqualToString:@"<null>"]) {
             cell.detailTextLabel.text = @"全部";
         }
         else {
-            cell.detailTextLabel.text = we_codings[@"doctorCategory"][condition_category][@"title"][condition_title];
+            if ([condition_title isEqualToString:@"<null>"]) {
+                cell.detailTextLabel.text = we_codings[@"doctorCategory"][condition_category][@"name"];
+            }
+            else {
+                cell.detailTextLabel.text = we_codings[@"doctorCategory"][condition_category][@"title"][condition_title];
+            }
         }
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     if (indexPath.section == 0 && indexPath.row == 4) {
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
-        cell.textLabel.text = @"推荐";
+        cell.textLabel.text = @"只看推荐";
+        [cell.contentView addSubview:sys_recommand_switch];
     }
     if (indexPath.section == 1 && indexPath.row == 0) {
         cell.backgroundColor = We_foreground_red_general;
@@ -180,13 +200,14 @@
 }
 
 - (void)setConditionToDefault:(id)sender {
-    condition_provinceId = @"<null>";
-    condition_cityId = @"<null>";
-    condition_hospitalId = @"<null>";
-    condition_topSectionId = @"<null>";
-    condition_sectionId = @"<null>";
-    condition_category = @"<null>";
-    condition_title = @"<null>";
+    condition_provinceId = selection_provinceId;
+    condition_cityId = selection_cityId;
+    condition_hospitalId = selection_hospitalId;
+    condition_topSectionId = selection_topSectionId;
+    condition_sectionId = selection_sectionId;
+    condition_category = selection_category;
+    condition_title = selection_title;
+    [sys_recommand_switch setOn:([selection_recommend isEqualToString:@"true"])];
     [sys_tableView reloadData];
 }
 
@@ -222,6 +243,9 @@
 
     UIBarButtonItem * user_cancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(user_cancel_onpress:)];
     self.navigationItem.leftBarButtonItem = user_cancel;
+    
+    sys_recommand_switch = [[UISwitch alloc] initWithFrame:CGRectMake(250, 5, 60, 30)];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

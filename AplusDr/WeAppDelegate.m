@@ -347,13 +347,7 @@
                  NSArray * favorDoctorList = [HTTPResponse objectForKey:@"response"];
                  for (int i = 0; i < [favorDoctorList count]; i++) {
                      WeFavorDoctor * newDoctor = favorDoctors[[WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"id"]]];
-                     if (newDoctor == NULL) newDoctor = [[WeFavorDoctor alloc] init];
-                     newDoctor.userId = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"id"]];
-                     newDoctor.userName = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"name"]];
-                     newDoctor.title = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"title"]];
-                     newDoctor.category = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"category"]];
-                     newDoctor.hospitalName = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"hospital"][@"name"]];
-                     newDoctor.sectionName = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"section"][@"text"]];
+                     if (newDoctor == NULL) newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorList[i][@"doctor"]];
                      if (![newDoctor.avatarPath isEqualToString:[WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"avatar"]]]) {
                          newDoctor.avatarPath = [WeAppDelegate toString:favorDoctorList[i][@"doctor"][@"avatar"]];
                          [self DownloadImageWithURL:yijiarenAvatarUrl(newDoctor.avatarPath) successCompletion:^(id image) {

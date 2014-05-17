@@ -62,8 +62,19 @@ NSString * condition_sectionName;
 NSString * condition_category;
 NSString * condition_category_tmp;
 NSString * condition_title;
-NSString * condition_recommand;
 NSString * condition_order;
+
+// Consulting room - selection
+BOOL selection_changed;
+NSString * selection_provinceId;
+NSString * selection_cityId;
+NSString * selection_hospitalId;
+NSString * selection_topSectionId;
+NSString * selection_sectionId;
+NSString * selection_category;
+NSString * selection_title;
+NSString * selection_recommend;
+
 
 BOOL we_logined;
 int we_targetTabId;
