@@ -35,6 +35,15 @@
     if (path.section == 0 && path.row == 0) {
         [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelArea" sender:self];
     }
+    if (path.section == 0 && path.row == 1) {
+        [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelHos" sender:self];
+    }
+    if (path.section == 0 && path.row == 2) {
+        [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelSec" sender:self];
+    }
+    if (path.section == 0 && path.row == 3) {
+        [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelTit" sender:self];
+    }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
@@ -113,6 +122,44 @@
         }
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
+    if (indexPath.section == 0 && indexPath.row == 2) {
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        cell.textLabel.text = @"科室";
+        cell.detailTextLabel.font = We_font_textfield_zh_cn;
+        cell.detailTextLabel.textColor = We_foreground_gray_general;
+        if ([condition_topSectionId isEqualToString:@"<null>"]) {
+            cell.detailTextLabel.text = @"全部";
+        }
+        else {
+            if ([condition_sectionId isEqualToString:@"<null>"]) {
+                cell.detailTextLabel.text = condition_topSectionName;
+            }
+            else {
+                cell.detailTextLabel.text = condition_sectionName;
+            }
+        }
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 0 && indexPath.row == 3) {
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        cell.textLabel.text = @"职称";
+        cell.detailTextLabel.font = We_font_textfield_zh_cn;
+        cell.detailTextLabel.textColor = We_foreground_gray_general;
+        if ([condition_title isEqualToString:@"<null>"]) {
+            cell.detailTextLabel.text = @"全部";
+        }
+        else {
+            cell.detailTextLabel.text = we_codings[@"doctorCategory"][condition_category][@"title"][condition_title];
+        }
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 0 && indexPath.row == 4) {
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        cell.textLabel.text = @"推荐";
+    }
     if (indexPath.section == 1 && indexPath.row == 0) {
         cell.backgroundColor = We_foreground_red_general;
         cell.textLabel.font = We_font_textfield_zh_cn;
@@ -136,6 +183,10 @@
     condition_provinceId = @"<null>";
     condition_cityId = @"<null>";
     condition_hospitalId = @"<null>";
+    condition_topSectionId = @"<null>";
+    condition_sectionId = @"<null>";
+    condition_category = @"<null>";
+    condition_title = @"<null>";
     [sys_tableView reloadData];
 }
 

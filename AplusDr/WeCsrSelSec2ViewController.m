@@ -1,22 +1,22 @@
 //
-//  WeCsrSelHosViewController.m
+//  WeCsrSelSec2ViewController.m
 //  AplusDr
 //
 //  Created by WeDoctor on 14-5-17.
 //  Copyright (c) 2014年 ___PKU___. All rights reserved.
 //
 
-#import "WeCsrSelHosViewController.h"
+#import "WeCsrSelSec2ViewController.h"
 
-@interface WeCsrSelHosViewController ()  {
-    NSArray * hospitalList;
+@interface WeCsrSelSec2ViewController () {
+    NSArray * sectionList;
     UITableView * sys_tableView;
     UIActivityIndicatorView * sys_pendingView;
 }
 
 @end
 
-@implementation WeCsrSelHosViewController
+@implementation WeCsrSelSec2ViewController
 
 /*
  [AREA]
@@ -35,12 +35,16 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.row == 0) {
-        condition_hospitalId = @"<null>";
+        condition_topSectionId = condition_topSectionId_tmp;
+        condition_topSectionName = condition_topSectionName_tmp;
+        condition_sectionId = @"<null>";
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else {
-        condition_hospitalId = [WeAppDelegate toString:hospitalList[path.row - 1][@"id"]];
-        condition_hospitalName = [WeAppDelegate toString:hospitalList[path.row - 1][@"text"]];
+        condition_topSectionId = condition_topSectionId_tmp;
+        condition_topSectionName = condition_topSectionName_tmp;
+        condition_sectionId = [WeAppDelegate toString:sectionList[path.row - 1][@"id"]];
+        condition_sectionName = [WeAppDelegate toString:sectionList[path.row - 1][@"text"]];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
@@ -71,7 +75,7 @@
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
-    return [hospitalList count] + 1;
+    return [sectionList count] + 1;
 }
 // 询问每个具体条目的内容
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -87,13 +91,13 @@
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
         cell.textLabel.text = @"全部";
-        if ([condition_hospitalId isEqualToString:@"<null>"]) [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        if ([condition_sectionId isEqualToString:@"<null>"]) [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
     }
     if (indexPath.section == 0 && indexPath.row > 0) {
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
-        cell.textLabel.text = hospitalList[indexPath.row - 1][@"text"];
-        if ([condition_hospitalId isEqualToString:[NSString stringWithFormat:@"%@", hospitalList[indexPath.row - 1][@"id"]]]) [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        cell.textLabel.text = sectionList[indexPath.row - 1][@"text"];
+        if ([condition_sectionId isEqualToString:[NSString stringWithFormat:@"%@", sectionList[indexPath.row - 1][@"id"]]]) [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
     }
     return cell;
 }
@@ -107,22 +111,18 @@
     return self;
 }
 
-- (void)queryHospitalList:(id)sender {
-    NSDictionary * parameters;
-    NSLog(@"%@ %@", condition_provinceId, condition_cityId);
-    if (![condition_provinceId isEqualToString:@"<null>"]) {
-        parameters = @{@"areaId":condition_provinceId};
-        if (![condition_cityId isEqualToString:@"<null>"]) parameters = @{@"areaId":condition_cityId};
-    }
-    
+- (void)querySectionList:(id)sender {
+    NSDictionary * parameters = @{@"parentId":condition_topSectionId_tmp};
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:yijiarenUrl(@"data", @"listHospitalsOfArea") parameters:parameters
+    [manager GET:yijiarenUrl(@"data", @"listSections") parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
              NSString * errorMessage;
              NSString *result = [HTTPResponse objectForKey:@"result"];
              result = [NSString stringWithFormat:@"%@", result];
+             NSLog(@"%@", HTTPResponse);
              if ([result isEqualToString:@"1"]) {
-                 hospitalList = HTTPResponse[@"response"];
+                 NSLog(@"%@", HTTPResponse[@"response"]);
+                 sectionList = HTTPResponse[@"response"];
                  [sys_pendingView stopAnimating];
                  [sys_tableView reloadData];
                  return;
@@ -179,7 +179,7 @@
     [sys_pendingView startAnimating];
     [self.view addSubview:sys_pendingView];
     
-    [self queryHospitalList:self];
+    [self querySectionList:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -189,14 +189,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

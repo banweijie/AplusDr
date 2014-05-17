@@ -434,6 +434,8 @@
                     <navigationItem key="navigationItem" title="筛选" id="75u-8u-per"/>
                     <connections>
                         <segue destination="Nrx-Lt-d7t" kind="push" identifier="CsrSel_pushto_CsrSelArea" id="zC0-uP-AHH"/>
+                        <segue destination="wzu-ry-s6j" kind="push" identifier="CsrSel_pushto_CsrSelHos" id="kpu-VC-hRJ"/>
+                        <segue destination="udq-w1-zV8" kind="push" identifier="CsrSel_pushto_CsrSelSec" id="nDN-T9-38h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oDA-Lh-1L2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -460,7 +462,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ruu-2N-x6k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3315" y="2231"/>
+            <point key="canvasLocation" x="3267" y="2247"/>
         </scene>
         <!--We Csr Sel Area2 View Controller - 选择城市-->
         <scene sceneID="hJy-KV-fe3">
@@ -479,7 +481,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6BG-zf-6KS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3759" y="2229"/>
+            <point key="canvasLocation" x="3791" y="2247"/>
         </scene>
         <!--We Csr Dci View Controller-->
         <scene sceneID="AN5-c4-1DT">
@@ -501,7 +503,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ePC-Eo-yEo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2227" y="2977"/>
+            <point key="canvasLocation" x="2213" y="3707"/>
         </scene>
         <!--We Csr Cos View Controller - 发起咨询-->
         <scene sceneID="b0m-ye-ype">
@@ -520,7 +522,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hii-VN-xGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3275" y="2969"/>
+            <point key="canvasLocation" x="3275" y="3707"/>
         </scene>
         <!--Navigation Controller - 众筹项目-->
         <scene sceneID="grl-Bt-DYQ">
@@ -579,6 +581,66 @@
             </objects>
             <point key="canvasLocation" x="613" y="2976"/>
         </scene>
+        <!--We Csr Sel Hos View Controller-->
+        <scene sceneID="MDW-c1-INr">
+            <objects>
+                <viewController id="wzu-ry-s6j" customClass="WeCsrSelHosViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yww-gi-a4G"/>
+                        <viewControllerLayoutGuide type="bottom" id="iOJ-SM-xIG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ess-Bw-sFV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="MuO-Bu-Gyx"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SKw-Hf-el9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3267" y="2969"/>
+        </scene>
+        <!--We Csr Sel Sec View Controller - 选择一级科室-->
+        <scene sceneID="PzJ-BN-8BQ">
+            <objects>
+                <viewController id="udq-w1-zV8" customClass="WeCsrSelSecViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WNQ-Gw-Ojp"/>
+                        <viewControllerLayoutGuide type="bottom" id="RQs-hC-Bnp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Pf1-sb-iya">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="选择一级科室" id="d4i-30-X0x"/>
+                    <connections>
+                        <segue destination="lOV-xZ-fen" kind="push" identifier="CsrSelSec_pushto_CsrSelSec2" id="Ary-ed-yba"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pdC-tW-lmA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3787" y="2973"/>
+        </scene>
+        <!--We Csr Sel Sec2 View Controller - 选择二级科室-->
+        <scene sceneID="KLx-rc-fqM">
+            <objects>
+                <viewController id="lOV-xZ-fen" customClass="WeCsrSelSec2ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bm4-nE-5kV"/>
+                        <viewControllerLayoutGuide type="bottom" id="VxE-Ec-VfZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7Vl-tM-npd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="选择二级科室" id="8Uq-Q2-29u"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z4X-l5-aJs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4349" y="2976"/>
+        </scene>
         <!--We Csr Nav View Controller-->
         <scene sceneID="MYl-XM-wDU">
             <objects>
@@ -595,7 +657,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vac-Gy-5TH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2749" y="2969"/>
+            <point key="canvasLocation" x="2733" y="3697"/>
         </scene>
         <!--We Csr Nav View Controller-->
         <scene sceneID="XIu-KR-3wz">

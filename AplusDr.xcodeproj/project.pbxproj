@@ -56,6 +56,10 @@
 		90F0CE801926D0CA006A4605 /* WeCsrSelAreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE7F1926D0CA006A4605 /* WeCsrSelAreaViewController.m */; };
 		90F0CE831926F820006A4605 /* WeCsrSelArea2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE821926F820006A4605 /* WeCsrSelArea2ViewController.m */; };
 		90F0CE861926FE68006A4605 /* WeCsrSelHosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE851926FE68006A4605 /* WeCsrSelHosViewController.m */; };
+		90F0CE89192710C1006A4605 /* WeCsrSelSecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE88192710C1006A4605 /* WeCsrSelSecViewController.m */; };
+		90F0CE8C19271226006A4605 /* WeCsrSelSec2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE8B19271226006A4605 /* WeCsrSelSec2ViewController.m */; };
+		90F0CE8F19271794006A4605 /* WeCsrSelCatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE8E19271794006A4605 /* WeCsrSelCatViewController.m */; };
+		90F0CE92192717AC006A4605 /* WeCsrSelTilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE91192717AC006A4605 /* WeCsrSelTilViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +162,14 @@
 		90F0CE821926F820006A4605 /* WeCsrSelArea2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelArea2ViewController.m; sourceTree = "<group>"; };
 		90F0CE841926FE68006A4605 /* WeCsrSelHosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelHosViewController.h; sourceTree = "<group>"; };
 		90F0CE851926FE68006A4605 /* WeCsrSelHosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelHosViewController.m; sourceTree = "<group>"; };
+		90F0CE87192710C1006A4605 /* WeCsrSelSecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelSecViewController.h; sourceTree = "<group>"; };
+		90F0CE88192710C1006A4605 /* WeCsrSelSecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelSecViewController.m; sourceTree = "<group>"; };
+		90F0CE8A19271226006A4605 /* WeCsrSelSec2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelSec2ViewController.h; sourceTree = "<group>"; };
+		90F0CE8B19271226006A4605 /* WeCsrSelSec2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelSec2ViewController.m; sourceTree = "<group>"; };
+		90F0CE8D19271794006A4605 /* WeCsrSelCatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelCatViewController.h; sourceTree = "<group>"; };
+		90F0CE8E19271794006A4605 /* WeCsrSelCatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelCatViewController.m; sourceTree = "<group>"; };
+		90F0CE90192717AC006A4605 /* WeCsrSelTilViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelTilViewController.h; sourceTree = "<group>"; };
+		90F0CE91192717AC006A4605 /* WeCsrSelTilViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelTilViewController.m; sourceTree = "<group>"; };
 		B7BF13CDE3A84113994A769D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -362,6 +374,14 @@
 				90F0CE821926F820006A4605 /* WeCsrSelArea2ViewController.m */,
 				90F0CE841926FE68006A4605 /* WeCsrSelHosViewController.h */,
 				90F0CE851926FE68006A4605 /* WeCsrSelHosViewController.m */,
+				90F0CE87192710C1006A4605 /* WeCsrSelSecViewController.h */,
+				90F0CE88192710C1006A4605 /* WeCsrSelSecViewController.m */,
+				90F0CE8A19271226006A4605 /* WeCsrSelSec2ViewController.h */,
+				90F0CE8B19271226006A4605 /* WeCsrSelSec2ViewController.m */,
+				90F0CE8D19271794006A4605 /* WeCsrSelCatViewController.h */,
+				90F0CE8E19271794006A4605 /* WeCsrSelCatViewController.m */,
+				90F0CE90192717AC006A4605 /* WeCsrSelTilViewController.h */,
+				90F0CE91192717AC006A4605 /* WeCsrSelTilViewController.m */,
 				907D5B4A19202BC10006EAE0 /* WeCsrDciViewController.h */,
 				907D5B4B19202BC10006EAE0 /* WeCsrDciViewController.m */,
 				907D5B551920CD4B0006EAE0 /* WeCsrCosViewController.h */,
@@ -575,9 +595,13 @@
 				907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */,
 				90F0CE6519228CEF006A4605 /* WeUser.m in Sources */,
 				9026EEF21904EE5500CE4A7A /* WeAppDelegate.m in Sources */,
+				90F0CE8C19271226006A4605 /* WeCsrSelSec2ViewController.m in Sources */,
 				9026EEF41904EE5500CE4A7A /* WeMapNavController.m in Sources */,
 				907D5B571920CD4B0006EAE0 /* WeCsrCosViewController.m in Sources */,
+				90F0CE89192710C1006A4605 /* WeCsrSelSecViewController.m in Sources */,
 				9026EE261904E8A700CE4A7A /* main.m in Sources */,
+				90F0CE92192717AC006A4605 /* WeCsrSelTilViewController.m in Sources */,
+				90F0CE8F19271794006A4605 /* WeCsrSelCatViewController.m in Sources */,
 				9026EEF71904EE5500CE4A7A /* WeRegIpnViewController.m in Sources */,
 				907D5B6A1920D9DA0006EAE0 /* UIBubbleTableViewCell.m in Sources */,
 			);

@@ -1,5 +1,5 @@
 //
-//  WeCsrSelHosViewController.h
+//  WeCsrSelSec2ViewController.h
 //  AplusDr
 //
 //  Created by WeDoctor on 14-5-17.
@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "WeAppDelegate.h"
 
-@interface WeCsrSelHosViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface WeCsrSelSec2ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end
