@@ -1,20 +1,22 @@
 //
-//  WeCsrSelViewController.m
+//  WeCsrSelArea2ViewController.m
 //  AplusDr
 //
 //  Created by WeDoctor on 14-5-17.
 //  Copyright (c) 2014年 ___PKU___. All rights reserved.
 //
 
-#import "WeCsrSelViewController.h"
+#import "WeCsrSelArea2ViewController.h"
 
-@interface WeCsrSelViewController () {
+@interface WeCsrSelArea2ViewController () {
+    NSArray * cityList;
     UITableView * sys_tableView;
+    UIActivityIndicatorView * sys_pendingView;
 }
 
 @end
 
-@implementation WeCsrSelViewController
+@implementation WeCsrSelArea2ViewController
 
 /*
  [AREA]
@@ -32,8 +34,18 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
-    if (path.section == 0 && path.row == 0) {
-        [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelArea" sender:self];
+    if (path.row == 0) {
+        condition_provinceId = condition_provinceId_tmp;
+        condition_provinceName = condition_provinceName_tmp;
+        condition_cityId = @"<null>";
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else {
+        condition_provinceId = condition_provinceId_tmp;
+        condition_provinceName = condition_provinceName_tmp;
+        condition_cityId = [WeAppDelegate toString:cityList[path.row - 1][@"id"]];
+        condition_cityName = [WeAppDelegate toString:cityList[path.row - 1][@"text"]];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
@@ -59,66 +71,33 @@
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
-    return 2;
+    return 1;
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) return 5;
-    if (section == 1) return 1;
-    return 0;
+    return [cityList count] + 1;
 }
 // 询问每个具体条目的内容
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *MyIdentifier = @"MyReuseIdentifier";
     UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
     if (cell == nil) {
-        if (indexPath.section == 1 && indexPath.row == 0) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
-        }
-        else {
+        {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
         }
     }
     [[cell imageView] setContentMode:UIViewContentModeCenter];
-    if (indexPath.section == 0 && indexPath.row ==  0) {
+    if (indexPath.section == 0 && indexPath.row == 0) {
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
-        cell.textLabel.text = @"地区";
-        cell.detailTextLabel.font = We_font_textfield_zh_cn;
-        cell.detailTextLabel.textColor = We_foreground_gray_general;
-        if ([condition_provinceId isEqualToString:@"<null>"]) {
-            cell.detailTextLabel.text = @"全部";
-        }
-        else {
-            if ([condition_cityId isEqualToString:@"<null>"]) {
-                cell.detailTextLabel.text = condition_provinceName;
-            }
-            else {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", condition_provinceName, condition_cityName];
-            }
-        }
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        cell.textLabel.text = @"全部";
+        if ([condition_cityId isEqualToString:@"<null>"]) [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
     }
-    if (indexPath.section == 0 && indexPath.row == 1) {
+    if (indexPath.section == 0 && indexPath.row > 0) {
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
-        cell.textLabel.text = @"医院";
-        cell.detailTextLabel.font = We_font_textfield_zh_cn;
-        cell.detailTextLabel.textColor = We_foreground_gray_general;
-        if ([condition_hospitalId isEqualToString:@"<null>"]) {
-            cell.detailTextLabel.text = @"全部";
-        }
-        else {
-            cell.detailTextLabel.text = condition_hospitalName;
-        }
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    }
-    if (indexPath.section == 1 && indexPath.row == 0) {
-        cell.backgroundColor = We_foreground_red_general;
-        cell.textLabel.font = We_font_textfield_zh_cn;
-        cell.textLabel.textColor = We_foreground_white_general;
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
-        cell.textLabel.text = @"筛选";
+        cell.textLabel.text = cityList[indexPath.row - 1][@"text"];
+        if ([condition_cityId isEqualToString:[NSString stringWithFormat:@"%@", cityList[indexPath.row - 1][@"id"]]]) [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
     }
     return cell;
 }
@@ -132,24 +111,50 @@
     return self;
 }
 
-- (void)setConditionToDefault:(id)sender {
-    condition_provinceId = @"<null>";
-    condition_cityId = @"<null>";
-    condition_hospitalId = @"<null>";
-    [sys_tableView reloadData];
-}
-
-- (void)user_cancel_onpress:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)queryCityList:(id)sender {
+    NSDictionary * parameters = @{@"parentId":condition_provinceId_tmp};
+    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:yijiarenUrl(@"data", @"listAreas") parameters:parameters
+         success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
+             NSString * errorMessage;
+             NSString *result = [HTTPResponse objectForKey:@"result"];
+             result = [NSString stringWithFormat:@"%@", result];
+             NSLog(@"%@", HTTPResponse);
+             if ([result isEqualToString:@"1"]) {
+                 NSLog(@"%@", HTTPResponse[@"response"]);
+                 cityList = HTTPResponse[@"response"];
+                 [sys_pendingView stopAnimating];
+                 [sys_tableView reloadData];
+                 return;
+             }
+             if ([result isEqualToString:@"2"]) {
+                 NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
+                 NSEnumerator *enumerator = [fields keyEnumerator];
+                 id key;
+                 while ((key = [enumerator nextObject])) {
+                     NSString * tmp1 = [fields objectForKey:key];
+                     if (tmp1 != NULL) errorMessage = tmp1;
+                 }
+             }
+             if ([result isEqualToString:@"3"]) {
+                 errorMessage = [HTTPResponse objectForKey:@"info"];
+             }
+             if ([result isEqualToString:@"4"]) {
+                 errorMessage = [HTTPResponse objectForKey:@"info"];
+             }
+             NSLog(@"Response error: %@", errorMessage);
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }
+     ];
+    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    // Default Value
-    [self setConditionToDefault:self];
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -166,16 +171,15 @@
     sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
     
-    UIBarButtonItem * user_reset = [[UIBarButtonItem alloc] initWithTitle:@"重设" style:UIBarButtonItemStylePlain target:self action:@selector(setConditionToDefault:)];
-    self.navigationItem.rightBarButtonItem = user_reset;
-
-    UIBarButtonItem * user_cancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(user_cancel_onpress:)];
-    self.navigationItem.leftBarButtonItem = user_cancel;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [sys_tableView reloadData];
+    // sys_pendingView
+    sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    sys_pendingView.backgroundColor = [UIColor blackColor];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    [sys_pendingView setAlpha:0.5];
+    [sys_pendingView startAnimating];
+    [self.view addSubview:sys_pendingView];
+    
+    [self queryCityList:self];
 }
 
 - (void)didReceiveMemoryWarning

@@ -153,6 +153,10 @@
     return self;
 }
 
+- (void)selection:(id)sender {
+    [self performSegueWithIdentifier:@"CsrAdd_pushto_CsrSel" sender:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -201,6 +205,7 @@
     [selectButton setTitle:@"筛选" forState:UIControlStateNormal];
     [selectButton.titleLabel setFont:We_font_textfield_zh_cn];
     [selectButton setTintColor:We_foreground_red_general];
+    [selectButton addTarget:self action:@selector(selection:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:selectButton];
     
     // search bar

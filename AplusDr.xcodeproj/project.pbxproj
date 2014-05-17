@@ -53,6 +53,9 @@
 		90F0CE771922D711006A4605 /* WeDoctor.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE761922D711006A4605 /* WeDoctor.m */; };
 		90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE791922D854006A4605 /* WeFavorDoctor.m */; };
 		90F0CE7D1926C86F006A4605 /* WeCsrSelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE7C1926C86F006A4605 /* WeCsrSelViewController.m */; };
+		90F0CE801926D0CA006A4605 /* WeCsrSelAreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE7F1926D0CA006A4605 /* WeCsrSelAreaViewController.m */; };
+		90F0CE831926F820006A4605 /* WeCsrSelArea2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE821926F820006A4605 /* WeCsrSelArea2ViewController.m */; };
+		90F0CE861926FE68006A4605 /* WeCsrSelHosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE851926FE68006A4605 /* WeCsrSelHosViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +152,12 @@
 		90F0CE791922D854006A4605 /* WeFavorDoctor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFavorDoctor.m; sourceTree = "<group>"; };
 		90F0CE7B1926C86F006A4605 /* WeCsrSelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelViewController.h; sourceTree = "<group>"; };
 		90F0CE7C1926C86F006A4605 /* WeCsrSelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelViewController.m; sourceTree = "<group>"; };
+		90F0CE7E1926D0CA006A4605 /* WeCsrSelAreaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelAreaViewController.h; sourceTree = "<group>"; };
+		90F0CE7F1926D0CA006A4605 /* WeCsrSelAreaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelAreaViewController.m; sourceTree = "<group>"; };
+		90F0CE811926F820006A4605 /* WeCsrSelArea2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelArea2ViewController.h; sourceTree = "<group>"; };
+		90F0CE821926F820006A4605 /* WeCsrSelArea2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelArea2ViewController.m; sourceTree = "<group>"; };
+		90F0CE841926FE68006A4605 /* WeCsrSelHosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelHosViewController.h; sourceTree = "<group>"; };
+		90F0CE851926FE68006A4605 /* WeCsrSelHosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelHosViewController.m; sourceTree = "<group>"; };
 		B7BF13CDE3A84113994A769D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -347,6 +356,12 @@
 				907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */,
 				90F0CE7B1926C86F006A4605 /* WeCsrSelViewController.h */,
 				90F0CE7C1926C86F006A4605 /* WeCsrSelViewController.m */,
+				90F0CE7E1926D0CA006A4605 /* WeCsrSelAreaViewController.h */,
+				90F0CE7F1926D0CA006A4605 /* WeCsrSelAreaViewController.m */,
+				90F0CE811926F820006A4605 /* WeCsrSelArea2ViewController.h */,
+				90F0CE821926F820006A4605 /* WeCsrSelArea2ViewController.m */,
+				90F0CE841926FE68006A4605 /* WeCsrSelHosViewController.h */,
+				90F0CE851926FE68006A4605 /* WeCsrSelHosViewController.m */,
 				907D5B4A19202BC10006EAE0 /* WeCsrDciViewController.h */,
 				907D5B4B19202BC10006EAE0 /* WeCsrDciViewController.m */,
 				907D5B551920CD4B0006EAE0 /* WeCsrCosViewController.h */,
@@ -531,9 +546,11 @@
 				9026EEF31904EE5500CE4A7A /* WeTabBarViewController.m in Sources */,
 				907D5B6E1920DB430006EAE0 /* WeSPViewController.m in Sources */,
 				907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */,
+				90F0CE801926D0CA006A4605 /* WeCsrSelAreaViewController.m in Sources */,
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
 				9026EEF01904EE5500CE4A7A /* VPImageCropperViewController.m in Sources */,
+				90F0CE861926FE68006A4605 /* WeCsrSelHosViewController.m in Sources */,
 				90F0CE7D1926C86F006A4605 /* WeCsrSelViewController.m in Sources */,
 				9026EEF61904EE5500CE4A7A /* WeRegWlcViewController.m in Sources */,
 				9026EEF51904EE5500CE4A7A /* WeRegNavViewController.m in Sources */,
@@ -553,6 +570,7 @@
 				907D5B5A1920D9AD0006EAE0 /* WeCsrCtrViewController.m in Sources */,
 				907D5B411920164B0006EAE0 /* WeCsrNavViewController.m in Sources */,
 				907D5B46192017260006EAE0 /* PAImageView.m in Sources */,
+				90F0CE831926F820006A4605 /* WeCsrSelArea2ViewController.m in Sources */,
 				907D5B671920D9DA0006EAE0 /* NSBubbleData.m in Sources */,
 				907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */,
 				90F0CE6519228CEF006A4605 /* WeUser.m in Sources */,

@@ -41,7 +41,25 @@ WeUser * currentUser;
 WeDoctor * doctorViewing;
 NSMutableDictionary * favorDoctors;
 
+// user defaults
 NSUserDefaults * userDefaults;
+
+// Consulting room - selection - condition
+NSString * condition_provinceId;
+NSString * condition_provinceName;
+NSString * condition_provinceId_tmp;
+NSString * condition_provinceName_tmp;
+NSString * condition_cityId;
+NSString * condition_cityName;
+NSString * condition_hospitalId;
+NSString * condition_hospitalName;
+NSString * condition_topSectionId;
+NSString * condition_topSectionName;
+NSString * condition_sectionId;
+NSString * condition_category;
+NSString * condition_title;
+NSString * condition_recommand;
+NSString * condition_order;
 
 BOOL we_logined;
 int we_targetTabId;

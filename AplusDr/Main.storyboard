@@ -411,11 +411,75 @@
                     <navigationItem key="navigationItem" title="添加保健医" id="2en-Du-crf"/>
                     <connections>
                         <segue destination="EQU-dN-USK" kind="push" identifier="CsrAdd_pushto_CsrDci" id="ZTK-bg-UFf"/>
+                        <segue destination="euR-5C-RVK" kind="modal" identifier="CsrAdd_pushto_CsrSel" id="iV4-Kf-jYB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jNK-hP-lak" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1711" y="2976"/>
+        </scene>
+        <!--We Csr Sel View Controller - 筛选-->
+        <scene sceneID="m50-lU-KCY">
+            <objects>
+                <viewController id="Tq9-I0-O4S" customClass="WeCsrSelViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="V5P-kL-RhO"/>
+                        <viewControllerLayoutGuide type="bottom" id="ktC-Kv-gT5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kcB-aE-ydn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="筛选" id="75u-8u-per"/>
+                    <connections>
+                        <segue destination="Nrx-Lt-d7t" kind="push" identifier="CsrSel_pushto_CsrSelArea" id="zC0-uP-AHH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oDA-Lh-1L2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2739" y="2247"/>
+        </scene>
+        <!--We Csr Sel Area View Controller - 选择省份-->
+        <scene sceneID="xRJ-Gr-5iW">
+            <objects>
+                <viewController id="Nrx-Lt-d7t" customClass="WeCsrSelAreaViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="d4u-l6-mD5"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ux6-Vc-CsQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yXa-Ww-rrf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="选择省份" id="KzX-qc-nNW"/>
+                    <connections>
+                        <segue destination="6A8-YI-8c4" kind="push" identifier="CsrSelArea_pushto_CsrSelArea2" id="KwZ-OF-m62"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ruu-2N-x6k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3315" y="2231"/>
+        </scene>
+        <!--We Csr Sel Area2 View Controller - 选择城市-->
+        <scene sceneID="hJy-KV-fe3">
+            <objects>
+                <viewController id="6A8-YI-8c4" customClass="WeCsrSelArea2ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="V7v-mD-vyK"/>
+                        <viewControllerLayoutGuide type="bottom" id="z0M-n9-WKG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9JG-bI-f4v">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="选择城市" id="nq3-6c-mPp"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6BG-zf-6KS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3759" y="2229"/>
         </scene>
         <!--We Csr Dci View Controller-->
         <scene sceneID="AN5-c4-1DT">
@@ -533,9 +597,27 @@
             </objects>
             <point key="canvasLocation" x="2749" y="2969"/>
         </scene>
+        <!--We Csr Nav View Controller-->
+        <scene sceneID="XIu-KR-3wz">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="euR-5C-RVK" customClass="WeCsrNavViewController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FbA-Ff-NVo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Tq9-I0-O4S" kind="relationship" relationship="rootViewController" id="rOF-Ih-CMT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DI4-Ie-MFI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2213" y="2247"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="tab-chatroom" width="26" height="24"/>
+        <image name="tab-chatroom" width="25" height="24"/>
         <image name="tab-crowdfunding" width="33" height="24"/>
         <image name="tab-home" width="24" height="24"/>
         <image name="tab-me" width="25" height="24"/>
