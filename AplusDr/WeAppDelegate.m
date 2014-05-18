@@ -36,9 +36,8 @@
     
     we_hospitalList = [[NSMutableDictionary alloc] init];
     we_sectionList = [[NSMutableDictionary alloc] init];
-    we_msgsForPatient = [[NSMutableDictionary alloc] init];
-    we_avatars = [[NSMutableDictionary alloc] init];
     we_messagesWithDoctor = [[NSMutableDictionary alloc] init];
+    
     [self refreshInitialData];
     
     userDefaults = [NSUserDefaults standardUserDefaults];
@@ -236,22 +235,6 @@
         result = [NSString stringWithFormat:@"%@", result];
         if ([result isEqualToString:@"1"]) {
             NSDictionary * response = [HTTPResponse objectForKey:@"response"];
-            //NSLog(@"%@", response);
-            we_notice = [WeAppDelegate toString:[response objectForKey:@"notice"]];
-            we_consultPrice = [WeAppDelegate toString:[response objectForKey:@"consultPrice"]];
-            we_plusPrice = [WeAppDelegate toString:[response objectForKey:@"plusPrice"]];
-            we_maxResponseGap = [WeAppDelegate toString:[response objectForKey:@"maxResponseGap"]];
-            we_workPeriod = [WeAppDelegate toString:[response objectForKey:@"workPeriod"]];
-            we_workPeriod_save = [NSString stringWithString:we_workPeriod];
-            we_hospital = [response objectForKey:@"hospital"];
-            we_section = [response objectForKey:@"section"];
-            we_title = [WeAppDelegate toString:[response objectForKey:@"title"]];
-            we_category = [WeAppDelegate toString:[response objectForKey:@"category"]];
-            we_skills = [WeAppDelegate toString:[response objectForKey:@"skills"]];
-            we_degree = [WeAppDelegate toString:[response objectForKey:@"degree"]];
-            we_email = [WeAppDelegate toString:[response objectForKey:@"email"]];
-            we_gender = [WeAppDelegate toString:[response objectForKey:@"gender"]];
-            we_status = [WeAppDelegate toString:[response objectForKey:@"status"]];
             
             [currentUser setUserPhone:[WeAppDelegate toString:[response objectForKey:@"phone"]]];
             [currentUser setUserName:[WeAppDelegate toString:[response objectForKey:@"name"]]];
@@ -260,16 +243,6 @@
                 currentUser.avatar = image;
                 NSLog(@"Download Image(%@) succeed, user' avatar has been changed.", currentUser.avatarPath);
             }];
-            
-            we_groupIntro = [WeAppDelegate toString:[response objectForKey:@"groupIntro"]];
-            we_doctorId = [WeAppDelegate toString:[response objectForKey:@"id"]];
-            
-            we_qc = [WeAppDelegate toString:[response objectForKey:@"qc"]];
-            we_pc = [WeAppDelegate toString:[response objectForKey:@"pc"]];
-            
-            we_qcPath = [WeAppDelegate toString:[response objectForKey:@"qcPath"]];
-            we_pcPath = [WeAppDelegate toString:[response objectForKey:@"pcPath"]];
-            we_wcPath = [WeAppDelegate toString:[response objectForKey:@"wcPath"]];
             return;
         }
         if ([result isEqualToString:@"2"]) {

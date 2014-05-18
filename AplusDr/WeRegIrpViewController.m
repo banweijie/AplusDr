@@ -266,7 +266,7 @@ extern int we_targetTabId;
     NSString *urlString = @"http://115.28.222.1/yijiaren/user/login.action";
     NSString *md5pw = user_loginPassword_input.text;
     md5pw = [md5pw md5];
-    NSString *parasString = [NSString stringWithFormat:@"phone=%@&password=%@", we_phone_onReg, md5pw];
+    NSString *parasString = [NSString stringWithFormat:@"phone=%@&password=%@", currentUser.userPhone, md5pw];
     NSData * DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:parasString];
     
     if (DataResponse != NULL) {

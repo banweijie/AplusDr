@@ -78,6 +78,7 @@ NSString * selection_title;
 NSString * selection_recommend;
 NSString * selection_keyword;
 
+NSString * we_phone_onReg;
 BOOL we_logined;
 int we_targetTabId;
 NSString * we_vericode_type;
@@ -98,34 +99,6 @@ NSMutableDictionary * we_messagesWithDoctor;
 NSDictionary * we_codings;
 NSDictionary * we_imagePaths;
 
-// user data
-NSString * we_notice;
-NSString * we_doctorId;
-NSString * we_consultPrice;
-NSString * we_plusPrice;
-NSString * we_maxResponseGap;
-NSString * we_workPeriod;
-NSString * we_workPeriod_save;
-NSDictionary * we_hospital;
-NSDictionary * we_section;
-NSString * we_title;
-NSString * we_category;
-NSString * we_skills;
-NSString * we_degree;
-NSString * we_email;
-NSString * we_phone;
-NSString * we_name;
-NSString * we_gender;
-NSString * we_phone_onReg;
-NSString * we_qc;
-NSString * we_pc;
-NSString * we_status;
-NSString * we_avatarPath;
-NSString * we_pcPath;
-NSString * we_qcPath;
-NSString * we_wcPath;
-NSString * we_groupIntro;
-
 UIImage * we_avatar;
 UIImage * we_qcImage;
 UIImage * we_pcImage;
@@ -133,7 +106,6 @@ UIImage * we_wcImage;
 
 NSMutableArray * we_msgs;
 NSMutableArray * user_exps;
-NSMutableDictionary * we_msgsForPatient;
 NSMutableDictionary * we_hospitalList;
 NSMutableDictionary * we_sectionList;
 
@@ -162,7 +134,6 @@ weTargetView we_targetView;
 #define weTabBarIdMainPage 0
 #define weTabBarIdConsultingRoom 1
 #define weTabBarIdPersonalCenter 3
-
 
 #define yijiarenServer @"http://115.28.222.1/yijiaren"
 #define yijiarenUrl(field, action) [NSString stringWithFormat:@"%@/%@/%@.action", yijiarenServer, field, action]

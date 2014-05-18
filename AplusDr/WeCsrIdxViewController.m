@@ -120,10 +120,11 @@
         cell.detailTextLabel.textColor = We_foreground_black_general;
     }
     if (indexPath.row == 2) {
+        WeFavorDoctor * doctor = favorDoctors[orderedIdOfDoctor[indexPath.section]];
         cell.imageView.image = [UIImage imageNamed:@"docinfo-chatroom"];
         WeMessage * lastMsg = [we_messagesWithDoctor[orderedIdOfDoctor[indexPath.section]] lastObject];
         if ([lastMsg.messageType isEqualToString:@"C"]) {
-            long long restSecond = [we_maxResponseGap intValue] * 3600 - (long long) (([[NSDate date] timeIntervalSince1970] - lastMsg.time));
+            long long restSecond = [doctor.maxResponseGap integerValue] * 3600 - (long long) (([[NSDate date] timeIntervalSince1970] - lastMsg.time));
             cell.textLabel.text = [NSString stringWithFormat:@"[申请咨询中 剩余%lld小时%lld分钟]",  restSecond / 3600, restSecond % 3600 / 60];
             cell.textLabel.textColor = We_foreground_red_general;
         }
