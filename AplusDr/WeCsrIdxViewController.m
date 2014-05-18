@@ -122,20 +122,20 @@
     }
     if (indexPath.row == 2) {
         cell.imageView.image = [UIImage imageNamed:@"docinfo-chatroom"];
-        NSDictionary * lastMsg = [we_messagesWithDoctor[orderedIdOfDoctor[indexPath.section]] lastObject];
-        if ([lastMsg[@"type"] isEqualToString:@"C"]) {
-            long long restSecond = [we_maxResponseGap intValue] * 3600 - (long long) (([[NSDate date] timeIntervalSince1970] - [[WeAppDelegate toString:lastMsg[@"time"]] longLongValue] / 100));
+        WeMessage * lastMsg = [we_messagesWithDoctor[orderedIdOfDoctor[indexPath.section]] lastObject];
+        if ([lastMsg.messageType isEqualToString:@"C"]) {
+            long long restSecond = [we_maxResponseGap intValue] * 3600 - (long long) (([[NSDate date] timeIntervalSince1970] - lastMsg.time));
             cell.textLabel.text = [NSString stringWithFormat:@"[申请咨询中 剩余%lld小时%lld分钟]",  restSecond / 3600, restSecond % 3600 / 60];
             cell.textLabel.textColor = We_foreground_red_general;
         }
-        else if ([lastMsg[@"type"] isEqualToString:@"T"]) {
-            cell.textLabel.text = lastMsg[@"content"];
+        else if ([lastMsg.messageType isEqualToString:@"T"]) {
+            cell.textLabel.text = lastMsg.content;
             cell.textLabel.textColor = We_foreground_black_general;
         }
         else {
-            cell.textLabel.text = [NSString stringWithFormat:@"尚未处理此类型(%@)的消息:%@", lastMsg[@"type"], lastMsg[@"content"]];
+            cell.textLabel.text = [NSString stringWithFormat:@"尚未处理此类型(%@)的消息:%@", lastMsg.messageType, lastMsg.content];
         }
-        cell.detailTextLabel.text = [WeAppDelegate transitionToDateFromSecond:[lastMsg[@"time"] longLongValue]];
+        cell.detailTextLabel.text = [WeAppDelegate transitionToDateFromSecond:lastMsg.time];
         cell.textLabel.font = We_font_textfield_small_zh_cn;
         cell.detailTextLabel.font = We_font_textfield_small_zh_cn;
     }

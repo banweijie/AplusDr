@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AFNetworking.h>
 
 @interface WeMessage : NSObject
 
@@ -16,9 +17,13 @@
 @property(strong, nonatomic) NSString * senderId;
 @property(strong, nonatomic) NSString * viewed;
 @property(strong, nonatomic) NSString * content;
-@property(strong, nonatomic) NSString * time;
+@property(nonatomic) long long time;
+
+
+@property(strong, nonatomic) UIImage * imageContent;
 
 - (WeMessage *)initWithNSDictionary:(NSDictionary *)info;
 - (void)setWithNSDictionary:(NSDictionary *)info;
+- (NSString *)stringValue;
 
 @end

@@ -100,7 +100,7 @@
 
 - (void)refreshMessage:(id)sender {
     // 根据信息数量判断是否需要刷新
-    NSLog(@"%ul", [we_messagesWithDoctor[we_doctorChating] count]);
+    NSLog(@"\n msg amount : %u", [we_messagesWithDoctor[we_doctorChating] count]);
     if ([we_messagesWithDoctor[we_doctorChating] count] == currentCount) return;
     currentCount = [we_messagesWithDoctor[we_doctorChating] count];
     
@@ -109,20 +109,37 @@
     
     // 依次访问每条信息
     for (int i = 0; i < [we_messagesWithDoctor[we_doctorChating] count]; i++) {
-        NSLog(@"%@", we_messagesWithDoctor[we_doctorChating][i]);
-        //WeMessage * message = [[WeMessage alloc] initWithNSDictionary];
-        long long t = [we_messagesWithDoctor[we_doctorChating][i][@"time"] longLongValue] / 100;
-        NSBubbleData * bubble ;
-        if ([[NSString stringWithFormat:@"%@", we_messagesWithDoctor[we_doctorChating][i][@"senderId"]] isEqualToString:we_doctorChating]) {
-            bubble = [NSBubbleData dataWithText:we_messagesWithDoctor[we_doctorChating][i][@"content"] date:[NSDate dateWithTimeIntervalSince1970:t] type:BubbleTypeSomeoneElse];
-            bubble.avatar = [(WeFavorDoctor *)favorDoctors[we_doctorChating] avatar];
+        // 提取当前处理的信息
+        WeMessage * message = (WeMessage *) we_messagesWithDoctor[we_doctorChating][i];
+        NSLog(@"%@", [message stringValue]);
+        
+        // 判断发送方
+        NSBubbleType senderType;
+        UIImage * senderAvatar;
+        if ([message.senderId isEqualToString:we_doctorChating]) {
+            senderType = BubbleTypeSomeoneElse;
+            senderAvatar = [(WeFavorDoctor *)favorDoctors[we_doctorChating] avatar];
         }
         else {
-            bubble = [NSBubbleData dataWithText:we_messagesWithDoctor[we_doctorChating][i][@"content"] date:[NSDate dateWithTimeIntervalSince1970:t] type:BubbleTypeMine];
-            bubble.avatar = currentUser.avatar;
+            senderType = BubbleTypeMine;
+            senderAvatar = currentUser.avatar;
         }
+        
+        // 判断信息类型
+        NSBubbleData * bubble;
+        
+        if ([message.messageType isEqualToString:@"T"]) {
+            bubble = [NSBubbleData dataWithText:message.content date:[NSDate dateWithTimeIntervalSince1970:message.time] type:senderType];
+        }
+        else if ([message.messageType isEqualToString:@"I"]) {
+            bubble = [NSBubbleData dataWithImage:message.imageContent date:[NSDate dateWithTimeIntervalSince1970:message.time] type:senderType];
+        }
+        
+        // 添加到数组中
         [bubbleData addObject:bubble];
     }
+    
+    // 重载数据并滑至最底
     [bubbletTableView reloadData];
     [bubbletTableView scrollBubbleViewToBottomAnimated:YES];
 }
@@ -186,6 +203,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"!!!!!!!!");
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     

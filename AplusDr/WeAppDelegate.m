@@ -96,14 +96,14 @@
 }
 
 + (NSString *)transitionToDateFromSecond:(long long)s {
-    NSDate * t = [NSDate dateWithTimeIntervalSince1970:s / 100];
+    NSDate * t = [NSDate dateWithTimeIntervalSince1970:s];
     NSDate * date = [NSDate date];
     NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
     NSDateComponents * the = [calendar components:unitFlags fromDate:t];
     NSDateComponents * now = [calendar components:unitFlags fromDate:date];
     
-    if ([[NSDate date] timeIntervalSince1970] - s / 100 <= 24 * 3600) {
+    if ([[NSDate date] timeIntervalSince1970] - s <= 24 * 3600) {
         if ([the day] != [now day]) return [NSString stringWithFormat:@"昨天 %02d:%02d", [the hour], [the minute]];
         else return [NSString stringWithFormat:@"%02d:%02d", [the hour], [the minute]];
     }
@@ -298,7 +298,9 @@
 }
 
 - (void)refreshMessage:(id)sender {
+    // 判断登录状态
     if (!we_logined) return;
+    
     NSLog(@"refreshMessage(lastMessageId = %@)", [userDefaults stringForKey:@"lastMessageId"]);
     
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
@@ -311,15 +313,30 @@
              NSString * result = [NSString stringWithFormat:@"%@", [HTTPResponse objectForKey:@"result"]];
              
              if ([result isEqualToString:@"1"]) {
+                 // 获取所有信息
                  NSArray * messages = [HTTPResponse objectForKey:@"response"];
-                 //NSLog(@"%@", messages);
-                 for (int i = 0; i < [messages count]; i ++) {
-                     NSString * doctorId = [WeAppDelegate toString:messages[i][@"senderId"]];
-                     if (we_messagesWithDoctor[doctorId] == NULL) we_messagesWithDoctor[doctorId] = [[NSMutableArray alloc] init];
-                     [we_messagesWithDoctor[doctorId] addObject:messages[i]];
-                     [userDefaults setValue:messages[i][@"id"] forKey:@"lastMessageId"];
+                 
+                 // 依次处理所有信息
+                 if ([messages count] > 0) {
+                     WeMessage * message;
+                     for (int i = 0; i < [messages count]; i ++) {
+                         // 取出某一条消息
+                         message = [[WeMessage alloc] initWithNSDictionary:messages[i]];
+                         // 如果是图片消息则去读取图片
+                         if ([message.messageType isEqualToString:@"I"]) {
+                             [self DownloadImageWithURL:yijiarenImageUrl(message.content) successCompletion:^(id image) {
+                                 message.imageContent = (UIImage *) image;
+                             }];
+                         }
+                         // 添加到所属医生的信息列表中
+                         if (we_messagesWithDoctor[message.senderId] == NULL) {
+                             we_messagesWithDoctor[message.senderId] = [[NSMutableArray alloc] init];
+                         }
+                         [we_messagesWithDoctor[message.senderId] addObject:message];
+                     }
+                     // 设置最后读取的信息
+                     [userDefaults setValue:message.messageId forKey:@"lastMessageId"];
                  }
-                 //NSLog(@"%@", we_messagesWithDoctor);
                  return;
              }
              if ([result isEqualToString:@"2"]) {
