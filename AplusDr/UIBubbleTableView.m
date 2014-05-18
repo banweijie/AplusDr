@@ -87,7 +87,7 @@
 
 - (void)reloadData
 {
-    self.showsVerticalScrollIndicator = NO;
+    self.showsVerticalScrollIndicator = YES;
     self.showsHorizontalScrollIndicator = NO;
     
     // Cleaning up

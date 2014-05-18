@@ -14,6 +14,7 @@
 #import "WeDoctor.h"
 #import "WeFavorDoctor.h"
 #import "WeToolButton.h"
+#import "WeMessage.h"
 
 @interface WeAppDelegate : UIResponder <UIApplicationDelegate>
 

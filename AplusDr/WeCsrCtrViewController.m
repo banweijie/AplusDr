@@ -99,12 +99,18 @@
 }
 
 - (void)refreshMessage:(id)sender {
-    bubbleData = [[NSMutableArray alloc] init];
-    //NSLog(@"!!! %@ %@", we_messagesWithPatient, we_patient_chating);
+    // 根据信息数量判断是否需要刷新
     NSLog(@"%ul", [we_messagesWithDoctor[we_doctorChating] count]);
     if ([we_messagesWithDoctor[we_doctorChating] count] == currentCount) return;
     currentCount = [we_messagesWithDoctor[we_doctorChating] count];
+    
+    // 初始化信息数组
+    bubbleData = [[NSMutableArray alloc] init];
+    
+    // 依次访问每条信息
     for (int i = 0; i < [we_messagesWithDoctor[we_doctorChating] count]; i++) {
+        NSLog(@"%@", we_messagesWithDoctor[we_doctorChating][i]);
+        //WeMessage * message = [[WeMessage alloc] initWithNSDictionary];
         long long t = [we_messagesWithDoctor[we_doctorChating][i][@"time"] longLongValue] / 100;
         NSBubbleData * bubble ;
         if ([[NSString stringWithFormat:@"%@", we_messagesWithDoctor[we_doctorChating][i][@"senderId"]] isEqualToString:we_doctorChating]) {
@@ -205,7 +211,7 @@
     [self.view addSubview:unionView];
     
     // sys_tableView
-    bubbletTableView = [[UIBubbleTableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - 40 - 10) style:UITableViewStyleGrouped];
+    bubbletTableView = [[UIBubbleTableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - 40) style:UITableViewStyleGrouped];
     bubbletTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     bubbletTableView.backgroundColor = [UIColor clearColor];
     
