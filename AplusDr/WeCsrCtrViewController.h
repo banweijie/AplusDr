@@ -10,6 +10,6 @@
 #import "UIBubbleTableView.h"
 #import "WeSPViewController.h"
 
-@interface WeCsrCtrViewController : UIViewController <UIBubbleTableViewDataSource, UITextFieldDelegate>
+@interface WeCsrCtrViewController : UIViewController  <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end

@@ -13,6 +13,7 @@
 #import "WeUser.h"
 #import "WeDoctor.h"
 #import "WeFavorDoctor.h"
+#import "WeToolButton.h"
 
 @interface WeAppDelegate : UIResponder <UIApplicationDelegate>
 
