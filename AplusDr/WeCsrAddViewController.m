@@ -8,7 +8,6 @@
 
 #import "WeCsrAddViewController.h"
 #import "WeAppDelegate.h"
-#import "PAImageView.h"
 
 @interface WeCsrAddViewController () {
     UITableView * sys_tableView;

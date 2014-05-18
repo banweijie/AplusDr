@@ -37,7 +37,6 @@
 		907D5B37192014230006EAE0 /* WeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B36192014230006EAE0 /* WeViewController.m */; };
 		907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B3D1920164B0006EAE0 /* WeCsrIdxViewController.m */; };
 		907D5B411920164B0006EAE0 /* WeCsrNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B3F1920164B0006EAE0 /* WeCsrNavViewController.m */; };
-		907D5B46192017260006EAE0 /* PAImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B45192017260006EAE0 /* PAImageView.m */; };
 		907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */; };
 		907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B4B19202BC10006EAE0 /* WeCsrDciViewController.m */; };
 		907D5B541920C8590006EAE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 907D5B531920C8590006EAE0 /* Images.xcassets */; };
@@ -127,8 +126,6 @@
 		907D5B3D1920164B0006EAE0 /* WeCsrIdxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrIdxViewController.m; sourceTree = "<group>"; };
 		907D5B3E1920164B0006EAE0 /* WeCsrNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrNavViewController.h; sourceTree = "<group>"; };
 		907D5B3F1920164B0006EAE0 /* WeCsrNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrNavViewController.m; sourceTree = "<group>"; };
-		907D5B44192017260006EAE0 /* PAImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAImageView.h; sourceTree = "<group>"; };
-		907D5B45192017260006EAE0 /* PAImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAImageView.m; sourceTree = "<group>"; };
 		907D5B4719201CF20006EAE0 /* WeCsrAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrAddViewController.h; sourceTree = "<group>"; };
 		907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrAddViewController.m; sourceTree = "<group>"; };
 		907D5B4A19202BC10006EAE0 /* WeCsrDciViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrDciViewController.h; sourceTree = "<group>"; };
@@ -267,7 +264,6 @@
 			children = (
 				90F0CE6219228C97006A4605 /* Model */,
 				907D5B5B1920D9C50006EAE0 /* UIBubbleTableView */,
-				907D5B43192017260006EAE0 /* PAImageView */,
 				9026EF101904EEEF00CE4A7A /* VPImageCropper */,
 				9026EF111904EEFC00CE4A7A /* Customs */,
 				9026EEB51904EE5500CE4A7A /* WeAppDelegate.h */,
@@ -409,15 +405,6 @@
 				90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */,
 			);
 			name = ConsultingRoom;
-			sourceTree = "<group>";
-		};
-		907D5B43192017260006EAE0 /* PAImageView */ = {
-			isa = PBXGroup;
-			children = (
-				907D5B44192017260006EAE0 /* PAImageView.h */,
-				907D5B45192017260006EAE0 /* PAImageView.m */,
-			);
-			path = PAImageView;
 			sourceTree = "<group>";
 		};
 		907D5B5B1920D9C50006EAE0 /* UIBubbleTableView */ = {
@@ -613,7 +600,6 @@
 				9026EEFC1904EE5500CE4A7A /* WePecPeaViewController.m in Sources */,
 				907D5B5A1920D9AD0006EAE0 /* WeCsrCtrViewController.m in Sources */,
 				907D5B411920164B0006EAE0 /* WeCsrNavViewController.m in Sources */,
-				907D5B46192017260006EAE0 /* PAImageView.m in Sources */,
 				90F0CE831926F820006A4605 /* WeCsrSelArea2ViewController.m in Sources */,
 				907D5B671920D9DA0006EAE0 /* NSBubbleData.m in Sources */,
 				907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */,

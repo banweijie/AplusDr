@@ -7,7 +7,6 @@
 //
 
 #import "WeCsrIdxViewController.h"
-#import "PAImageView.h"
 #import "WeAppDelegate.h"
 #import <AFNetworking.h>
 #import <UIImageView+AFNetworking.h>

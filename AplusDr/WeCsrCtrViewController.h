@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UIBubbleTableView.h"
 #import "WeSPViewController.h"
+#import "WeToolButton.h"
 
 @interface WeCsrCtrViewController : UIViewController  <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
