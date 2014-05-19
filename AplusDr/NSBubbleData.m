@@ -32,7 +32,7 @@
     _view = nil;
     
     self.avatar = nil;
-
+    
     [super dealloc];
 }
 #endif
@@ -48,7 +48,7 @@ const UIEdgeInsets textInsetsSomeone = {15, 20, 15, 15};
     return [[[NSBubbleData alloc] initWithText:text date:date type:type] autorelease];
 #else
     return [[NSBubbleData alloc] initWithText:text date:date type:type];
-#endif    
+#endif
 }
 
 - (id)initWithText:(NSString *)text date:(NSDate *)date type:(NSBubbleType)type
@@ -73,8 +73,8 @@ const UIEdgeInsets textInsetsSomeone = {15, 20, 15, 15};
 
 #pragma mark - Image bubble
 
-const UIEdgeInsets imageInsetsMine = {25, 20, 25, 20};
-const UIEdgeInsets imageInsetsSomeone = {25, 20, 25, 20};
+const UIEdgeInsets imageInsetsMine = {10, 10, 10, 15};
+const UIEdgeInsets imageInsetsSomeone = {10, 15, 10, 10};
 
 + (id)dataWithImage:(UIImage *)image date:(NSDate *)date type:(NSBubbleType)type
 {
@@ -82,30 +82,30 @@ const UIEdgeInsets imageInsetsSomeone = {25, 20, 25, 20};
     return [[[NSBubbleData alloc] initWithImage:image date:date type:type] autorelease];
 #else
     return [[NSBubbleData alloc] initWithImage:image date:date type:type];
-#endif    
+#endif
 }
 
 - (id)initWithImage:(UIImage *)image date:(NSDate *)date type:(NSBubbleType)type
 {
     CGSize size = image.size;
-    if (size.width > 240)
+    if (size.width > 220)
     {
-        size.height /= (size.width / 240);
-        size.width = 240;
+        size.height /= (size.width / 220);
+        size.width = 220;
     }
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     imageView.image = image;
     imageView.layer.cornerRadius = 5.0;
     imageView.layer.masksToBounds = YES;
-
+    
     
 #if !__has_feature(objc_arc)
     [imageView autorelease];
 #endif
     
     UIEdgeInsets insets = (type == BubbleTypeMine ? imageInsetsMine : imageInsetsSomeone);
-    return [self initWithView:imageView date:date type:type insets:insets];       
+    return [self initWithView:imageView date:date type:type insets:insets];
 }
 
 #pragma mark - Custom view bubble
@@ -116,10 +116,10 @@ const UIEdgeInsets imageInsetsSomeone = {25, 20, 25, 20};
     return [[[NSBubbleData alloc] initWithView:view date:date type:type insets:insets] autorelease];
 #else
     return [[NSBubbleData alloc] initWithView:view date:date type:type insets:insets];
-#endif    
+#endif
 }
 
-- (id)initWithView:(UIView *)view date:(NSDate *)date type:(NSBubbleType)type insets:(UIEdgeInsets)insets  
+- (id)initWithView:(UIView *)view date:(NSDate *)date type:(NSBubbleType)type insets:(UIEdgeInsets)insets
 {
     self = [super init];
     if (self)

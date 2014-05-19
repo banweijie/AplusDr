@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AFNetworking.h>
 #import <UIImageView+AFNetworking.h>
+#import "VoiceConverter.h"
 
 #import "WeUser.h"
 #import "WeDoctor.h"

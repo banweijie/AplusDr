@@ -10,6 +10,13 @@
 		1E50538D81C24E6FA4893A80 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889390EBA434F5EA5AF2361 /* libPods.a */; };
 		900E28C81928F8E6008BF61C /* WeToolButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28C71928F8E6008BF61C /* WeToolButton.m */; };
 		900E28CB19290239008BF61C /* WeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28CA19290239008BF61C /* WeMessage.m */; };
+		900E29571929B44C008BF61C /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 900E29491929B44C008BF61C /* amrFileCodec.mm */; };
+		900E29581929B44C008BF61C /* wav.mm in Sources */ = {isa = PBXBuildFile; fileRef = 900E294B1929B44C008BF61C /* wav.mm */; };
+		900E29591929B44C008BF61C /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 900E294D1929B44C008BF61C /* libopencore-amrnb.a */; };
+		900E295A1929B44C008BF61C /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 900E294E1929B44C008BF61C /* libopencore-amrwb.a */; };
+		900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 900E29561929B44C008BF61C /* VoiceConverter.mm */; };
+		900E295E1929C380008BF61C /* WeInfoedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E295D1929C380008BF61C /* WeInfoedButton.m */; };
+		900E29601929E86F008BF61C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 900E295F1929E86F008BF61C /* Media.xcassets */; };
 		90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */; };
 		9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE191904E8A700CE4A7A /* Foundation.framework */; };
 		9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */; };
@@ -39,7 +46,6 @@
 		907D5B411920164B0006EAE0 /* WeCsrNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B3F1920164B0006EAE0 /* WeCsrNavViewController.m */; };
 		907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */; };
 		907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B4B19202BC10006EAE0 /* WeCsrDciViewController.m */; };
-		907D5B541920C8590006EAE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 907D5B531920C8590006EAE0 /* Images.xcassets */; };
 		907D5B571920CD4B0006EAE0 /* WeCsrCosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B561920CD4B0006EAE0 /* WeCsrCosViewController.m */; };
 		907D5B5A1920D9AD0006EAE0 /* WeCsrCtrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B591920D9AD0006EAE0 /* WeCsrCtrViewController.m */; };
 		907D5B671920D9DA0006EAE0 /* NSBubbleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B5D1920D9DA0006EAE0 /* NSBubbleData.m */; };
@@ -80,6 +86,21 @@
 		900E28C71928F8E6008BF61C /* WeToolButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeToolButton.m; sourceTree = "<group>"; };
 		900E28C919290239008BF61C /* WeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeMessage.h; sourceTree = "<group>"; };
 		900E28CA19290239008BF61C /* WeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeMessage.m; sourceTree = "<group>"; };
+		900E29481929B44C008BF61C /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amrFileCodec.h; sourceTree = "<group>"; };
+		900E29491929B44C008BF61C /* amrFileCodec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = amrFileCodec.mm; sourceTree = "<group>"; };
+		900E294A1929B44C008BF61C /* wav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav.h; sourceTree = "<group>"; };
+		900E294B1929B44C008BF61C /* wav.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = wav.mm; sourceTree = "<group>"; };
+		900E294D1929B44C008BF61C /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
+		900E294E1929B44C008BF61C /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
+		900E29501929B44C008BF61C /* interf_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_dec.h; sourceTree = "<group>"; };
+		900E29511929B44C008BF61C /* interf_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_enc.h; sourceTree = "<group>"; };
+		900E29531929B44C008BF61C /* dec_if.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dec_if.h; sourceTree = "<group>"; };
+		900E29541929B44C008BF61C /* if_rom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = if_rom.h; sourceTree = "<group>"; };
+		900E29551929B44C008BF61C /* VoiceConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceConverter.h; sourceTree = "<group>"; };
+		900E29561929B44C008BF61C /* VoiceConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VoiceConverter.mm; sourceTree = "<group>"; };
+		900E295C1929C380008BF61C /* WeInfoedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeInfoedButton.h; sourceTree = "<group>"; };
+		900E295D1929C380008BF61C /* WeInfoedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeInfoedButton.m; sourceTree = "<group>"; };
+		900E295F1929E86F008BF61C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../Media.xcassets; sourceTree = "<group>"; };
 		90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrJiaViewController.h; sourceTree = "<group>"; };
 		90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrJiaViewController.m; sourceTree = "<group>"; };
 		9026EE161904E8A700CE4A7A /* AplusDr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AplusDr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,7 +151,6 @@
 		907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrAddViewController.m; sourceTree = "<group>"; };
 		907D5B4A19202BC10006EAE0 /* WeCsrDciViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrDciViewController.h; sourceTree = "<group>"; };
 		907D5B4B19202BC10006EAE0 /* WeCsrDciViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrDciViewController.m; sourceTree = "<group>"; };
-		907D5B531920C8590006EAE0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		907D5B551920CD4B0006EAE0 /* WeCsrCosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrCosViewController.h; sourceTree = "<group>"; };
 		907D5B561920CD4B0006EAE0 /* WeCsrCosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrCosViewController.m; sourceTree = "<group>"; };
 		907D5B581920D9AD0006EAE0 /* WeCsrCtrViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrCtrViewController.h; sourceTree = "<group>"; };
@@ -187,6 +207,8 @@
 				9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */,
 				9026EE1E1904E8A700CE4A7A /* UIKit.framework in Frameworks */,
 				9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */,
+				900E29591929B44C008BF61C /* libopencore-amrnb.a in Frameworks */,
+				900E295A1929B44C008BF61C /* libopencore-amrwb.a in Frameworks */,
 				1E50538D81C24E6FA4893A80 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,6 +226,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		900E29461929B44C008BF61C /* VoiceConvert */ = {
+			isa = PBXGroup;
+			children = (
+				900E29471929B44C008BF61C /* amrwapper */,
+				900E294C1929B44C008BF61C /* lib */,
+				900E294F1929B44C008BF61C /* opencore-amrnb */,
+				900E29521929B44C008BF61C /* opencore-amrwb */,
+				900E29551929B44C008BF61C /* VoiceConverter.h */,
+				900E29561929B44C008BF61C /* VoiceConverter.mm */,
+			);
+			path = VoiceConvert;
+			sourceTree = "<group>";
+		};
+		900E29471929B44C008BF61C /* amrwapper */ = {
+			isa = PBXGroup;
+			children = (
+				900E29481929B44C008BF61C /* amrFileCodec.h */,
+				900E29491929B44C008BF61C /* amrFileCodec.mm */,
+				900E294A1929B44C008BF61C /* wav.h */,
+				900E294B1929B44C008BF61C /* wav.mm */,
+			);
+			path = amrwapper;
+			sourceTree = "<group>";
+		};
+		900E294C1929B44C008BF61C /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				900E294D1929B44C008BF61C /* libopencore-amrnb.a */,
+				900E294E1929B44C008BF61C /* libopencore-amrwb.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		900E294F1929B44C008BF61C /* opencore-amrnb */ = {
+			isa = PBXGroup;
+			children = (
+				900E29501929B44C008BF61C /* interf_dec.h */,
+				900E29511929B44C008BF61C /* interf_enc.h */,
+			);
+			path = "opencore-amrnb";
+			sourceTree = "<group>";
+		};
+		900E29521929B44C008BF61C /* opencore-amrwb */ = {
+			isa = PBXGroup;
+			children = (
+				900E29531929B44C008BF61C /* dec_if.h */,
+				900E29541929B44C008BF61C /* if_rom.h */,
+			);
+			path = "opencore-amrwb";
+			sourceTree = "<group>";
+		};
 		90266C3919276CB200478A89 /* Selection */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,6 +335,7 @@
 		9026EE1F1904E8A700CE4A7A /* AplusDr */ = {
 			isa = PBXGroup;
 			children = (
+				900E29461929B44C008BF61C /* VoiceConvert */,
 				90F0CE6219228C97006A4605 /* Model */,
 				907D5B5B1920D9C50006EAE0 /* UIBubbleTableView */,
 				9026EF101904EEEF00CE4A7A /* VPImageCropper */,
@@ -273,7 +347,7 @@
 				9026EF141904EF8300CE4A7A /* PersonalCenter */,
 				907D5B42192016580006EAE0 /* ConsultingRoom */,
 				9026EEEF1904EE5500CE4A7A /* Main.storyboard */,
-				907D5B531920C8590006EAE0 /* Images.xcassets */,
+				900E295F1929E86F008BF61C /* Media.xcassets */,
 				9026EE201904E8A700CE4A7A /* Supporting Files */,
 			);
 			path = AplusDr;
@@ -332,6 +406,8 @@
 				9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */,
 				900E28C61928F8E6008BF61C /* WeToolButton.h */,
 				900E28C71928F8E6008BF61C /* WeToolButton.m */,
+				900E295C1929C380008BF61C /* WeInfoedButton.h */,
+				900E295D1929C380008BF61C /* WeInfoedButton.m */,
 			);
 			name = Customs;
 			sourceTree = "<group>";
@@ -519,8 +595,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				907D5B541920C8590006EAE0 /* Images.xcassets in Resources */,
 				9026EF0F1904EE5500CE4A7A /* Main.storyboard in Resources */,
+				900E29601929E86F008BF61C /* Media.xcassets in Resources */,
 				9026EE241904E8A700CE4A7A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -578,6 +654,7 @@
 				907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */,
 				90F0CE801926D0CA006A4605 /* WeCsrSelAreaViewController.m in Sources */,
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
+				900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
 				9026EEF01904EE5500CE4A7A /* VPImageCropperViewController.m in Sources */,
 				90F0CE861926FE68006A4605 /* WeCsrSelHosViewController.m in Sources */,
@@ -594,10 +671,13 @@
 				907D5B691920D9DA0006EAE0 /* UIBubbleTableView.m in Sources */,
 				90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */,
 				90F0CE61192234E8006A4605 /* WeMapIdxViewController.m in Sources */,
+				900E29571929B44C008BF61C /* amrFileCodec.mm in Sources */,
 				90F0CE7119229973006A4605 /* WeNavViewController.m in Sources */,
 				90F0CE741922CF55006A4605 /* WeInpNamViewController.m in Sources */,
 				9026EEF11904EE5500CE4A7A /* WeTableViewCell.m in Sources */,
+				900E29581929B44C008BF61C /* wav.mm in Sources */,
 				9026EEFC1904EE5500CE4A7A /* WePecPeaViewController.m in Sources */,
+				900E295E1929C380008BF61C /* WeInfoedButton.m in Sources */,
 				907D5B5A1920D9AD0006EAE0 /* WeCsrCtrViewController.m in Sources */,
 				907D5B411920164B0006EAE0 /* WeCsrNavViewController.m in Sources */,
 				90F0CE831926F820006A4605 /* WeCsrSelArea2ViewController.m in Sources */,
@@ -737,6 +817,11 @@
 				GCC_PREFIX_HEADER = "AplusDr/AplusDr-Prefix.pch";
 				INFOPLIST_FILE = "AplusDr/AplusDr-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/AplusDr/arm/lib",
+					"$(PROJECT_DIR)/AplusDr/VoiceConvert/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -753,6 +838,11 @@
 				GCC_PREFIX_HEADER = "AplusDr/AplusDr-Prefix.pch";
 				INFOPLIST_FILE = "AplusDr/AplusDr-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/AplusDr/arm/lib",
+					"$(PROJECT_DIR)/AplusDr/VoiceConvert/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

@@ -17,10 +17,11 @@
 @property(strong, nonatomic) NSString * senderId;
 @property(strong, nonatomic) NSString * viewed;
 @property(strong, nonatomic) NSString * content;
+@property(nonatomic) BOOL loading;
 @property(nonatomic) long long time;
 
-
 @property(strong, nonatomic) UIImage * imageContent;
+@property(strong, nonatomic) NSData * audioContent;
 
 - (WeMessage *)initWithNSDictionary:(NSDictionary *)info;
 - (void)setWithNSDictionary:(NSDictionary *)info;

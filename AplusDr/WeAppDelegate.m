@@ -299,7 +299,45 @@
                          if ([message.messageType isEqualToString:@"I"]) {
                              [self DownloadImageWithURL:yijiarenImageUrl(message.content) successCompletion:^(id image) {
                                  message.imageContent = (UIImage *) image;
+                                 message.loading = NO;
                              }];
+                         }
+                         if ([message.messageType isEqualToString:@"A"]) {
+                             /*
+                             AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+                             manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/octet-stream"];
+                             [manager GET:yijiarenImageUrl(message.content) parameters:nil
+                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                        NSLog(@"successful download to %@", yijiarenImageUrl(message.content));
+                                        NSData * tmp = responseObject;
+                                        NSLog(@"%@", tmp);
+                                        [tmp writeToFile:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), message.content] atomically:YES];
+                                    }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      NSLog(@"Error: %@", error);
+                                }];*/
+                             NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+                             AFURLSessionManager * manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+                             
+                             NSURL *URL = [NSURL URLWithString:yijiarenImageUrl(message.content)];
+                             NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+                             
+                             NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+                                 NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+                                 return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+                             } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+                                 NSLog(@"File downloaded to: %@", filePath);
+                                 [VoiceConverter amrToWav:filePath.path wavSavePath:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
+                                 message.audioContent = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
+                                 NSLog(@"%@ %@", filePath.path, [NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]);
+                                 message.loading = NO;
+                             }];
+                             [downloadTask resume];
+                             NSLog(@"!!!:%@", yijiarenImageUrl(message.content));
+                             NSLog(@"!!!!:%@", [NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), message.content]);
+                         }
+                         else {
+                             message.loading = NO;
                          }
                          // 添加到所属医生的信息列表中
                          if (we_messagesWithDoctor[message.senderId] == NULL) {
@@ -336,7 +374,9 @@
 }
 
 - (void)refreshDoctorList:(id)sender {
+    // 判断登录状态
     if (!we_logined) return;
+    
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager GET:yijiarenUrl(@"patient", @"listFavorDoctors") parameters:nil
@@ -346,14 +386,28 @@
              NSString *result = [HTTPResponse objectForKey:@"result"];
              result = [NSString stringWithFormat:@"%@", result];
              if ([result isEqualToString:@"1"]) {
-                 favorDoctors = [[NSMutableDictionary alloc] init];
+                 NSMutableDictionary * newFavorDoctors = [[NSMutableDictionary alloc] init];
                  NSArray * favorDoctorList = HTTPResponse[@"response"];
-                 ///NSLog(@"%@", favorDoctorList);
                  for (int i = 0; i < [favorDoctorList count]; i++) {
+                     // 取出原来的医生和现在的医生
                      WeFavorDoctor * newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorList[i][@"doctor"]];
-                     //NSLog(@"%d %@ %@", i, newDoctor.userId, favorDoctorList[i]);
-                     favorDoctors[newDoctor.userId] = newDoctor;
+                     WeFavorDoctor * oldDoctor = (WeFavorDoctor *) favorDoctors[newDoctor.userId];
+                     
+                     
+                     // 如果头像变化则前往更新，否则沿用之前的
+                     if (![oldDoctor.avatarPath isEqualToString:newDoctor.avatarPath]) {
+                         [self DownloadImageWithURL:yijiarenAvatarUrl(newDoctor.avatarPath) successCompletion:^(id image) {
+                             newDoctor.avatar = image;
+                             NSLog(@"Download Image(%@) succeed, doctor(%@)' avatar has been changed.", newDoctor.avatarPath, newDoctor.userName);
+                         }];
+                     }
+                     else {
+                         newDoctor.avatar = oldDoctor.avatar;
+                     }
+                     
+                     newFavorDoctors[newDoctor.userId] = newDoctor;
                  }
+                 favorDoctors = newFavorDoctors;
                  return;
              }
              if ([result isEqualToString:@"2"]) {
