@@ -222,7 +222,7 @@
     We_init_textFieldInCell_pholder(user_password_input, @"请输入您的登录密码", We_font_textfield_zh_cn);
     user_password_input.secureTextEntry = YES;
     
-    user_phone_input.text = @"18810521310";
+    user_phone_input.text = @"18810521311";
     user_password_input.text = @"52yuqing";
     
     // user_forgetpass

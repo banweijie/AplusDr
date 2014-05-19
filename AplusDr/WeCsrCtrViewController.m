@@ -98,11 +98,11 @@ static double endRecordTime = 0;
         [manager POST:yijiarenUrl(@"message", @"postFileMsg") parameters:@{
                                                                            @"receiverId":we_doctorChating,
                                                                            @"content":inputTextField.text,
-                                                                           @"fileFileName":@"a.jpeg",
+                                                                           @"fileFileName":@"a.jpg",
                                                                            @"type":@"I",
                                                                            }
         constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 1.0) name:@"file" fileName:@"a.jpg" mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 1.0) name:@"file" fileName:@"a.jpg" mimeType:@"Audio/amr"];
         }
               success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
                   NSString * errorMessage;
@@ -312,6 +312,8 @@ static double endRecordTime = 0;
     
     [VoiceConverter wavToAmr:[NSString stringWithFormat:@"%@record.wav", NSTemporaryDirectory()] amrSavePath:[NSString stringWithFormat:@"%@record.amr", NSTemporaryDirectory()]];
     
+    [VoiceConverter amrToWav:[NSString stringWithFormat:@"%@record.amr", NSTemporaryDirectory()] wavSavePath:[NSString stringWithFormat:@"%@record1.wav", NSTemporaryDirectory()]];
+    
     NSError *error;
     
     NSData * wavData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@record.wav", NSTemporaryDirectory()]options:NSDataReadingUncached error:&error];
@@ -332,9 +334,10 @@ static double endRecordTime = 0;
                                                                        @"receiverId":we_doctorChating,
                                                                        @"fileFileName":@"a.amr",
                                                                        @"type":@"A",
+                                                                       @"fileContentType":@"audio/AMR"
                                                                        }
             constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                [formData appendPartWithFileData:amrData name:@"file" fileName:@"a.jpg" mimeType:@"image/jpeg"];
+                [formData appendPartWithFileData:amrData name:@"file" fileName:@"a.amr" mimeType:@"image/jpeg"];
             }
           success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
               NSString * errorMessage;
@@ -417,12 +420,11 @@ static double endRecordTime = 0;
     [self setExtendedLayoutIncludesOpaqueBars:YES];
     
     // Audio Recorder
-    NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
-                                   [NSNumber numberWithInt:AVAudioQualityLow], AVEncoderAudioQualityKey,
-                                   [NSNumber numberWithInt:16], AVEncoderBitRateKey,
-                                   [NSNumber numberWithInt:2], AVNumberOfChannelsKey,
-                                   [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
+    NSDictionary *recordSetting = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                   [NSNumber numberWithFloat: 8000.0],AVSampleRateKey, //采样率
+                                   [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
+                                   [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,//采样位数 默认 16
+                                   [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,//通道的数目
                                    nil];
     //录音文件保存地址的URL
     NSString * urlString = NSTemporaryDirectory();
@@ -637,6 +639,8 @@ static double endRecordTime = 0;
     [self moveUnionView:keyboardBounds.size.height withDuration:KeyboardAnimationDurationUserInfoKey];
     [self changeInputMode:0];
     [self displayMoreInput:0];
+    
+    [UIView commitAnimations];
 }
 
 - (void)keyboardWillHide:(NSNotification*)notification {

@@ -302,20 +302,7 @@
                                  message.loading = NO;
                              }];
                          }
-                         if ([message.messageType isEqualToString:@"A"]) {
-                             /*
-                             AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-                             manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/octet-stream"];
-                             [manager GET:yijiarenImageUrl(message.content) parameters:nil
-                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                        NSLog(@"successful download to %@", yijiarenImageUrl(message.content));
-                                        NSData * tmp = responseObject;
-                                        NSLog(@"%@", tmp);
-                                        [tmp writeToFile:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), message.content] atomically:YES];
-                                    }
-                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                      NSLog(@"Error: %@", error);
-                                }];*/
+                         else if ([message.messageType isEqualToString:@"A"]) {
                              NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
                              AFURLSessionManager * manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
                              
@@ -327,14 +314,13 @@
                                  return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
                              } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
                                  NSLog(@"File downloaded to: %@", filePath);
+                                 if (error) NSLog(@"%@", error);
                                  [VoiceConverter amrToWav:filePath.path wavSavePath:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
                                  message.audioContent = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
-                                 NSLog(@"%@ %@", filePath.path, [NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]);
+                                 //NSLog(@"%@ %@", filePath.path, [NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]);
                                  message.loading = NO;
                              }];
                              [downloadTask resume];
-                             NSLog(@"!!!:%@", yijiarenImageUrl(message.content));
-                             NSLog(@"!!!!:%@", [NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), message.content]);
                          }
                          else {
                              message.loading = NO;
@@ -392,7 +378,6 @@
                      // 取出原来的医生和现在的医生
                      WeFavorDoctor * newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorList[i][@"doctor"]];
                      WeFavorDoctor * oldDoctor = (WeFavorDoctor *) favorDoctors[newDoctor.userId];
-                     
                      
                      // 如果头像变化则前往更新，否则沿用之前的
                      if (![oldDoctor.avatarPath isEqualToString:newDoctor.avatarPath]) {
