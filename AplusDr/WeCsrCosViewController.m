@@ -13,6 +13,8 @@
     UIView * sys_explaination_view;
     UILabel * sys_explaination_label;
     UITableView * sys_tableView;
+    UITextField * user_age_input;
+    UISwitch * user_ifemergent_switch;
 }
 
 @end
@@ -35,6 +37,15 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
+    if (path.section == 1 && path.row == 0) {
+        [self performSegueWithIdentifier:@"CsrCos_pushto_CsrCosSelGen" sender:self];
+    }
+    if (path.section == 1 && path.row == 1) {
+        [user_age_input becomeFirstResponder];
+    }
+    if (path.section == 2 && path.row == 0) {
+        [self addConsult:self];
+    }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
@@ -71,7 +82,7 @@
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
     if (section == 0) return 2;
-    if (section == 1) return 4;
+    if (section == 1) return 3;
     if (section == 2) return 1;
     return 0;
 }
@@ -80,7 +91,12 @@
     static NSString *MyIdentifier = @"MyReuseIdentifier";
     UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
     if (cell == nil) {
+        if (indexPath.section == 2) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
+        }
+        else {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
+        }
     }
     [[cell imageView] setContentMode:UIViewContentModeCenter];
     switch (indexPath.section) {
@@ -119,6 +135,45 @@
         default:
             break;
     }
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        cell.contentView.backgroundColor = We_background_cell_general;
+        
+        cell.textLabel.text = @"性别";
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        
+        cell.detailTextLabel.text = [WeAppDelegate transitionGenderFromChar:csrcos_selected_gender];
+        cell.detailTextLabel.font = We_font_textfield_zh_cn;
+        cell.detailTextLabel.textColor = We_foreground_black_general;
+    }
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        
+        cell.contentView.backgroundColor = We_background_cell_general;
+        
+        cell.textLabel.text = @"年龄";
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        
+        [cell.contentView addSubview:user_age_input];
+    }
+    if (indexPath.section == 1 && indexPath.row == 2) {
+        
+        cell.contentView.backgroundColor = We_background_cell_general;
+        
+        cell.textLabel.text = @"是否紧急";
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        
+        [cell.contentView addSubview:user_ifemergent_switch];
+    }
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        cell.backgroundColor = We_foreground_red_general;
+        
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.text = @"确认发起咨询";
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_white_general;
+    }
     return cell;
 }
 
@@ -131,7 +186,63 @@
     return self;
 }
 
-- (void)press:(id)sender {
+- (void)addConsult:(id)sender {
+    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:yijiarenUrl(@"patient", @"addConsult") parameters:@{
+                                                                      @"consult.doctor.id":doctorViewing.userId,
+                                                                      @"consult.gender":csrcos_selected_gender,
+                                                                      @"consult.age":user_age_input.text,
+                                                                      @"consult.emergent":user_ifemergent_switch.on?@"true":@"false"
+                                                                      }
+          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
+              NSString * errorMessage;
+              
+              NSString *result = [HTTPResponse objectForKey:@"result"];
+              result = [NSString stringWithFormat:@"%@", result];
+              if ([result isEqualToString:@"1"]) {
+                  NSLog(@"%@", HTTPResponse);
+                  [self dismissViewControllerAnimated:YES completion:nil];
+                  return;
+              }
+              if ([result isEqualToString:@"2"]) {
+                  NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
+                  NSEnumerator *enumerator = [fields keyEnumerator];
+                  id key;
+                  while ((key = [enumerator nextObject])) {
+                      NSString * tmp1 = [fields objectForKey:key];
+                      if (tmp1 != NULL) errorMessage = tmp1;
+                  }
+              }
+              if ([result isEqualToString:@"3"]) {
+                  errorMessage = [HTTPResponse objectForKey:@"info"];
+              }
+              if ([result isEqualToString:@"4"]) {
+                  errorMessage = [HTTPResponse objectForKey:@"info"];
+              }
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"发送信息失败"
+                                           message:errorMessage
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"发送信息失败"
+                                           message:@"未能连接服务器，请重试"
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+     ];
+    
+}
+
+- (void)user_cancel_onPress:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -140,8 +251,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
-    self.navigationItem.leftBarButtonItem = user_save;
+    // Initial conditions
+    csrcos_selected_gender = @"M";
+    
+    // 年龄输入
+    We_init_textFieldInCell_general(user_age_input, @"20", We_font_textfield_en_us);
+    
+    // 是否紧急
+    user_ifemergent_switch = [[UISwitch alloc] initWithFrame:CGRectMake(250, 5, 60, 30)];
+    
+    UIBarButtonItem * user_cancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(user_cancel_onPress:)];
+    self.navigationItem.leftBarButtonItem = user_cancel;
     
     // sys_explaination
     sys_explaination_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];

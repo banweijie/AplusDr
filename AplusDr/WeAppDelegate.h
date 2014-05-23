@@ -79,6 +79,9 @@ NSString * selection_title;
 NSString * selection_recommend;
 NSString * selection_keyword;
 
+// Consulting room - new consult - condition
+NSString * csrcos_selected_gender;
+
 NSString * we_phone_onReg;
 BOOL we_logined;
 int we_targetTabId;

@@ -217,6 +217,10 @@ static double endRecordTime = 0;
                 bubble = [NSBubbleData dataWithView:tmpButton date:[NSDate dateWithTimeIntervalSince1970:message.time] type:senderType insets:UIEdgeInsetsMake(10, 15, 10, 10)];
             }
         }
+        else if ([message.messageType isEqualToString:@"C"]) {
+            currentCount ++;
+            continue;
+        }
         else {
             bubble = [NSBubbleData dataWithText:message.content date:[NSDate dateWithTimeIntervalSince1970:message.time] type:senderType];
         }

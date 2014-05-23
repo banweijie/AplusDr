@@ -17,6 +17,7 @@
 		900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 900E29561929B44C008BF61C /* VoiceConverter.mm */; };
 		900E295E1929C380008BF61C /* WeInfoedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E295D1929C380008BF61C /* WeInfoedButton.m */; };
 		900E29601929E86F008BF61C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 900E295F1929E86F008BF61C /* Media.xcassets */; };
+		900E2966192FE8DC008BF61C /* WeCsrCosSelGenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E2965192FE8DC008BF61C /* WeCsrCosSelGenViewController.m */; };
 		90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */; };
 		9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE191904E8A700CE4A7A /* Foundation.framework */; };
 		9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */; };
@@ -101,6 +102,8 @@
 		900E295C1929C380008BF61C /* WeInfoedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeInfoedButton.h; sourceTree = "<group>"; };
 		900E295D1929C380008BF61C /* WeInfoedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeInfoedButton.m; sourceTree = "<group>"; };
 		900E295F1929E86F008BF61C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../Media.xcassets; sourceTree = "<group>"; };
+		900E2964192FE8DC008BF61C /* WeCsrCosSelGenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrCosSelGenViewController.h; sourceTree = "<group>"; };
+		900E2965192FE8DC008BF61C /* WeCsrCosSelGenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrCosSelGenViewController.m; sourceTree = "<group>"; };
 		90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrJiaViewController.h; sourceTree = "<group>"; };
 		90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrJiaViewController.m; sourceTree = "<group>"; };
 		9026EE161904E8A700CE4A7A /* AplusDr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AplusDr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -477,6 +480,8 @@
 				907D5B4B19202BC10006EAE0 /* WeCsrDciViewController.m */,
 				907D5B551920CD4B0006EAE0 /* WeCsrCosViewController.h */,
 				907D5B561920CD4B0006EAE0 /* WeCsrCosViewController.m */,
+				900E2964192FE8DC008BF61C /* WeCsrCosSelGenViewController.h */,
+				900E2965192FE8DC008BF61C /* WeCsrCosSelGenViewController.m */,
 				90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */,
 				90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */,
 			);
@@ -664,6 +669,7 @@
 				9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */,
 				9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */,
 				907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */,
+				900E2966192FE8DC008BF61C /* WeCsrCosSelGenViewController.m in Sources */,
 				900E28C81928F8E6008BF61C /* WeToolButton.m in Sources */,
 				907D5B681920D9DA0006EAE0 /* UIBubbleHeaderTableViewCell.m in Sources */,
 				90F0CE771922D711006A4605 /* WeDoctor.m in Sources */,

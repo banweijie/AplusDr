@@ -521,10 +521,34 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="发起咨询" id="KiJ-Nx-yoR"/>
+                    <connections>
+                        <segue destination="A4q-LM-WSu" kind="push" identifier="CsrCos_pushto_CsrCosSelGen" id="HFc-zg-eDE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hii-VN-xGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3275" y="3707"/>
+            <point key="canvasLocation" x="4903" y="4547"/>
+        </scene>
+        <!--We Csr Cos Sel Gen View Controller - 选择性别-->
+        <scene sceneID="fCH-w4-dbX">
+            <objects>
+                <viewController id="A4q-LM-WSu" customClass="WeCsrCosSelGenViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yTx-Qu-fJ1"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ruc-Y2-LL9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vwT-PD-ZgR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="选择性别" id="A5x-xI-yso">
+                        <barButtonItem key="backBarButtonItem" title="返回" id="a2W-BF-6gy"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AhN-vx-5IN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5453" y="4551"/>
         </scene>
         <!--We Csr Sel Cat View Controller - 选择类别-->
         <scene sceneID="ehb-kk-rkq">
@@ -700,7 +724,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vac-Gy-5TH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2733" y="3697"/>
+            <point key="canvasLocation" x="4361" y="4537"/>
         </scene>
         <!--We Csr Jia View Controller - 申请加号-->
         <scene sceneID="qiP-eM-o6Z">
