@@ -595,6 +595,8 @@ static double endRecordTime = 0;
         [self changeInputMode:1];
         [self displayMoreInput:NO];
         [self moveUnionView:0 withDuration:0.2];
+        inputTextField.text = @"";
+        [self textFieldDidChange:self];
         [inputTextField resignFirstResponder];
     }
     else {

@@ -219,38 +219,6 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3]; // if you want to slide up the view
     
-    switch (selectPanel) {
-        case 0:
-            panel0.tintColor = We_foreground_black_general;
-            break;
-        case 1:
-            panel1.tintColor = We_foreground_black_general;
-            break;
-        case 2:
-            panel2.tintColor = We_foreground_black_general;
-        default:
-            break;
-    }
-    
-    switch (targetPanel) {
-        case 0:
-            panel0.tintColor = We_foreground_red_general;
-            break;
-        case 1:
-            panel1.tintColor = We_foreground_red_general;
-            break;
-        case 2:
-            panel2.tintColor = We_foreground_red_general;
-        default:
-            break;
-    }
-    
-    CGRect rect = selectSign.frame;
-    rect.origin.x += (targetPanel - selectPanel) * 100;
-    selectSign.frame = rect;
-    
-    selectPanel = targetPanel;
-    
     [UIView commitAnimations];
     
     [tableViews scrollRectToVisible:CGRectMake(320 * targetPanel, 0, 320, tableViews.frame.size.height) animated:YES];
@@ -276,7 +244,8 @@
 }
 
 - (void)consulting:(id)sender {
-    //[self performSegueWithIdentifier:@"CsrDci_pushto_CsrCos" sender:self];
+    [self performSegueWithIdentifier:@"CsrDci_pushto_CsrCos" sender:self];
+    return;
     NSString *urlString = yijiarenUrl(@"patient", @"addConsult");
     NSString *parasString = [NSString stringWithFormat:@"consult.doctor.id=%@&consult.order.id=3&consult.gender=M&consult.age=20", doctorViewing.userId];
     NSData * DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:parasString];
@@ -313,6 +282,42 @@
                                  cancelButtonTitle:@"OK"
                                  otherButtonTitles:nil];
     [notPermitted show];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"11111");
+    CGRect rect = selectSign.frame;
+    rect.origin.x = 15 + 100 * scrollView.contentOffset.x / 320;
+    selectSign.frame = rect;
+    
+    NSInteger targetPanel = (scrollView.contentOffset.x + 160) / 320;
+    
+    switch (selectPanel) {
+        case 0:
+            panel0.tintColor = We_foreground_black_general;
+            break;
+        case 1:
+            panel1.tintColor = We_foreground_black_general;
+            break;
+        case 2:
+            panel2.tintColor = We_foreground_black_general;
+        default:
+            break;
+    }
+    
+    switch (targetPanel) {
+        case 0:
+            panel0.tintColor = We_foreground_red_general;
+            break;
+        case 1:
+            panel1.tintColor = We_foreground_red_general;
+            break;
+        case 2:
+            panel2.tintColor = We_foreground_red_general;
+        default:
+            break;
+    }
+    selectPanel = targetPanel;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
