@@ -130,14 +130,16 @@ typedef enum _WeTargetView
     targetViewMainPage = 1,
     targetViewPersonalCenter = 2,
     targetViewConsultingRoom = 3,
-    targetViewPersonalAccount = 4
+    targetViewPersonalAccount = 4,
+    targetViewCaseHistory = 5
 } weTargetView;
 
 weTargetView we_targetView;
 
 #define weTabBarIdMainPage 0
 #define weTabBarIdConsultingRoom 1
-#define weTabBarIdPersonalCenter 3
+#define weTabBarIdPersonalCenter 4
+#define weTabBarIdCaseHistory 3
 
 #define yijiarenServer @"http://115.28.222.1/yijiaren"
 #define yijiarenUrl(field, action) [NSString stringWithFormat:@"%@/%@/%@.action", yijiarenServer, field, action]

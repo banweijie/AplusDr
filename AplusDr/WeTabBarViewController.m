@@ -26,7 +26,11 @@
         [self performSegueWithIdentifier:@"TabBar_Modalto_RegWlc" sender:self];
         return NO;
     }
-    
+    if (viewController == [tabBarController.viewControllers objectAtIndex:weTabBarIdCaseHistory] && !we_logined) {
+        we_targetView = targetViewCaseHistory;
+        [self performSegueWithIdentifier:@"TabBar_Modalto_RegWlc" sender:self];
+        return NO;
+    }
     return YES;
 }
 

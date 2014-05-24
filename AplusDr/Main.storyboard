@@ -285,11 +285,12 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <segue destination="ZGO-u0-7yk" kind="modal" identifier="TabBar_Modalto_RegWlc" id="kGw-7E-Cpt"/>
                         <segue destination="bni-Ri-avn" kind="relationship" relationship="viewControllers" id="rex-yh-AU6"/>
                         <segue destination="G9f-X1-J9c" kind="relationship" relationship="viewControllers" id="tXO-bP-Iow"/>
                         <segue destination="FbH-Go-jOX" kind="relationship" relationship="viewControllers" id="gV7-Zh-poc"/>
+                        <segue destination="CZg-W4-mch" kind="relationship" relationship="viewControllers" id="kr6-zr-IQE"/>
                         <segue destination="bHV-1f-jWO" kind="relationship" relationship="viewControllers" id="Pfd-v9-efB"/>
-                        <segue destination="ZGO-u0-7yk" kind="modal" identifier="TabBar_Modalto_RegWlc" id="kGw-7E-Cpt"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zbq-rB-hT1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -375,6 +376,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uad-bp-ueb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1152" y="2976"/>
+        </scene>
+        <!--We Cah Idx View Controller - 病历管理-->
+        <scene sceneID="vMl-R5-S4q">
+            <objects>
+                <viewController id="yyY-B7-eHw" customClass="WeCahIdxViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="v2R-aC-PPo"/>
+                        <viewControllerLayoutGuide type="bottom" id="aPU-Jf-gTj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QpN-bK-Owm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="病历管理" id="Pjx-8W-PL5"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OfU-Yc-87b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1102" y="5439"/>
         </scene>
         <!--We Csr Ctr View Controller-->
         <scene sceneID="EdS-0V-om2">
@@ -782,8 +802,28 @@
             </objects>
             <point key="canvasLocation" x="2733" y="4499"/>
         </scene>
+        <!--We Nav View Controller - 病例管理-->
+        <scene sceneID="M0V-Dy-8yL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CZg-W4-mch" customClass="WeNavViewController" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="病例管理" image="tab-casehistory" id="AZP-D9-OzH"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4LW-dX-hDK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="yyY-B7-eHw" kind="relationship" relationship="rootViewController" id="SHr-3F-Fxq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ojh-5z-XKR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="576" y="5439"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="tab-casehistory" width="22" height="25"/>
         <image name="tab-chatroom" width="25" height="24"/>
         <image name="tab-crowdfunding" width="33" height="24"/>
         <image name="tab-home" width="24" height="24"/>
