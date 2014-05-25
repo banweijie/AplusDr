@@ -391,10 +391,33 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="病历管理" id="Pjx-8W-PL5"/>
+                    <connections>
+                        <segue destination="e5t-50-G0L" kind="modal" identifier="CahIdx_modalto_CahAddExa" id="qvS-AG-sQu"/>
+                        <segue destination="LJ9-3E-8jw" kind="push" identifier="CahIdx_pushto_CahCah" id="PTy-cH-jaf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OfU-Yc-87b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1102" y="5439"/>
+        </scene>
+        <!--We Cah Cah View Controller - 就诊详情-->
+        <scene sceneID="TH8-ll-zgb">
+            <objects>
+                <viewController id="LJ9-3E-8jw" customClass="WeCahCahViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7i4-EV-4yt"/>
+                        <viewControllerLayoutGuide type="bottom" id="P2S-6Y-07l"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NQN-sR-RpQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="就诊详情" id="7jd-vB-elD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aua-Nh-iOe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1927" y="4855"/>
         </scene>
         <!--We Csr Ctr View Controller-->
         <scene sceneID="EdS-0V-om2">
@@ -547,7 +570,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hii-VN-xGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4903" y="4547"/>
+            <point key="canvasLocation" x="5429" y="4547"/>
         </scene>
         <!--We Csr Cos Sel Gen View Controller - 选择性别-->
         <scene sceneID="fCH-w4-dbX">
@@ -568,7 +591,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AhN-vx-5IN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5453" y="4551"/>
+            <point key="canvasLocation" x="5979" y="4551"/>
         </scene>
         <!--We Csr Sel Cat View Controller - 选择类别-->
         <scene sceneID="ehb-kk-rkq">
@@ -744,7 +767,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vac-Gy-5TH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4361" y="4537"/>
+            <point key="canvasLocation" x="4887" y="4537"/>
         </scene>
         <!--We Csr Jia View Controller - 申请加号-->
         <scene sceneID="qiP-eM-o6Z">
@@ -763,7 +786,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BiJ-BR-Gj0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3259" y="4499"/>
+            <point key="canvasLocation" x="3785" y="4499"/>
         </scene>
         <!--We Csr Nav View Controller-->
         <scene sceneID="XIu-KR-3wz">
@@ -800,7 +823,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jFq-5q-Ux7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2733" y="4499"/>
+            <point key="canvasLocation" x="3259" y="4499"/>
         </scene>
         <!--We Nav View Controller - 病例管理-->
         <scene sceneID="M0V-Dy-8yL">
@@ -820,6 +843,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ojh-5z-XKR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="576" y="5439"/>
+        </scene>
+        <!--We Cah Add Cah View Controller - 添加就诊记录-->
+        <scene sceneID="1S3-WA-Jhd">
+            <objects>
+                <viewController id="FpH-BC-1Vn" customClass="WeCahAddCahViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IfN-wA-cCa"/>
+                        <viewControllerLayoutGuide type="bottom" id="UfA-N5-fxx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wgY-UG-Omw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="添加就诊记录" id="1UF-jY-rto"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yjd-np-qkV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2453" y="5587"/>
+        </scene>
+        <!--We Nav View Controller-->
+        <scene sceneID="EsS-Vz-mGU">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e5t-50-G0L" customClass="WeNavViewController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="OEZ-SX-wFP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FpH-BC-1Vn" kind="relationship" relationship="rootViewController" id="d7Q-xa-1jE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="265-ni-MwO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1927" y="5587"/>
         </scene>
     </scenes>
     <resources>

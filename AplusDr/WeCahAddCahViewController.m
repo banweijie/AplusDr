@@ -1,24 +1,25 @@
 //
-//  WeCahIdxViewController.m
+//  WeCahAddCahViewController.m
 //  AplusDr
 //
 //  Created by WeDoctor on 14-5-24.
 //  Copyright (c) 2014年 ___PKU___. All rights reserved.
 //
 
-#import "WeCahIdxViewController.h"
+#import "WeCahAddCahViewController.h"
 
-@interface WeCahIdxViewController () {
-    UIView * view0;
-    UIView * view1;
-    UITableView * tableView_view0;
-    UITableView * tableView_view1;
+@interface WeCahAddCahViewController () {
+    UITableView * sys_tableView;
+    UITextField * user_date_input;
+    UITextField * user_hospitalName_input;
+    UITextField * user_diseaseName_input;
     UIActivityIndicatorView * sys_pendingView;
 }
-
 @end
 
-@implementation WeCahIdxViewController
+@implementation WeCahAddCahViewController
+
+@synthesize lastViewController;
 
 /*
  [AREA]
@@ -37,20 +38,19 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
-    if (tv == tableView_view0) {
+    if (tv == sys_tableView) {
         if (path.section == 0 && path.row == 0) {
-            //[self performSegueWithIdentifier:@"CahIdx_modalto_CahAddExa" sender:self];
-            WeNavViewController * nav = [[WeNavViewController alloc] init];
-            
-            WeCahAddCahViewController * vc = [[WeCahAddCahViewController alloc] init];
-            vc.lastViewController = self;
-            [nav pushViewController:vc animated:NO];
-            
-            [self presentViewController:nav animated:YES completion:nil];
+            [user_date_input becomeFirstResponder];
+        }
+        if (path.section == 0 && path.row == 1) {
+            [user_hospitalName_input becomeFirstResponder];
+        }
+        if (path.section == 0 && path.row == 2) {
+            [user_diseaseName_input becomeFirstResponder];
         }
         if (path.section == 1) {
-            caseRecordChanging = caseRecords[path.row];
-            [self performSegueWithIdentifier:@"CahIdx_pushto_CahCah" sender:self];
+            [self addNewCaseHistory:self];
+            [sys_pendingView startAnimating];
         }
     }
     [tv deselectRowAtIndexPath:path animated:YES];
@@ -61,7 +61,7 @@
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
-    if (section == 0) return 10;
+    if (section == 0) return 10 + 64;
     return 10;
 }
 // 询问每个段落的头部标题
@@ -83,16 +83,16 @@
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
-    if (tv == tableView_view0) {
+    if (tv == sys_tableView) {
         return 2;
     }
     return 0;
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
-    if (tv == tableView_view0) {
-        if (section == 0) return 1;
-        if (section == 1) return [caseRecords count];
+    if (tv == sys_tableView) {
+        if (section == 0) return 3;
+        if (section == 1) return 1;
     }
     return 0;
 }
@@ -102,24 +102,40 @@
     UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
+        if (indexPath.section == 1 && indexPath.row == 0) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
+        }
     }
     [[cell imageView] setContentMode:UIViewContentModeCenter];
     
-    if (tv == tableView_view0) {
+    if (tv == sys_tableView) {
         if (indexPath.section == 0 && indexPath.row == 0) {
-            cell.backgroundColor = We_foreground_red_general;
-            cell.textLabel.textColor = We_foreground_white_general;
-            cell.textLabel.text = @"添加新纪录";
-        }
-        if (indexPath.section == 1) {
-            WeCaseRecord * caseRecord = caseRecords[indexPath.row];
             cell.backgroundColor = We_foreground_white_general;
-            
-            cell.textLabel.textColor = We_foreground_black_general;
+            cell.textLabel.text = @"就诊时间";
             cell.textLabel.font = We_font_textfield_zh_cn;
-            cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ %@", caseRecord.diseaseName, caseRecord.hospitalName, caseRecord.date];
-            
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            cell.textLabel.textColor = We_foreground_black_general;
+            [cell.contentView addSubview:user_date_input];
+        }
+        if (indexPath.section == 0 && indexPath.row == 1) {
+            cell.backgroundColor = We_foreground_white_general;
+            cell.textLabel.text = @"就诊地点";
+            cell.textLabel.font = We_font_textfield_zh_cn;
+            cell.textLabel.textColor = We_foreground_black_general;
+            [cell.contentView addSubview:user_hospitalName_input];
+        }
+        if (indexPath.section == 0 && indexPath.row == 2) {
+            cell.backgroundColor = We_foreground_white_general;
+            cell.textLabel.text = @"疾病名称";
+            cell.textLabel.font = We_font_textfield_zh_cn;
+            cell.textLabel.textColor = We_foreground_black_general;
+            [cell.contentView addSubview:user_diseaseName_input];
+        }
+        if (indexPath.section == 1 && indexPath.row == 0) {
+            cell.backgroundColor = We_foreground_red_general;
+            cell.textLabel.text = @"确认添加";
+            cell.textLabel.font = We_font_textfield_zh_cn;
+            cell.textLabel.textColor = We_foreground_white_general;
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
         }
     }
     return cell;
@@ -134,48 +150,10 @@
     return self;
 }
 
-// 当segControl产生切换
-- (void)selectedSegmentChanged:(UISegmentedControl *)segControl {
-    NSLog(@"%d", segControl.selectedSegmentIndex);
-    if (segControl.selectedSegmentIndex == 0) {
-        [view0 setHidden:NO];
-        [view1 setHidden:YES];
-    }
-    else {
-        [view0 setHidden:YES];
-        [view1 setHidden:NO];
-    }
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    we_justAddNewCaseRecord = NO;
-    
-    // 切换“就诊历史"和"检查结果"
-    UIView * segControlView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 320, 44)];
-    segControlView.backgroundColor = We_background_red_general;
-    
-    UISegmentedControl * segControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"就诊历史", @"检查结果", nil]];
-    [segControl setFrame:CGRectMake(20, 7, 280, 30)];
-    segControl.backgroundColor = [UIColor clearColor];
-    segControl.selectedSegmentIndex = 0;
-    segControl.tintColor = We_foreground_white_general;
-    segControl.layer.cornerRadius = 5;
-    [segControl addTarget:self action:@selector(selectedSegmentChanged:) forControlEvents:UIControlEventValueChanged];
-    [segControlView addSubview:segControl];
-    
-    // 就诊历史页面
-    view0 = [[UIView alloc] initWithFrame:CGRectMake(0, 64 + 44, 320, self.view.frame.size.height - 64 - 44)];
-    
-    tableView_view0 = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, view0.frame.size.width, view0.frame.size.height) style:UITableViewStyleGrouped];
-    tableView_view0.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    tableView_view0.delegate = self;
-    tableView_view0.dataSource = self;
-    tableView_view0.backgroundColor = [UIColor clearColor];
-    [view0 addSubview:tableView_view0];
     
     // 背景图片
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -183,9 +161,13 @@
     bg.contentMode = UIViewContentModeCenter;
     [self.view addSubview:bg];
     
-    [self.view addSubview:segControlView];
-    [self.view addSubview:view0];
-    [self.view addSubview:view1];
+    // 表格
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
+    sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    sys_tableView.delegate = self;
+    sys_tableView.dataSource = self;
+    sys_tableView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:sys_tableView];
     
     // 转圈圈
     sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -194,20 +176,33 @@
     [sys_pendingView setAlpha:1.0];
     [self.view addSubview:sys_pendingView];
     
-    [self getCaseRecords:self];
+    // 输入框初始化
+    We_init_textFieldInCell_pholder(user_date_input, @"如：2014-02-16", We_font_textfield_en_us);
+    We_init_textFieldInCell_pholder(user_hospitalName_input, @"如：北医三院", We_font_textfield_zh_cn);
+    We_init_textFieldInCell_pholder(user_diseaseName_input, @"如：哮喘", We_font_textfield_zh_cn);
+    
+    // 取消按键
+    UIBarButtonItem * user_cancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(user_cancel_onPress:)];
+    self.navigationItem.leftBarButtonItem = user_cancel;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [tableView_view0 reloadData];
-    [super viewWillAppear:animated];
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
-- (void)getCaseRecords:(id)sender {
-    [sys_pendingView startAnimating];
-    [self.view endEditing:YES];
+- (void)user_cancel_onPress:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)addNewCaseHistory:(id)sender {
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [manager POST:yijiarenUrl(@"patient", @"listRecords") parameters:nil
+    [manager POST:yijiarenUrl(@"patient", @"addRecord") parameters:@{
+                                                                       @"record.date":user_date_input.text,
+                                                                       @"record.hospital":user_hospitalName_input.text,
+                                                                       @"record.disease":user_diseaseName_input.text,
+                                                                       }
           success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
               NSString * errorMessage;
               
@@ -215,12 +210,15 @@
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
                   NSLog(@"response : %@", HTTPResponse[@"response"]);
-                  for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
-                      WeCaseRecord * newCaseRecord = [[WeCaseRecord alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];
-                      [caseRecords addObject:newCaseRecord];
-                  }
-                  [sys_pendingView stopAnimating];
-                  [tableView_view0 reloadData];
+                  WeCaseRecord * newCaseRecord = [[WeCaseRecord alloc] initWithNSDictionary:HTTPResponse[@"response"]];
+                  [caseRecords addObject:newCaseRecord];
+                  
+                  caseRecordChanging = newCaseRecord;
+                  
+                  [self dismissViewControllerAnimated:YES completion:nil];
+                  [self.lastViewController performSegueWithIdentifier:@"CahIdx_pushto_CahCah" sender:self];
+                  
+                  we_justAddNewCaseRecord = YES;
                   return;
               }
               if ([result isEqualToString:@"2"]) {
@@ -240,7 +238,7 @@
               }
               [sys_pendingView stopAnimating];
               UIAlertView *notPermitted = [[UIAlertView alloc]
-                                           initWithTitle:@"获取就诊记录"
+                                           initWithTitle:@"发送信息失败"
                                            message:errorMessage
                                            delegate:nil
                                            cancelButtonTitle:@"确定"
@@ -251,7 +249,7 @@
               NSLog(@"Error: %@", error);
               [sys_pendingView stopAnimating];
               UIAlertView *notPermitted = [[UIAlertView alloc]
-                                           initWithTitle:@"获取就诊记录"
+                                           initWithTitle:@"发送信息失败"
                                            message:@"未能连接服务器，请重试"
                                            delegate:nil
                                            cancelButtonTitle:@"确定"
@@ -266,5 +264,16 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

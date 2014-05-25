@@ -37,6 +37,7 @@
     we_hospitalList = [[NSMutableDictionary alloc] init];
     we_sectionList = [[NSMutableDictionary alloc] init];
     we_messagesWithDoctor = [[NSMutableDictionary alloc] init];
+    caseRecords = [[NSMutableArray alloc] init];
     
     [self refreshInitialData];
     
@@ -241,7 +242,7 @@
             [currentUser setAvatarPath:[WeAppDelegate toString:[response objectForKey:@"avatar"]]];
             [self DownloadImageWithURL:yijiarenAvatarUrl(currentUser.avatarPath) successCompletion:^(id image) {
                 currentUser.avatar = image;
-                NSLog(@"Download Image(%@) succeed, user' avatar has been changed.", currentUser.avatarPath);
+                //NSLog(@"Download Image(%@) succeed, user' avatar has been changed.", currentUser.avatarPath);
             }];
             return;
         }
@@ -313,7 +314,7 @@
                                  NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
                                  return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
                              } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-                                 NSLog(@"File downloaded to: %@", filePath);
+                                 //NSLog(@"File downloaded to: %@", filePath);
                                  if (error) NSLog(@"%@", error);
                                  [VoiceConverter amrToWav:filePath.path wavSavePath:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
                                  message.audioContent = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
@@ -383,7 +384,7 @@
                      if (![oldDoctor.avatarPath isEqualToString:newDoctor.avatarPath]) {
                          [self DownloadImageWithURL:yijiarenAvatarUrl(newDoctor.avatarPath) successCompletion:^(id image) {
                              newDoctor.avatar = image;
-                             NSLog(@"Download Image(%@) succeed, doctor(%@)' avatar has been changed.", newDoctor.avatarPath, newDoctor.userName);
+                             //NSLog(@"Download Image(%@) succeed, doctor(%@)' avatar has been changed.", newDoctor.avatarPath, newDoctor.userName);
                          }];
                      }
                      else {

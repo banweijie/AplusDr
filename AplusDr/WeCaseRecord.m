@@ -18,4 +18,31 @@
 @synthesize examinations;
 @synthesize recordDrugs;
 
+- (WeCaseRecord *)initWithNSDictionary:(NSDictionary *)info {
+    [self setWithNSDictionary:info];
+    return self;
+}
+
+- (void)setWithNSDictionary:(NSDictionary *)info {
+    // 提取信息
+    self.caseRecordId = [NSString stringWithFormat:@"%@", info[@"id"]];
+    self.date = [NSString stringWithFormat:@"%@", info[@"date"]];
+    self.diseaseName = [NSString stringWithFormat:@"%@", info[@"disease"]];
+    self.hospitalName = [NSString stringWithFormat:@"%@", info[@"hospital"]];
+    self.treatment = [NSString stringWithFormat:@"%@", info[@"treatment"]];
+}
+
+- (NSString *)stringValue {
+    return [NSString stringWithFormat:@"%@", @{
+                                               }];
+}
+
+- (void)setWithCaseRecord:(WeCaseRecord *)caseRecord {
+    self.caseRecordId = caseRecord.caseRecordId;
+    self.date = caseRecord.date;
+    self.diseaseName = caseRecord.diseaseName;
+    self.hospitalName = caseRecord.hospitalName;
+    self.treatment = caseRecord.treatment;
+}
+
 @end

@@ -10,6 +10,7 @@
 
 @interface WeCaseRecord : NSObject
 
+@property(strong, nonatomic) NSString * date;
 @property(strong, nonatomic) NSString * caseRecordId;
 @property(strong, nonatomic) NSString * hospitalName;
 @property(strong, nonatomic) NSString * diseaseName;
@@ -17,6 +18,10 @@
 @property(strong, nonatomic) NSMutableArray * examinations;
 @property(strong, nonatomic) NSMutableArray * recordDrugs;
 
-@property(nonatomic) long long date;
+
+- (WeCaseRecord *)initWithNSDictionary:(NSDictionary *)info;
+- (void)setWithNSDictionary:(NSDictionary *)info;
+- (void)setWithCaseRecord:(WeCaseRecord *)caseRecord;
+- (NSString *)stringValue;
 
 @end

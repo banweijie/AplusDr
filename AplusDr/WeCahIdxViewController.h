@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "WeAppDelegate.h"
+#import "WeCahCahViewController.h"
+#import "WeCahAddCahViewController.h"
+#import "WeNavViewController.h"
 
-@interface WeCahIdxViewController : UIViewController
+@interface WeCahIdxViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end
