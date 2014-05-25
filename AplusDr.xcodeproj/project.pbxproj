@@ -22,6 +22,8 @@
 		900E296D193080EA008BF61C /* WeCaseRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E296C193080EA008BF61C /* WeCaseRecord.m */; };
 		900E2970193087AF008BF61C /* WeCahCahViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E296F193087AF008BF61C /* WeCahCahViewController.m */; };
 		900E29731930C847008BF61C /* WeCahAddCahViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E29721930C847008BF61C /* WeCahAddCahViewController.m */; };
+		900E297619318EF9008BF61C /* WeCahCahAddDruViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E297519318EF9008BF61C /* WeCahCahAddDruViewController.m */; };
+		900E29791931900D008BF61C /* WeRecordDrug.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E29781931900D008BF61C /* WeRecordDrug.m */; };
 		90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */; };
 		9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE191904E8A700CE4A7A /* Foundation.framework */; };
 		9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */; };
@@ -116,6 +118,10 @@
 		900E296F193087AF008BF61C /* WeCahCahViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCahCahViewController.m; sourceTree = "<group>"; };
 		900E29711930C847008BF61C /* WeCahAddCahViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCahAddCahViewController.h; sourceTree = "<group>"; };
 		900E29721930C847008BF61C /* WeCahAddCahViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCahAddCahViewController.m; sourceTree = "<group>"; };
+		900E297419318EF9008BF61C /* WeCahCahAddDruViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCahCahAddDruViewController.h; sourceTree = "<group>"; };
+		900E297519318EF9008BF61C /* WeCahCahAddDruViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCahCahAddDruViewController.m; sourceTree = "<group>"; };
+		900E29771931900D008BF61C /* WeRecordDrug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeRecordDrug.h; sourceTree = "<group>"; };
+		900E29781931900D008BF61C /* WeRecordDrug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeRecordDrug.m; sourceTree = "<group>"; };
 		90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrJiaViewController.h; sourceTree = "<group>"; };
 		90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrJiaViewController.m; sourceTree = "<group>"; };
 		9026EE161904E8A700CE4A7A /* AplusDr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AplusDr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -297,10 +303,12 @@
 			children = (
 				900E296819307AA7008BF61C /* WeCahIdxViewController.h */,
 				900E296919307AA7008BF61C /* WeCahIdxViewController.m */,
-				900E296E193087AF008BF61C /* WeCahCahViewController.h */,
-				900E296F193087AF008BF61C /* WeCahCahViewController.m */,
 				900E29711930C847008BF61C /* WeCahAddCahViewController.h */,
 				900E29721930C847008BF61C /* WeCahAddCahViewController.m */,
+				900E296E193087AF008BF61C /* WeCahCahViewController.h */,
+				900E296F193087AF008BF61C /* WeCahCahViewController.m */,
+				900E297419318EF9008BF61C /* WeCahCahAddDruViewController.h */,
+				900E297519318EF9008BF61C /* WeCahCahAddDruViewController.m */,
 			);
 			name = CaseManage;
 			sourceTree = "<group>";
@@ -545,6 +553,8 @@
 				900E28CA19290239008BF61C /* WeMessage.m */,
 				900E296B193080EA008BF61C /* WeCaseRecord.h */,
 				900E296C193080EA008BF61C /* WeCaseRecord.m */,
+				900E29771931900D008BF61C /* WeRecordDrug.h */,
+				900E29781931900D008BF61C /* WeRecordDrug.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -694,6 +704,7 @@
 				900E296D193080EA008BF61C /* WeCaseRecord.m in Sources */,
 				9026EEF01904EE5500CE4A7A /* VPImageCropperViewController.m in Sources */,
 				90F0CE861926FE68006A4605 /* WeCsrSelHosViewController.m in Sources */,
+				900E29791931900D008BF61C /* WeRecordDrug.m in Sources */,
 				90F0CE7D1926C86F006A4605 /* WeCsrSelViewController.m in Sources */,
 				9026EEF61904EE5500CE4A7A /* WeRegWlcViewController.m in Sources */,
 				9026EEF51904EE5500CE4A7A /* WeRegNavViewController.m in Sources */,
@@ -722,6 +733,7 @@
 				907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */,
 				90F0CE6519228CEF006A4605 /* WeUser.m in Sources */,
 				9026EEF21904EE5500CE4A7A /* WeAppDelegate.m in Sources */,
+				900E297619318EF9008BF61C /* WeCahCahAddDruViewController.m in Sources */,
 				90F0CE8C19271226006A4605 /* WeCsrSelSec2ViewController.m in Sources */,
 				9026EEF41904EE5500CE4A7A /* WeMapNavController.m in Sources */,
 				90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */,

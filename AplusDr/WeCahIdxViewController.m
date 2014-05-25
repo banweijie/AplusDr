@@ -39,7 +39,6 @@
 {
     if (tv == tableView_view0) {
         if (path.section == 0 && path.row == 0) {
-            //[self performSegueWithIdentifier:@"CahIdx_modalto_CahAddExa" sender:self];
             WeNavViewController * nav = [[WeNavViewController alloc] init];
             
             WeCahAddCahViewController * vc = [[WeCahAddCahViewController alloc] init];
@@ -57,7 +56,7 @@
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return tv.rowHeight;
+    return tv.rowHeight * 2;
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
@@ -115,9 +114,23 @@
             WeCaseRecord * caseRecord = caseRecords[indexPath.row];
             cell.backgroundColor = We_foreground_white_general;
             
-            cell.textLabel.textColor = We_foreground_black_general;
-            cell.textLabel.font = We_font_textfield_zh_cn;
-            cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ %@", caseRecord.diseaseName, caseRecord.hospitalName, caseRecord.date];
+            UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 100, 40)];
+            l1.font = We_font_textfield_zh_cn;
+            l1.textColor = We_foreground_black_general;
+            l1.text = caseRecord.diseaseName;
+            [cell.contentView addSubview:l1];
+            
+            UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 40, 100, 40)];
+            l2.font = We_font_textfield_zh_cn;
+            l2.textColor = We_foreground_gray_general;
+            l2.text = caseRecord.hospitalName;
+            [cell.contentView addSubview:l2];
+            
+            UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 80, 88)];
+            l3.font = We_font_textfield_zh_cn;
+            l3.textColor = We_foreground_gray_general;
+            l3.text = caseRecord.date;
+            [cell.contentView addSubview:l3];
             
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         }

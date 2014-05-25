@@ -30,6 +30,12 @@
     self.diseaseName = [NSString stringWithFormat:@"%@", info[@"disease"]];
     self.hospitalName = [NSString stringWithFormat:@"%@", info[@"hospital"]];
     self.treatment = [NSString stringWithFormat:@"%@", info[@"treatment"]];
+    
+    self.recordDrugs = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [info[@"recordDrugs"] count]; i++) {
+        WeRecordDrug * newRecordDrug = [[WeRecordDrug alloc] initWithNSDictionary:info[@"recordDrugs"][i]];
+        [self.recordDrugs addObject:newRecordDrug];
+    }
 }
 
 - (NSString *)stringValue {

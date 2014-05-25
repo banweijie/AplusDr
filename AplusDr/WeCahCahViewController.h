@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "WeAppDelegate.h"
+#import "WeNavViewController.h"
+#import "WeCahCahAddDruViewController.h"
 
 @interface WeCahCahViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate>
 

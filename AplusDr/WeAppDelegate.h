@@ -16,6 +16,7 @@
 #import "WeFavorDoctor.h"
 #import "WeMessage.h"
 #import "WeCaseRecord.h"
+#import "WeRecordDrug.h"
 
 @interface WeAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -42,10 +43,12 @@
 
 // Global Variables
 WeUser * currentUser;
-WeCaseRecord * caseRecordChanging;
-WeDoctor * doctorViewing;
 NSMutableDictionary * favorDoctors;
 NSMutableArray * caseRecords;
+
+WeDoctor * doctorViewing;
+WeCaseRecord * caseRecordChanging;
+WeRecordDrug * recordDrugChanging;
 
 // user defaults
 NSUserDefaults * userDefaults;
