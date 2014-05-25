@@ -55,7 +55,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     self.tabBar.selectedImageTintColor = We_foreground_red_general;
+    self.tabBar.tintColor = We_foreground_red_general;
     
+    /*
     UITabBarItem * tmp0 = [self.tabBar.items objectAtIndex:0];
     tmp0.selectedImage = [UIImage imageNamed:@"tab-home-selected"];
     UITabBarItem * tmp1 = [self.tabBar.items objectAtIndex:1];
@@ -65,7 +67,7 @@
     UITabBarItem * tmp3 = [self.tabBar.items objectAtIndex:3];
     tmp3.selectedImage = [UIImage imageNamed:@"tab-casehistory-selected"];
     UITabBarItem * tmp4 = [self.tabBar.items objectAtIndex:4];
-    tmp4.selectedImage = [UIImage imageNamed:@"tab-me-selected"];
+    tmp4.selectedImage = [UIImage imageNamed:@"tab-me-selected"];*/
     
     [super viewWillAppear:animated];
 }

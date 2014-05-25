@@ -26,6 +26,11 @@
 		900E29791931900D008BF61C /* WeRecordDrug.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E29781931900D008BF61C /* WeRecordDrug.m */; };
 		900E297C1931BDF3008BF61C /* WeTextCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E297B1931BDF3008BF61C /* WeTextCoding.m */; };
 		900E29821931BE88008BF61C /* WeExamination.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E29811931BE88008BF61C /* WeExamination.m */; };
+		900E2989193202F7008BF61C /* WeCahAddExaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E2988193202F7008BF61C /* WeCahAddExaViewController.m */; };
+		900E298C19320B92008BF61C /* WeCahExaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E298B19320B92008BF61C /* WeCahExaViewController.m */; };
+		900E298F193220C5008BF61C /* WeCahExaAddIteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E298E193220C5008BF61C /* WeCahExaAddIteViewController.m */; };
+		900E2992193223A0008BF61C /* WeExaminationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E2991193223A0008BF61C /* WeExaminationItem.m */; };
+		900E2995193223B8008BF61C /* WeExaminationItemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E2994193223B8008BF61C /* WeExaminationItemConfig.m */; };
 		90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */; };
 		9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE191904E8A700CE4A7A /* Foundation.framework */; };
 		9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */; };
@@ -128,6 +133,16 @@
 		900E297B1931BDF3008BF61C /* WeTextCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeTextCoding.m; sourceTree = "<group>"; };
 		900E29801931BE88008BF61C /* WeExamination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeExamination.h; sourceTree = "<group>"; };
 		900E29811931BE88008BF61C /* WeExamination.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeExamination.m; sourceTree = "<group>"; };
+		900E2987193202F7008BF61C /* WeCahAddExaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCahAddExaViewController.h; sourceTree = "<group>"; };
+		900E2988193202F7008BF61C /* WeCahAddExaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCahAddExaViewController.m; sourceTree = "<group>"; };
+		900E298A19320B92008BF61C /* WeCahExaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCahExaViewController.h; sourceTree = "<group>"; };
+		900E298B19320B92008BF61C /* WeCahExaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCahExaViewController.m; sourceTree = "<group>"; };
+		900E298D193220C5008BF61C /* WeCahExaAddIteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCahExaAddIteViewController.h; sourceTree = "<group>"; };
+		900E298E193220C5008BF61C /* WeCahExaAddIteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCahExaAddIteViewController.m; sourceTree = "<group>"; };
+		900E2990193223A0008BF61C /* WeExaminationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeExaminationItem.h; sourceTree = "<group>"; };
+		900E2991193223A0008BF61C /* WeExaminationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeExaminationItem.m; sourceTree = "<group>"; };
+		900E2993193223B8008BF61C /* WeExaminationItemConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeExaminationItemConfig.h; sourceTree = "<group>"; };
+		900E2994193223B8008BF61C /* WeExaminationItemConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeExaminationItemConfig.m; sourceTree = "<group>"; };
 		90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrJiaViewController.h; sourceTree = "<group>"; };
 		90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrJiaViewController.m; sourceTree = "<group>"; };
 		9026EE161904E8A700CE4A7A /* AplusDr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AplusDr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -315,6 +330,12 @@
 				900E296F193087AF008BF61C /* WeCahCahViewController.m */,
 				900E297419318EF9008BF61C /* WeCahCahAddDruViewController.h */,
 				900E297519318EF9008BF61C /* WeCahCahAddDruViewController.m */,
+				900E2987193202F7008BF61C /* WeCahAddExaViewController.h */,
+				900E2988193202F7008BF61C /* WeCahAddExaViewController.m */,
+				900E298A19320B92008BF61C /* WeCahExaViewController.h */,
+				900E298B19320B92008BF61C /* WeCahExaViewController.m */,
+				900E298D193220C5008BF61C /* WeCahExaAddIteViewController.h */,
+				900E298E193220C5008BF61C /* WeCahExaAddIteViewController.m */,
 			);
 			name = CaseManage;
 			sourceTree = "<group>";
@@ -565,6 +586,10 @@
 				900E297B1931BDF3008BF61C /* WeTextCoding.m */,
 				900E29801931BE88008BF61C /* WeExamination.h */,
 				900E29811931BE88008BF61C /* WeExamination.m */,
+				900E2990193223A0008BF61C /* WeExaminationItem.h */,
+				900E2991193223A0008BF61C /* WeExaminationItem.m */,
+				900E2993193223B8008BF61C /* WeExaminationItemConfig.h */,
+				900E2994193223B8008BF61C /* WeExaminationItemConfig.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -703,6 +728,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9026EEF31904EE5500CE4A7A /* WeTabBarViewController.m in Sources */,
+				900E2989193202F7008BF61C /* WeCahAddExaViewController.m in Sources */,
 				907D5B6E1920DB430006EAE0 /* WeSPViewController.m in Sources */,
 				900E296A19307AA7008BF61C /* WeCahIdxViewController.m in Sources */,
 				907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */,
@@ -717,6 +743,8 @@
 				900E29791931900D008BF61C /* WeRecordDrug.m in Sources */,
 				90F0CE7D1926C86F006A4605 /* WeCsrSelViewController.m in Sources */,
 				900E297C1931BDF3008BF61C /* WeTextCoding.m in Sources */,
+				900E298C19320B92008BF61C /* WeCahExaViewController.m in Sources */,
+				900E2995193223B8008BF61C /* WeExaminationItemConfig.m in Sources */,
 				9026EEF61904EE5500CE4A7A /* WeRegWlcViewController.m in Sources */,
 				9026EEF51904EE5500CE4A7A /* WeRegNavViewController.m in Sources */,
 				9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */,
@@ -730,6 +758,7 @@
 				907D5B691920D9DA0006EAE0 /* UIBubbleTableView.m in Sources */,
 				90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */,
 				90F0CE61192234E8006A4605 /* WeMapIdxViewController.m in Sources */,
+				900E2992193223A0008BF61C /* WeExaminationItem.m in Sources */,
 				900E29571929B44C008BF61C /* amrFileCodec.mm in Sources */,
 				90F0CE7119229973006A4605 /* WeNavViewController.m in Sources */,
 				90F0CE741922CF55006A4605 /* WeInpNamViewController.m in Sources */,
@@ -757,6 +786,7 @@
 				90F0CE8F19271794006A4605 /* WeCsrSelCatViewController.m in Sources */,
 				9026EEF71904EE5500CE4A7A /* WeRegIpnViewController.m in Sources */,
 				907D5B6A1920D9DA0006EAE0 /* UIBubbleTableViewCell.m in Sources */,
+				900E298F193220C5008BF61C /* WeCahExaAddIteViewController.m in Sources */,
 				900E28CB19290239008BF61C /* WeMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

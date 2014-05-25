@@ -38,6 +38,7 @@
     we_sectionList = [[NSMutableDictionary alloc] init];
     we_messagesWithDoctor = [[NSMutableDictionary alloc] init];
     caseRecords = [[NSMutableArray alloc] init];
+    examinations = [[NSMutableArray alloc] init];
     
     [self refreshInitialData];
     
@@ -210,9 +211,19 @@
     if (DataResponse != NULL) {
         NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
         //NSLog(@"%@", HTTPResponse);
-        we_codings = HTTPResponse[@"codings"];
-        we_imagePaths = HTTPResponse[@"imagePaths"];
-        //NSLog(@"%@", we_codings);
+        we_codings = HTTPResponse[@"response"][@"codings"];
+        we_imagePaths = HTTPResponse[@"response"][@"imagePaths"];
+        we_examinationTypeKeys = [we_codings[@"examinationType"] allKeys];
+        we_examinationTypes = HTTPResponse[@"response"][@"examinationTypes"];
+        we_secondaryTypeKeyToValue = [[NSMutableDictionary alloc] init];
+        we_secondaryTypeKeyToData = [[NSMutableDictionary alloc] init];
+        for (int i = 0; i < [we_examinationTypeKeys count]; i++) {
+            for (int j = 0; j < [we_examinationTypes[we_examinationTypeKeys[i]] count]; j++) {
+                we_secondaryTypeKeyToValue[[WeAppDelegate toString:secondaryTypeId(i, j)]] = secondaryTypeName(i, j);
+                we_secondaryTypeKeyToData[[WeAppDelegate toString:secondaryTypeId(i, j)]] = secondaryTypeData(i, j);
+            }
+        }
+        NSLog(@"%@", we_secondaryTypeKeyToData);
         return;
     }
     UIAlertView *notPermitted = [[UIAlertView alloc]

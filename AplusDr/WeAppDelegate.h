@@ -17,6 +17,7 @@
 #import "WeMessage.h"
 #import "WeCaseRecord.h"
 #import "WeRecordDrug.h"
+#import "WeExamination.h"
 
 @interface WeAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -45,10 +46,13 @@
 WeUser * currentUser;
 NSMutableDictionary * favorDoctors;
 NSMutableArray * caseRecords;
+NSMutableArray * examinations;
 
 WeDoctor * doctorViewing;
 WeCaseRecord * caseRecordChanging;
 WeRecordDrug * recordDrugChanging;
+WeExamination * examinationChanging;
+WeExaminationItem * itemChanging;
 
 // user defaults
 NSUserDefaults * userDefaults;
@@ -110,6 +114,14 @@ NSMutableDictionary * we_messagesWithDoctor;
 
 // app data
 NSDictionary * we_codings;
+NSArray * we_examinationTypeKeys;
+NSMutableDictionary * we_secondaryTypeKeyToValue;
+NSMutableDictionary * we_secondaryTypeKeyToData;
+#define secondaryTypeName(parentTypeOrder, secondaryTypeOrder) we_examinationTypes[we_examinationTypeKeys[parentTypeOrder]][secondaryTypeOrder][@"text"]
+#define secondaryTypeNameByKey(parentTypeKey, secondaryTypeOrder) we_examinationTypes[parentTypeKey][secondaryTypeOrder][@"text"]
+#define secondaryTypeId(parentTypeOrder, secondaryTypeOrder) we_examinationTypes[we_examinationTypeKeys[parentTypeOrder]][secondaryTypeOrder][@"id"]
+#define secondaryTypeData(parentTypeOrder, secondaryTypeOrder) we_examinationTypes[we_examinationTypeKeys[parentTypeOrder]][secondaryTypeOrder][@"data"]
+NSDictionary * we_examinationTypes;
 NSDictionary * we_imagePaths;
 
 UIImage * we_avatar;

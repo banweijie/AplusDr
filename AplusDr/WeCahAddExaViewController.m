@@ -1,25 +1,23 @@
 //
-//  WeCahAddCahViewController.m
+//  WeCahAddExaViewController.m
 //  AplusDr
 //
-//  Created by WeDoctor on 14-5-24.
+//  Created by WeDoctor on 14-5-25.
 //  Copyright (c) 2014年 ___PKU___. All rights reserved.
 //
 
-#import "WeCahAddCahViewController.h"
+#import "WeCahAddExaViewController.h"
 
-@interface WeCahAddCahViewController () {
+@interface WeCahAddExaViewController () {
     UITableView * sys_tableView;
     UITextField * user_date_input;
     UITextField * user_hospitalName_input;
-    UITextField * user_diseaseName_input;
     UIActivityIndicatorView * sys_pendingView;
 }
+
 @end
 
-@implementation WeCahAddCahViewController
-
-@synthesize lastViewController;
+@implementation WeCahAddExaViewController
 
 /*
  [AREA]
@@ -45,11 +43,8 @@
         if (path.section == 0 && path.row == 1) {
             [user_hospitalName_input becomeFirstResponder];
         }
-        if (path.section == 0 && path.row == 2) {
-            [user_diseaseName_input becomeFirstResponder];
-        }
         if (path.section == 1) {
-            [self addNewCaseHistory:self];
+            [self addNewExamination:self];
             [sys_pendingView startAnimating];
         }
     }
@@ -62,6 +57,7 @@
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
     if (section == 0) return 10 + 64;
+    if (section == 1) return 30;
     return 10;
 }
 // 询问每个段落的头部标题
@@ -78,7 +74,6 @@
 }
 // 询问每个段落的尾部
 -(UIView *)tableView:(UITableView *)tv viewForFooterInSection:(NSInteger)section{
-    //if (section == 1) return sys_countDown_demo;
     return nil;
 }
 // 询问共有多少个段落
@@ -91,7 +86,7 @@
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
     if (tv == sys_tableView) {
-        if (section == 0) return 3;
+        if (section == 0) return 2;
         if (section == 1) return 1;
     }
     return 0;
@@ -122,13 +117,6 @@
             cell.textLabel.font = We_font_textfield_zh_cn;
             cell.textLabel.textColor = We_foreground_black_general;
             [cell.contentView addSubview:user_hospitalName_input];
-        }
-        if (indexPath.section == 0 && indexPath.row == 2) {
-            cell.backgroundColor = We_foreground_white_general;
-            cell.textLabel.text = @"疾病名称";
-            cell.textLabel.font = We_font_textfield_zh_cn;
-            cell.textLabel.textColor = We_foreground_black_general;
-            [cell.contentView addSubview:user_diseaseName_input];
         }
         if (indexPath.section == 1 && indexPath.row == 0) {
             cell.backgroundColor = We_foreground_red_general;
@@ -181,7 +169,6 @@
     // 输入框初始化
     We_init_textFieldInCell_pholder(user_date_input, @"如：2014-02-16", We_font_textfield_en_us);
     We_init_textFieldInCell_pholder(user_hospitalName_input, @"如：北医三院", We_font_textfield_zh_cn);
-    We_init_textFieldInCell_pholder(user_diseaseName_input, @"如：哮喘", We_font_textfield_zh_cn);
     
     // 取消按键
     UIBarButtonItem * user_cancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(user_cancel_onPress:)];
@@ -197,14 +184,14 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)addNewCaseHistory:(id)sender {
+- (void)addNewExamination:(id)sender {
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [manager POST:yijiarenUrl(@"patient", @"addRecord") parameters:@{
-                                                                       @"record.date":user_date_input.text,
-                                                                       @"record.hospital":user_hospitalName_input.text,
-                                                                       @"record.disease":user_diseaseName_input.text,
-                                                                       }
+    [manager POST:yijiarenUrl(@"patient", @"addExamination") parameters:@{
+                                                                     @"examination.type.id":self.secondaryTypeId,
+                                                                     @"examination.date":user_date_input.text,
+                                                                     @"examination.hospital":user_hospitalName_input.text
+                                                                     }
           success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
               NSString * errorMessage;
               
@@ -212,15 +199,21 @@
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
                   NSLog(@"response : %@", HTTPResponse[@"response"]);
-                  WeCaseRecord * newCaseRecord = [[WeCaseRecord alloc] initWithNSDictionary:HTTPResponse[@"response"]];
-                  [caseRecords addObject:newCaseRecord];
+                  WeExamination * newExamination = [[WeExamination alloc] initWithNSDictionary:HTTPResponse[@"response"]];
+                  newExamination.type.objId = self.secondaryTypeId;
+                  newExamination.type.objName = we_secondaryTypeKeyToValue[self.secondaryTypeId];
+                  newExamination.typeParent = self.primaryTypeKey;
                   
-                  caseRecordChanging = newCaseRecord;
+                  [examinations addObject:newExamination];
                   
-                  [self dismissViewControllerAnimated:YES completion:nil];
-                  [self.lastViewController performSegueWithIdentifier:@"CahIdx_pushto_CahCah" sender:self];
+                  examinationChanging = newExamination;
                   
-                  we_justAddNewCaseRecord = YES;
+                  [self dismissViewControllerAnimated:NO completion:nil];
+                  
+                  
+                  WeCahExaViewController * vc = [[WeCahExaViewController alloc] init];
+                  [self.lastViewController.navigationController pushViewController:vc animated:YES];
+                  
                   return;
               }
               if ([result isEqualToString:@"2"]) {
