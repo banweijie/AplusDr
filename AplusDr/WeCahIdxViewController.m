@@ -208,6 +208,12 @@
     [self.view addSubview:sys_pendingView];
     
     [self getCaseRecords:self];
+    
+    // test
+    /*
+    UIToolbar * toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
+    [toolBar setTintColor:[UIColor clearColor]];
+    toolBar.alpha = 0.95; */
 }
 
 - (void)viewWillAppear:(BOOL)animated {
