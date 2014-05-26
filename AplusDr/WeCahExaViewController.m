@@ -14,12 +14,137 @@
     UITextField * user_hospital_input;
     UITextView * user_result_input;
     UIActivityIndicatorView * sys_pendingView;
+    UIView * sys_imageView;
+    UIActionSheet * deleteImage_actionSheet;
+    
+    WeTextCoding * imageToDelete;
 }
 
 @end
 
 @implementation WeCahExaViewController
 
+// Action Sheet 按钮样式
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
+{
+    for (UIView *subview in actionSheet.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton *)subview;
+            [button setTitleColor:We_foreground_red_general forState:UIControlStateNormal];
+            button.titleLabel.font = We_font_textfield_zh_cn;
+        }
+    }
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (actionSheet == deleteImage_actionSheet) {
+        [self removeExaminationImage:self];
+        return;
+    }
+    if (buttonIndex == 0) {
+        // 拍照
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        {
+            UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;//设置类型为相机
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
+            picker.delegate = self;//设置代理
+            picker.allowsEditing = YES;//设置照片可编辑
+            picker.sourceType = sourceType;
+            //picker.showsCameraControls = NO;//默认为YES
+            //创建叠加层
+            UIView *overLayView=[[UIView alloc]initWithFrame:CGRectMake(0, 120, 320, 254)];
+            //取景器的背景图片，该图片中间挖掉了一块变成透明，用来显示摄像头获取的图片；
+            UIImage *overLayImag=[UIImage imageNamed:@"zhaoxiangdingwei.png"];
+            UIImageView *bgImageView=[[UIImageView alloc]initWithImage:overLayImag];
+            [overLayView addSubview:bgImageView];
+            picker.cameraOverlayView=overLayView;
+            picker.cameraDevice=UIImagePickerControllerCameraDeviceFront;//选择前置摄像头或后置摄像头
+            [self presentViewController:picker animated:YES completion:^{
+            }];
+        }
+        else {
+            NSLog(@"该设备无相机");
+        }
+        
+    } else if (buttonIndex == 1) {
+        // 从相册中选取
+        UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            //pickerImage.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+        }
+        pickerImage.delegate = self;
+        pickerImage.allowsEditing = NO;
+        [self presentViewController:pickerImage animated:YES completion:^{
+        }];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [picker dismissViewControllerAnimated:YES completion:^{
+        UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        // 将图片上传至服务器
+        [sys_pendingView startAnimating];
+        AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        [manager POST:yijiarenUrl(@"patient", @"addExaminationImage") parameters:@{
+                                                                           @"examinationId":examinationChanging.examId,
+                                                                           @"fileFileName":@"a.jpg",
+                                                                           }
+            constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 1.0) name:@"file" fileName:@"a.jpg" mimeType:@"image/jpeg"];
+            }
+              success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
+                  NSString * errorMessage;
+                  
+                  NSString *result = [HTTPResponse objectForKey:@"result"];
+                  result = [NSString stringWithFormat:@"%@", result];
+                  if ([result isEqualToString:@"1"]) {
+                      NSLog(@"response : %@", HTTPResponse[@"response"]);
+                      WeTextCoding * newImage = [[WeTextCoding alloc] initWithNSDictionary:HTTPResponse[@"response"]];
+                      [examinationChanging.images addObject:newImage];
+                      [self refreshImageView:self];
+                      [sys_tableView reloadData];
+                      
+                      [sys_pendingView stopAnimating];
+                      return;
+                  }
+                  if ([result isEqualToString:@"2"]) {
+                      NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
+                      NSEnumerator *enumerator = [fields keyEnumerator];
+                      id key;
+                      while ((key = [enumerator nextObject])) {
+                          NSString * tmp1 = [fields objectForKey:key];
+                          if (tmp1 != NULL) errorMessage = tmp1;
+                      }
+                  }
+                  if ([result isEqualToString:@"3"]) {
+                      errorMessage = [HTTPResponse objectForKey:@"info"];
+                  }
+                  if ([result isEqualToString:@"4"]) {
+                      errorMessage = [HTTPResponse objectForKey:@"info"];
+                  }
+                  UIAlertView *notPermitted = [[UIAlertView alloc]
+                                               initWithTitle:@"发送信息失败"
+                                               message:errorMessage
+                                               delegate:nil
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles:nil];
+                  [notPermitted show];
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  NSLog(@"Error: %@", error);
+                  UIAlertView *notPermitted = [[UIAlertView alloc]
+                                               initWithTitle:@"发送信息失败"
+                                               message:@"未能连接服务器，请重试"
+                                               delegate:nil
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles:nil];
+                  [notPermitted show];
+              }
+         ];
+    }];
+}
 /*
  [AREA]
  UITableView dataSource & delegate interfaces
@@ -181,7 +306,7 @@
             [cell.contentView addSubview:user_hospital_input];
         }
         if (indexPath.section == 1 && ![examinationChanging.typeParent isEqualToString:@"P"]) {
-            
+            [cell.contentView addSubview:sys_imageView];
         }
         if (indexPath.section == 1 && [examinationChanging.typeParent isEqualToString:@"P"]) {
             if ([examinationChanging.items count] == 0) {
@@ -283,6 +408,9 @@
     bg.contentMode = UIViewContentModeCenter;
     [self.view addSubview:bg];
     
+    // 更新图片集
+    [self refreshImageView:self];
+    
     // 表格
     sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
@@ -312,6 +440,113 @@
 - (void)viewWillAppear:(BOOL)animated {
     [sys_tableView reloadData];
     [super viewWillAppear:animated];
+}
+
+- (void)refreshImageView:(id)sender {
+    sys_imageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20 + (([examinationChanging.images count] + 1) / 3 + 1) * 100)];
+    for (int i = 0; i <= [examinationChanging.images count]; i++) {
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20 + (i % 3) * 100, 20 + (i / 3) * 100, 80, 80)];
+        UIButton * imageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [imageButton setFrame:CGRectMake(20 + (i % 3) * 100, 20 + (i / 3) * 100, 80, 80)];
+        
+        [sys_imageView addSubview:imageView];
+        [sys_imageView addSubview:imageButton];
+        
+        if (i < [examinationChanging.images count]) {
+            [imageView setImageWithURL:[NSURL URLWithString:yijiarenImageUrl(((WeTextCoding *)examinationChanging.images[i]).objName)]];
+            WeInfoedButton * deleteButton = [WeInfoedButton buttonWithType:UIButtonTypeRoundedRect];
+            [deleteButton setFrame:CGRectMake(10 + (i % 3) * 100, 10 + (i / 3) * 100, 20, 20)];
+            [deleteButton setBackgroundImage:[UIImage imageNamed:@"casehistory-deleteimage"] forState:UIControlStateNormal];
+            [deleteButton setUserData:examinationChanging.images[i]];
+            [deleteButton addTarget:self action:@selector(deleteButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
+            [sys_imageView addSubview:deleteButton];
+        }
+        else {
+            [imageView setImage:[UIImage imageNamed:@"casehistory-addimage"]];
+            [imageButton addTarget:self action:@selector(addExaminationImage:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        //NSLog(@"%@", yijiarenImageUrl(((WeTextCoding *)examinationChanging.images[i]).objName));
+    }
+}
+
+- (void)deleteButton_onPress:(WeInfoedButton *)sender {
+    imageToDelete = sender.userData;
+    deleteImage_actionSheet = [[UIActionSheet alloc]
+                    initWithTitle:nil
+                    delegate:self
+                    cancelButtonTitle:@"取消"
+                    destructiveButtonTitle:nil
+                    otherButtonTitles:@"确认删除",nil];
+    deleteImage_actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [deleteImage_actionSheet showInView:self.view];
+}
+
+- (void)addExaminationImage:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:nil
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:@"拍照", @"选择本地图片",nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [actionSheet showInView:self.view];
+}
+
+- (void)removeExaminationImage:(id)sender {
+    [sys_pendingView startAnimating];
+    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:yijiarenUrl(@"patient", @"removeExaminationImage") parameters:@{
+                                                                               @"eiId":imageToDelete.objId
+                                                                               }
+          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
+              NSString * errorMessage;
+              
+              NSString *result = [HTTPResponse objectForKey:@"result"];
+              result = [NSString stringWithFormat:@"%@", result];
+              if ([result isEqualToString:@"1"]) {
+                  NSLog(@"response : %@", HTTPResponse[@"response"]);
+                  [examinationChanging.images removeObject:imageToDelete];
+                  [self refreshImageView:self];
+                  [sys_tableView reloadData];
+                  
+                  [sys_pendingView stopAnimating];
+                  return;
+              }
+              if ([result isEqualToString:@"2"]) {
+                  NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
+                  NSEnumerator *enumerator = [fields keyEnumerator];
+                  id key;
+                  while ((key = [enumerator nextObject])) {
+                      NSString * tmp1 = [fields objectForKey:key];
+                      if (tmp1 != NULL) errorMessage = tmp1;
+                  }
+              }
+              if ([result isEqualToString:@"3"]) {
+                  errorMessage = [HTTPResponse objectForKey:@"info"];
+              }
+              if ([result isEqualToString:@"4"]) {
+                  errorMessage = [HTTPResponse objectForKey:@"info"];
+              }
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"删除图片失败"
+                                           message:errorMessage
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"删除图片失败"
+                                           message:@"未能连接服务器，请重试"
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+     ];
 }
 
 - (void)user_save_onPress:(id)sender {

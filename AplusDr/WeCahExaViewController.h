@@ -10,7 +10,8 @@
 #import "WeAppDelegate.h"
 #import "WeNavViewController.h"
 #import "WeCahExaAddIteViewController.h"
+#import "WeInfoedButton.h"
 
-@interface WeCahExaViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate>
+@interface WeCahExaViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end
