@@ -11,6 +11,7 @@
 #import "WeNavViewController.h"
 #import "WeCahExaAddIteViewController.h"
 #import "WeInfoedButton.h"
+#import "WeImageViewerViewController.h"
 
 @interface WeCahExaViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 

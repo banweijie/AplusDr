@@ -333,7 +333,7 @@
     
     UIToolbar * toolBar0 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 300)];
     [toolBar0 setTintColor:[UIColor whiteColor]];
-    toolBar0.alpha = 0.95;
+    toolBar0.alpha = 0.98;
     [ssview0 addSubview:toolBar0];
     
     // 添加检查结果产生的效应 - 取消按钮

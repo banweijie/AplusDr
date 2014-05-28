@@ -31,6 +31,7 @@
 		900E298F193220C5008BF61C /* WeCahExaAddIteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E298E193220C5008BF61C /* WeCahExaAddIteViewController.m */; };
 		900E2992193223A0008BF61C /* WeExaminationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E2991193223A0008BF61C /* WeExaminationItem.m */; };
 		900E2995193223B8008BF61C /* WeExaminationItemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E2994193223B8008BF61C /* WeExaminationItemConfig.m */; };
+		900E29981935F7C2008BF61C /* WeImageViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E29971935F7C2008BF61C /* WeImageViewerViewController.m */; };
 		90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */; };
 		9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE191904E8A700CE4A7A /* Foundation.framework */; };
 		9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */; };
@@ -143,6 +144,8 @@
 		900E2991193223A0008BF61C /* WeExaminationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeExaminationItem.m; sourceTree = "<group>"; };
 		900E2993193223B8008BF61C /* WeExaminationItemConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeExaminationItemConfig.h; sourceTree = "<group>"; };
 		900E2994193223B8008BF61C /* WeExaminationItemConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeExaminationItemConfig.m; sourceTree = "<group>"; };
+		900E29961935F7C2008BF61C /* WeImageViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeImageViewerViewController.h; sourceTree = "<group>"; };
+		900E29971935F7C2008BF61C /* WeImageViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeImageViewerViewController.m; sourceTree = "<group>"; };
 		90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrJiaViewController.h; sourceTree = "<group>"; };
 		90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrJiaViewController.m; sourceTree = "<group>"; };
 		9026EE161904E8A700CE4A7A /* AplusDr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AplusDr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -472,6 +475,8 @@
 				900E28C71928F8E6008BF61C /* WeToolButton.m */,
 				900E295C1929C380008BF61C /* WeInfoedButton.h */,
 				900E295D1929C380008BF61C /* WeInfoedButton.m */,
+				900E29961935F7C2008BF61C /* WeImageViewerViewController.h */,
+				900E29971935F7C2008BF61C /* WeImageViewerViewController.m */,
 			);
 			name = Customs;
 			sourceTree = "<group>";
@@ -741,6 +746,7 @@
 				9026EEF01904EE5500CE4A7A /* VPImageCropperViewController.m in Sources */,
 				90F0CE861926FE68006A4605 /* WeCsrSelHosViewController.m in Sources */,
 				900E29791931900D008BF61C /* WeRecordDrug.m in Sources */,
+				900E29981935F7C2008BF61C /* WeImageViewerViewController.m in Sources */,
 				90F0CE7D1926C86F006A4605 /* WeCsrSelViewController.m in Sources */,
 				900E297C1931BDF3008BF61C /* WeTextCoding.m in Sources */,
 				900E298C19320B92008BF61C /* WeCahExaViewController.m in Sources */,
@@ -915,6 +921,7 @@
 					"$(PROJECT_DIR)/AplusDr/VoiceConvert/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3312E140-D977-43DD-BA2B-547349F9997C";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -936,6 +943,7 @@
 					"$(PROJECT_DIR)/AplusDr/VoiceConvert/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3312E140-D977-43DD-BA2B-547349F9997C";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

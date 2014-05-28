@@ -18,6 +18,7 @@
     UIActionSheet * deleteImage_actionSheet;
     
     WeTextCoding * imageToDelete;
+    WeTextCoding * imageToDemo;
 }
 
 @end
@@ -446,7 +447,7 @@
     sys_imageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20 + (([examinationChanging.images count] + 1) / 3 + 1) * 100)];
     for (int i = 0; i <= [examinationChanging.images count]; i++) {
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20 + (i % 3) * 100, 20 + (i / 3) * 100, 80, 80)];
-        UIButton * imageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        WeInfoedButton * imageButton = [WeInfoedButton buttonWithType:UIButtonTypeRoundedRect];
         [imageButton setFrame:CGRectMake(20 + (i % 3) * 100, 20 + (i / 3) * 100, 80, 80)];
         
         [sys_imageView addSubview:imageView];
@@ -460,6 +461,10 @@
             [deleteButton setUserData:examinationChanging.images[i]];
             [deleteButton addTarget:self action:@selector(deleteButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
             [sys_imageView addSubview:deleteButton];
+            
+            // 点击图片放大
+            [imageButton setUserData:examinationChanging.images[i]];
+            [imageButton addTarget:self action:@selector(demoImage:) forControlEvents:UIControlEventTouchUpInside];
         }
         else {
             [imageView setImage:[UIImage imageNamed:@"casehistory-addimage"]];
@@ -467,6 +472,13 @@
         }
         //NSLog(@"%@", yijiarenImageUrl(((WeTextCoding *)examinationChanging.images[i]).objName));
     }
+}
+
+- (void)demoImage:(WeInfoedButton *)sender {
+    WeTextCoding * image = sender.userData;
+    WeImageViewerViewController * vc = [[WeImageViewerViewController alloc] init];
+    vc.imageToDemoPath = yijiarenImageUrl(image.objName);
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)deleteButton_onPress:(WeInfoedButton *)sender {
