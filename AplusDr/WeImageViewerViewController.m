@@ -96,14 +96,16 @@
     UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewsingleTapped:)];
     doubleTapRecognizer.numberOfTapsRequired = 1;
     doubleTapRecognizer.numberOfTouchesRequired = 1;
-    [scrollView addGestureRecognizer:singleTapRecognizer];
+    //[scrollView addGestureRecognizer:singleTapRecognizer];
     
     UIButton * cancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     cancelButton.frame = CGRectMake(100, self.view.frame.size.height - 60, 120, 40);
-    cancelButton.tintColor = [UIColor colorWithRed:134 / 255.0 green:11 / 255.0 blue:38 / 255.0 alpha:1.0];
-    [cancelButton setTitle:@"离开" forState:UIControlStateNormal];
-    cancelButton.titleLabel.font = [UIFont fontWithName:@"Heiti SC" size:14];
+    cancelButton.tintColor = [UIColor whiteColor];
+    cancelButton.backgroundColor = [UIColor colorWithRed:134 / 255.0 green:11 / 255.0 blue:38 / 255.0 alpha:1.0];
+    [cancelButton setTitle:@"返回" forState:UIControlStateNormal];
+    cancelButton.titleLabel.font = [UIFont fontWithName:@"Heiti SC" size:16];
     cancelButton.layer.borderWidth = 1.0f;
+    cancelButton.layer.borderColor = (__bridge CGColorRef)([UIColor whiteColor]);
     cancelButton.layer.cornerRadius = 5.0f;
     [cancelButton addTarget:self action:@selector(cancelButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cancelButton];

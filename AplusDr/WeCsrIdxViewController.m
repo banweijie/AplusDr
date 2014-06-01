@@ -205,6 +205,7 @@
     if (we_targetView == targetViewMainPage) [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
     if (we_targetView == targetViewConsultingRoom) we_targetView = targetViewNone;
     if (we_targetView == targetViewPersonalCenter) [self.tabBarController setSelectedIndex:weTabBarIdPersonalCenter];
+    if (we_targetView == targetViewCaseHistory) [self.tabBarController setSelectedIndex:weTabBarIdCaseHistory];
 }
 - (void)didReceiveMemoryWarning
 {

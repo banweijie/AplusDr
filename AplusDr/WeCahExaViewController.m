@@ -478,6 +478,7 @@
     WeTextCoding * image = sender.userData;
     WeImageViewerViewController * vc = [[WeImageViewerViewController alloc] init];
     vc.imageToDemoPath = yijiarenImageUrl(image.objName);
+    //[self.navigationController pushViewController:vc animated:YES];
     [self presentViewController:vc animated:YES completion:nil];
 }
 
