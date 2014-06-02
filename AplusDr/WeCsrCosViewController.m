@@ -192,7 +192,7 @@
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:yijiarenUrl(@"patient", @"addConsult") parameters:@{
-                                                                      @"consult.doctor.id":doctorViewing.userId,
+                                                                      @"consult.doctor.id":self.favorDoctor.userId,
                                                                       @"consult.gender":csrcos_selected_gender,
                                                                       @"consult.age":user_age_input.text,
                                                                       @"consult.emergent":user_ifemergent_switch.on?@"true":@"false"
@@ -205,6 +205,7 @@
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
                   //[self dismissViewControllerAnimated:YES completion:nil];
+                  NSLog(@"%@", HTTPResponse);
                   NSString * orderId = [NSString stringWithFormat:@"%@", HTTPResponse[@"response"][@"order"][@"id"]];
                   NSLog(@"\norderId = %@", orderId);
                   [self finishOrder:orderId];
@@ -262,6 +263,7 @@
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
+                  self.favorDoctor.consultStatus = @"A";
                   [self dismissViewControllerAnimated:YES completion:nil];
                   return;
               }
