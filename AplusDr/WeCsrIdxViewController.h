@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeCsrCtrViewController.h"
 
 @interface WeCsrIdxViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

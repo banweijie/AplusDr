@@ -10,4 +10,11 @@
 
 @interface WeFavorDoctor : WeDoctor
 
+@property(strong, nonatomic) NSString * consultStatus;
+@property(nonatomic) BOOL sendable;
+@property(nonatomic) long long deadline;
+
+- (WeFavorDoctor *)initWithNSDictionary:(NSDictionary *)info;
+- (void)setWithNSDictionary:(NSDictionary *)info;
+
 @end

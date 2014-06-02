@@ -27,11 +27,16 @@
     
     // audio recorder
     NSData * amrAudio;
+    
+    // 发起咨询和加号
+    UIView * newConsultOrPlusView;
 }
 
 @end
 
 @implementation WeCsrCtrViewController
+
+@synthesize doctorChating;
 
 static double startRecordTime = 0;
 static double endRecordTime = 0;
@@ -459,11 +464,10 @@ static double endRecordTime = 0;
     
     [unionView addSubview:bubbletTableView];
     
-    [self refreshMessage:self];
     bubbletTableView.bubbleDataSource = self;
     bubbletTableView.showAvatars = YES;
-    [bubbletTableView reloadData];
-    [bubbletTableView scrollBubbleViewToBottomAnimated:YES];
+    //[bubbletTableView reloadData];
+    //[bubbletTableView scrollBubbleViewToBottomAnimated:YES];
     
     inputView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 320, 40)];
     inputView.backgroundColor = [UIColor colorWithRed:231 / 255.0 green:228 / 255.0 blue:223 / 255.0 alpha:0.9];
@@ -550,7 +554,6 @@ static double endRecordTime = 0;
     uploadVedioButton.tintColor = We_foreground_red_general;
     [moreInputView addSubview:uploadVedioButton];
     
-    
     WeToolButton * jiahaoButton = [WeToolButton buttonWithType:UIButtonTypeRoundedRect];
     [jiahaoButton setFrame:CGRectMake(240, 0, 80, 100)];
     [jiahaoButton setTitle:@"我要加号" forState:UIControlStateNormal];
@@ -568,8 +571,37 @@ static double endRecordTime = 0;
                                                  name:UIKeyboardWillHideNotification object:nil];
     [unionView addSubview:inputView];
     
+    // 发起咨询和发起加号
+    newConsultOrPlusView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, 320, 44)];
+    [newConsultOrPlusView setBackgroundColor:We_foreground_white_general];
+    [self.view addSubview:newConsultOrPlusView];
+    
+    UIButton * newConsultButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [newConsultButton setFrame:CGRectMake(0, 0, 159, 44)];
+    [newConsultButton setTitle:@"发起咨询" forState:UIControlStateNormal];
+    [newConsultButton setTintColor:[UIColor whiteColor]];
+    [newConsultButton setBackgroundColor:We_foreground_red_general];
+    [newConsultButton.titleLabel setFont:We_font_button_zh_cn];
+    [newConsultOrPlusView addSubview:newConsultButton];
+    
+    UIButton * newAppointmentButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [newAppointmentButton setFrame:CGRectMake(161, 0, 159, 44)];
+    [newAppointmentButton setTitle:@"申请加号" forState:UIControlStateNormal];
+    [newAppointmentButton setTintColor:[UIColor whiteColor]];
+    [newAppointmentButton setBackgroundColor:We_foreground_red_general];
+    [newAppointmentButton.titleLabel setFont:We_font_button_zh_cn];
+    [newConsultOrPlusView addSubview:newAppointmentButton];
+    
+    //
+    [self refreshView:self];
 }
 
+// 发起咨询和发起加号
+- (void)newConsultButton_onPress:(id)sender {
+    
+}
+
+// 输入框右侧更多选项
 - (void)displayMoreInput:(int)mode {
     currentMoreInputState = mode;
     
@@ -688,7 +720,28 @@ static double endRecordTime = 0;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
-    timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(refreshMessage:) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(refreshView:) userInfo:nil repeats:YES];
+}
+
+- (void)refreshView:(id)sender {
+    [self refreshMessage:sender];
+    [self refreshKeyboard:sender];
+}
+
+- (void)refreshKeyboard:(id)sender {
+    //NSLog(@"%hhd", doctorChating.sendable);
+    NSLog(@"!!!!");
+    WeFavorDoctor * favorDoctor = favorDoctors[we_doctorChating];
+    if (favorDoctor.sendable) {
+        [newConsultOrPlusView setHidden:YES];
+    }
+    else {
+        [newConsultOrPlusView setHidden:NO];
+        [self displayMoreInput:NO];
+        [self changeInputMode:0];
+        [self moveUnionView:0 withDuration:0];
+        [inputTextField resignFirstResponder];
+    }
 }
 
 - (void)didReceiveMemoryWarning

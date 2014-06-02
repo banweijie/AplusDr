@@ -39,7 +39,9 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     we_doctorChating = orderedIdOfDoctor[path.section];
-    [self performSegueWithIdentifier:@"CsrIdx_pushto_CsrCtr" sender:self];
+    WeCsrCtrViewController * vc = [[WeCsrCtrViewController alloc] init];
+    vc.doctorChating = favorDoctors[orderedIdOfDoctor[path.section]];
+    [self.navigationController pushViewController:vc animated:YES];
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度

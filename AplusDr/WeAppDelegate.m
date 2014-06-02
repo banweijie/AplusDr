@@ -334,6 +334,23 @@
                              }];
                              [downloadTask resume];
                          }
+                         else if ([message.messageType isEqualToString:@"C"]) {
+                             if ([message.content isEqualToString:@"sendable=0"]) {
+                                 WeFavorDoctor * favorDoctor = favorDoctors[message.senderId];
+                                 NSLog(@"%@ %@ %@", message.content, message.senderId, favorDoctor.userName);
+                                 if (favorDoctor != NULL) {
+                                     favorDoctor.sendable = NO;
+                                 }
+                             }
+                             if ([message.content isEqualToString:@"sendable=1"]) {
+                                 WeFavorDoctor * favorDoctor = favorDoctors[message.senderId];
+                                 NSLog(@"%@ %@ %@", message.content, message.senderId, favorDoctor.userName);
+                                 if (favorDoctor != NULL) {
+                                     favorDoctor.sendable = YES;
+                                 }
+                             }
+                             message.loading = NO;
+                         }
                          else {
                              message.loading = NO;
                          }
@@ -388,7 +405,7 @@
                  NSArray * favorDoctorList = HTTPResponse[@"response"];
                  for (int i = 0; i < [favorDoctorList count]; i++) {
                      // 取出原来的医生和现在的医生
-                     WeFavorDoctor * newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorList[i][@"doctor"]];
+                     WeFavorDoctor * newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorList[i]];
                      WeFavorDoctor * oldDoctor = (WeFavorDoctor *) favorDoctors[newDoctor.userId];
                      
                      // 如果头像变化则前往更新，否则沿用之前的
