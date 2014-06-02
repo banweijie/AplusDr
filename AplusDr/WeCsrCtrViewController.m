@@ -423,7 +423,6 @@ static double endRecordTime = 0;
     [self.view addSubview:bg];
     
     // Title
-    self.navigationItem.title = ((WeFavorDoctor *) favorDoctors[we_doctorChating]).userName;
     
     // Invisible of tab bar
     [self setExtendedLayoutIncludesOpaqueBars:YES];
@@ -582,6 +581,7 @@ static double endRecordTime = 0;
     [newConsultButton setTintColor:[UIColor whiteColor]];
     [newConsultButton setBackgroundColor:We_foreground_red_general];
     [newConsultButton.titleLabel setFont:We_font_button_zh_cn];
+    [newConsultButton addTarget:self action:@selector(newConsultButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [newConsultOrPlusView addSubview:newConsultButton];
     
     UIButton * newAppointmentButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -596,9 +596,17 @@ static double endRecordTime = 0;
     [self refreshView:self];
 }
 
-// 发起咨询和发起加号
+// 发起咨询按钮被按下
 - (void)newConsultButton_onPress:(id)sender {
+    WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
+    vc.pushType = @"consultingRoom";
+    vc.favorDoctor = favorDoctors[we_doctorChating];
+    //doctorViewing = favorDoctors[we_doctorChating];
     
+    WeNavViewController * nav = [[WeNavViewController alloc] init];
+    [nav pushViewController:vc animated:NO];
+    
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 // 输入框右侧更多选项
@@ -726,6 +734,8 @@ static double endRecordTime = 0;
 - (void)refreshView:(id)sender {
     [self refreshMessage:sender];
     [self refreshKeyboard:sender];
+    
+    self.navigationItem.title = [NSString stringWithFormat:@"%@(%@)", doctorChating.userName, doctorChating.consultStatus];
 }
 
 - (void)refreshKeyboard:(id)sender {

@@ -15,6 +15,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "VoiceConverter.h"
 #import "WeInfoedButton.h"
+#import "WeCsrCosViewController.h"
+#import "WeNavViewController.h"
 
 @interface WeCsrCtrViewController : UIViewController  <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVAudioPlayerDelegate>
 

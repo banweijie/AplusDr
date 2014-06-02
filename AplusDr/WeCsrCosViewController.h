@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "WeViewController.h"
+#import "WeAppDelegate.h"
 
 @interface WeCsrCosViewController :  WeViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+
+@property(strong, nonatomic) NSString * pushType;
+@property(strong, nonatomic) WeFavorDoctor * favorDoctor;
 
 @end

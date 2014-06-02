@@ -15,6 +15,7 @@
     UITableView * sys_tableView;
     UITextField * user_age_input;
     UISwitch * user_ifemergent_switch;
+    UIActivityIndicatorView * sys_pendingView;
 }
 
 @end
@@ -187,6 +188,7 @@
 }
 
 - (void)addConsult:(id)sender {
+    [sys_pendingView startAnimating];
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:yijiarenUrl(@"patient", @"addConsult") parameters:@{
@@ -196,12 +198,70 @@
                                                                       @"consult.emergent":user_ifemergent_switch.on?@"true":@"false"
                                                                       }
           success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
+              [sys_pendingView stopAnimating];
               NSString * errorMessage;
               
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
-                  NSLog(@"%@", HTTPResponse);
+                  //[self dismissViewControllerAnimated:YES completion:nil];
+                  NSString * orderId = [NSString stringWithFormat:@"%@", HTTPResponse[@"response"][@"order"][@"id"]];
+                  NSLog(@"\norderId = %@", orderId);
+                  [self finishOrder:orderId];
+                  return;
+              }
+              if ([result isEqualToString:@"2"]) {
+                  NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
+                  NSEnumerator *enumerator = [fields keyEnumerator];
+                  id key;
+                  while ((key = [enumerator nextObject])) {
+                      NSString * tmp1 = [fields objectForKey:key];
+                      if (tmp1 != NULL) errorMessage = tmp1;
+                  }
+              }
+              if ([result isEqualToString:@"3"]) {
+                  errorMessage = [HTTPResponse objectForKey:@"info"];
+              }
+              if ([result isEqualToString:@"4"]) {
+                  errorMessage = [HTTPResponse objectForKey:@"info"];
+              }
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"发送信息失败"
+                                           message:errorMessage
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [sys_pendingView stopAnimating];
+              NSLog(@"Error: %@", error);
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"发送信息失败"
+                                           message:@"未能连接服务器，请重试"
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+     ];
+    
+}
+
+- (void)finishOrder:(NSString *)orderId {
+    [sys_pendingView startAnimating];
+    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:yijiarenUrl(@"patient", @"finishOrder") parameters:@{
+                                                                      @"orderId":orderId,
+                                                                      }
+          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
+              [sys_pendingView stopAnimating];
+              NSString * errorMessage;
+              
+              NSString *result = [HTTPResponse objectForKey:@"result"];
+              result = [NSString stringWithFormat:@"%@", result];
+              if ([result isEqualToString:@"1"]) {
                   [self dismissViewControllerAnimated:YES completion:nil];
                   return;
               }
@@ -229,6 +289,7 @@
               [notPermitted show];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [sys_pendingView stopAnimating];
               NSLog(@"Error: %@", error);
               UIAlertView *notPermitted = [[UIAlertView alloc]
                                            initWithTitle:@"发送信息失败"
@@ -250,6 +311,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.navigationItem.title = @"发起咨询";
     
     // Initial conditions
     csrcos_selected_gender = @"M";
@@ -287,6 +350,13 @@
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:sys_tableView];
+    
+    // 转圈圈
+    sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    [sys_pendingView setAlpha:1.0];
+    [self.view addSubview:sys_pendingView];
 }
 
 - (void)didReceiveMemoryWarning

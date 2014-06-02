@@ -10,6 +10,4 @@
 
 @interface WeCsrDciViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIScrollViewDelegate>
 
-@property(strong, nonatomic) NSString * pushType;
-
 @end
