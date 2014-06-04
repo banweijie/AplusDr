@@ -590,6 +590,7 @@ static double endRecordTime = 0;
     [newAppointmentButton setTintColor:[UIColor whiteColor]];
     [newAppointmentButton setBackgroundColor:We_foreground_red_general];
     [newAppointmentButton.titleLabel setFont:We_font_button_zh_cn];
+    [newAppointmentButton addTarget:self action:@selector(newAppointmentButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [newConsultOrPlusView addSubview:newAppointmentButton];
     
     //
@@ -602,6 +603,17 @@ static double endRecordTime = 0;
     vc.pushType = @"consultingRoom";
     vc.favorDoctor = favorDoctors[we_doctorChating];
     //doctorViewing = favorDoctors[we_doctorChating];
+    
+    WeNavViewController * nav = [[WeNavViewController alloc] init];
+    [nav pushViewController:vc animated:NO];
+    
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+// 申请加号按钮被按下
+- (void)newAppointmentButton_onPress:(id)sender {
+    WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
+    vc.favorDoctor = favorDoctors[we_doctorChating];
     
     WeNavViewController * nav = [[WeNavViewController alloc] init];
     [nav pushViewController:vc animated:NO];

@@ -472,7 +472,6 @@
 }
 @end
 
-
 #import <CommonCrypto/CommonDigest.h> // Need to import for CC_MD5 access
 @implementation NSString (WeDelegate)
 - (NSString *)md5
