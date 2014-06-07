@@ -244,8 +244,18 @@
 }
 
 - (void)consulting:(id)sender {
-    [self performSegueWithIdentifier:@"CsrDci_pushto_CsrCos" sender:self];
+    WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
+    vc.pushType = @"consultingRoom";
+    vc.favorDoctor = doctorViewing;
+    //doctorViewing = favorDoctors[we_doctorChating];
+    
+    WeNavViewController * nav = [[WeNavViewController alloc] init];
+    [nav pushViewController:vc animated:NO];
+    
+    [self presentViewController:nav animated:YES completion:nil];
     return;
+    
+    
     NSString *urlString = yijiarenUrl(@"patient", @"addConsult");
     NSString *parasString = [NSString stringWithFormat:@"consult.doctor.id=%@&consult.order.id=3&consult.gender=M&consult.age=20", doctorViewing.userId];
     NSData * DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:parasString];

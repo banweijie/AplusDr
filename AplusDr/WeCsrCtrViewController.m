@@ -588,9 +588,9 @@ static double endRecordTime = 0;
     [newAppointmentButton setFrame:CGRectMake(161, 0, 159, 44)];
     [newAppointmentButton setTitle:@"申请加号" forState:UIControlStateNormal];
     [newAppointmentButton setTintColor:[UIColor whiteColor]];
-    [newAppointmentButton setBackgroundColor:We_foreground_red_general];
+    [newAppointmentButton setBackgroundColor:We_foreground_gray_general];
     [newAppointmentButton.titleLabel setFont:We_font_button_zh_cn];
-    [newAppointmentButton addTarget:self action:@selector(newAppointmentButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
+    //[newAppointmentButton addTarget:self action:@selector(newAppointmentButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [newConsultOrPlusView addSubview:newAppointmentButton];
     
     //
@@ -748,6 +748,9 @@ static double endRecordTime = 0;
     [self refreshKeyboard:sender];
     
     self.navigationItem.title = [NSString stringWithFormat:@"%@(%@)", doctorChating.userName, doctorChating.consultStatus];
+    if ([doctorChating.consultStatus isEqualToString:@"A"]) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%@(申请咨询中)", doctorChating.userName];
+    }
 }
 
 - (void)refreshKeyboard:(id)sender {

@@ -13,6 +13,6 @@
 @interface WeCsrCosViewController :  WeViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property(strong, nonatomic) NSString * pushType;
-@property(weak, nonatomic) WeFavorDoctor * favorDoctor;
+@property(strong, nonatomic) WeFavorDoctor * favorDoctor;
 
 @end
