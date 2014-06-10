@@ -50,9 +50,35 @@
     timer1 = [NSTimer scheduledTimerWithTimeInterval:refreshInterval target:self selector:@selector(refreshMessage:) userInfo:nil repeats:YES];
     
     NSLog(@"%@", [userDefaults stringForKey:@"lastMessageId"]);
+    
+    // 初始化数据库
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documents = [paths objectAtIndex:0];
+    NSString *database_path = [documents stringByAppendingPathComponent:@"yijiaren.sqlite"];
+    
+    if (sqlite3_open([database_path UTF8String], &yjr_db) != SQLITE_OK) {
+        sqlite3_close(yjr_db);
+        NSLog(@"数据库打开失败");
+    }
+    
+    // 创建YJRUser表
+    [WeAppDelegate execSql:@"CREATE TABLE IF NOT EXISTS YJRUser (id TEXT PRIMARY KEY, lastMessageId TEXT)"];
+    
+    // 创建YJRMessage表
+    [WeAppDelegate execSql:@"CREATE TABLE IF NOT EXISTS YJRMessage (id TEXT PRIMARY KEY, senderId TEXT, receiverId TEXT, content TEXT, time TEXT)"];
+    
     return YES;
 }
 
+// 数据库操作
++ (void)execSql:(NSString *)sql
+{
+    char *err;
+    if (sqlite3_exec(yjr_db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK) {
+        sqlite3_close(yjr_db);
+        NSLog(@"数据库操作数据失败!");
+    }
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -94,6 +120,42 @@
         return nil;
     }
     
+}
+
+// AFNetworking 网络连接通用方法
++ (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong NSDictionary *))success failure:(void (^__strong)(__strong NSString *))failure {
+    NSLog(@"\npostToServer:%@ %@ %@", field, action, parameters);
+    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+    [manager POST:yijiarenUrl(field, action) parameters:parameters
+         success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
+             NSString * errorMessage = @"未知的错误";
+             NSString * result = [NSString stringWithFormat:@"%@", HTTPResponse[@"result"]];
+             if ([result isEqualToString:@"1"]) {
+                 success(HTTPResponse[@"response"]);
+                 return;
+             }
+             if ([result isEqualToString:@"2"]) {
+                 NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
+                 NSEnumerator *enumerator = [fields keyEnumerator];
+                 id key;
+                 while ((key = [enumerator nextObject])) {
+                     NSString * tmp1 = [fields objectForKey:key];
+                     if (tmp1 != NULL) errorMessage = tmp1;
+                 }
+             }
+             else if ([result isEqualToString:@"3"]) {
+                 errorMessage = [HTTPResponse objectForKey:@"info"];
+             }
+             else if ([result isEqualToString:@"4"]) {
+                 errorMessage = [HTTPResponse objectForKey:@"info"];
+             }
+             failure(errorMessage);
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError * error) {
+             failure([NSString stringWithFormat:@"%@", error]);
+         }
+     ];
 }
 
 + (NSString *)transitionToDateFromSecond:(long long)s {

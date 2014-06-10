@@ -751,13 +751,24 @@ static double endRecordTime = 0;
     if ([doctorChating.consultStatus isEqualToString:@"A"]) {
         self.navigationItem.title = [NSString stringWithFormat:@"%@(申请咨询中)", doctorChating.userName];
     }
+    if ([doctorChating.consultStatus isEqualToString:@"N"]) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%@", doctorChating.userName];
+    }
+    if ([doctorChating.consultStatus isEqualToString:@"C"]) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%@(咨询中)", doctorChating.userName];
+    }
+    if ([doctorChating.consultStatus isEqualToString:@"W"]) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%@(等待支付)", doctorChating.userName];
+    }
 }
 
 - (void)refreshKeyboard:(id)sender {
     //NSLog(@"%hhd", doctorChating.sendable);
     NSLog(@"!!!!");
     WeFavorDoctor * favorDoctor = favorDoctors[we_doctorChating];
-    if (favorDoctor.sendable) {
+    [newConsultOrPlusView setHidden:YES];
+    /*
+    if ([favorDoctor.consultStatus isEqualToString:@"N"]) {
         [newConsultOrPlusView setHidden:YES];
     }
     else {
@@ -766,7 +777,7 @@ static double endRecordTime = 0;
         [self changeInputMode:0];
         [self moveUnionView:0 withDuration:0];
         [inputTextField resignFirstResponder];
-    }
+    }*/
 }
 
 - (void)didReceiveMemoryWarning

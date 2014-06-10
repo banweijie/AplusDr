@@ -69,6 +69,7 @@
 		907D5B6A1920D9DA0006EAE0 /* UIBubbleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B631920D9DA0006EAE0 /* UIBubbleTableViewCell.m */; };
 		907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B661920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m */; };
 		907D5B6E1920DB430006EAE0 /* WeSPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B6D1920DB430006EAE0 /* WeSPViewController.m */; };
+		90B31A3C1947AA6C00A19CD7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B31A3B1947AA6C00A19CD7 /* libsqlite3.dylib */; };
 		90F0CE61192234E8006A4605 /* WeMapIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE60192234E8006A4605 /* WeMapIdxViewController.m */; };
 		90F0CE6519228CEF006A4605 /* WeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE6419228CEF006A4605 /* WeUser.m */; };
 		90F0CE7119229973006A4605 /* WeNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE7019229973006A4605 /* WeNavViewController.m */; };
@@ -213,6 +214,7 @@
 		907D5B661920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBubbleTypingTableViewCell.m; sourceTree = "<group>"; };
 		907D5B6C1920DB430006EAE0 /* WeSPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSPViewController.h; sourceTree = "<group>"; };
 		907D5B6D1920DB430006EAE0 /* WeSPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSPViewController.m; sourceTree = "<group>"; };
+		90B31A3B1947AA6C00A19CD7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		90F0CE5F192234E8006A4605 /* WeMapIdxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeMapIdxViewController.h; sourceTree = "<group>"; };
 		90F0CE60192234E8006A4605 /* WeMapIdxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeMapIdxViewController.m; sourceTree = "<group>"; };
 		90F0CE6319228CEF006A4605 /* WeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeUser.h; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90B31A3C1947AA6C00A19CD7 /* libsqlite3.dylib in Frameworks */,
 				9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */,
 				9026EE1E1904E8A700CE4A7A /* UIKit.framework in Frameworks */,
 				9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */,
@@ -389,6 +392,7 @@
 		9026EE181904E8A700CE4A7A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				90B31A3B1947AA6C00A19CD7 /* libsqlite3.dylib */,
 				9026EE191904E8A700CE4A7A /* Foundation.framework */,
 				9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */,
 				9026EE1D1904E8A700CE4A7A /* UIKit.framework */,
@@ -410,7 +414,7 @@
 				9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */,
 				900E2967193079F3008BF61C /* CaseManage */,
 				9026EF121904EF1600CE4A7A /* MainPage */,
-				9026EF131904EF2800CE4A7A /* Register */,
+				9026EF131904EF2800CE4A7A /* UserManagement */,
 				9026EF141904EF8300CE4A7A /* PersonalCenter */,
 				907D5B42192016580006EAE0 /* ConsultingRoom */,
 				9026EEEF1904EE5500CE4A7A /* Main.storyboard */,
@@ -492,7 +496,7 @@
 			name = MainPage;
 			sourceTree = "<group>";
 		};
-		9026EF131904EF2800CE4A7A /* Register */ = {
+		9026EF131904EF2800CE4A7A /* UserManagement */ = {
 			isa = PBXGroup;
 			children = (
 				9026EEBB1904EE5500CE4A7A /* WeRegNavViewController.h */,
@@ -506,7 +510,7 @@
 				9026EEC31904EE5500CE4A7A /* WeRegIrpViewController.h */,
 				9026EEC41904EE5500CE4A7A /* WeRegIrpViewController.m */,
 			);
-			name = Register;
+			name = UserManagement;
 			sourceTree = "<group>";
 		};
 		9026EF141904EF8300CE4A7A /* PersonalCenter */ = {
@@ -649,6 +653,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "___PKU___";
 				TargetAttributes = {
+					9026EE151904E8A700CE4A7A = {
+						DevelopmentTeam = 7C2GR9EG83;
+					};
 					9026EE391904E8A700CE4A7A = {
 						TestTargetID = 9026EE151904E8A700CE4A7A;
 					};
@@ -911,6 +918,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AplusDr/AplusDr-Prefix.pch";
 				INFOPLIST_FILE = "AplusDr/AplusDr-Info.plist";
@@ -921,7 +930,7 @@
 					"$(PROJECT_DIR)/AplusDr/VoiceConvert/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3312E140-D977-43DD-BA2B-547349F9997C";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -933,6 +942,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AplusDr/AplusDr-Prefix.pch";
 				INFOPLIST_FILE = "AplusDr/AplusDr-Info.plist";
@@ -943,7 +954,7 @@
 					"$(PROJECT_DIR)/AplusDr/VoiceConvert/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3312E140-D977-43DD-BA2B-547349F9997C";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

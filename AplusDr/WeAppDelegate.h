@@ -10,6 +10,7 @@
 #import <AFNetworking.h>
 #import <UIImageView+AFNetworking.h>
 #import "VoiceConverter.h"
+#import <sqlite3.h>
 
 #import "WeUser.h"
 #import "WeDoctor.h"
@@ -40,7 +41,14 @@
 + (void)refreshUserData;
 + (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success;
 + (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month;
++ (void)execSql:(NSString *)sql;
+
+// AFNetworking 网络连接通用方法
++ (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong NSDictionary *))success failure:(void (^__strong)(__strong NSString *))failure;
 @end
+
+// 数据库
+sqlite3 * yjr_db;
 
 // Global Variables
 WeUser * currentUser;

@@ -10,6 +10,7 @@
 #import "WeAppDelegate.h"
 
 @interface WeRegWlcViewController () {
+    UIActivityIndicatorView * sys_pendingView;
     UITableView * sys_tableView;
     UITextField * user_phone_input;
     UITextField * user_password_input;
@@ -50,7 +51,7 @@
         }
     }
     if (path.section == 2) {
-        [self send_login:self];
+        [self api_user_login];
     }
     if (path.section == 3) {
         [self send_register:self];
@@ -246,6 +247,13 @@
     sys_tableView.backgroundColor = [UIColor clearColor];
     sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
+    
+    // 转圈圈
+    sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    [sys_pendingView setAlpha:1.0];
+    [self.view addSubview:sys_pendingView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -269,7 +277,6 @@
 
 - (void)send_login:(id)sender {
     NSLog(@"%@ %@", user_phone_input.text, user_password_input.text);
-    if (![self checkUserRights]) return;
     we_logined = YES;
     currentUser = [[WeUser alloc] init];
     we_targetTabId = 3;
@@ -278,45 +285,48 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (BOOL) checkUserRights {
-    NSString *errorMessage = @"连接失败，请检查网络";
-    NSString *urlString = @"http://115.28.222.1/yijiaren/user/login.action";
-    NSString *md5pw = user_password_input.text;
-    md5pw = [md5pw md5];
-    NSString *parasString = [NSString stringWithFormat:@"phone=%@&password=%@", user_phone_input.text, md5pw];
-    NSData * DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:parasString];
-    
-    if (DataResponse != NULL) {
-        NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
-        NSString *result = [HTTPResponse objectForKey:@"result"];
-        result = [NSString stringWithFormat:@"%@", result];
-        if ([result isEqualToString:@"1"]) {
-            return YES;
-        }
-        if ([result isEqualToString:@"2"]) {
-            NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-            NSEnumerator *enumerator = [fields keyEnumerator];
-            id key;
-            while ((key = [enumerator nextObject])) {
-                NSString * tmp = [fields objectForKey:key];
-                if (tmp != NULL) errorMessage = tmp;
-            }
-        }
-        if ([result isEqualToString:@"3"]) {
-            errorMessage = [HTTPResponse objectForKey:@"info"];
-        }
-        if ([result isEqualToString:@"4"]) {
-            errorMessage = [HTTPResponse objectForKey:@"info"];
-        }
-    }
-    UIAlertView *notPermitted = [[UIAlertView alloc]
-                                 initWithTitle:@"登陆失败"
-                                 message:errorMessage
-                                 delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-    [notPermitted show];
-    return NO;
+// 访问登录接口
+- (void)api_user_login {
+    [sys_pendingView startAnimating];
+    [WeAppDelegate postToServerWithField:@"user" action:@"login"
+                              parameters:@{
+                                           @"phone":user_phone_input.text,
+                                           @"password":[user_password_input.text md5]
+                                           }
+                                 success:^(NSDictionary * response) {
+                                     [self api_user_refreshUser];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView *notPermitted = [[UIAlertView alloc]
+                                                                  initWithTitle:@"登陆失败"
+                                                                  message:errorMessage
+                                                                  delegate:nil
+                                                                  cancelButtonTitle:@"OK"
+                                                                  otherButtonTitles:nil];
+                                     [notPermitted show];
+                                     [sys_pendingView stopAnimating];
+                                 }];
+}
+
+// 访问获取用户信息接口
+- (void)api_user_refreshUser {
+    [WeAppDelegate postToServerWithField:@"user" action:@"refreshUser"
+                              parameters:@{
+                                           }
+                                 success:^(NSDictionary * response) {
+                                     [self dismissViewControllerAnimated:YES completion:nil];
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView *notPermitted = [[UIAlertView alloc]
+                                                                  initWithTitle:@"获取用户信息失败"
+                                                                  message:errorMessage
+                                                                  delegate:nil
+                                                                  cancelButtonTitle:@"OK"
+                                                                  otherButtonTitles:nil];
+                                     [notPermitted show];
+                                     [sys_pendingView stopAnimating];
+                                 }];
 }
 
 - (void)send_forgetpass:(id)sender {
