@@ -16,6 +16,10 @@
 @implementation WeTabBarViewController
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    /*
+    if (currentUserId == nil) {
+        
+    }*/
     if (viewController == [tabBarController.viewControllers objectAtIndex:weTabBarIdPersonalCenter] && !we_logined) {
         we_targetView = targetViewPersonalCenter;
         [self performSegueWithIdentifier:@"TabBar_Modalto_RegWlc" sender:self];

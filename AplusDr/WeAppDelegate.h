@@ -186,8 +186,7 @@ weTargetView we_targetView;
 #define We_font_button_zh_cn [UIFont fontWithName:@"Heiti SC" size:14]
 #define We_font_textfield_small_zh_cn [UIFont fontWithName:@"Heiti SC" size:11]
 
-
-#define We_background_cell_general UIColorFromRGB(255, 255, 255, 0.85)
+#define We_background_cell_general UIColorFromRGB(255, 255, 255, 0.3)
 #define We_background_general UIColorFromRGB(237, 237, 237, 1)
 #define We_background_red_general UIColorFromRGB(134, 11, 38, 0.9)
 #define We_background_red_tableviewcell UIColorFromRGB(134, 11, 38, 0.85)

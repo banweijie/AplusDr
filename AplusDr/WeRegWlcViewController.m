@@ -25,22 +25,15 @@
 @implementation WeRegWlcViewController
 
 
-/*
- [AREA]
- UITableView dataSource & delegate interfaces
- */
+#pragma mark - UITableView Delegate & DataSource
+
 // 调整格子的透明度
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.alpha = We_alpha_cell_general;;
-    cell.opaque = YES;
+    //cell.alpha = We_alpha_cell_general;;
+    //cell.opaque = YES;
 }
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
-{
-    return path;
-}
-// 选中某个Cell触发的事件
-- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section == 1) {
         if (path.row == 0) {
@@ -49,7 +42,13 @@
         if (path.row == 1) {
             [user_password_input becomeFirstResponder];
         }
+        return nil;
     }
+    return path;
+}
+// 选中某个Cell触发的事件
+- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
+{
     if (path.section == 2) {
         [self api_user_login];
     }
@@ -118,22 +117,21 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
     }
+    cell.opaque = NO;
     switch (indexPath.section) {
         case 0:
             break;
         case 1:
             switch (indexPath.row) {
                 case 0:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.backgroundColor = [UIColor clearColor];
+                    cell.backgroundColor = We_background_cell_general;
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
                     cell.imageView.image = [UIImage imageNamed:@"login-phonenum"];
                     [cell.contentView addSubview:user_phone_input];
                     break;
                 case 1:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.backgroundColor = [UIColor clearColor];
+                    cell.backgroundColor = We_background_cell_general;
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
                     cell.imageView.image = [UIImage imageNamed:@"login-password"];
@@ -146,10 +144,9 @@
         case 2:
             switch (indexPath.row) {
                 case 0:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.backgroundColor = [UIColor clearColor];
+                    cell.backgroundColor = We_background_cell_general;
                     cell.textLabel.text = @"登录";
-                    cell.textLabel.font = We_font_textfield_zh_cn;
+                    cell.textLabel.font = [UIFont fontWithName:@"Heiti SC" size:15];
                     cell.textLabel.textColor = We_foreground_red_general;
                     cell.textLabel.textAlignment = NSTextAlignmentCenter;
                     break;
@@ -158,10 +155,9 @@
             }
             break;
         case 3:
-            cell.contentView.backgroundColor = We_foreground_red_general;
-            cell.backgroundColor = [UIColor clearColor];
+            cell.backgroundColor = We_background_red_tableviewcell;
             cell.textLabel.text = @"初次使用？现在注册";
-            cell.textLabel.font = We_font_textfield_zh_cn;
+            cell.textLabel.font = [UIFont fontWithName:@"Heiti SC" size:16];
             cell.textLabel.textColor = We_foreground_white_general;
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
             break;
@@ -171,11 +167,6 @@
     return cell;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -183,11 +174,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
 }
 
 - (void)viewDidLoad
@@ -219,7 +205,6 @@
     [sys_titles addSubview:title_zh];
     
     We_init_textFieldInCell_pholder(user_phone_input, @"请输入您的手机号码", We_font_textfield_zh_cn);
-    
     We_init_textFieldInCell_pholder(user_password_input, @"请输入您的登录密码", We_font_textfield_zh_cn);
     user_password_input.secureTextEntry = YES;
     
@@ -246,6 +231,7 @@
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
     sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    sys_tableView.scrollEnabled = NO;
     [self.view addSubview:sys_tableView];
     
     // 转圈圈
@@ -262,28 +248,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"登录" style:UIBarButtonItemStylePlain target:nil action:nil];
-}
-
-
-- (void)send_login:(id)sender {
-    NSLog(@"%@ %@", user_phone_input.text, user_password_input.text);
-    we_logined = YES;
-    currentUser = [[WeUser alloc] init];
-    we_targetTabId = 3;
-    [WeAppDelegate refreshUserData];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+#pragma api
 
 // 访问登录接口
 - (void)api_user_login {
@@ -297,7 +262,7 @@
                                      [self api_user_refreshUser];
                                  }
                                  failure:^(NSString * errorMessage) {
-                                     UIAlertView *notPermitted = [[UIAlertView alloc]
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
                                                                   initWithTitle:@"登陆失败"
                                                                   message:errorMessage
                                                                   delegate:nil
@@ -318,7 +283,7 @@
                                      [sys_pendingView stopAnimating];
                                  }
                                  failure:^(NSString * errorMessage) {
-                                     UIAlertView *notPermitted = [[UIAlertView alloc]
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
                                                                   initWithTitle:@"获取用户信息失败"
                                                                   message:errorMessage
                                                                   delegate:nil

@@ -125,37 +125,36 @@
 // AFNetworking 网络连接通用方法
 + (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong NSDictionary *))success failure:(void (^__strong)(__strong NSString *))failure {
     NSLog(@"\npostToServer:%@ %@ %@", field, action, parameters);
-    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
     [manager POST:yijiarenUrl(field, action) parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
-             NSString * errorMessage = @"未知的错误";
-             NSString * result = [NSString stringWithFormat:@"%@", HTTPResponse[@"result"]];
-             if ([result isEqualToString:@"1"]) {
-                 success(HTTPResponse[@"response"]);
-                 return;
-             }
-             if ([result isEqualToString:@"2"]) {
-                 NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-                 NSEnumerator *enumerator = [fields keyEnumerator];
-                 id key;
-                 while ((key = [enumerator nextObject])) {
-                     NSString * tmp1 = [fields objectForKey:key];
-                     if (tmp1 != NULL) errorMessage = tmp1;
-                 }
-             }
-             else if ([result isEqualToString:@"3"]) {
-                 errorMessage = [HTTPResponse objectForKey:@"info"];
-             }
-             else if ([result isEqualToString:@"4"]) {
-                 errorMessage = [HTTPResponse objectForKey:@"info"];
-             }
-             failure(errorMessage);
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError * error) {
-             failure([NSString stringWithFormat:@"%@", error]);
-         }
-     ];
+          success:^(NSURLSessionDataTask *task, id responseObject) {
+              NSString * errorMessage = @"未知的错误";
+              NSString * result = [NSString stringWithFormat:@"%@", responseObject[@"result"]];
+              if ([result isEqualToString:@"1"]) {
+                  success(responseObject[@"response"]);
+                  return;
+              }
+              if ([result isEqualToString:@"2"]) {
+                  NSDictionary *fields = responseObject[@"fields"];
+                  NSEnumerator *enumerator = [fields keyEnumerator];
+                  id key;
+                  while ((key = [enumerator nextObject])) {
+                      NSString * tmp1 = [fields objectForKey:key];
+                      if (tmp1 != NULL) errorMessage = tmp1;
+                  }
+              }
+              else if ([result isEqualToString:@"3"]) {
+                  errorMessage = responseObject[@"info"];
+              }
+              else if ([result isEqualToString:@"4"]) {
+                  errorMessage = responseObject[@"info"];
+              }
+              failure(errorMessage);
+          }
+          failure:^(NSURLSessionDataTask *task, NSError *error) {
+              failure([NSString stringWithFormat:@"%@", error]);
+          }];
 }
 
 + (NSString *)transitionToDateFromSecond:(long long)s {

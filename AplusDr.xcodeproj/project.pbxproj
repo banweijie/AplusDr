@@ -48,7 +48,6 @@
 		9026EEF21904EE5500CE4A7A /* WeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */; };
 		9026EEF31904EE5500CE4A7A /* WeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */; };
 		9026EEF41904EE5500CE4A7A /* WeMapNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEBA1904EE5500CE4A7A /* WeMapNavController.m */; };
-		9026EEF51904EE5500CE4A7A /* WeRegNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEBC1904EE5500CE4A7A /* WeRegNavViewController.m */; };
 		9026EEF61904EE5500CE4A7A /* WeRegWlcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEBE1904EE5500CE4A7A /* WeRegWlcViewController.m */; };
 		9026EEF71904EE5500CE4A7A /* WeRegIpnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEC01904EE5500CE4A7A /* WeRegIpnViewController.m */; };
 		9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEC21904EE5500CE4A7A /* WeRegIvcViewController.m */; };
@@ -172,8 +171,6 @@
 		9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeTabBarViewController.m; sourceTree = "<group>"; };
 		9026EEB91904EE5500CE4A7A /* WeMapNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeMapNavController.h; sourceTree = "<group>"; };
 		9026EEBA1904EE5500CE4A7A /* WeMapNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeMapNavController.m; sourceTree = "<group>"; };
-		9026EEBB1904EE5500CE4A7A /* WeRegNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeRegNavViewController.h; sourceTree = "<group>"; };
-		9026EEBC1904EE5500CE4A7A /* WeRegNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeRegNavViewController.m; sourceTree = "<group>"; };
 		9026EEBD1904EE5500CE4A7A /* WeRegWlcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeRegWlcViewController.h; sourceTree = "<group>"; };
 		9026EEBE1904EE5500CE4A7A /* WeRegWlcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeRegWlcViewController.m; sourceTree = "<group>"; };
 		9026EEBF1904EE5500CE4A7A /* WeRegIpnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeRegIpnViewController.h; sourceTree = "<group>"; };
@@ -499,8 +496,6 @@
 		9026EF131904EF2800CE4A7A /* UserManagement */ = {
 			isa = PBXGroup;
 			children = (
-				9026EEBB1904EE5500CE4A7A /* WeRegNavViewController.h */,
-				9026EEBC1904EE5500CE4A7A /* WeRegNavViewController.m */,
 				9026EEBD1904EE5500CE4A7A /* WeRegWlcViewController.h */,
 				9026EEBE1904EE5500CE4A7A /* WeRegWlcViewController.m */,
 				9026EEBF1904EE5500CE4A7A /* WeRegIpnViewController.h */,
@@ -759,7 +754,6 @@
 				900E298C19320B92008BF61C /* WeCahExaViewController.m in Sources */,
 				900E2995193223B8008BF61C /* WeExaminationItemConfig.m in Sources */,
 				9026EEF61904EE5500CE4A7A /* WeRegWlcViewController.m in Sources */,
-				9026EEF51904EE5500CE4A7A /* WeRegNavViewController.m in Sources */,
 				9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */,
 				9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */,
 				907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */,

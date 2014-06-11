@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "WeViewController.h"
 
-@interface WeRegWlcViewController : WeViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface WeRegWlcViewController : WeViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate> {
+    NSInteger originTargetTabIndex;
+}
 
 @end
