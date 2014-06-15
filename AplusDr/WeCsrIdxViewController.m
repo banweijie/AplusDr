@@ -22,63 +22,65 @@
 
 @implementation WeCsrIdxViewController
 
-/*
- [AREA]
- UITableView dataSource & delegate interfaces
- */
-- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.alpha = We_alpha_cell_general;;
-    cell.opaque = YES;
-}
+#pragma mark - UITableView Delegate & DataSource
+
 // 欲选中某个Cell触发的事件
-- (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
-{
+- (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path {
     return path;
 }
+
 // 选中某个Cell触发的事件
-- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
-{
+- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path {
     we_doctorChating = orderedIdOfDoctor[path.section];
     WeCsrCtrViewController * vc = [[WeCsrCtrViewController alloc] init];
-    vc.doctorChating = favorDoctors[orderedIdOfDoctor[path.section]];
+    vc.doctorChating = favorDoctorList[orderedIdOfDoctor[path.section]];
     [self.navigationController pushViewController:vc animated:YES];
     [tv deselectRowAtIndexPath:path animated:YES];
 }
+
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) return tv.rowHeight * 1.5;
     return tv.rowHeight;
 }
+
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
     if (section == 0) return 10 + 64;
     return 10;
 }
+
 // 询问每个段落的头部标题
 - (NSString *)tableView:(UITableView *)tv titleForHeaderInSection:(NSInteger)section {
     return @"";
 }
+
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
     return 1;
 }
+
 // 询问每个段落的尾部标题
 - (NSString *)tableView:(UITableView *)tv titleForFooterInSection:(NSInteger)section {
     return @"";
 }
+
 // 询问每个段落的尾部
 -(UIView *)tableView:(UITableView *)tv viewForFooterInSection:(NSInteger)section{
     //if (section == 1) return sys_countDown_demo;
     return nil;
 }
+
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
     return [orderedIdOfDoctor count];
 }
+
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
     return 3;
 }
+
 // 询问每个具体条目的内容
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *MyIdentifier = @"MyReuseIdentifier";
@@ -89,7 +91,7 @@
     [[cell imageView] setContentMode:UIViewContentModeCenter];
     
     if (indexPath.row == 0) {
-        WeFavorDoctor * doctor = favorDoctors[orderedIdOfDoctor[indexPath.section]];
+        WeFavorDoctor * doctor = favorDoctorList[orderedIdOfDoctor[indexPath.section]];
         cell.contentView.backgroundColor = We_background_cell_general;
         // l1 - user name
         UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(75, 12, 240, 23)];
@@ -122,7 +124,7 @@
         cell.detailTextLabel.textColor = We_foreground_black_general;
     }
     if (indexPath.row == 2) {
-        WeFavorDoctor * doctor = favorDoctors[orderedIdOfDoctor[indexPath.section]];
+        WeFavorDoctor * doctor = favorDoctorList[orderedIdOfDoctor[indexPath.section]];
         cell.imageView.image = [UIImage imageNamed:@"docinfo-chatroom"];
         WeMessage * lastMsg = [we_messagesWithDoctor[orderedIdOfDoctor[indexPath.section]] lastObject];
         if ([lastMsg.messageType isEqualToString:@"c"]) {
@@ -152,8 +154,9 @@
     return cell;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+#pragma mark - ViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -166,12 +169,7 @@
     self.tabBarController.tabBar.hidden = NO;
 }
 
-- (void)press:(id)sender {
-    [self performSegueWithIdentifier:@"CsrIdx_pushto_CsrAdd" sender:self];
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
@@ -181,8 +179,8 @@
     bg.contentMode = UIViewContentModeCenter;
     [self.view addSubview:bg];
     
-    UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chatroom-adddoctor"] style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
-    self.navigationItem.rightBarButtonItem = user_save;
+    UIBarButtonItem * addDoctorButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chatroom-adddoctor"] style:UIBarButtonItemStylePlain target:self action:@selector(addDoctorButton_onPress:)];
+    self.navigationItem.rightBarButtonItem = addDoctorButton;
     
     // sys_tableView
     sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, 300, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
@@ -198,33 +196,18 @@
 }
 
 - (void)refreshData:(id)sender {
-    orderedIdOfDoctor = [NSMutableArray arrayWithArray:[favorDoctors allKeys]];
+    orderedIdOfDoctor = [NSMutableArray arrayWithArray:[favorDoctorList allKeys]];
     [sys_tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    /*
-    if (we_targetView == targetViewMainPage) [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
-    if (we_targetView == targetViewConsultingRoom) we_targetView = targetViewNone;
-    if (we_targetView == targetViewPersonalCenter) [self.tabBarController setSelectedIndex:weTabBarIdPersonalCenter];
-    if (we_targetView == targetViewCaseHistory) [self.tabBarController setSelectedIndex:weTabBarIdCaseHistory];*/
-}
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - customs
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)addDoctorButton_onPress:(id)sender {
+    [self performSegueWithIdentifier:@"CsrIdx_pushto_CsrAdd" sender:self];
 }
-*/
 
 @end

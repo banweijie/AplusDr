@@ -328,14 +328,14 @@
                          }
                          else if ([message.messageType isEqualToString:@"C"]) {
                              if ([message.content isEqualToString:@"sendable=0"]) {
-                                 WeFavorDoctor * favorDoctor = favorDoctors[message.senderId];
+                                 WeFavorDoctor * favorDoctor = favorDoctorList[message.senderId];
                                  NSLog(@"%@ %@ %@", message.content, message.senderId, favorDoctor.userName);
                                  if (favorDoctor != NULL) {
                                      favorDoctor.sendable = NO;
                                  }
                              }
                              if ([message.content isEqualToString:@"sendable=1"]) {
-                                 WeFavorDoctor * favorDoctor = favorDoctors[message.senderId];
+                                 WeFavorDoctor * favorDoctor = favorDoctorList[message.senderId];
                                  NSLog(@"%@ %@ %@", message.content, message.senderId, favorDoctor.userName);
                                  if (favorDoctor != NULL) {
                                      favorDoctor.sendable = YES;
@@ -394,11 +394,11 @@
              result = [NSString stringWithFormat:@"%@", result];
              if ([result isEqualToString:@"1"]) {
                  NSMutableDictionary * newFavorDoctors = [[NSMutableDictionary alloc] init];
-                 NSArray * favorDoctorList = HTTPResponse[@"response"];
-                 for (int i = 0; i < [favorDoctorList count]; i++) {
+                 NSArray * favorDoctorArray = HTTPResponse[@"response"];
+                 for (int i = 0; i < [favorDoctorArray count]; i++) {
                      // 取出原来的医生和现在的医生
-                     WeFavorDoctor * newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorList[i]];
-                     WeFavorDoctor * oldDoctor = (WeFavorDoctor *) favorDoctors[newDoctor.userId];
+                     WeFavorDoctor * newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorArray[i]];
+                     WeFavorDoctor * oldDoctor = (WeFavorDoctor *) favorDoctorList[newDoctor.userId];
                      
                      // 如果头像变化则前往更新，否则沿用之前的
                      if (![oldDoctor.avatarPath isEqualToString:newDoctor.avatarPath]) {
@@ -413,7 +413,7 @@
                      
                      newFavorDoctors[newDoctor.userId] = newDoctor;
                  }
-                 favorDoctors = newFavorDoctors;
+                 favorDoctorList = newFavorDoctors;
                  return;
              }
              if ([result isEqualToString:@"2"]) {

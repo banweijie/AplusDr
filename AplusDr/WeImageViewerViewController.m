@@ -93,9 +93,10 @@
     doubleTapRecognizer.numberOfTouchesRequired = 1;
     [scrollView addGestureRecognizer:doubleTapRecognizer];
     
+    /*
     UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewsingleTapped:)];
     doubleTapRecognizer.numberOfTapsRequired = 1;
-    doubleTapRecognizer.numberOfTouchesRequired = 1;
+    doubleTapRecognizer.numberOfTouchesRequired = 1;*/
     //[scrollView addGestureRecognizer:singleTapRecognizer];
     
     UIButton * cancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];

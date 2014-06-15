@@ -406,7 +406,7 @@
     button1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [button1 setFrame:CGRectMake(91, 2, 138, 48)];
     //NSLog(@"%@ %@", we_doctors, we_doctorViewing[@"id"]);
-    if (favorDoctors[doctorViewing.userId] == NULL) {
+    if (favorDoctorList[doctorViewing.userId] == NULL) {
         [button1 setTitle:@"添加为保健医" forState:UIControlStateNormal];
     }
     else {

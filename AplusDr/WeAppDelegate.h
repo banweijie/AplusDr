@@ -52,9 +52,9 @@
 // 数据库
 LKDBHelper * globalHelper;
 
-// Global Variables
+// 全局变量
 WePatient * currentUser;
-NSMutableDictionary * favorDoctors;
+NSMutableDictionary * favorDoctorList;
 NSMutableArray * caseRecords;
 NSMutableArray * examinations;
 

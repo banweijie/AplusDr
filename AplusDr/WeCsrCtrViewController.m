@@ -192,7 +192,7 @@ static double endRecordTime = 0;
         UIImage * senderAvatar;
         if ([message.senderId isEqualToString:we_doctorChating]) {
             senderType = BubbleTypeSomeoneElse;
-            senderAvatar = [(WeFavorDoctor *)favorDoctors[we_doctorChating] avatar];
+            senderAvatar = [(WeFavorDoctor *)favorDoctorList[we_doctorChating] avatar];
         }
         else {
             senderType = BubbleTypeMine;
@@ -601,7 +601,7 @@ static double endRecordTime = 0;
 - (void)newConsultButton_onPress:(id)sender {
     WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
     vc.pushType = @"consultingRoom";
-    vc.favorDoctor = favorDoctors[we_doctorChating];
+    vc.favorDoctor = favorDoctorList[we_doctorChating];
     //doctorViewing = favorDoctors[we_doctorChating];
     
     WeNavViewController * nav = [[WeNavViewController alloc] init];
@@ -613,7 +613,7 @@ static double endRecordTime = 0;
 // 申请加号按钮被按下
 - (void)newAppointmentButton_onPress:(id)sender {
     WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
-    vc.favorDoctor = favorDoctors[we_doctorChating];
+    vc.favorDoctor = favorDoctorList[we_doctorChating];
     
     WeNavViewController * nav = [[WeNavViewController alloc] init];
     [nav pushViewController:vc animated:NO];
@@ -765,7 +765,7 @@ static double endRecordTime = 0;
 - (void)refreshKeyboard:(id)sender {
     //NSLog(@"%hhd", doctorChating.sendable);
     NSLog(@"!!!!");
-    WeFavorDoctor * favorDoctor = favorDoctors[we_doctorChating];
+    WeFavorDoctor * favorDoctor = favorDoctorList[we_doctorChating];
     [newConsultOrPlusView setHidden:YES];
     /*
     if ([favorDoctor.consultStatus isEqualToString:@"N"]) {

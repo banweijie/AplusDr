@@ -173,8 +173,8 @@
 
 - (void)viewDidLoad
 {
-    
-    [self.view setBackgroundColor:[UIColor colorWithRed:237.0/255 green:237.0/255 blue:237.0/255 alpha:1.0]];
+    // 页面标题
+    self.navigationItem.title = @"欢迎使用";
     
     // 背景图片
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];

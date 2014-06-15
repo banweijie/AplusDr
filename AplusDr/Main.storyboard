@@ -634,10 +634,10 @@
             </objects>
             <point key="canvasLocation" x="4361" y="3711"/>
         </scene>
-        <!--Navigation Controller - 众筹项目-->
+        <!--We Nav View Controller - 众筹项目-->
         <scene sceneID="grl-Bt-DYQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FbH-Go-jOX" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FbH-Go-jOX" customClass="WeNavViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="众筹项目" image="tab-crowdfunding" id="NTT-Jw-ARP"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7cq-9M-Xhb">
@@ -672,10 +672,10 @@
             </objects>
             <point key="canvasLocation" x="623" y="2216"/>
         </scene>
-        <!--We Csr Nav View Controller - 咨询室-->
+        <!--We Nav View Controller - 咨询室-->
         <scene sceneID="vRA-4K-jvF">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G9f-X1-J9c" customClass="WeCsrNavViewController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G9f-X1-J9c" customClass="WeNavViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="咨询室" image="tab-chatroom" id="1TI-ob-JSf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xeC-pU-Tq7">
