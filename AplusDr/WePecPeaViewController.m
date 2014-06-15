@@ -372,8 +372,7 @@
     // Do any additional setup after loading the view.
     
     user_avatar_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(242, 10, 70, 70)];
-    [user_avatar_imageView setImageWithURL:[NSURL URLWithString:currentUser.avatarPath]];
-    //user_avatar_imageView.image = currentUser.avatar;
+    [user_avatar_imageView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentUser.avatarPath)]];
     user_avatar_imageView.layer.cornerRadius = user_avatar_imageView.frame.size.height / 2;
     user_avatar_imageView.clipsToBounds = YES;
     
