@@ -18,5 +18,8 @@
 @property(strong, nonatomic) UIImage * avatar;
 
 - (id)init;
-- (id)initWithUserId:(NSString *)_userId;
+- (WeUser *)initWithNSDictionary:(NSDictionary *)info;
+- (void)setWithNSDictionary:(NSDictionary *)info;
+- (NSString *)stringValue;
+
 @end

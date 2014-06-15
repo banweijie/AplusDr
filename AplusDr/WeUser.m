@@ -23,8 +23,24 @@
     return self;
 }
 
-- (id)initWithUserId:(NSString *)_userId {
-    self.userId = _userId;
+- (id)initWithNSDictionary:(NSDictionary *)info {
+    [self setWithNSDictionary:info];
     return self;
+}
+
+- (void)setWithNSDictionary:(NSDictionary *)info {
+    self.userId = [NSString stringWithFormat:@"%@", info[@"id"]];
+    self.userName = [NSString stringWithFormat:@"%@", info[@"name"]];
+    self.userPhone = [NSString stringWithFormat:@"%@", info[@"phone"]];
+    self.avatarPath = [NSString stringWithFormat:@"%@", info[@"avatar"]];
+    avatar = [UIImage imageNamed:@"defaultAvatar"];
+}
+
+- (NSString *)stringValue {
+    return [NSString stringWithFormat:@"\n%@", @{
+                                                 @"userId":self.userId,
+                                                 @"userName":self.userName,
+                                                 @"userPhone":self.userPhone,
+                                                 }];
 }
 @end

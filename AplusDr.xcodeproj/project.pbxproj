@@ -69,6 +69,8 @@
 		907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B661920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m */; };
 		907D5B6E1920DB430006EAE0 /* WeSPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B6D1920DB430006EAE0 /* WeSPViewController.m */; };
 		90B31A3C1947AA6C00A19CD7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B31A3B1947AA6C00A19CD7 /* libsqlite3.dylib */; };
+		90B31A4F194BF61B00A19CD7 /* WePatient.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A4C194BF61B00A19CD7 /* WePatient.m */; };
+		90B31A50194BF61B00A19CD7 /* WeFavorPatient.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A4E194BF61B00A19CD7 /* WeFavorPatient.m */; };
 		90F0CE61192234E8006A4605 /* WeMapIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE60192234E8006A4605 /* WeMapIdxViewController.m */; };
 		90F0CE6519228CEF006A4605 /* WeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE6419228CEF006A4605 /* WeUser.m */; };
 		90F0CE7119229973006A4605 /* WeNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE7019229973006A4605 /* WeNavViewController.m */; };
@@ -212,6 +214,10 @@
 		907D5B6C1920DB430006EAE0 /* WeSPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSPViewController.h; sourceTree = "<group>"; };
 		907D5B6D1920DB430006EAE0 /* WeSPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSPViewController.m; sourceTree = "<group>"; };
 		90B31A3B1947AA6C00A19CD7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		90B31A4B194BF61B00A19CD7 /* WePatient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WePatient.h; sourceTree = "<group>"; };
+		90B31A4C194BF61B00A19CD7 /* WePatient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePatient.m; sourceTree = "<group>"; };
+		90B31A4D194BF61B00A19CD7 /* WeFavorPatient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFavorPatient.h; sourceTree = "<group>"; };
+		90B31A4E194BF61B00A19CD7 /* WeFavorPatient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFavorPatient.m; sourceTree = "<group>"; };
 		90F0CE5F192234E8006A4605 /* WeMapIdxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeMapIdxViewController.h; sourceTree = "<group>"; };
 		90F0CE60192234E8006A4605 /* WeMapIdxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeMapIdxViewController.m; sourceTree = "<group>"; };
 		90F0CE6319228CEF006A4605 /* WeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeUser.h; sourceTree = "<group>"; };
@@ -402,18 +408,12 @@
 		9026EE1F1904E8A700CE4A7A /* AplusDr */ = {
 			isa = PBXGroup;
 			children = (
-				900E29461929B44C008BF61C /* VoiceConvert */,
-				90F0CE6219228C97006A4605 /* Model */,
-				907D5B5B1920D9C50006EAE0 /* UIBubbleTableView */,
-				9026EF101904EEEF00CE4A7A /* VPImageCropper */,
-				9026EF111904EEFC00CE4A7A /* Customs */,
 				9026EEB51904EE5500CE4A7A /* WeAppDelegate.h */,
 				9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */,
-				900E2967193079F3008BF61C /* CaseManage */,
-				9026EF121904EF1600CE4A7A /* MainPage */,
-				9026EF131904EF2800CE4A7A /* UserManagement */,
-				9026EF141904EF8300CE4A7A /* PersonalCenter */,
-				907D5B42192016580006EAE0 /* ConsultingRoom */,
+				9026EF111904EEFC00CE4A7A /* Customs */,
+				90F0CE6219228C97006A4605 /* Model */,
+				90B31A4A194BF1DD00A19CD7 /* ViewController */,
+				90B31A48194BF1AC00A19CD7 /* Framework */,
 				9026EEEF1904EE5500CE4A7A /* Main.storyboard */,
 				900E295F1929E86F008BF61C /* Media.xcassets */,
 				9026EE201904E8A700CE4A7A /* Supporting Files */,
@@ -493,7 +493,7 @@
 			name = MainPage;
 			sourceTree = "<group>";
 		};
-		9026EF131904EF2800CE4A7A /* UserManagement */ = {
+		9026EF131904EF2800CE4A7A /* User */ = {
 			isa = PBXGroup;
 			children = (
 				9026EEBD1904EE5500CE4A7A /* WeRegWlcViewController.h */,
@@ -505,7 +505,7 @@
 				9026EEC31904EE5500CE4A7A /* WeRegIrpViewController.h */,
 				9026EEC41904EE5500CE4A7A /* WeRegIrpViewController.m */,
 			);
-			name = UserManagement;
+			name = User;
 			sourceTree = "<group>";
 		};
 		9026EF141904EF8300CE4A7A /* PersonalCenter */ = {
@@ -571,7 +571,7 @@
 			name = UIBubbleTableView;
 			sourceTree = "<group>";
 		};
-		90F0CE6219228C97006A4605 /* Model */ = {
+		90B31A47194BF19B00A19CD7 /* User */ = {
 			isa = PBXGroup;
 			children = (
 				90F0CE6319228CEF006A4605 /* WeUser.h */,
@@ -580,6 +580,40 @@
 				90F0CE761922D711006A4605 /* WeDoctor.m */,
 				90F0CE781922D854006A4605 /* WeFavorDoctor.h */,
 				90F0CE791922D854006A4605 /* WeFavorDoctor.m */,
+				90B31A4B194BF61B00A19CD7 /* WePatient.h */,
+				90B31A4C194BF61B00A19CD7 /* WePatient.m */,
+				90B31A4D194BF61B00A19CD7 /* WeFavorPatient.h */,
+				90B31A4E194BF61B00A19CD7 /* WeFavorPatient.m */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		90B31A48194BF1AC00A19CD7 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				900E29461929B44C008BF61C /* VoiceConvert */,
+				907D5B5B1920D9C50006EAE0 /* UIBubbleTableView */,
+				9026EF101904EEEF00CE4A7A /* VPImageCropper */,
+			);
+			name = Framework;
+			sourceTree = "<group>";
+		};
+		90B31A4A194BF1DD00A19CD7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				900E2967193079F3008BF61C /* CaseManage */,
+				9026EF121904EF1600CE4A7A /* MainPage */,
+				9026EF131904EF2800CE4A7A /* User */,
+				9026EF141904EF8300CE4A7A /* PersonalCenter */,
+				907D5B42192016580006EAE0 /* ConsultingRoom */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		90F0CE6219228C97006A4605 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				90B31A47194BF19B00A19CD7 /* User */,
 				900E28C919290239008BF61C /* WeMessage.h */,
 				900E28CA19290239008BF61C /* WeMessage.m */,
 				900E296B193080EA008BF61C /* WeCaseRecord.h */,
@@ -741,6 +775,7 @@
 				907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */,
 				900E29731930C847008BF61C /* WeCahAddCahViewController.m in Sources */,
 				90F0CE801926D0CA006A4605 /* WeCsrSelAreaViewController.m in Sources */,
+				90B31A4F194BF61B00A19CD7 /* WePatient.m in Sources */,
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
 				900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
@@ -790,6 +825,7 @@
 				9026EE261904E8A700CE4A7A /* main.m in Sources */,
 				90F0CE92192717AC006A4605 /* WeCsrSelTilViewController.m in Sources */,
 				900E29821931BE88008BF61C /* WeExamination.m in Sources */,
+				90B31A50194BF61B00A19CD7 /* WeFavorPatient.m in Sources */,
 				90F0CE8F19271794006A4605 /* WeCsrSelCatViewController.m in Sources */,
 				9026EEF71904EE5500CE4A7A /* WeRegIpnViewController.m in Sources */,
 				907D5B6A1920D9DA0006EAE0 /* UIBubbleTableViewCell.m in Sources */,

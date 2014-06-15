@@ -49,8 +49,7 @@ extern int we_targetTabId;
             if (![self checkUserRights]) return;
             we_logined = YES;
             we_targetView = targetViewPersonalAccount;
-            currentUser = [[WeUser alloc] init];
-            [WeAppDelegate refreshUserData];
+            currentUser = [[WePatient alloc] init];
         }
         else
         if ([we_vericode_type isEqualToString:@"ModifyPassword"]) {

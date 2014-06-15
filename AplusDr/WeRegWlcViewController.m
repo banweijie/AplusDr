@@ -27,11 +27,6 @@
 
 #pragma mark - UITableView Delegate & DataSource
 
-// 调整格子的透明度
-- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    //cell.alpha = We_alpha_cell_general;;
-    //cell.opaque = YES;
-}
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
@@ -279,6 +274,7 @@
                               parameters:@{
                                            }
                                  success:^(NSDictionary * response) {
+                                     currentUser = [[WePatient alloc] initWithNSDictionary:response];
                                      [self dismissViewControllerAnimated:YES completion:nil];
                                      [sys_pendingView stopAnimating];
                                  }

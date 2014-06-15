@@ -196,7 +196,7 @@ static double endRecordTime = 0;
         }
         else {
             senderType = BubbleTypeMine;
-            senderAvatar = currentUser.avatar;
+            //senderAvatar = currentUser.avatar;
         }
         
         // 判断信息类型

@@ -13,17 +13,6 @@
     NSTimer * timer1;
 }
 
-+ (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month {
-    if (month == 2) {
-        if (year % 400 == 0) return 29;
-        if (year % 100 == 0) return 28;
-        if (year % 4 == 0) return 29;
-        return 28;
-    }
-    if (month == 4 || month == 6 || month == 9 || month == 11) return 30;
-    return 31;
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
@@ -49,35 +38,11 @@
     
     timer1 = [NSTimer scheduledTimerWithTimeInterval:refreshInterval target:self selector:@selector(refreshMessage:) userInfo:nil repeats:YES];
     
-    NSLog(@"%@", [userDefaults stringForKey:@"lastMessageId"]);
+    //NSLog(@"%@", [userDefaults stringForKey:@"lastMessageId"]);
     
-    // 初始化数据库
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documents = [paths objectAtIndex:0];
-    NSString *database_path = [documents stringByAppendingPathComponent:@"yijiaren.sqlite"];
-    
-    if (sqlite3_open([database_path UTF8String], &yjr_db) != SQLITE_OK) {
-        sqlite3_close(yjr_db);
-        NSLog(@"数据库打开失败");
-    }
-    
-    // 创建YJRUser表
-    [WeAppDelegate execSql:@"CREATE TABLE IF NOT EXISTS YJRUser (id TEXT PRIMARY KEY, lastMessageId TEXT)"];
-    
-    // 创建YJRMessage表
-    [WeAppDelegate execSql:@"CREATE TABLE IF NOT EXISTS YJRMessage (id TEXT PRIMARY KEY, senderId TEXT, receiverId TEXT, content TEXT, time TEXT)"];
+    globalHelper = [LKDBHelper getUsingLKDBHelper];
     
     return YES;
-}
-
-// 数据库操作
-+ (void)execSql:(NSString *)sql
-{
-    char *err;
-    if (sqlite3_exec(yjr_db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK) {
-        sqlite3_close(yjr_db);
-        NSLog(@"数据库操作数据失败!");
-    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -107,6 +72,17 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
++ (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month {
+    if (month == 2) {
+        if (year % 400 == 0) return 29;
+        if (year % 100 == 0) return 28;
+        if (year % 4 == 0) return 29;
+        return 28;
+    }
+    if (month == 4 || month == 6 || month == 9 || month == 11) return 30;
+    return 31;
+}
+
 + (NSDictionary *)toArrayOrNSDictionary:(NSData *)jsonData{
     NSError *error = nil;
     NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData
@@ -124,7 +100,7 @@
 
 // AFNetworking 网络连接通用方法
 + (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong NSDictionary *))success failure:(void (^__strong)(__strong NSString *))failure {
-    NSLog(@"\npostToServer:%@ %@ %@", field, action, parameters);
+    NSLog(@"\npost to api: <%@, %@>\nparameters: %@", field, action, parameters);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
     [manager POST:yijiarenUrl(field, action) parameters:parameters
@@ -153,7 +129,7 @@
               failure(errorMessage);
           }
           failure:^(NSURLSessionDataTask *task, NSError *error) {
-              failure([NSString stringWithFormat:@"%@", error]);
+              failure([NSString stringWithFormat:@"%@", @"连接服务器失败"]);
           }];
 }
 
@@ -284,58 +260,11 @@
                 we_secondaryTypeKeyToData[[WeAppDelegate toString:secondaryTypeId(i, j)]] = secondaryTypeData(i, j);
             }
         }
-        NSLog(@"%@", we_secondaryTypeKeyToData);
+        //NSLog(@"%@", we_secondaryTypeKeyToData);
         return;
     }
     UIAlertView *notPermitted = [[UIAlertView alloc]
                                  initWithTitle:@"更新应用数据失败"
-                                 message:errorMessage
-                                 delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-    [notPermitted show];
-}
-
-+ (void)refreshUserData {
-    NSString * urlString = yijiarenUrl(@"user", @"refreshUser");
-    NSString * paraString = @"";
-    NSData * DataResponse = [WeAppDelegate postToServer:urlString withParas:paraString];
-    
-    NSString * errorMessage = @"连接服务器失败";
-    if (DataResponse != NULL) {
-        NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
-        NSString *result = [HTTPResponse objectForKey:@"result"];
-        result = [NSString stringWithFormat:@"%@", result];
-        if ([result isEqualToString:@"1"]) {
-            NSDictionary * response = [HTTPResponse objectForKey:@"response"];
-            
-            [currentUser setUserPhone:[WeAppDelegate toString:[response objectForKey:@"phone"]]];
-            [currentUser setUserName:[WeAppDelegate toString:[response objectForKey:@"name"]]];
-            [currentUser setAvatarPath:[WeAppDelegate toString:[response objectForKey:@"avatar"]]];
-            [self DownloadImageWithURL:yijiarenAvatarUrl(currentUser.avatarPath) successCompletion:^(id image) {
-                currentUser.avatar = image;
-                //NSLog(@"Download Image(%@) succeed, user' avatar has been changed.", currentUser.avatarPath);
-            }];
-            return;
-        }
-        if ([result isEqualToString:@"2"]) {
-            NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-            NSEnumerator *enumerator = [fields keyEnumerator];
-            id key;
-            while ((key = [enumerator nextObject])) {
-                NSString * tmp1 = [fields objectForKey:key];
-                if (tmp1 != NULL) errorMessage = tmp1;
-            }
-        }
-        if ([result isEqualToString:@"3"]) {
-            errorMessage = [HTTPResponse objectForKey:@"info"];
-        }
-        if ([result isEqualToString:@"4"]) {
-            errorMessage = [HTTPResponse objectForKey:@"info"];
-        }
-    }
-    UIAlertView *notPermitted = [[UIAlertView alloc]
-                                 initWithTitle:@"更新用户数据失败"
                                  message:errorMessage
                                  delegate:nil
                                  cancelButtonTitle:@"OK"

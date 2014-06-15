@@ -136,7 +136,7 @@
                     [cell.contentView addSubview:l2];
                     // 头像
                     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 70, 70)];
-                    imageView.image = currentUser.avatar;
+                    [imageView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentUser.avatarPath)]];
                     imageView.layer.cornerRadius = imageView.frame.size.height / 2;
                     imageView.clipsToBounds = YES;
                     [cell.contentView addSubview:imageView];
@@ -243,8 +243,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    [WeAppDelegate refreshUserData];
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];

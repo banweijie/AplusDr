@@ -299,7 +299,6 @@
         if ([result isEqualToString:@"1"]) {
             NSLog(@"%@", HTTPResponse);
             [currentUser setAvatarPath:[WeAppDelegate toString:[HTTPResponse objectForKey:@"response"]]];
-            [currentUser setAvatar:image];
             return YES;
         }
         if ([result isEqualToString:@"2"]) {
@@ -373,7 +372,8 @@
     // Do any additional setup after loading the view.
     
     user_avatar_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(242, 10, 70, 70)];
-    user_avatar_imageView.image = currentUser.avatar;
+    [user_avatar_imageView setImageWithURL:[NSURL URLWithString:currentUser.avatarPath]];
+    //user_avatar_imageView.image = currentUser.avatar;
     user_avatar_imageView.layer.cornerRadius = user_avatar_imageView.frame.size.height / 2;
     user_avatar_imageView.clipsToBounds = YES;
     
