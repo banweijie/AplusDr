@@ -275,6 +275,7 @@
                                            }
                                  success:^(NSDictionary * response) {
                                      currentUser = [[WePatient alloc] initWithNSDictionary:response];
+                                     [(UITabBarController *)self.navigationController.presentingViewController setSelectedViewController:self.originTargetViewController];
                                      [self dismissViewControllerAnimated:YES completion:nil];
                                      [sys_pendingView stopAnimating];
                                  }

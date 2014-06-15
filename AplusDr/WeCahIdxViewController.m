@@ -406,11 +406,12 @@
     [self preworkOnExaminations:self];
     [tableView_view1 reloadData];
     
+    /*
     if (we_targetView == targetViewMainPage) [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
     if (we_targetView == targetViewConsultingRoom) [self.tabBarController setSelectedIndex:weTabBarIdConsultingRoom];
     if (we_targetView == targetViewPersonalCenter) [self.tabBarController setSelectedIndex:weTabBarIdPersonalCenter];
     if (we_targetView == targetViewCaseHistory) we_targetView = targetViewNone;
-    
+    */
     [super viewWillAppear:animated];
 }
 

@@ -269,10 +269,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    /*
     if (we_targetView == targetViewMainPage) [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
     if (we_targetView == targetViewConsultingRoom) [self.tabBarController setSelectedIndex:weTabBarIdConsultingRoom];
     if (we_targetView == targetViewPersonalCenter) we_targetView = targetViewNone;
-    if (we_targetView == targetViewCaseHistory) [self.tabBarController setSelectedIndex:weTabBarIdCaseHistory];
+    if (we_targetView == targetViewCaseHistory) [self.tabBarController setSelectedIndex:weTabBarIdCaseHistory];*/
 }
 
 - (void)viewWillAppear:(BOOL)animated {

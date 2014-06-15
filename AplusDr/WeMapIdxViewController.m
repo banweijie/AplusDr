@@ -47,10 +47,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:NO];
-    if (we_targetView == targetViewMainPage) we_targetView = targetViewNone;
-    if (we_targetView == targetViewConsultingRoom) [self.tabBarController setSelectedIndex:weTabBarIdConsultingRoom];
-    if (we_targetView == targetViewPersonalCenter) [self.tabBarController setSelectedIndex:weTabBarIdPersonalCenter];
-    if (we_targetView == targetViewCaseHistory) [self.tabBarController setSelectedIndex:weTabBarIdCaseHistory];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

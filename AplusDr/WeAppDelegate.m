@@ -18,8 +18,10 @@
     // Override point for customization after application launch.
     currentUser = nil;
     
-    we_logined = NO;
-    we_targetTabId = 0;
+    //we_logined = NO;
+    //we_targetTabId = 0;
+    
+    // 设置TabBar的delegate
     UITabBarController<UITabBarControllerDelegate> * _tabBarController = (UITabBarController<UITabBarControllerDelegate> *)_window.rootViewController;
     _tabBarController.delegate = _tabBarController;
     

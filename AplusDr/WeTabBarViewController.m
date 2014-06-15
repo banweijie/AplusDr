@@ -16,10 +16,19 @@
 @implementation WeTabBarViewController
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    /*
-    if (currentUserId == nil) {
+    
+    if (currentUser == nil && viewController != [tabBarController.viewControllers objectAtIndex:0]) {
+        WeRegWlcViewController * vc = [[WeRegWlcViewController alloc] init];
+        vc.originTargetViewController = viewController;
         
-    }*/
+        WeNavViewController * nav = [[WeNavViewController alloc] init];
+        [nav pushViewController:vc animated:NO];
+        
+        [self presentViewController:nav animated:YES completion:nil];
+        
+        return NO;
+    }
+    /*
     if (viewController == [tabBarController.viewControllers objectAtIndex:weTabBarIdPersonalCenter] && !we_logined) {
         we_targetView = targetViewPersonalCenter;
         [self performSegueWithIdentifier:@"TabBar_Modalto_RegWlc" sender:self];
@@ -34,7 +43,7 @@
         we_targetView = targetViewCaseHistory;
         [self performSegueWithIdentifier:@"TabBar_Modalto_RegWlc" sender:self];
         return NO;
-    }
+    }*/
     return YES;
 }
 
