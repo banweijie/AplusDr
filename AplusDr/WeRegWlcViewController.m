@@ -254,7 +254,7 @@
                                            @"password":[user_password_input.text md5]
                                            }
                                  success:^(NSDictionary * response) {
-                                     [self api_user_refreshUser];
+                                     [self api_patient_listFavorDoctors];
                                  }
                                  failure:^(NSString * errorMessage) {
                                      UIAlertView * notPermitted = [[UIAlertView alloc]
@@ -263,6 +263,31 @@
                                                                   delegate:nil
                                                                   cancelButtonTitle:@"OK"
                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                     [sys_pendingView stopAnimating];
+                                 }];
+}
+
+// 访问获取保健医列表接口
+- (void)api_patient_listFavorDoctors {
+    [WeAppDelegate postToServerWithField:@"patient" action:@"listFavorDoctors"
+                              parameters:@{
+                                           }
+                                 success:^(NSArray * response) {
+                                     favorDoctorList = [[NSMutableDictionary alloc] init];
+                                     for (int i = 0; i < [response count]; i++) {
+                                         WeFavorDoctor * newFavorDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:response[i]];
+                                         favorDoctorList[newFavorDoctor.userId] = newFavorDoctor;
+                                     }
+                                     [self api_user_refreshUser];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"获取保健医列表失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
                                      [notPermitted show];
                                      [sys_pendingView stopAnimating];
                                  }];

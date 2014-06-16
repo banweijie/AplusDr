@@ -35,8 +35,8 @@
     
     userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setValue:@"1" forKey:@"lastMessageId"];
-    
-    timer0 = [NSTimer scheduledTimerWithTimeInterval:refreshInterval target:self selector:@selector(refreshDoctorList:) userInfo:nil repeats:YES];
+        
+    //timer0 = [NSTimer scheduledTimerWithTimeInterval:refreshInterval target:self selector:@selector(refreshDoctorList:) userInfo:nil repeats:YES];
     
     timer1 = [NSTimer scheduledTimerWithTimeInterval:refreshInterval target:self selector:@selector(refreshMessage:) userInfo:nil repeats:YES];
     
@@ -101,7 +101,7 @@
 }
 
 // AFNetworking 网络连接通用方法
-+ (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong NSDictionary *))success failure:(void (^__strong)(__strong NSString *))failure {
++ (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong id))success failure:(void (^__strong)(__strong NSString *))failure {
     NSLog(@"\npost to api: <%@, %@>\nparameters: %@", field, action, parameters);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
@@ -380,6 +380,7 @@
      ];
 }
 
+/*
 - (void)refreshDoctorList:(id)sender {
     // 判断登录状态
     if (!we_logined) return;
@@ -437,7 +438,7 @@
              NSLog(@"Error: %@", error);
          }
      ];
-}
+}*/
 
 + (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success {
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];

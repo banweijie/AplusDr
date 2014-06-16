@@ -46,7 +46,7 @@
 + (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month;
 
 // AFNetworking 网络连接通用方法
-+ (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong NSDictionary *))success failure:(void (^__strong)(__strong NSString *))failure;
++ (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong id))success failure:(void (^__strong)(__strong NSString *))failure;
 @end
 
 // 数据库
