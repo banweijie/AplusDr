@@ -316,10 +316,10 @@
             </objects>
             <point key="canvasLocation" x="623" y="784"/>
         </scene>
-        <!--View Controller - 众筹项目-->
+        <!--We Fun Idx View Controller - 众筹项目-->
         <scene sceneID="nyi-4h-rrD">
             <objects>
-                <viewController title="众筹项目" id="yKF-Kn-GeX" sceneMemberID="viewController">
+                <viewController title="众筹项目" id="yKF-Kn-GeX" customClass="WeFunIdxViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kec-rA-iB5"/>
                         <viewControllerLayoutGuide type="bottom" id="fng-5h-VML"/>

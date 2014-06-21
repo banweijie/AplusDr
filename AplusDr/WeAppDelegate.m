@@ -252,6 +252,7 @@
         //NSLog(@"%@", HTTPResponse);
         we_codings = HTTPResponse[@"response"][@"codings"];
         we_imagePaths = HTTPResponse[@"response"][@"imagePaths"];
+        NSLog(@"%@", HTTPResponse);
         we_examinationTypeKeys = [we_codings[@"examinationType"] allKeys];
         we_examinationTypes = HTTPResponse[@"response"][@"examinationTypes"];
         we_secondaryTypeKeyToValue = [[NSMutableDictionary alloc] init];

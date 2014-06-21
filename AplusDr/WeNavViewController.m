@@ -29,7 +29,7 @@
     
     self.navigationBar.translucent = YES;
     [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"texture"] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationBar setAlpha:0.9];
+    [self.navigationBar setAlpha:0.7];
     [self.navigationBar setShadowImage:[UIImage new]];
     [self.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:

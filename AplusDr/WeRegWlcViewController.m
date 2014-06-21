@@ -243,7 +243,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma api
+#pragma mark - api
 
 // 访问登录接口
 - (void)api_user_login {
@@ -299,10 +299,8 @@
                               parameters:@{
                                            }
                                  success:^(NSDictionary * response) {
-                                     currentUser = [[WePatient alloc] initWithNSDictionary:response];
-                                     [(UITabBarController *)self.navigationController.presentingViewController setSelectedViewController:self.originTargetViewController];
-                                     [self dismissViewControllerAnimated:YES completion:nil];
-                                     [sys_pendingView stopAnimating];
+                                     WePatient * newUser = [[WePatient alloc] initWithNSDictionary:response];
+                                     [self api_message_getUnviewedMsg:newUser];
                                  }
                                  failure:^(NSString * errorMessage) {
                                      UIAlertView * notPermitted = [[UIAlertView alloc]
@@ -311,6 +309,30 @@
                                                                   delegate:nil
                                                                   cancelButtonTitle:@"OK"
                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                     [sys_pendingView stopAnimating];
+                                 }];
+}
+
+// 访问获取未读信息接口
+- (void)api_message_getUnviewedMsg:(WePatient *)newUser {
+    [WeAppDelegate postToServerWithField:@"message" action:@"getUnviewedMsg"
+                              parameters:@{
+                                           }
+                                 success:^(NSDictionary * response) {
+                                     NSLog(@"%@", response);
+                                     currentUser = newUser;
+                                     [(UITabBarController *)self.navigationController.presentingViewController setSelectedViewController:self.originTargetViewController];
+                                     [self dismissViewControllerAnimated:YES completion:nil];
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"获取用户信息失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
                                      [notPermitted show];
                                      [sys_pendingView stopAnimating];
                                  }];
