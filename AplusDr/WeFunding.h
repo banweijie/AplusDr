@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "WeFundingLevel.h"
+#import "WeDoctor.h"
 
 @interface WeFunding : NSObject
 
-@property(nonatomic, strong) NSString * initiatorId;
+@property(nonatomic, strong) NSString * fundingId;
+@property(nonatomic, strong) WeDoctor * initiator;
 @property(nonatomic, strong) NSString * status;
 @property(nonatomic, strong) NSString * startTime;
 @property(nonatomic, strong) NSString * endTime;

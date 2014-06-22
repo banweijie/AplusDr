@@ -9,9 +9,16 @@
 #import "WeFunDetViewController.h"
 
 @interface WeFunDetViewController () {
+    WeFunding * currentFunding;
+    UIActivityIndicatorView * sys_pendingView;
     UIImageView * posterView;
     UITableView * sys_tableView;
     UIView * barView;
+    UIButton * refreshButton;
+    UIView * contentView;
+    
+    UILabel * button0label0;
+    UILabel * button2label0;
 }
 
 @end
@@ -32,12 +39,18 @@
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 220;
+    if (indexPath.section == 0 && indexPath.row == 0) return [tableView rowHeight] * 1.5;
+    if (indexPath.section == 0 && indexPath.row == 1) return [tableView rowHeight] * 2;
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        CGSize sizezz = [currentFunding.introduction sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+        return sizezz.height + 60;
+    }
+    return [tableView rowHeight];
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) return 310;
-    return 9;
+    return 19;
 }
 // 询问每个段落的头部标题
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -60,27 +73,134 @@
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
-    return 1;
+    return 3;
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) return 2;
+    if (section == 1) return 4;
+    if (section == 2) return 2;
     return 1;
 }
 // 询问每个具体条目的内容
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *MyIdentifier = @"MyReuseIdentifier";
-    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
+    static NSString * MyIdentifier = @"MyReuseIdentifier";
+    UITableViewCell * cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
     }
     cell.opaque = NO;
     cell.backgroundColor = We_background_cell_general;
     
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        [cell.textLabel setNumberOfLines:2];
+        [cell.textLabel setFont:We_font_textfield_large_zh_cn];
+        [cell.textLabel setText:currentFunding.subTitle];
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 5, [tv rowHeight] * 1.5)];
+        [imageView setImage:[WeAppDelegate imageWithColor:We_foreground_red_general]];
+        [cell.contentView addSubview:imageView];
+    }
+    if (indexPath.section == 0 && indexPath.row == 1) {
+        // 左侧横条
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 5, [tv rowHeight] * 2)];
+        [imageView setImage:[WeAppDelegate imageWithColor:[UIColor purpleColor]]];
+        [cell.contentView addSubview:imageView];
+        
+        // 医生名称
+        UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 16, 220, 32)];
+        if ([currentFunding.initiator.userName isEqualToString:@""]) {
+            l1.text = @"尚未设置名称";
+        }
+        else {
+            l1.text = [NSString stringWithFormat:@"%@ %@", currentFunding.initiator.userName, we_codings[@"doctorCategory"][currentFunding.initiator.category][@"title"][currentFunding.initiator.title]];
+        }
+        l1.font = We_font_textfield_large_zh_cn;
+        l1.textColor = We_foreground_black_general;
+        [cell.contentView addSubview:l1];
+        
+        // 医院科室
+        UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(100, 44, 220, 32)];
+        l2.text = [NSString stringWithFormat:@"%@ %@", currentFunding.initiator.hospitalName, currentFunding.initiator.sectionName];
+        l2.textColor = We_foreground_gray_general;
+        l2.font = We_font_textfield_zh_cn;
+        [cell.contentView addSubview:l2];
+        
+        // 医生头像
+        UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 12, 64, 64)];
+        [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentFunding.initiator.avatarPath)]];
+        avatarView.layer.cornerRadius = 32;
+        avatarView.clipsToBounds = YES;
+        [cell.contentView addSubview:avatarView];
+        
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        [cell.textLabel setText:@"已募款项"];
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setTextColor:We_foreground_black_general];
+        [cell.detailTextLabel setText:[NSString stringWithFormat:@"￥%@ / %.1f %%", currentFunding.sum, [currentFunding.sum longLongValue] * 1.0 / [currentFunding.goal longLongValue]]];
+        [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+        [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+    }
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        [cell.textLabel setText:@"支持人数"];
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setTextColor:We_foreground_black_general];
+        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@ 人", currentFunding.supportCount]];
+        [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+        [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+    }
+    if (indexPath.section == 1 && indexPath.row == 2) {
+        [cell.textLabel setText:@"结束时间"];
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setTextColor:We_foreground_black_general];
+        NSDate * endDate = [NSDate dateWithTimeIntervalSince1970:[currentFunding.endTime longLongValue] / 1000];
+        NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+        NSDateComponents * the = [calendar components:unitFlags fromDate:endDate];
+        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%d年%d月%d日", the.year, the.month, the.day]];
+        [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+        [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+    }
+    if (indexPath.section == 1 && indexPath.row == 3) {
+        [cell.textLabel setText:@"起募金额"];
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setTextColor:We_foreground_black_general];
+        if ([currentFunding.levels count] > 0) {
+            WeFundingLevel * fundingLevel = currentFunding.levels[0];
+            [cell.detailTextLabel setText:[NSString stringWithFormat:@"￥%@", fundingLevel.money]];
+        }
+        else {
+            [cell.detailTextLabel setText:@"不存在任何募集方案"];
+        }
+        [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+        [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+    }
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 280, 40)];
+        l1.text = @"众筹简介";
+        l1.font = We_font_textfield_zh_cn;
+        l1.textColor = We_foreground_black_general;
+        [cell.contentView addSubview:l1];
+        CGSize sizezz = [currentFunding.introduction sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
+        label.numberOfLines = 0;
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.text = currentFunding.introduction;
+        label.font = We_font_textfield_zh_cn;
+        label.textColor = We_foreground_gray_general;
+        [cell.contentView addSubview:label];
+    }
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        [cell.textLabel setText:@"查看详情"];
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setTextColor:We_foreground_black_general];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
     return cell;
 }
 // 滑动到一定位置
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"%f", scrollView.contentOffset.y);
     
     // 调整背景图片位置
     CGRect frame = posterView.frame;
@@ -96,7 +216,7 @@
     // 调整标题栏
     if (scrollView.contentOffset.y > 235 - 64 - 2) {
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"texture"] forBarMetrics:UIBarMetricsDefault];
-        [self.navigationItem setTitle:_currentFunding.title];
+        [self.navigationItem setTitle:currentFunding.title];
     }
     else {
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"transparent"] forBarMetrics:UIBarMetricsDefault];
@@ -105,14 +225,12 @@
 }
 // 滑动结束
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    NSLog(@"!!!");
     
     if (scrollView.contentOffset.y < 117) {
         [scrollView scrollRectToVisible:CGRectMake(0, 0, 320, self.view.frame.size.height) animated:YES];
     }
     
     if (scrollView.contentOffset.y > 117 && scrollView.contentOffset.y < 235 - 64) {
-        NSLog(@"up");
         [scrollView scrollRectToVisible:CGRectMake(0, 235 - 64, 320, self.view.frame.size.height) animated:YES];
     }
 }
@@ -141,12 +259,19 @@
     // 导航栏背景
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"transparent"] forBarMetrics:UIBarMetricsDefault];
     
+    // 分享按钮
+    UIBarButtonItem * shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"crowdfunding-detail-share"] style:UIBarButtonItemStylePlain target:self action:@selector(shareButton_onPress:)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    
+    // 所有内容
+    contentView = [[UIView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:contentView];
+    
     // 海报背景图片
     posterView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 235)];
-    NSLog(@"%@", yijiarenImageUrl(_currentFunding.poster2));
-    [posterView setImageWithURL:[NSURL URLWithString:yijiarenImageUrl(_currentFunding.poster2)]];
+    [posterView setImageWithURL:[NSURL URLWithString:yijiarenImageUrl(currentFunding.poster2)]];
     [posterView setContentMode:UIViewContentModeScaleAspectFill];
-    [self.view addSubview:posterView];
+    [contentView addSubview:posterView];
     
     // 表格
     sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
@@ -155,21 +280,21 @@
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
     sys_tableView.bounces = NO;
-    [self.view addSubview:sys_tableView];
+    [contentView addSubview:sys_tableView];
     
     // barView
     barView = [[UIView alloc] initWithFrame:CGRectMake(0, 235, 320, 50)];
-    [self.view addSubview:barView];
+    [contentView addSubview:barView];
     
     // barView - button0
     UIButton * button0 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [button0 setFrame:CGRectMake(0, 2, 89, 48)];
-    [button0 setBackgroundColor:[UIColor colorWithRed:90 / 255.0 green:41 / 255.0 blue:45 / 255.0 alpha:1.0]];
+    [button0 setBackgroundColor:[UIColor colorWithRed:90 / 255.0 green:42 / 255.0 blue:47 / 255.0 alpha:0.9]];
     [barView addSubview:button0];
     
     // barView - button0 - label0
-    UILabel * button0label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 89, 30)];
-    [button0label0 setText:[NSString stringWithFormat:@"￥%@ ", _currentFunding.goal]];
+    button0label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 89, 30)];
+    [button0label0 setText:[NSString stringWithFormat:@"￥%@ ", currentFunding.goal]];
     [button0label0 setTextAlignment:NSTextAlignmentCenter];
     [button0label0 setFont:We_font_textfield_zh_cn];
     [button0label0 setTextColor:We_foreground_white_general];
@@ -196,13 +321,12 @@
     // barView - button2
     UIButton * button2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [button2 setFrame:CGRectMake(231, 2, 89, 48)];
-    [button2 setBackgroundColor:[UIColor colorWithRed:90 / 255.0 green:41 / 255.0 blue:45 / 255.0 alpha:1.0]];
+    [button2 setBackgroundColor:[UIColor colorWithRed:90 / 255.0 green:42 / 255.0 blue:47 / 255.0 alpha:0.9]];
     [barView addSubview:button2];
     
     // barView - button2 - label0
-    UILabel * button2label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 89, 30)];
-    NSLog(@"%f %lld", [[NSDate date] timeIntervalSince1970], [_currentFunding.endTime longLongValue] / 1000);
-    int restSec =  [_currentFunding.endTime longLongValue] / 1000 - [[NSDate date] timeIntervalSince1970];
+    button2label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 89, 30)];
+    int restSec =  [currentFunding.endTime longLongValue] / 1000 - [[NSDate date] timeIntervalSince1970];
     [button2label0 setText:[NSString stringWithFormat:@"%d天", restSec / 86400 + 1]];
     [button2label0 setTextAlignment:NSTextAlignmentCenter];
     [button2label0 setFont:We_font_textfield_zh_cn];
@@ -216,6 +340,53 @@
     [button2label1 setFont:We_font_textfield_small_zh_cn];
     [button2label1 setTextColor:We_foreground_gray_general];
     [button2 addSubview:button2label1];
+    
+    // 转圈圈
+    sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    [sys_pendingView setAlpha:1.0];
+    [self.view addSubview:sys_pendingView];
+    
+    // 刷新按钮
+    refreshButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    refreshButton.frame = self.view.frame;
+    [refreshButton setTitle:@"获取众筹详情失败，点击刷新" forState:UIControlStateNormal];
+    [refreshButton addTarget:self action:@selector(refreshButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
+    [refreshButton setTintColor:We_foreground_red_general];
+    [self.view addSubview:refreshButton];
+    
+    // 访问获取众筹详情列表
+    [self api_data_viewFunding];
+}
+
+- (void)refreshButton_onPress:(id)sender {
+    [self api_data_viewFunding];
+}
+
+- (void)api_data_viewFunding {
+    [refreshButton setHidden:YES];
+    [contentView setHidden:YES];
+    [sys_pendingView startAnimating];
+    
+    [WeAppDelegate postToServerWithField:@"data" action:@"viewFunding"
+                              parameters:@{
+                                           @"fundingId":_currentFundingId
+                                           }
+                                 success:^(id response) {
+                                     currentFunding = [[WeFunding alloc] initWithNSDictionary:response];
+                                     [posterView setImageWithURL:[NSURL URLWithString:yijiarenImageUrl(currentFunding.poster2)]];
+                                     [button0label0 setText:[NSString stringWithFormat:@"￥%@ ", currentFunding.goal]];
+                                     int restSec =  [currentFunding.endTime longLongValue] / 1000 - [[NSDate date] timeIntervalSince1970];
+                                     [button2label0 setText:[NSString stringWithFormat:@"%d天", restSec / 86400 + 1]];
+                                     [sys_tableView reloadData];
+                                     [contentView setHidden:NO];
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     [refreshButton setHidden:NO];
+                                     [sys_pendingView stopAnimating];
+                                 }];
 }
 
 - (void)didReceiveMemoryWarning

@@ -12,6 +12,6 @@
 
 @interface WeFunDetViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property(nonatomic, strong) WeFunding * currentFunding;
+@property(nonatomic, strong) NSString * currentFundingId;
 
 @end

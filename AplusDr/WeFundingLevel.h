@@ -10,6 +10,7 @@
 
 @interface WeFundingLevel : NSObject
 
+@property(nonatomic, strong) NSString * levelId;
 @property(nonatomic, strong) NSString * money;
 @property(nonatomic, strong) NSString * limit;
 @property(nonatomic, strong) NSString * repay;
@@ -26,5 +27,8 @@
 @property(nonatomic, strong) NSString * sendBluePin;
 @property(nonatomic, strong) NSString * supportCount;
 @property(nonatomic, strong) NSMutableArray * supports;
+
+- (WeFundingLevel *)initWithNSDictionary:(NSDictionary *)info;
+- (void)setWithNSDictionary:(NSDictionary *)info;
 
 @end

@@ -44,7 +44,7 @@
 + (NSString *)transitionToDateFromSecond:(long long)s;
 + (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success;
 + (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month;
-
++ (UIImage *)imageWithColor:(UIColor *)color;
 // AFNetworking 网络连接通用方法
 + (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong id))success failure:(void (^__strong)(__strong NSString *))failure;
 @end
@@ -186,9 +186,10 @@ weTargetView we_targetView;
 #define We_font_textfield_zh_cn [UIFont fontWithName:@"Heiti SC" size:14]
 #define We_font_textfield_en_us [UIFont fontWithName:@"Helvetica" size:14]
 #define We_font_button_zh_cn [UIFont fontWithName:@"Heiti SC" size:14]
-#define We_font_textfield_small_zh_cn [UIFont fontWithName:@"Heiti SC" size:11]
+#define We_font_textfield_small_zh_cn [UIFont fontWithName:@"Heiti SC" size:12]
+#define We_font_textfield_large_zh_cn [UIFont fontWithName:@"Heiti SC" size:16]
 
-#define We_background_cell_general UIColorFromRGB(255, 255, 255, 0.3)
+#define We_background_cell_general UIColorFromRGB(255, 255, 255, 0.7)
 #define We_background_general UIColorFromRGB(237, 237, 237, 1)
 #define We_background_red_general UIColorFromRGB(134, 11, 38, 0.9)
 #define We_background_red_tableviewcell UIColorFromRGB(134, 11, 38, 0.85)

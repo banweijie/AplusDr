@@ -10,7 +10,8 @@
 
 @implementation WeFunding
 
-@synthesize initiatorId;
+@synthesize fundingId;
+@synthesize initiator;
 @synthesize status;
 @synthesize startTime;
 @synthesize endTime;
@@ -36,13 +37,14 @@
 
 - (void)setWithNSDictionary:(NSDictionary *)info {
     // 提取信息
-    self.initiatorId = [NSString stringWithFormat:@"%@", info[@"initiatorId"]];
+    self.fundingId = [NSString stringWithFormat:@"%@", info[@"id"]];
+    self.initiator = [[WeDoctor alloc] initWithNSDictionary:info[@"initiator"]];
     self.status = [NSString stringWithFormat:@"%@", info[@"status"]];
     self.startTime = [NSString stringWithFormat:@"%@", info[@"startTime"]];
     self.endTime = [NSString stringWithFormat:@"%@", info[@"endTime"]];
     self.type = [NSString stringWithFormat:@"%@", info[@"type"]];
     self.title = [NSString stringWithFormat:@"%@", info[@"title"]];
-    self.subTitle = [NSString stringWithFormat:@"%@", info[@"subTitle"]];
+    self.subTitle = [NSString stringWithFormat:@"%@", info[@"subtitle"]];
     self.poster = [NSString stringWithFormat:@"%@", info[@"poster"]];
     self.poster2 = [NSString stringWithFormat:@"%@", info[@"poster2"]];
     self.introduction = [NSString stringWithFormat:@"%@", info[@"introduction"]];
@@ -53,6 +55,14 @@
     self.sum = [NSString stringWithFormat:@"%@", info[@"sum"]];
     self.likeCount = [NSString stringWithFormat:@"%@", info[@"likeCount"]];
     self.supportCount = [NSString stringWithFormat:@"%@", info[@"supportCount"]];
+    
+    self.levels = [[NSMutableArray alloc] init];
+    if (info[@"levels"] != [NSNull null]) {
+        NSArray * levelJsonList = info[@"levels"];
+        for (int i = 0; i < [levelJsonList count]; i ++) {
+            [self.levels addObject:[[WeFundingLevel alloc] initWithNSDictionary:levelJsonList[i]]];
+        }
+    }
 }
 
 @end

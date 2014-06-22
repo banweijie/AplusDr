@@ -32,7 +32,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     WeFunDetViewController * vc = [[WeFunDetViewController alloc] init];
-    vc.currentFunding = fundingList[path.section];
+    vc.currentFundingId = [(WeFunding *)fundingList[path.section] fundingId];
     UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backItem;
     [self.navigationController pushViewController:vc animated:YES];
