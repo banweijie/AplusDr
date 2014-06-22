@@ -75,6 +75,8 @@
 		90B31A601955348100A19CD7 /* WeFundingLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A5F1955348100A19CD7 /* WeFundingLevel.m */; };
 		90B31A6319554BCA00A19CD7 /* WeFunDetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A6219554BCA00A19CD7 /* WeFunDetViewController.m */; };
 		90B31A661956906000A19CD7 /* WeFunDesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A651956906000A19CD7 /* WeFunDesViewController.m */; };
+		90B31A69195750C000A19CD7 /* WeFunSupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A68195750C000A19CD7 /* WeFunSupViewController.m */; };
+		90B31A6C195785DA00A19CD7 /* WeFunSup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A6B195785DA00A19CD7 /* WeFunSup2ViewController.m */; };
 		90F0CE61192234E8006A4605 /* WeMapIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE60192234E8006A4605 /* WeMapIdxViewController.m */; };
 		90F0CE6519228CEF006A4605 /* WeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE6419228CEF006A4605 /* WeUser.m */; };
 		90F0CE7119229973006A4605 /* WeNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE7019229973006A4605 /* WeNavViewController.m */; };
@@ -230,6 +232,10 @@
 		90B31A6219554BCA00A19CD7 /* WeFunDetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunDetViewController.m; sourceTree = "<group>"; };
 		90B31A641956906000A19CD7 /* WeFunDesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunDesViewController.h; sourceTree = "<group>"; };
 		90B31A651956906000A19CD7 /* WeFunDesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunDesViewController.m; sourceTree = "<group>"; };
+		90B31A67195750C000A19CD7 /* WeFunSupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSupViewController.h; sourceTree = "<group>"; };
+		90B31A68195750C000A19CD7 /* WeFunSupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSupViewController.m; sourceTree = "<group>"; };
+		90B31A6A195785DA00A19CD7 /* WeFunSup2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSup2ViewController.h; sourceTree = "<group>"; };
+		90B31A6B195785DA00A19CD7 /* WeFunSup2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSup2ViewController.m; sourceTree = "<group>"; };
 		90F0CE5F192234E8006A4605 /* WeMapIdxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeMapIdxViewController.h; sourceTree = "<group>"; };
 		90F0CE60192234E8006A4605 /* WeMapIdxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeMapIdxViewController.m; sourceTree = "<group>"; };
 		90F0CE6319228CEF006A4605 /* WeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeUser.h; sourceTree = "<group>"; };
@@ -630,6 +636,10 @@
 				90B31A6219554BCA00A19CD7 /* WeFunDetViewController.m */,
 				90B31A641956906000A19CD7 /* WeFunDesViewController.h */,
 				90B31A651956906000A19CD7 /* WeFunDesViewController.m */,
+				90B31A67195750C000A19CD7 /* WeFunSupViewController.h */,
+				90B31A68195750C000A19CD7 /* WeFunSupViewController.m */,
+				90B31A6A195785DA00A19CD7 /* WeFunSup2ViewController.h */,
+				90B31A6B195785DA00A19CD7 /* WeFunSup2ViewController.m */,
 			);
 			name = Funding;
 			sourceTree = "<group>";
@@ -823,6 +833,7 @@
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
 				900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
+				90B31A69195750C000A19CD7 /* WeFunSupViewController.m in Sources */,
 				90B31A601955348100A19CD7 /* WeFundingLevel.m in Sources */,
 				900E296D193080EA008BF61C /* WeCaseRecord.m in Sources */,
 				9026EEF01904EE5500CE4A7A /* VPImageCropperViewController.m in Sources */,
@@ -873,6 +884,7 @@
 				900E29821931BE88008BF61C /* WeExamination.m in Sources */,
 				90B31A5719544BAF00A19CD7 /* WeFunIdxViewController.m in Sources */,
 				90B31A50194BF61B00A19CD7 /* WeFavorPatient.m in Sources */,
+				90B31A6C195785DA00A19CD7 /* WeFunSup2ViewController.m in Sources */,
 				90F0CE8F19271794006A4605 /* WeCsrSelCatViewController.m in Sources */,
 				9026EEF71904EE5500CE4A7A /* WeRegIpnViewController.m in Sources */,
 				90B31A661956906000A19CD7 /* WeFunDesViewController.m in Sources */,

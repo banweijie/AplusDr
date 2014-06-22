@@ -334,7 +334,7 @@
     [button1 setFrame:CGRectMake(91, 2, 138, 48)];
     [button1 setImage:[UIImage imageNamed:@"crowdfunding-detail-support"] forState:UIControlStateNormal];
     [button1 setTitle:@" 支持众筹项目" forState:UIControlStateNormal];
-    //[button1 addTarget:self action:@selector(transferTo0:) forControlEvents:UIControlEventTouchUpInside];
+    [button1 addTarget:self action:@selector(button1_onPress:) forControlEvents:UIControlEventTouchUpInside];
     button1.tintColor = We_foreground_white_general;
     button1.backgroundColor = We_background_red_general;
     button1.titleLabel.font = We_font_textfield_zh_cn;
@@ -382,6 +382,16 @@
     [self api_data_viewFunding];
 }
 
+- (void)button1_onPress:(id)sender {
+    WeFunSupViewController * vc = [[WeFunSupViewController alloc] init];
+    vc.currentFunding = currentFunding;
+    
+    WeNavViewController * nav = [[WeNavViewController alloc] init];
+    [nav pushViewController:vc animated:NO];
+    
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
 - (void)refreshButton_onPress:(id)sender {
     [self api_data_viewFunding];
 }
@@ -396,6 +406,7 @@
                                            @"fundingId":_currentFundingId
                                            }
                                  success:^(id response) {
+                                     NSLog(@"%@", response);
                                      currentFunding = [[WeFunding alloc] initWithNSDictionary:response];
                                      [posterView setImageWithURL:[NSURL URLWithString:yijiarenImageUrl(currentFunding.poster2)]];
                                      [posterTitle setText:currentFunding.title];

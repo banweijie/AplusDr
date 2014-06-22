@@ -37,6 +37,7 @@
     // 标题
     [self.navigationItem setTitle:@"众筹详情"];
     
+    // 富文本内容显示
     UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64 - self.tabBarController.tabBar.frame.size.height)];
     [webView loadHTMLString:_HTMLContent baseURL:[NSURL URLWithString:@"www.yijiaren.com"]];
     [self.view addSubview:webView];

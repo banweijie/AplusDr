@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "WeAppDelegate.h"
 #import "WeFunding.h"
+
 #import "WeFunDesViewController.h"
+#import "WeFunSupViewController.h"
+#import "WeNavViewController.h"
 
 @interface WeFunDetViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 

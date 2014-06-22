@@ -43,11 +43,11 @@
     self.type = [NSString stringWithFormat:@"%@", info[@"type"]];
     self.way = [NSString stringWithFormat:@"%@", info[@"way"]];
     self.open = [NSString stringWithFormat:@"%@", info[@"open"]];
-    self.needEmail = [NSString stringWithFormat:@"%@", info[@"needEmail"]];
-    self.needAddress = [NSString stringWithFormat:@"%@", info[@"needAddress"]];
-    self.needPhone = [NSString stringWithFormat:@"%@", info[@"needPhone"]];
-    self.needName = [NSString stringWithFormat:@"%@", info[@"needName"]];
-    self.needDescription = [NSString stringWithFormat:@"%@", info[@"needDescription"]];
+    self.needEmail = [[NSString stringWithFormat:@"%@", info[@"needEmail"]] isEqualToString:@"1"];
+    self.needAddress = [[NSString stringWithFormat:@"%@", info[@"needAddress"]] isEqualToString:@"1"];
+    self.needPhone = [[NSString stringWithFormat:@"%@", info[@"needPhone"]] isEqualToString:@"1"];
+    self.needName = [[NSString stringWithFormat:@"%@", info[@"needName"]] isEqualToString:@"1"];
+    self.needDescription = [[NSString stringWithFormat:@"%@", info[@"needDescription"]] isEqualToString:@"1"];
     self.sendRedPin = [NSString stringWithFormat:@"%@", info[@"sendRedPin"]];
     self.sendBluePin = [NSString stringWithFormat:@"%@", info[@"sendBluePin"]];
     self.supportCount = [NSString stringWithFormat:@"%@", info[@"supportCount"]];
