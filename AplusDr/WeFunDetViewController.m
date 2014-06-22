@@ -19,6 +19,7 @@
     
     UILabel * button0label0;
     UILabel * button2label0;
+    UILabel * posterTitle;
 }
 
 @end
@@ -35,6 +36,13 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)path
 {
+    if (path.section == 2 && path.row == 1) {
+        WeFunDesViewController * vc = [[WeFunDesViewController alloc] init];
+        vc.HTMLContent = currentFunding.description;
+        UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"基本信息" style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.navigationItem.backBarButtonItem = backItem;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     [tableView deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
@@ -59,7 +67,7 @@
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if (section == [self numberOfSectionsInTableView:tableView] - 1) {
-        return 400;
+        return self.tabBarController.tabBar.frame.size.height + 20;
     }
     return 1;
 }
@@ -163,16 +171,10 @@
         [cell.detailTextLabel setTextColor:We_foreground_gray_general];
     }
     if (indexPath.section == 1 && indexPath.row == 3) {
-        [cell.textLabel setText:@"起募金额"];
+        [cell.textLabel setText:@"点赞人数"];
         [cell.textLabel setFont:We_font_textfield_zh_cn];
         [cell.textLabel setTextColor:We_foreground_black_general];
-        if ([currentFunding.levels count] > 0) {
-            WeFundingLevel * fundingLevel = currentFunding.levels[0];
-            [cell.detailTextLabel setText:[NSString stringWithFormat:@"￥%@", fundingLevel.money]];
-        }
-        else {
-            [cell.detailTextLabel setText:@"不存在任何募集方案"];
-        }
+        [cell.detailTextLabel setText:currentFunding.likeCount];
         [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
         [cell.detailTextLabel setTextColor:We_foreground_gray_general];
     }
@@ -261,7 +263,7 @@
     
     // 分享按钮
     UIBarButtonItem * shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"crowdfunding-detail-share"] style:UIBarButtonItemStylePlain target:self action:@selector(shareButton_onPress:)];
-    self.navigationItem.rightBarButtonItem = shareButton;
+    //self.navigationItem.rightBarButtonItem = shareButton;
     
     // 所有内容
     contentView = [[UIView alloc] initWithFrame:self.view.frame];
@@ -273,6 +275,25 @@
     [posterView setContentMode:UIViewContentModeScaleAspectFill];
     [contentView addSubview:posterView];
     
+    // 高斯模糊
+    UIToolbar * toolBar0 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 235 - 80, 320, 80)];
+    //[toolBar0 setBackgroundImage:[WeAppDelegate imageWithColor:UIColorFromRGB(33, 33, 33, 0.9)] forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    [toolBar0 setBarStyle:UIBarStyleBlackTranslucent];
+    [toolBar0 setBarTintColor:UIColorFromRGB(255, 255, 255, 0.5)];
+    //[posterView addSubview:toolBar0];
+    
+    // 海报上的标题
+    posterTitle = [[UILabel alloc] initWithFrame:CGRectMake(20, 235 - 64, 280, 64)];
+    [posterTitle setTextAlignment:NSTextAlignmentCenter];
+    [posterTitle setText:currentFunding.title];
+    [posterTitle setFont:We_font_textfield_huge_zh_cn];
+    [posterTitle setTextColor:We_foreground_white_general];
+    [posterTitle setNumberOfLines:2];
+    [posterView addSubview:posterTitle];
+    
+    // 海报上的播放按钮
+    
+    
     // 表格
     sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
@@ -280,6 +301,7 @@
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
     sys_tableView.bounces = NO;
+    sys_tableView.showsVerticalScrollIndicator = NO;
     [contentView addSubview:sys_tableView];
     
     // barView
@@ -376,6 +398,7 @@
                                  success:^(id response) {
                                      currentFunding = [[WeFunding alloc] initWithNSDictionary:response];
                                      [posterView setImageWithURL:[NSURL URLWithString:yijiarenImageUrl(currentFunding.poster2)]];
+                                     [posterTitle setText:currentFunding.title];
                                      [button0label0 setText:[NSString stringWithFormat:@"￥%@ ", currentFunding.goal]];
                                      int restSec =  [currentFunding.endTime longLongValue] / 1000 - [[NSDate date] timeIntervalSince1970];
                                      [button2label0 setText:[NSString stringWithFormat:@"%d天", restSec / 86400 + 1]];

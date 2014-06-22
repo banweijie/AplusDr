@@ -154,6 +154,11 @@
     [self api_data_listFunding];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"texture"] forBarMetrics:UIBarMetricsDefault];
+    [super viewWillAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
