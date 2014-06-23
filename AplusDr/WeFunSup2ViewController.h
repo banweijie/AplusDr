@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "WeFundingLevel.h"
 #import "WeAppDelegate.h"
+#import "WeSentenceModifyViewController.h"
+#import "WeParagraphModifyViewController.h"
 
 @interface WeFunSup2ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 

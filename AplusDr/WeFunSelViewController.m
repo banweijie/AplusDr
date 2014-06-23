@@ -187,7 +187,7 @@
     UIBarButtonItem * cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton_onPress:)];
     self.navigationItem.leftBarButtonItem = cancelButton;
     
-    // 取消按钮
+    // 重设按钮
     UIBarButtonItem * resetButton = [[UIBarButtonItem alloc] initWithTitle:@"重设" style:UIBarButtonItemStylePlain target:self action:@selector(resetButton_onPress:)];
     self.navigationItem.rightBarButtonItem = resetButton;
     

@@ -11,29 +11,90 @@
 @interface WeFunSup2ViewController () {
     UITableView * sys_tableView;
     NSMutableArray * infoList;
+    
+    NSMutableString * info_name;
+    NSMutableString * info_phone;
+    NSMutableString * info_address;
+    NSMutableString * info_email;
+    NSMutableString * info_description;
 }
 
 @end
 
 @implementation WeFunSup2ViewController
 
+@synthesize currentLevel;
+
 #pragma mark - UITableView Delegate & DataSource
 
 // 欲选中某个Cell触发的事件
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)path
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return path;
+    return indexPath;
 }
 // 选中某个Cell触发的事件
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)path
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:path animated:YES];
+    if (indexPath.section == 1) {
+        if ([infoList[indexPath.row] isEqualToString:@"name"]) {
+            WeSentenceModifyViewController * vc = [[WeSentenceModifyViewController alloc] init];
+            vc.stringToModify = info_name;
+            vc.stringToPlaceHolder = @"尚未填写真实姓名";
+            vc.stringToBeTitle = @"真实姓名";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        if ([infoList[indexPath.row] isEqualToString:@"phone"]) {
+            WeSentenceModifyViewController * vc = [[WeSentenceModifyViewController alloc] init];
+            vc.stringToModify = info_phone;
+            vc.stringToPlaceHolder = @"尚未填写手机号码";
+            vc.stringToBeTitle = @"手机号码";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        if ([infoList[indexPath.row] isEqualToString:@"email"]) {
+            WeSentenceModifyViewController * vc = [[WeSentenceModifyViewController alloc] init];
+            vc.stringToModify = info_email;
+            vc.stringToPlaceHolder = @"尚未填写电子邮件";
+            vc.stringToBeTitle = @"电子邮件";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        if ([infoList[indexPath.row] isEqualToString:@"address"]) {
+            WeParagraphModifyViewController * vc = [[WeParagraphModifyViewController alloc] init];
+            vc.stringToModify = info_address;
+            vc.stringToPlaceHolder = @"尚未填写寄件地址";
+            vc.stringToBeTitle = @"寄件地址";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        if ([infoList[indexPath.row] isEqualToString:@"description"]) {
+            WeParagraphModifyViewController * vc = [[WeParagraphModifyViewController alloc] init];
+            vc.stringToModify = info_description;
+            vc.stringToPlaceHolder = @"尚未填写自我介绍";
+            vc.stringToBeTitle = @"自我介绍";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 && indexPath.row == 0) {
-        CGSize sizezz = [_currentLevel.repay sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize sizezz = [currentLevel.repay sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
         return sizezz.height + 80;
+    }
+    if (indexPath.section == 1) {
+        if ([infoList[indexPath.row] isEqualToString:@"address"]) {
+            NSString * tmpString = info_address;
+            if ([info_address isEqualToString:@""]) tmpString = @"尚未填写寄送地址";
+            
+            CGSize sizezz = [tmpString sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+            return sizezz.height + 60;
+        }
+        if ([infoList[indexPath.row] isEqualToString:@"description"]) {
+            NSString * tmpString = info_description;
+            if ([info_description isEqualToString:@""]) tmpString = @"尚未填写自我介绍";
+            
+            CGSize sizezz = [tmpString sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+            return sizezz.height + 60;
+        }
     }
     return [tableView rowHeight];
 }
@@ -77,18 +138,21 @@
     static NSString *MyIdentifier = @"MyReuseIdentifier";
     UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
+        if (indexPath.section == 2 && indexPath.row == 0) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
+        }
     }
     cell.opaque = NO;
     cell.backgroundColor = We_background_cell_general;
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 220 - 16, 60)];
-        if ([_currentLevel.type isEqualToString:@"E"]) {
-            l1.text = _currentLevel.way;
+        if ([currentLevel.type isEqualToString:@"E"]) {
+            l1.text = currentLevel.way;
         }
         else {
-            l1.text = [NSString stringWithFormat:@"支持 ￥%@", _currentLevel.money];
+            l1.text = [NSString stringWithFormat:@"支持 ￥%@", currentLevel.money];
         }
         l1.font = We_font_textfield_large_zh_cn;
         l1.textColor = We_foreground_red_general;
@@ -96,25 +160,111 @@
         
         UILabel * infoLabel = [[UILabel alloc] init];
         [infoLabel setFrame:CGRectMake(180, 15, 120, 30)];
-        if ([_currentLevel.limit isEqualToString:@"0"]) {
-            [infoLabel setText:[NSString stringWithFormat:@"%@人支持", _currentLevel.supportCount]];
+        if ([currentLevel.limit isEqualToString:@"0"]) {
+            [infoLabel setText:[NSString stringWithFormat:@"%@人支持", currentLevel.supportCount]];
         }
         else {
-            [infoLabel setText:[NSString stringWithFormat:@"%@人支持/限%@人", _currentLevel.supportCount, _currentLevel.limit]];
+            [infoLabel setText:[NSString stringWithFormat:@"%@人支持/限%@人", currentLevel.supportCount, currentLevel.limit]];
         }
         [infoLabel setTextAlignment:NSTextAlignmentRight];
         [infoLabel setTextColor:We_foreground_black_general];
         [infoLabel setFont:We_font_textfield_zh_cn];
         [cell.contentView addSubview:infoLabel];
         
-        CGSize sizezz = [_currentLevel.repay sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize sizezz = [currentLevel.repay sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(16, 60, sizezz.width, sizezz.height)];
         label.numberOfLines = 0;
         label.lineBreakMode = NSLineBreakByWordWrapping;
-        label.text = _currentLevel.repay;
+        label.text = currentLevel.repay;
         label.font = We_font_textfield_zh_cn;
         label.textColor = We_foreground_gray_general;
         [cell.contentView addSubview:label];
+    }
+    if (indexPath.section == 1) {
+        if ([infoList[indexPath.row] isEqualToString:@"name"]) {
+            [cell.textLabel setText:@"真实姓名"];
+            if (![info_name isEqualToString:@""]) {
+                [cell.detailTextLabel setText:info_name];
+            }
+            else {
+                [cell.detailTextLabel setText:@"尚未填写真实姓名"];
+            }
+            [cell.textLabel setFont:We_font_textfield_zh_cn];
+            [cell.textLabel setTextColor:We_foreground_black_general];
+            [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+            [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }
+        if ([infoList[indexPath.row] isEqualToString:@"phone"]) {
+            [cell.textLabel setText:@"手机号码"];
+            if (![info_phone isEqualToString:@""]) {
+                [cell.detailTextLabel setText:info_phone];
+            }
+            else {
+                [cell.detailTextLabel setText:@"尚未填写手机号码"];
+            }
+            [cell.textLabel setFont:We_font_textfield_zh_cn];
+            [cell.textLabel setTextColor:We_foreground_black_general];
+            [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+            [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }
+        if ([infoList[indexPath.row] isEqualToString:@"email"]) {
+            [cell.textLabel setText:@"电子邮箱"];
+            if (![info_email isEqualToString:@""]) {
+                [cell.detailTextLabel setText:info_email];
+            }
+            else {
+                [cell.detailTextLabel setText:@"尚未填写电子邮箱"];
+            }
+            [cell.textLabel setFont:We_font_textfield_zh_cn];
+            [cell.textLabel setTextColor:We_foreground_black_general];
+            [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+            [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }
+        if ([infoList[indexPath.row] isEqualToString:@"address"]) {
+            UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 220 - 16, 40)];
+            [l1 setText:@"寄送地址"];
+            l1.font = We_font_textfield_zh_cn;
+            l1.textColor = We_foreground_black_general;
+            [cell.contentView addSubview:l1];
+            
+            NSString * tmpString = info_address;
+            if ([info_address isEqualToString:@""]) tmpString = @"尚未填写寄送地址";
+            
+            CGSize sizezz = [tmpString sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+            UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.text = tmpString;
+            label.font = We_font_textfield_zh_cn;
+            label.textColor = We_foreground_gray_general;
+            [cell.contentView addSubview:label];
+            
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }
+        if ([infoList[indexPath.row] isEqualToString:@"description"]) {
+            UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 220 - 16, 40)];
+            [l1 setText:@"自我简介"];
+            l1.font = We_font_textfield_zh_cn;
+            l1.textColor = We_foreground_black_general;
+            [cell.contentView addSubview:l1];
+            
+            NSString * tmpString = info_description;
+            if ([info_description isEqualToString:@""]) tmpString = @"尚未填写自我介绍";
+            
+            CGSize sizezz = [tmpString sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+            UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.text = tmpString;
+            label.font = We_font_textfield_zh_cn;
+            label.textColor = We_foreground_gray_general;
+            [cell.contentView addSubview:label];
+            
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }
     }
     if (indexPath.section == 2 && indexPath.row == 0) {
         [cell setBackgroundColor:We_background_red_tableviewcell];
@@ -158,11 +308,24 @@
     [self.view addSubview:sys_tableView];
     
     // 统计需要记录的信息
-    if (_currentLevel.needName) [infoList addObject:@"name"];
-    if (_currentLevel.needPhone) [infoList addObject:@"phone"];
-    if (_currentLevel.needEmail) [infoList addObject:@"email"];
-    if (_currentLevel.needAddress) [infoList addObject:@"address"];
-    if (_currentLevel.needDescription) [infoList addObject:@"description"];
+    infoList = [[NSMutableArray alloc] init];
+    if (currentLevel.needName) [infoList addObject:@"name"];
+    if (currentLevel.needPhone) [infoList addObject:@"phone"];
+    if (currentLevel.needEmail) [infoList addObject:@"email"];
+    if (currentLevel.needAddress) [infoList addObject:@"address"];
+    if (currentLevel.needDescription) [infoList addObject:@"description"];
+    
+    // 初始化各输入框
+    info_name = [NSMutableString stringWithString:currentUser.trueName];
+    info_phone = [NSMutableString stringWithString:currentUser.userPhone];
+    info_email = [NSMutableString stringWithString:@""];
+    info_address = [NSMutableString stringWithString:@""];
+    info_description = [NSMutableString stringWithString:@""];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [sys_tableView reloadData];
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
