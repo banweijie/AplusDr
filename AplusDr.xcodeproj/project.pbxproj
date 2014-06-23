@@ -77,6 +77,10 @@
 		90B31A661956906000A19CD7 /* WeFunDesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A651956906000A19CD7 /* WeFunDesViewController.m */; };
 		90B31A69195750C000A19CD7 /* WeFunSupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A68195750C000A19CD7 /* WeFunSupViewController.m */; };
 		90B31A6C195785DA00A19CD7 /* WeFunSup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A6B195785DA00A19CD7 /* WeFunSup2ViewController.m */; };
+		90B31A6F19579A6F00A19CD7 /* WeFunSelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A6E19579A6F00A19CD7 /* WeFunSelViewController.m */; };
+		90B31A731957A75400A19CD7 /* WeFunSelTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A721957A75400A19CD7 /* WeFunSelTypeViewController.m */; };
+		90B31A761957AE1A00A19CD7 /* WeFunSelTopSecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A751957AE1A00A19CD7 /* WeFunSelTopSecViewController.m */; };
+		90B31A791957B4CE00A19CD7 /* WeFunSelSecSecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A781957B4CE00A19CD7 /* WeFunSelSecSecViewController.m */; };
 		90F0CE61192234E8006A4605 /* WeMapIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE60192234E8006A4605 /* WeMapIdxViewController.m */; };
 		90F0CE6519228CEF006A4605 /* WeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE6419228CEF006A4605 /* WeUser.m */; };
 		90F0CE7119229973006A4605 /* WeNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE7019229973006A4605 /* WeNavViewController.m */; };
@@ -236,6 +240,14 @@
 		90B31A68195750C000A19CD7 /* WeFunSupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSupViewController.m; sourceTree = "<group>"; };
 		90B31A6A195785DA00A19CD7 /* WeFunSup2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSup2ViewController.h; sourceTree = "<group>"; };
 		90B31A6B195785DA00A19CD7 /* WeFunSup2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSup2ViewController.m; sourceTree = "<group>"; };
+		90B31A6D19579A6F00A19CD7 /* WeFunSelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSelViewController.h; sourceTree = "<group>"; };
+		90B31A6E19579A6F00A19CD7 /* WeFunSelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSelViewController.m; sourceTree = "<group>"; };
+		90B31A711957A75400A19CD7 /* WeFunSelTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSelTypeViewController.h; sourceTree = "<group>"; };
+		90B31A721957A75400A19CD7 /* WeFunSelTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSelTypeViewController.m; sourceTree = "<group>"; };
+		90B31A741957AE1A00A19CD7 /* WeFunSelTopSecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSelTopSecViewController.h; sourceTree = "<group>"; };
+		90B31A751957AE1A00A19CD7 /* WeFunSelTopSecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSelTopSecViewController.m; sourceTree = "<group>"; };
+		90B31A771957B4CE00A19CD7 /* WeFunSelSecSecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSelSecSecViewController.h; sourceTree = "<group>"; };
+		90B31A781957B4CE00A19CD7 /* WeFunSelSecSecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSelSecSecViewController.m; sourceTree = "<group>"; };
 		90F0CE5F192234E8006A4605 /* WeMapIdxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeMapIdxViewController.h; sourceTree = "<group>"; };
 		90F0CE60192234E8006A4605 /* WeMapIdxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeMapIdxViewController.m; sourceTree = "<group>"; };
 		90F0CE6319228CEF006A4605 /* WeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeUser.h; sourceTree = "<group>"; };
@@ -630,6 +642,7 @@
 		90B31A5419544B7B00A19CD7 /* Funding */ = {
 			isa = PBXGroup;
 			children = (
+				90B31A7019579F5B00A19CD7 /* Selection */,
 				90B31A5519544BAF00A19CD7 /* WeFunIdxViewController.h */,
 				90B31A5619544BAF00A19CD7 /* WeFunIdxViewController.m */,
 				90B31A6119554BCA00A19CD7 /* WeFunDetViewController.h */,
@@ -672,6 +685,21 @@
 				900E2994193223B8008BF61C /* WeExaminationItemConfig.m */,
 			);
 			name = CaseManage;
+			sourceTree = "<group>";
+		};
+		90B31A7019579F5B00A19CD7 /* Selection */ = {
+			isa = PBXGroup;
+			children = (
+				90B31A6D19579A6F00A19CD7 /* WeFunSelViewController.h */,
+				90B31A6E19579A6F00A19CD7 /* WeFunSelViewController.m */,
+				90B31A711957A75400A19CD7 /* WeFunSelTypeViewController.h */,
+				90B31A721957A75400A19CD7 /* WeFunSelTypeViewController.m */,
+				90B31A741957AE1A00A19CD7 /* WeFunSelTopSecViewController.h */,
+				90B31A751957AE1A00A19CD7 /* WeFunSelTopSecViewController.m */,
+				90B31A771957B4CE00A19CD7 /* WeFunSelSecSecViewController.h */,
+				90B31A781957B4CE00A19CD7 /* WeFunSelSecSecViewController.m */,
+			);
+			name = Selection;
 			sourceTree = "<group>";
 		};
 		90F0CE6219228C97006A4605 /* Model */ = {
@@ -829,10 +857,12 @@
 				907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */,
 				900E29731930C847008BF61C /* WeCahAddCahViewController.m in Sources */,
 				90F0CE801926D0CA006A4605 /* WeCsrSelAreaViewController.m in Sources */,
+				90B31A791957B4CE00A19CD7 /* WeFunSelSecSecViewController.m in Sources */,
 				90B31A4F194BF61B00A19CD7 /* WePatient.m in Sources */,
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
 				900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
+				90B31A6F19579A6F00A19CD7 /* WeFunSelViewController.m in Sources */,
 				90B31A69195750C000A19CD7 /* WeFunSupViewController.m in Sources */,
 				90B31A601955348100A19CD7 /* WeFundingLevel.m in Sources */,
 				900E296D193080EA008BF61C /* WeCaseRecord.m in Sources */,
@@ -853,6 +883,7 @@
 				907D5B681920D9DA0006EAE0 /* UIBubbleHeaderTableViewCell.m in Sources */,
 				90F0CE771922D711006A4605 /* WeDoctor.m in Sources */,
 				907D5B37192014230006EAE0 /* WeViewController.m in Sources */,
+				90B31A731957A75400A19CD7 /* WeFunSelTypeViewController.m in Sources */,
 				907D5B691920D9DA0006EAE0 /* UIBubbleTableView.m in Sources */,
 				90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */,
 				90F0CE61192234E8006A4605 /* WeMapIdxViewController.m in Sources */,
@@ -891,6 +922,7 @@
 				907D5B6A1920D9DA0006EAE0 /* UIBubbleTableViewCell.m in Sources */,
 				900E298F193220C5008BF61C /* WeCahExaAddIteViewController.m in Sources */,
 				900E28CB19290239008BF61C /* WeMessage.m in Sources */,
+				90B31A761957AE1A00A19CD7 /* WeFunSelTopSecViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

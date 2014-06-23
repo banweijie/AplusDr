@@ -45,8 +45,12 @@
 + (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success;
 + (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month;
 + (UIImage *)imageWithColor:(UIColor *)color;
+
 // AFNetworking 网络连接通用方法
 + (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong id))success failure:(void (^__strong)(__strong NSString *))failure;
+
+// 编码转换
++ (NSString *)transitionOfFundingType:(NSString *)type;
 @end
 
 // 数据库

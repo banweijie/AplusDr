@@ -14,7 +14,17 @@
     UIButton * refreshButton;
     UIView * contentView;
     
+    UISearchBar * searchBar;
+    UIButton * coverButton;
+    
     NSMutableArray * fundingList;
+    
+    NSMutableString * sel_keyword;
+    NSMutableString * sel_type;
+    NSMutableString * sel_topSectionId;
+    NSMutableString * sel_topSectionName;
+    NSMutableString * sel_secSectionId;
+    NSMutableString * sel_secSectionName;
 }
 
 @end
@@ -33,8 +43,10 @@
 {
     WeFunDetViewController * vc = [[WeFunDetViewController alloc] init];
     vc.currentFundingId = [(WeFunding *)fundingList[path.section] fundingId];
+    
     UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backItem;
+    
     [self.navigationController pushViewController:vc animated:YES];
     
     [tableView deselectRowAtIndexPath:path animated:YES];
@@ -54,6 +66,9 @@
 }
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == [self numberOfSectionsInTableView:tableView] - 1) {
+        return 10 + self.tabBarController.tabBar.frame.size.height;
+    }
     return 1;
 }
 // 询问每个段落的尾部标题
@@ -127,6 +142,54 @@
     contentView = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:contentView];
     
+    // 筛选参数
+    sel_keyword = [NSMutableString stringWithString:@""];
+    sel_type = [NSMutableString stringWithString:@""];
+    sel_topSectionId = [NSMutableString stringWithString:@""];
+    sel_topSectionName = [NSMutableString stringWithString:@"全部"];
+    sel_secSectionId = [NSMutableString stringWithString:@""];
+    sel_secSectionName = [NSMutableString stringWithString:@"全部"];
+    NSLog(@"%@", sel_topSectionName);
+    
+    // bar background image
+    UIImageView * barBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, 320, 85)];
+    barBackground.image = [UIImage imageNamed:@"bar"];
+    [self.view addSubview:barBackground];
+    
+    UIButton * sortButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [sortButton setFrame:CGRectMake(0, 64, 210, 40)];
+    [sortButton setTitle:@"已筹募款从多到少" forState:UIControlStateNormal];
+    [sortButton.titleLabel setFont:We_font_textfield_zh_cn];
+    [sortButton setTintColor:We_foreground_red_general];
+    [self.view addSubview:sortButton];
+    
+    UIButton * selectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [selectButton setFrame:CGRectMake(210, 64, 110, 40)];
+    [selectButton setTitle:@"筛选" forState:UIControlStateNormal];
+    [selectButton.titleLabel setFont:We_font_textfield_zh_cn];
+    [selectButton setTintColor:We_foreground_red_general];
+    [selectButton addTarget:self action:@selector(selectButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:selectButton];
+    
+    // search bar
+    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 104, 320, 45)];
+    searchBar.placeholder = @"搜索";
+    searchBar.translucent = YES;
+    searchBar.backgroundImage = [UIImage new];
+    searchBar.scopeBarBackgroundImage = [UIImage new];
+    [searchBar setTranslucent:YES];
+    searchBar.delegate = self;
+    
+    // cover button
+    coverButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    coverButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    coverButton.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
+    [coverButton addTarget:self action:@selector(coverButtonOnPress:) forControlEvents:UIControlEventTouchUpInside];
+    coverButton.hidden = YES;
+    [self.view addSubview:coverButton];
+    
+    [self.view addSubview:searchBar];
+    
     // 表格
     sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 64 + 85, 300, self.view.frame.size.height - 64 - 85) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
@@ -165,13 +228,48 @@
     // Dispose of any resources that can be recreated.
 }
 
-// 刷新按钮被按下
-- (void)refreshButton_onPress:(id)sender {
-    NSLog(@"!!!");
-    //[self api_data_listFunding];
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    coverButton.hidden = NO;
+    return YES;
 }
 
-// 我的众筹按钮被按下
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
+    coverButton.hidden = YES;
+    return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)sbar {
+    [sel_keyword setString:searchBar.text];
+    [searchBar resignFirstResponder];
+}
+
+- (void)coverButtonOnPress:(id)sender {
+    [sel_keyword setString:searchBar.text];
+    [searchBar resignFirstResponder];
+}
+
+// 筛选按钮被按下
+- (void)selectButton_onPress:(id)sender {
+    WeFunSelViewController * vc = [[WeFunSelViewController alloc] init];
+    vc.lastSel_type = sel_type;
+    vc.lastSel_topSectionId = sel_topSectionId;
+    vc.lastSel_topSectionName = sel_topSectionName;
+    vc.lastSel_secSectionId = sel_secSectionId;
+    vc.lastSel_secSectionName = sel_secSectionName;
+    vc.originVC = self;
+    
+    WeNavViewController * nav = [[WeNavViewController alloc] init];
+    [nav pushViewController:vc animated:NO];
+    
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+// 刷新按钮被按下
+- (void)refreshButton_onPress:(id)sender {
+    [self api_data_listFunding];
+}
+
+// 我的参与按钮被按下
 - (void)myFundingButton_onPress:(id)sender {
     NSLog(@"!!!");
 }
@@ -182,8 +280,14 @@
     [contentView setHidden:YES];
     [sys_pendingView startAnimating];
     
+    NSMutableDictionary * parameters = [[NSMutableDictionary alloc] init];
+    if (![sel_type isEqualToString:@""]) [parameters setValue:sel_type forKey:@"f.type"];
+    if (![sel_topSectionId isEqualToString:@""]) [parameters setValue:sel_topSectionId forKey:@"f.topSectionId"];
+    if (![sel_secSectionId isEqualToString:@""]) [parameters setValue:sel_secSectionId forKey:@"f.sectionId"];
+    if (![sel_keyword isEqualToString:@""]) [parameters setValue:sel_keyword forKey:@"f.words"];
+    
     [WeAppDelegate postToServerWithField:@"data" action:@"listFunding"
-                              parameters:nil
+                              parameters:parameters
                                  success:^(id response) {
                                      fundingList = [[NSMutableArray alloc] init];
                                      NSArray * fundingJsonList = response[@"list"];

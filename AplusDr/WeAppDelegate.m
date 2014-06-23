@@ -135,6 +135,12 @@
           }];
 }
 
+// 编码转换
++ (NSString *)transitionOfFundingType:(NSString *)type {
+    if ([type isEqualToString:@""]) return @"全部";
+    return we_codings[@"fundingType"][type];
+}
+
 + (NSString *)transitionToDateFromSecond:(long long)s {
     NSDate * t = [NSDate dateWithTimeIntervalSince1970:s];
     NSDate * date = [NSDate date];
