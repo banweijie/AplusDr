@@ -241,11 +241,13 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)sbar {
     [sel_keyword setString:searchBar.text];
     [searchBar resignFirstResponder];
+    [self api_data_listFunding];
 }
 
 - (void)coverButtonOnPress:(id)sender {
     [sel_keyword setString:searchBar.text];
     [searchBar resignFirstResponder];
+    [self api_data_listFunding];
 }
 
 // 筛选按钮被按下
