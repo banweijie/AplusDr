@@ -128,6 +128,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.navigationItem.title = @"众筹项目";
+    
     // 我的众筹按钮
     UIBarButtonItem * myFundingButton = [[UIBarButtonItem alloc] initWithTitle:@"我的参与" style:UIBarButtonItemStylePlain target:self action:@selector(myFundingButton_onPress:)];
     self.navigationItem.rightBarButtonItem = myFundingButton;
@@ -149,7 +151,6 @@
     sel_topSectionName = [NSMutableString stringWithString:@"全部"];
     sel_secSectionId = [NSMutableString stringWithString:@""];
     sel_secSectionName = [NSMutableString stringWithString:@"全部"];
-    NSLog(@"%@", sel_topSectionName);
     
     // bar background image
     UIImageView * barBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, 320, 85)];
@@ -273,7 +274,8 @@
 
 // 我的参与按钮被按下
 - (void)myFundingButton_onPress:(id)sender {
-    NSLog(@"!!!");
+    WeFunMySupViewController * vc = [[WeFunMySupViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 // 获取众筹列表接口

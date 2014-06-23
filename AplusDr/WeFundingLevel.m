@@ -35,7 +35,7 @@
 
 - (void)setWithNSDictionary:(NSDictionary *)info {
     // 提取信息
-    self.levelId = [NSString stringWithFormat:@"%@", info[@"levelId"]];
+    self.levelId = [NSString stringWithFormat:@"%@", info[@"id"]];
     self.money = [NSString stringWithFormat:@"%@", info[@"money"]];
     self.limit = [NSString stringWithFormat:@"%@", info[@"limit"]];
     self.repay = [NSString stringWithFormat:@"%@", info[@"repay"]];

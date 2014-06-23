@@ -9,6 +9,8 @@
 #import "WeFunSup2ViewController.h"
 
 @interface WeFunSup2ViewController () {
+    UIActivityIndicatorView * sys_pendingView;
+    
     UITableView * sys_tableView;
     NSMutableArray * infoList;
     
@@ -71,6 +73,9 @@
             vc.stringToBeTitle = @"自我介绍";
             [self.navigationController pushViewController:vc animated:YES];
         }
+    }
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        [self api_patient_supportFunding];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -307,6 +312,13 @@
     sys_tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:sys_tableView];
     
+    // 转圈圈
+    sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    [sys_pendingView setAlpha:1.0];
+    [self.view addSubview:sys_pendingView];
+    
     // 统计需要记录的信息
     infoList = [[NSMutableArray alloc] init];
     if (currentLevel.needName) [infoList addObject:@"name"];
@@ -332,6 +344,29 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)api_patient_supportFunding {
+    [sys_pendingView startAnimating];
+    
+    [WeAppDelegate postToServerWithField:@"patient" action:@"supportFunding"
+                              parameters:@{
+                                           @"fs.fundingLevel.id":currentLevel.levelId,
+                                           @"fs.email":info_email,
+                                           @"fs.name":info_name,
+                                           @"fs.address":info_address,
+                                           @"fs.phone":info_phone,
+                                           @"fs.description":info_description,
+                                           @"fs.zip":@"100871"
+                                           }
+                                 success:^(id response) {
+                                     NSLog(@"%@", response);
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     NSLog(@"%@", errorMessage);
+                                     [sys_pendingView stopAnimating];
+                                 }];
 }
 
 /*
