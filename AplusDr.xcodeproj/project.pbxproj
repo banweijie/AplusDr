@@ -472,7 +472,7 @@
 				9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */,
 				9026EF111904EEFC00CE4A7A /* CustomsView */,
 				90F0CE6219228C97006A4605 /* Model */,
-				90B31A4A194BF1DD00A19CD7 /* Controller */,
+				90B31A4A194BF1DD00A19CD7 /* View&Controller */,
 				90B31A48194BF1AC00A19CD7 /* Framework */,
 				9026EEEF1904EE5500CE4A7A /* Main.storyboard */,
 				900E295F1929E86F008BF61C /* Media.xcassets */,
@@ -661,7 +661,7 @@
 			name = Framework;
 			sourceTree = "<group>";
 		};
-		90B31A4A194BF1DD00A19CD7 /* Controller */ = {
+		90B31A4A194BF1DD00A19CD7 /* View&Controller */ = {
 			isa = PBXGroup;
 			children = (
 				90B31A5419544B7B00A19CD7 /* RaisePublic */,
@@ -671,7 +671,7 @@
 				9026EF141904EF8300CE4A7A /* PersonalCenter */,
 				907D5B42192016580006EAE0 /* ConsultingRoom */,
 			);
-			name = Controller;
+			name = "View&Controller";
 			sourceTree = "<group>";
 		};
 		90B31A5419544B7B00A19CD7 /* RaisePublic */ = {

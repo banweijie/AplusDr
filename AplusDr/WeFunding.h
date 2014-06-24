@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WeFundingLevel.h"
 #import "WeDoctor.h"
+#import "WeFundingLevel.h"
 
 @interface WeFunding : NSObject
 

@@ -274,6 +274,7 @@
                               parameters:@{
                                            }
                                  success:^(NSArray * response) {
+                                     NSLog(@"%@", response);
                                      favorDoctorList = [[NSMutableDictionary alloc] init];
                                      for (int i = 0; i < [response count]; i++) {
                                          WeFavorDoctor * newFavorDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:response[i]];
@@ -320,7 +321,7 @@
                               parameters:@{
                                            }
                                  success:^(NSDictionary * response) {
-                                     NSLog(@"%@", response);
+                                     //NSLog(@"%@", response);
                                      currentUser = newUser;
                                      [(UITabBarController *)self.navigationController.presentingViewController setSelectedViewController:self.originTargetViewController];
                                      [self dismissViewControllerAnimated:YES completion:nil];

@@ -24,6 +24,13 @@
 @property(strong, nonatomic) NSString * maxResponseGap;
 @property(strong, nonatomic) NSString * plusPrice;
 
+@property(strong, nonatomic) NSString * currentFundingId;
+@property(strong, nonatomic) NSString * currentFundingName;
+@property(strong, nonatomic) NSString * currentFundingType;
+@property(strong, nonatomic) NSString * currentFundingSupportCount;
+@property(strong, nonatomic) NSString * currentFundingLikeCount;
+@property(strong, nonatomic) NSString * currentFundingSum;
+
 - (WeDoctor *)initWithNSDictionary:(NSDictionary *)info;
 - (void)setWithNSDictionary:(NSDictionary *)info;
 

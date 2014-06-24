@@ -47,7 +47,7 @@
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
     if (section == 0) return 10 + 64;
-    return 10;
+    return 9;
 }
 
 // 询问每个段落的头部标题
@@ -57,6 +57,7 @@
 
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
+    if (section == [self numberOfSectionsInTableView:tv] - 1) return 10;
     return 1;
 }
 
@@ -78,7 +79,9 @@
 
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    WeFavorDoctor * currentDoctor = favorDoctorList[orderedIdOfDoctor[section]];
+    if (currentDoctor.currentFundingId == nil) return 2;
+    else return 3;
 }
 
 // 询问每个具体条目的内容
@@ -90,8 +93,8 @@
     }
     [[cell imageView] setContentMode:UIViewContentModeCenter];
     
+    WeFavorDoctor * doctor = favorDoctorList[orderedIdOfDoctor[indexPath.section]];
     if (indexPath.row == 0) {
-        WeFavorDoctor * doctor = favorDoctorList[orderedIdOfDoctor[indexPath.section]];
         cell.contentView.backgroundColor = We_background_cell_general;
         // l1 - user name
         UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(75, 12, 240, 23)];
@@ -114,17 +117,21 @@
         avatarView.clipsToBounds = YES;
         [cell.contentView addSubview:avatarView];
     }
-    if (indexPath.row == 1) {
+    if (indexPath.row == 1 && doctor.currentFundingId != nil) {
         cell.imageView.image = [UIImage imageNamed:@"docinfo-crowdfunding"];
-        cell.textLabel.text = @"众筹项目名称";
+        cell.textLabel.text = doctor.currentFundingName;
         cell.textLabel.font = We_font_textfield_small_zh_cn;
         cell.textLabel.textColor = We_foreground_gray_general;
-        cell.detailTextLabel.text = @"￥10,000已筹 / 52赞";
+        if ([doctor.currentFundingType isEqualToString:@"D"]) {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@人已募 / %@赞", doctor.currentFundingSupportCount, doctor.currentFundingLikeCount];
+        }
+        else {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"￥%@已筹 / %@赞", doctor.currentFundingSum, doctor.currentFundingLikeCount];
+        }
         cell.detailTextLabel.font = We_font_textfield_small_zh_cn;
         cell.detailTextLabel.textColor = We_foreground_black_general;
     }
-    if (indexPath.row == 2) {
-        WeFavorDoctor * doctor = favorDoctorList[orderedIdOfDoctor[indexPath.section]];
+    if (indexPath.row == 2 || (indexPath.row == 1 && doctor.currentFundingId == nil)) {
         cell.imageView.image = [UIImage imageNamed:@"docinfo-chatroom"];
         WeMessage * lastMsg = [we_messagesWithDoctor[orderedIdOfDoctor[indexPath.section]] lastObject];
         if ([lastMsg.messageType isEqualToString:@"c"]) {

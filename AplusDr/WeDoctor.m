@@ -23,6 +23,12 @@
 @synthesize gender;
 @synthesize maxResponseGap;
 @synthesize plusPrice;
+@synthesize currentFundingId;
+@synthesize currentFundingLikeCount;
+@synthesize currentFundingName;
+@synthesize currentFundingSum;
+@synthesize currentFundingSupportCount;
+@synthesize currentFundingType;
 
 - (WeDoctor *)initWithNSDictionary:(NSDictionary *)info {
     [self setWithNSDictionary:info];
@@ -48,6 +54,18 @@
     [self setMaxResponseGap:[NSString stringWithFormat:@"%@", info[@"maxResponseGap"]]];
     [self setPlusPrice:[NSString stringWithFormat:@"%@", info[@"plusPrice"]]];
     [self setWorkPeriod:[NSString stringWithFormat:@"%@", info[@"workPeriod"]]];
+    
+    if (![info[@"currentFunding"] isEqual:[NSNull null]]) {
+        self.currentFundingId = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"id"]];
+        self.currentFundingName = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"title"]];
+        self.currentFundingType = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"type"]];
+        self.currentFundingSupportCount = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"supportCount"]];
+        self.currentFundingLikeCount = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"likeCount"]];
+        self.currentFundingSum = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"sum"]];
+    }
+    else {
+        self.currentFundingId = nil;
+    }
 }
 
 @end
