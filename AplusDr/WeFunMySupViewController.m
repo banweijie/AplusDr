@@ -155,7 +155,7 @@
     // 标题
     self.navigationItem.title = @"我的参与";
     
-    // 访问获取众筹详情列表
+    // 获取我的参与列表
     [self api_patient_listMySupports];
 }
 

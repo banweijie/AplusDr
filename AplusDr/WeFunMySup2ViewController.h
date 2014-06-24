@@ -12,6 +12,8 @@
 #import "WeFundingLevel.h"
 #import "WeFunding.h"
 
+#import "WeFunDetViewController.h"
+
 @interface WeFunMySup2ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic, strong) NSString * currentSupportId;

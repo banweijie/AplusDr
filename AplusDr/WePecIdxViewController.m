@@ -49,6 +49,10 @@
         default:
             break;
     }
+    if (path.section == 2 && path.row == 1) {
+        WePecTrhViewController * vc = [[WePecTrhViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -269,11 +273,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    /*
-    if (we_targetView == targetViewMainPage) [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
-    if (we_targetView == targetViewConsultingRoom) [self.tabBarController setSelectedIndex:weTabBarIdConsultingRoom];
-    if (we_targetView == targetViewPersonalCenter) we_targetView = targetViewNone;
-    if (we_targetView == targetViewCaseHistory) [self.tabBarController setSelectedIndex:weTabBarIdCaseHistory];*/
 }
 
 - (void)viewWillAppear:(BOOL)animated {

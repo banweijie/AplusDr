@@ -33,6 +33,8 @@
 		900E2995193223B8008BF61C /* WeExaminationItemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E2994193223B8008BF61C /* WeExaminationItemConfig.m */; };
 		900E29981935F7C2008BF61C /* WeImageViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E29971935F7C2008BF61C /* WeImageViewerViewController.m */; };
 		900EB75119588CC9006BBA04 /* WeFunMySup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900EB75019588CC9006BBA04 /* WeFunMySup2ViewController.m */; };
+		900EB758195941D9006BBA04 /* WePecTrhViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900EB757195941D9006BBA04 /* WePecTrhViewController.m */; };
+		900EB75B195945EB006BBA04 /* WeOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 900EB75A195945EB006BBA04 /* WeOrder.m */; };
 		90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */; };
 		9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE191904E8A700CE4A7A /* Foundation.framework */; };
 		9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */; };
@@ -165,6 +167,10 @@
 		900E29971935F7C2008BF61C /* WeImageViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeImageViewerViewController.m; sourceTree = "<group>"; };
 		900EB74F19588CC9006BBA04 /* WeFunMySup2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunMySup2ViewController.h; sourceTree = "<group>"; };
 		900EB75019588CC9006BBA04 /* WeFunMySup2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunMySup2ViewController.m; sourceTree = "<group>"; };
+		900EB756195941D9006BBA04 /* WePecTrhViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WePecTrhViewController.h; sourceTree = "<group>"; };
+		900EB757195941D9006BBA04 /* WePecTrhViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePecTrhViewController.m; sourceTree = "<group>"; };
+		900EB759195945EB006BBA04 /* WeOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeOrder.h; sourceTree = "<group>"; };
+		900EB75A195945EB006BBA04 /* WeOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeOrder.m; sourceTree = "<group>"; };
 		90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrJiaViewController.h; sourceTree = "<group>"; };
 		90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrJiaViewController.m; sourceTree = "<group>"; };
 		9026EE161904E8A700CE4A7A /* AplusDr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AplusDr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -394,6 +400,15 @@
 			name = CaseManage;
 			sourceTree = "<group>";
 		};
+		900EB752195940DE006BBA04 /* TransactionHistory */ = {
+			isa = PBXGroup;
+			children = (
+				900EB756195941D9006BBA04 /* WePecTrhViewController.h */,
+				900EB757195941D9006BBA04 /* WePecTrhViewController.m */,
+			);
+			name = TransactionHistory;
+			sourceTree = "<group>";
+		};
 		90266C3919276CB200478A89 /* Selection */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,9 +470,9 @@
 			children = (
 				9026EEB51904EE5500CE4A7A /* WeAppDelegate.h */,
 				9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */,
-				9026EF111904EEFC00CE4A7A /* Customs */,
+				9026EF111904EEFC00CE4A7A /* CustomsView */,
 				90F0CE6219228C97006A4605 /* Model */,
-				90B31A4A194BF1DD00A19CD7 /* ViewController */,
+				90B31A4A194BF1DD00A19CD7 /* Controller */,
 				90B31A48194BF1AC00A19CD7 /* Framework */,
 				9026EEEF1904EE5500CE4A7A /* Main.storyboard */,
 				900E295F1929E86F008BF61C /* Media.xcassets */,
@@ -504,7 +519,7 @@
 			name = VPImageCropper;
 			sourceTree = "<group>";
 		};
-		9026EF111904EEFC00CE4A7A /* Customs */ = {
+		9026EF111904EEFC00CE4A7A /* CustomsView */ = {
 			isa = PBXGroup;
 			children = (
 				9026EEB31904EE5500CE4A7A /* WeTableViewCell.h */,
@@ -528,7 +543,7 @@
 				90B31A7D19582C0000A19CD7 /* WeParagraphModifyViewController.h */,
 				90B31A7E19582C0000A19CD7 /* WeParagraphModifyViewController.m */,
 			);
-			name = Customs;
+			name = CustomsView;
 			sourceTree = "<group>";
 		};
 		9026EF121904EF1600CE4A7A /* MainPage */ = {
@@ -542,7 +557,7 @@
 			name = MainPage;
 			sourceTree = "<group>";
 		};
-		9026EF131904EF2800CE4A7A /* User */ = {
+		9026EF131904EF2800CE4A7A /* Register&Login */ = {
 			isa = PBXGroup;
 			children = (
 				9026EEBD1904EE5500CE4A7A /* WeRegWlcViewController.h */,
@@ -554,15 +569,16 @@
 				9026EEC31904EE5500CE4A7A /* WeRegIrpViewController.h */,
 				9026EEC41904EE5500CE4A7A /* WeRegIrpViewController.m */,
 			);
-			name = User;
+			name = "Register&Login";
 			sourceTree = "<group>";
 		};
 		9026EF141904EF8300CE4A7A /* PersonalCenter */ = {
 			isa = PBXGroup;
 			children = (
+				900EB752195940DE006BBA04 /* TransactionHistory */,
+				9026EF151904EFA300CE4A7A /* PersonalAccount */,
 				9026EEC71904EE5500CE4A7A /* WePecIdxViewController.h */,
 				9026EEC81904EE5500CE4A7A /* WePecIdxViewController.m */,
-				9026EF151904EFA300CE4A7A /* PersonalAccount */,
 			);
 			name = PersonalCenter;
 			sourceTree = "<group>";
@@ -645,20 +661,20 @@
 			name = Framework;
 			sourceTree = "<group>";
 		};
-		90B31A4A194BF1DD00A19CD7 /* ViewController */ = {
+		90B31A4A194BF1DD00A19CD7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				90B31A5419544B7B00A19CD7 /* Funding */,
+				90B31A5419544B7B00A19CD7 /* RaisePublic */,
 				900E2967193079F3008BF61C /* CaseManage */,
 				9026EF121904EF1600CE4A7A /* MainPage */,
-				9026EF131904EF2800CE4A7A /* User */,
+				9026EF131904EF2800CE4A7A /* Register&Login */,
 				9026EF141904EF8300CE4A7A /* PersonalCenter */,
 				907D5B42192016580006EAE0 /* ConsultingRoom */,
 			);
-			name = ViewController;
+			name = Controller;
 			sourceTree = "<group>";
 		};
-		90B31A5419544B7B00A19CD7 /* Funding */ = {
+		90B31A5419544B7B00A19CD7 /* RaisePublic */ = {
 			isa = PBXGroup;
 			children = (
 				90B31A81195833E900A19CD7 /* MySupports */,
@@ -674,7 +690,7 @@
 				90B31A6A195785DA00A19CD7 /* WeFunSup2ViewController.h */,
 				90B31A6B195785DA00A19CD7 /* WeFunSup2ViewController.m */,
 			);
-			name = Funding;
+			name = RaisePublic;
 			sourceTree = "<group>";
 		};
 		90B31A591954FDA400A19CD7 /* Funding */ = {
@@ -743,6 +759,8 @@
 				90B31A47194BF19B00A19CD7 /* User */,
 				900E28C919290239008BF61C /* WeMessage.h */,
 				900E28CA19290239008BF61C /* WeMessage.m */,
+				900EB759195945EB006BBA04 /* WeOrder.h */,
+				900EB75A195945EB006BBA04 /* WeOrder.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -895,6 +913,7 @@
 				90B31A4F194BF61B00A19CD7 /* WePatient.m in Sources */,
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
 				900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */,
+				900EB75B195945EB006BBA04 /* WeOrder.m in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
 				90B31A6F19579A6F00A19CD7 /* WeFunSelViewController.m in Sources */,
 				90B31A69195750C000A19CD7 /* WeFunSupViewController.m in Sources */,
@@ -960,6 +979,7 @@
 				907D5B6A1920D9DA0006EAE0 /* UIBubbleTableViewCell.m in Sources */,
 				900E298F193220C5008BF61C /* WeCahExaAddIteViewController.m in Sources */,
 				900E28CB19290239008BF61C /* WeMessage.m in Sources */,
+				900EB758195941D9006BBA04 /* WePecTrhViewController.m in Sources */,
 				90B31A761957AE1A00A19CD7 /* WeFunSelTopSecViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

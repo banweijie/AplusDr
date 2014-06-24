@@ -257,14 +257,16 @@
     
     UIButton * sortButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [sortButton setFrame:CGRectMake(0, 64, 210, 40)];
-    [sortButton setTitle:@"已筹募款从多到少" forState:UIControlStateNormal];
+    [sortButton setImage:[UIImage imageNamed:@"crowdfunding-list-order"] forState:UIControlStateNormal];
+    [sortButton setTitle:@"  已筹募款从多到少" forState:UIControlStateNormal];
     [sortButton.titleLabel setFont:We_font_textfield_zh_cn];
     [sortButton setTintColor:We_foreground_red_general];
     [self.view addSubview:sortButton];
     
     UIButton * selectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [selectButton setFrame:CGRectMake(210, 64, 110, 40)];
-    [selectButton setTitle:@"筛选" forState:UIControlStateNormal];
+    [selectButton setImage:[UIImage imageNamed:@"crowdfunding-list-filter"] forState:UIControlStateNormal];
+    [selectButton setTitle:@"  筛选" forState:UIControlStateNormal];
     [selectButton.titleLabel setFont:We_font_textfield_zh_cn];
     [selectButton setTintColor:We_foreground_red_general];
     [selectButton addTarget:self action:@selector(selectButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
