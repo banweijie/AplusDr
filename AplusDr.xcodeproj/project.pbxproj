@@ -16,7 +16,6 @@
 		900E295A1929B44C008BF61C /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 900E294E1929B44C008BF61C /* libopencore-amrwb.a */; };
 		900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 900E29561929B44C008BF61C /* VoiceConverter.mm */; };
 		900E295E1929C380008BF61C /* WeInfoedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E295D1929C380008BF61C /* WeInfoedButton.m */; };
-		900E29601929E86F008BF61C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 900E295F1929E86F008BF61C /* Media.xcassets */; };
 		900E2966192FE8DC008BF61C /* WeCsrCosSelGenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E2965192FE8DC008BF61C /* WeCsrCosSelGenViewController.m */; };
 		900E296A19307AA7008BF61C /* WeCahIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E296919307AA7008BF61C /* WeCahIdxViewController.m */; };
 		900E296D193080EA008BF61C /* WeCaseRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E296C193080EA008BF61C /* WeCaseRecord.m */; };
@@ -35,6 +34,7 @@
 		900EB75119588CC9006BBA04 /* WeFunMySup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900EB75019588CC9006BBA04 /* WeFunMySup2ViewController.m */; };
 		900EB758195941D9006BBA04 /* WePecTrhViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900EB757195941D9006BBA04 /* WePecTrhViewController.m */; };
 		900EB75B195945EB006BBA04 /* WeOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 900EB75A195945EB006BBA04 /* WeOrder.m */; };
+		900EB75D195A2139006BBA04 /* Resource.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 900EB75C195A2139006BBA04 /* Resource.xcassets */; };
 		90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */; };
 		9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE191904E8A700CE4A7A /* Foundation.framework */; };
 		9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */; };
@@ -134,7 +134,6 @@
 		900E29561929B44C008BF61C /* VoiceConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VoiceConverter.mm; sourceTree = "<group>"; };
 		900E295C1929C380008BF61C /* WeInfoedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeInfoedButton.h; sourceTree = "<group>"; };
 		900E295D1929C380008BF61C /* WeInfoedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeInfoedButton.m; sourceTree = "<group>"; };
-		900E295F1929E86F008BF61C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../Media.xcassets; sourceTree = "<group>"; };
 		900E2964192FE8DC008BF61C /* WeCsrCosSelGenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrCosSelGenViewController.h; sourceTree = "<group>"; };
 		900E2965192FE8DC008BF61C /* WeCsrCosSelGenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrCosSelGenViewController.m; sourceTree = "<group>"; };
 		900E296819307AA7008BF61C /* WeCahIdxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCahIdxViewController.h; sourceTree = "<group>"; };
@@ -171,6 +170,7 @@
 		900EB757195941D9006BBA04 /* WePecTrhViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePecTrhViewController.m; sourceTree = "<group>"; };
 		900EB759195945EB006BBA04 /* WeOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeOrder.h; sourceTree = "<group>"; };
 		900EB75A195945EB006BBA04 /* WeOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeOrder.m; sourceTree = "<group>"; };
+		900EB75C195A2139006BBA04 /* Resource.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resource.xcassets; sourceTree = "<group>"; };
 		90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrJiaViewController.h; sourceTree = "<group>"; };
 		90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrJiaViewController.m; sourceTree = "<group>"; };
 		9026EE161904E8A700CE4A7A /* AplusDr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AplusDr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -475,7 +475,7 @@
 				90B31A4A194BF1DD00A19CD7 /* View&Controller */,
 				90B31A48194BF1AC00A19CD7 /* Framework */,
 				9026EEEF1904EE5500CE4A7A /* Main.storyboard */,
-				900E295F1929E86F008BF61C /* Media.xcassets */,
+				900EB75C195A2139006BBA04 /* Resource.xcassets */,
 				9026EE201904E8A700CE4A7A /* Supporting Files */,
 			);
 			path = AplusDr;
@@ -848,8 +848,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9026EF0F1904EE5500CE4A7A /* Main.storyboard in Resources */,
-				900E29601929E86F008BF61C /* Media.xcassets in Resources */,
 				9026EE241904E8A700CE4A7A /* InfoPlist.strings in Resources */,
+				900EB75D195A2139006BBA04 /* Resource.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,10 +7,30 @@
 //
 
 #import "WeCsrCtrViewController.h"
+#define gasp 10
+#define avatarWidth 40
+#define maxTextWidth 180
+#define maxImageWidth 120
+#define maxImageHeight 150
+#define rowLeastHeight gasp * 2 + avatarWidth
+
+// 泡泡边界
+#define bubbleGaspShort 20
+#define bubbleGaspLong 15
+#define bubbleGaspVertical 14
+
+#define bubbleImageGaspShort 15
+#define bubbleImageGaspLong 10
+#define bubbleImageGaspVertical 9
 
 @interface WeCsrCtrViewController () {
     UIBubbleTableView * bubbletTableView;
     NSMutableArray * bubbleData;
+    
+    // ChatView
+    NSMutableArray * chatData;
+    UITableView * chatTableView;
+    
     NSTimer * timer;
     UITextField * inputTextField;
     NSInteger currentCount;
@@ -38,12 +58,11 @@
 
 @synthesize doctorChating;
 
-static double startRecordTime = 0;
-static double endRecordTime = 0;
+//static double startRecordTime = 0;
+//static double endRecordTime = 0;
 
 // Action Sheet 按钮样式
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
-{
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
     for (UIView *subview in actionSheet.subviews) {
         if ([subview isKindOfClass:[UIButton class]]) {
             UIButton *button = (UIButton *)subview;
@@ -52,6 +71,7 @@ static double endRecordTime = 0;
         }
     }
 }
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         // 拍照
@@ -161,6 +181,205 @@ static double endRecordTime = 0;
     }];
 }
 
+#pragma mark - UITableView Delegate & DataSource
+
+// 欲选中某个Cell触发的事件
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)path
+{
+    return path;
+}
+// 选中某个Cell触发的事件
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)path
+{
+    [tableView deselectRowAtIndexPath:path animated:YES];
+}
+// 询问每个cell的高度
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    WeMessage * currentMessage = chatData[indexPath.section][indexPath.row];
+    
+    // 判断是谁发出的信息
+    if ([currentMessage.senderId isEqualToString:currentUser.userId]) {
+        if ([currentMessage.messageType isEqualToString:@"T"]) {
+            // 计算文字大小
+            CGSize textSize = [WeAppDelegate calcSizeForString:currentMessage.content Font:We_font_textfield_zh_cn expectWidth:maxTextWidth];
+            return MAX(textSize.height + 2 * bubbleGaspVertical + 2 * gasp, rowLeastHeight);
+        }
+        if ([currentMessage.messageType isEqualToString:@"I"]) {
+            // 计算图片大小
+            CGSize imageSize = currentMessage.imageContent.size;
+            if (imageSize.width > maxImageWidth) {
+                imageSize.height = imageSize.height / imageSize.width * maxImageWidth;
+                imageSize.width = maxImageWidth;
+            }
+            if (imageSize.height > maxImageHeight) {
+                imageSize.width = imageSize.width / imageSize.height * maxImageHeight;
+                imageSize.height = maxImageHeight;
+            }
+            return MAX(imageSize.height + 2 * bubbleImageGaspVertical + 2 * gasp, rowLeastHeight);
+        }
+        
+    }
+    else {
+        if ([currentMessage.messageType isEqualToString:@"T"]) {
+            // 计算文字大小
+            CGSize textSize = [WeAppDelegate calcSizeForString:currentMessage.content Font:We_font_textfield_zh_cn expectWidth:maxTextWidth];
+            return MAX(textSize.height + 2 * bubbleGaspVertical + 2 * gasp, rowLeastHeight);
+        }
+        if ([currentMessage.messageType isEqualToString:@"I"]) {
+            // 计算图片大小
+            CGSize imageSize = currentMessage.imageContent.size;
+            if (imageSize.width > maxImageWidth) {
+                imageSize.height = imageSize.height / imageSize.width * maxImageWidth;
+                imageSize.width = maxImageWidth;
+            }
+            if (imageSize.height > maxImageHeight) {
+                imageSize.width = imageSize.width / imageSize.height * maxImageHeight;
+                imageSize.height = maxImageHeight;
+            }
+            return MAX(imageSize.height + 2 * bubbleImageGaspVertical + 2 * gasp, rowLeastHeight);
+        }
+    }
+    return [tableView rowHeight] * 2;
+}
+// 询问每个段落的头部高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) return 40 + 64;
+    return 40;
+}
+// 询问每个段落的头部标题
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"";
+}
+// 询问每个段落的头部
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, [self tableView:tableView heightForHeaderInSection:section])];
+    
+    WeMessage * currentMessage = chatData[section][0];
+    
+    NSString * title = [WeAppDelegate transitionToDateFromSecond:currentMessage.time];
+    
+    CGSize titleSize = [WeAppDelegate calcSizeForString:title Font:We_font_textfield_small_zh_cn expectWidth:320];
+    
+    UIButton * titleButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [titleButton setTitle:title forState:UIControlStateNormal];
+    [titleButton setTintColor:We_foreground_white_general];
+    [titleButton setBackgroundColor:We_foreground_gray_general];
+    [titleButton setFrame:CGRectMake((320 - titleSize.width - 20) / 2, [self tableView:tableView heightForHeaderInSection:section] - 25, titleSize.width + 20, 20)];
+    [titleButton.titleLabel setFont:We_font_textfield_small_zh_cn];
+    [titleButton.layer setCornerRadius:4];
+    [headerView addSubview:titleButton];
+    
+    return headerView;
+}
+// 询问每个段落的尾部高度
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == [self numberOfSectionsInTableView:tableView] - 1) {
+        return 20;
+    }
+    return 1;
+}
+// 询问每个段落的尾部标题
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    return @"";
+}
+// 询问每个段落的尾部
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    return nil;
+}
+// 询问共有多少个段落
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [chatData count];
+}
+// 询问每个段落有多少条目
+- (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
+    return [chatData[section] count];
+}
+// 询问每个具体条目的内容
+- (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *MyIdentifier = @"MyReuseIdentifier";
+    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
+    }
+    cell.opaque = NO;
+    cell.backgroundColor = [UIColor clearColor];
+
+    WeMessage * currentMessage = chatData[indexPath.section][indexPath.row];
+    
+    // 判断是谁发出的信息
+    if ([currentMessage.senderId isEqualToString:currentUser.userId]) {
+        
+    }
+    else {
+        if ([currentMessage.messageType isEqualToString:@"T"]) {
+            // 头像
+            UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(gasp, gasp, avatarWidth, avatarWidth)];
+            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(doctorChating.avatarPath)]];
+            [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
+            [avatarView.layer setMasksToBounds:YES];
+            [cell.contentView addSubview:avatarView];
+            
+            // 计算文字大小
+            CGSize textSize = [WeAppDelegate calcSizeForString:currentMessage.content Font:We_font_textfield_zh_cn expectWidth:maxTextWidth];
+            
+            // 泡泡
+            UIImageView * bubbleView = [[UIImageView alloc] initWithFrame:CGRectMake(2 * gasp + avatarWidth, gasp, textSize.width + bubbleGaspShort + bubbleGaspLong, textSize.height + bubbleGaspVertical * 2)];
+            [bubbleView setImage:[[UIImage imageNamed:@"chatbubble-left"] stretchableImageWithLeftCapWidth:10 topCapHeight:30]];
+            [cell.contentView addSubview:bubbleView];
+            
+            // 文字
+            UILabel * textView = [[UILabel alloc] initWithFrame:CGRectMake(2 * gasp + avatarWidth + bubbleGaspShort, gasp + bubbleGaspVertical, textSize.width, textSize.height)];
+            [textView setFont:We_font_textfield_zh_cn];
+            [textView setText:currentMessage.content];
+            [textView setTextColor:We_foreground_black_general];
+            [textView setNumberOfLines:0];
+            [cell.contentView addSubview:textView];
+        }
+        if ([currentMessage.messageType isEqualToString:@"I"]) {
+            // 头像
+            UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(gasp, gasp, avatarWidth, avatarWidth)];
+            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(doctorChating.avatarPath)]];
+            [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
+            [avatarView.layer setMasksToBounds:YES];
+            [cell.contentView addSubview:avatarView];
+            
+            // 计算图片大小
+            CGSize imageSize = currentMessage.imageContent.size;
+            if (imageSize.width > maxImageWidth) {
+                imageSize.height = imageSize.height / imageSize.width * maxImageWidth;
+                imageSize.width = maxImageWidth;
+            }
+            if (imageSize.height > maxImageHeight) {
+                imageSize.width = imageSize.width / imageSize.height * maxImageHeight;
+                imageSize.height = maxImageHeight;
+            }
+            
+            // 泡泡
+            UIImageView * bubbleView = [[UIImageView alloc] initWithFrame:CGRectMake(2 * gasp + avatarWidth, gasp, imageSize.width + bubbleImageGaspShort + bubbleImageGaspLong, imageSize.height + bubbleImageGaspVertical * 2)];
+            [bubbleView setImage:[[UIImage imageNamed:@"chatbubble-left"] stretchableImageWithLeftCapWidth:10 topCapHeight:30]];
+            [cell.contentView addSubview:bubbleView];
+            
+            // 图片
+            UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(2 * gasp + avatarWidth + bubbleImageGaspShort, gasp + bubbleImageGaspVertical, imageSize.width, imageSize.height)];
+            [imageView setImage:currentMessage.imageContent];
+            [imageView.layer setCornerRadius:5];
+            [imageView.layer setMasksToBounds:YES];
+            [cell.contentView addSubview:imageView];
+        }
+        if ([currentMessage.messageType isEqualToString:@"A"]) {
+            // 头像
+            UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(gasp, gasp, avatarWidth, avatarWidth)];
+            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(doctorChating.avatarPath)]];
+            [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
+            [avatarView.layer setMasksToBounds:YES];
+            [cell.contentView addSubview:avatarView];
+        }
+    }
+    
+    
+    return cell;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -171,21 +390,50 @@ static double endRecordTime = 0;
 }
 
 - (void)refreshMessage:(id)sender {
+    // 从数据库中提取信息
+    NSMutableArray * messageList = [globalHelper search:[WeMessage class]
+                                                  where:[NSString stringWithFormat:@"(senderId = %@ and receiverId = %@) or (senderId = %@ and receiverId = %@)", currentUser.userId, doctorChating.userId, doctorChating.userId, currentUser.userId]
+                                                orderBy:nil
+                                                 offset:0
+                                                  count:100];
+    NSLog(@"\nSelect %lu message(s) from database.", (unsigned long)[messageList count]);
+    
     // 根据信息数量判断是否需要刷新
-    NSLog(@"\n msg amount : %u", [we_messagesWithDoctor[we_doctorChating] count]);
-    if ([we_messagesWithDoctor[we_doctorChating] count] == currentCount) return;
-    currentCount = 0;
+    if ([messageList count] == currentCount) return;
+    currentCount = [messageList count];
+    
+    // 处理信息分组
+    int maxTimeInterval = 300;
+    
+    [messageList sortUsingComparator:^NSComparisonResult(id rA, id rB) {
+        return [(WeMessage *)rA time] > [(WeMessage *)rB time];
+    }];
+    
+    chatData = [[NSMutableArray alloc] init];
+    int j = -1;
+    long long lastTime = -1;
+    for (int i = 0; i < [messageList count]; i ++) {
+        if (i == 0 || [(WeMessage *)messageList[i] time] > lastTime + maxTimeInterval) {
+            chatData[++j] = [[NSMutableArray alloc] init];
+            lastTime = [(WeMessage *)messageList[i] time];
+        }
+        [chatData[j] addObject:messageList[i]];
+    }
+    
+    // 重载数据并滑至最底
+    [chatTableView reloadData];
+    //[bubbletTableView scrollBubbleViewToBottomAnimated:YES];
+    
+    /*
+    
     
     // 初始化信息数组
     bubbleData = [[NSMutableArray alloc] init];
     
     // 依次访问每条信息
-    for (int i = 0; i < [we_messagesWithDoctor[we_doctorChating] count]; i++) {
+    for (int i = 0; i < [messageList count]; i++) {
         // 提取当前处理的信息
-        WeMessage * message = (WeMessage *) we_messagesWithDoctor[we_doctorChating][i];
-        
-        // 判断是否仍在后续读取中
-        if (message.loading) continue;
+        WeMessage * message = (WeMessage *) messageList[i];
         
         // 判断发送方
         NSBubbleType senderType;
@@ -235,11 +483,7 @@ static double endRecordTime = 0;
         [bubbleData addObject:bubble];
         
         currentCount ++;
-    }
-    
-    // 重载数据并滑至最底
-    [bubbletTableView reloadData];
-    [bubbletTableView scrollBubbleViewToBottomAnimated:YES];
+    }*/
 }
 
 - (void)playAudio:(WeInfoedButton *)sender {
@@ -457,6 +701,19 @@ static double endRecordTime = 0;
     [self.view addSubview:unionView];
     
     // sys_tableView
+    // 表格
+    chatTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - 40) style:UITableViewStyleGrouped];
+    chatTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    chatTableView.delegate = self;
+    chatTableView.dataSource = self;
+    chatTableView.backgroundColor = [UIColor clearColor];
+    //[chatTableView setSeparatorColor:[UIColor clearColor]];
+    [self.view addSubview:chatTableView];
+    
+    
+    
+    /*
+    
     bubbletTableView = [[UIBubbleTableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - 40) style:UITableViewStyleGrouped];
     bubbletTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     bubbletTableView.backgroundColor = [UIColor clearColor];
@@ -464,7 +721,7 @@ static double endRecordTime = 0;
     [unionView addSubview:bubbletTableView];
     
     bubbletTableView.bubbleDataSource = self;
-    bubbletTableView.showAvatars = YES;
+    bubbletTableView.showAvatars = YES;*/
     //[bubbletTableView reloadData];
     //[bubbletTableView scrollBubbleViewToBottomAnimated:YES];
     

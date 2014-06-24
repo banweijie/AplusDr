@@ -152,12 +152,16 @@
     NSDateComponents * now = [calendar components:unitFlags fromDate:date];
     
     if ([[NSDate date] timeIntervalSince1970] - s <= 24 * 3600) {
-        if ([the day] != [now day]) return [NSString stringWithFormat:@"昨天 %02d:%02d", [the hour], [the minute]];
-        else return [NSString stringWithFormat:@"%02d:%02d", [the hour], [the minute]];
+        if ([the day] != [now day]) return [NSString stringWithFormat:@"昨天 %02ld:%02ld", (long)[the hour], (long)[the minute]];
+        else return [NSString stringWithFormat:@"%02ld:%02ld", (long)[the hour], (long)[the minute]];
     }
     else {
-        if ([the year] != [now year]) return [NSString stringWithFormat:@"%d年%d月", [the year], [the month]];
-        else return [NSString stringWithFormat:@"%d月%d日", [the month], [the day]];
+        if ([the year] != [now year]) {
+            return [NSString stringWithFormat:@"%ld年%ld月%ld日 %02ld %02ld", (long)[the year], (long)[the month], (long)[the day], (long)[the hour], (long)[the minute]];
+        }
+        else {
+            return [NSString stringWithFormat:@"%ld月%ld日 %02ld:%02ld", (long)[the month], (long)[the day], (long)[the hour], (long)[the minute]];
+        }
     }
     return [NSString stringWithFormat:@"%lld", s];
 }
@@ -504,6 +508,12 @@
     
     return image;
 }
+
++ (CGSize)calcSizeForString:(NSString *)text Font:(UIFont *)font expectWidth:(int)width {
+   CGSize size = [text sizeWithFont:font constrainedToSize:CGSizeMake(width, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+   return size;
+}
+
 @end
 
 #import <CommonCrypto/CommonDigest.h> // Need to import for CC_MD5 access

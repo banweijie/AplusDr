@@ -52,6 +52,9 @@
 
 // 编码转换
 + (NSString *)transitionOfFundingType:(NSString *)type;
+
+// 计算文本高度
++ (CGSize)calcSizeForString:(NSString *)text Font:(UIFont *)font expectWidth:(int)width;
 @end
 
 // 数据库
@@ -191,6 +194,7 @@ weTargetView we_targetView;
 #define We_font_textfield_zh_cn [UIFont fontWithName:@"Heiti SC" size:14]
 #define We_font_textfield_en_us [UIFont fontWithName:@"Helvetica" size:14]
 #define We_font_button_zh_cn [UIFont fontWithName:@"Heiti SC" size:14]
+#define We_font_textfield_tiny_zh_cn [UIFont fontWithName:@"Heiti SC" size:10]
 #define We_font_textfield_small_zh_cn [UIFont fontWithName:@"Heiti SC" size:12]
 #define We_font_textfield_large_zh_cn [UIFont fontWithName:@"Heiti SC" size:16]
 #define We_font_textfield_huge_zh_cn [UIFont fontWithName:@"Heiti SC" size:18]

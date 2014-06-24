@@ -19,7 +19,7 @@
 #import "WeNavViewController.h"
 #import "WeCsrJiaViewController.h"
 
-@interface WeCsrCtrViewController : UIViewController  <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVAudioPlayerDelegate>
+@interface WeCsrCtrViewController : UIViewController  <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) AVAudioRecorder * audioRecorder;
 @property (strong, nonatomic) AVAudioPlayer * audioPlayer;
