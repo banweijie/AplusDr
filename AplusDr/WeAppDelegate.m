@@ -44,6 +44,8 @@
     
     globalHelper = [LKDBHelper getUsingLKDBHelper];
     
+    [globalHelper createTableWithModelClass:[WeMessage class]];
+    
     return YES;
 }
 
@@ -314,21 +316,19 @@
                              }];
                          }
                          else if ([message.messageType isEqualToString:@"A"]) {
-                             NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+                             NSURLSessionConfiguration * configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
                              AFURLSessionManager * manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
                              
-                             NSURL *URL = [NSURL URLWithString:yijiarenImageUrl(message.content)];
-                             NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+                             NSURL * URL = [NSURL URLWithString:yijiarenImageUrl(message.content)];
+                             NSURLRequest * request = [NSURLRequest requestWithURL:URL];
                              
-                             NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+                             NSURLSessionDownloadTask * downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
                                  NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
                                  return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
-                             } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-                                 //NSLog(@"File downloaded to: %@", filePath);
+                             } completionHandler:^(NSURLResponse * response, NSURL *filePath, NSError *error) {
                                  if (error) NSLog(@"%@", error);
                                  [VoiceConverter amrToWav:filePath.path wavSavePath:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
                                  message.audioContent = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
-                                 //NSLog(@"%@ %@", filePath.path, [NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]);
                                  message.loading = NO;
                              }];
                              [downloadTask resume];
@@ -469,6 +469,26 @@
         NSLog(@"DownloadImageWithURL error: %@", error);
     }];
     [requestOperation start];
+}
+
++ (void)DownloadFileWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id)) success {
+    NSURLSessionConfiguration * configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager * manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
+    
+    NSURLSessionDownloadTask * downloadTask = [manager downloadTaskWithRequest:request
+                                                                      progress:nil
+                                                                   destination:^NSURL * (NSURL * targetPath, NSURLResponse * response) {
+                                                                       NSURL * documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+                                                                       return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+                                                                   }
+                                                             completionHandler:^(NSURLResponse * response, NSURL * filePath, NSError * error) {
+                                                                 if (error) NSLog(@"%@", error);
+                                                                 else {
+                                                                     success(filePath);
+                                                                 }
+                                                             }];
+    [downloadTask resume];
 }
 
 + (UIImage *)imageWithColor:(UIColor *)color {

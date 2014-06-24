@@ -36,7 +36,9 @@
     [self setContent:[NSString stringWithFormat:@"%@", info[@"content"]]];
     self.time = [info[@"time"] longLongValue] / 100;
     self.loading = YES;
+    
     [self setImageContent:nil];
+    [self setAudioContent:nil];
 }
 
 - (NSString *)stringValue {

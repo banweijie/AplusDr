@@ -274,7 +274,6 @@
                               parameters:@{
                                            }
                                  success:^(NSArray * response) {
-                                     NSLog(@"%@", response);
                                      favorDoctorList = [[NSMutableDictionary alloc] init];
                                      for (int i = 0; i < [response count]; i++) {
                                          WeFavorDoctor * newFavorDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:response[i]];
@@ -320,8 +319,40 @@
     [WeAppDelegate postToServerWithField:@"message" action:@"getUnviewedMsg"
                               parameters:@{
                                            }
-                                 success:^(NSDictionary * response) {
-                                     //NSLog(@"%@", response);
+                                 success:^(NSArray * response) {
+                                     NSLog(@"%@", response);
+                                     for (int i = 0; i < [response count]; i++) {
+                                         WeMessage * message = [[WeMessage alloc] initWithNSDictionary:response[i]];
+                                         NSMutableArray * result = [globalHelper search:[WeMessage class]
+                                                                                  where:[NSString stringWithFormat:@"messageId = %@", message.messageId]
+                                                                                orderBy:nil offset:0 count:0];
+                                         if ([result count] == 0) {
+                                             // 文字消息
+                                             if ([message.messageType isEqualToString:@"T"]) {
+                                                 [globalHelper insertToDB:message];
+                                             }
+                                             // 图片消息
+                                             if ([message.messageType isEqualToString:@"I"]) {
+                                                 [globalHelper insertToDB:message];
+                                                 [WeAppDelegate DownloadImageWithURL:yijiarenImageUrl(message.content)
+                                                                   successCompletion:^(id image) {
+                                                                       NSLog(@"!!!");
+                                                                       message.imageContent = (UIImage *)image;
+                                                                       [globalHelper updateToDB:message where:nil];
+                                                                   }];
+                                             }
+                                             // 语音消息
+                                             if ([message.messageType isEqualToString:@"A"]) {
+                                                 [globalHelper insertToDB:message];
+                                                 [WeAppDelegate DownloadFileWithURL:yijiarenImageUrl(message.content)
+                                                                  successCompletion:^(NSURL * filePath) {
+                                                                      [VoiceConverter amrToWav:filePath.path wavSavePath:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
+                                                                      message.audioContent = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
+                                                                      [globalHelper updateToDB:message where:nil];
+                                                                  }];
+                                             }
+                                         }
+                                     }
                                      currentUser = newUser;
                                      [(UITabBarController *)self.navigationController.presentingViewController setSelectedViewController:self.originTargetViewController];
                                      [self dismissViewControllerAnimated:YES completion:nil];
@@ -329,7 +360,7 @@
                                  }
                                  failure:^(NSString * errorMessage) {
                                      UIAlertView * notPermitted = [[UIAlertView alloc]
-                                                                   initWithTitle:@"获取用户信息失败"
+                                                                   initWithTitle:@"获取未读信息失败"
                                                                    message:errorMessage
                                                                    delegate:nil
                                                                    cancelButtonTitle:@"OK"

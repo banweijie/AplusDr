@@ -42,12 +42,13 @@
 + (NSString *)transitionGenderFromChar:(NSString *)TypeOfPeriod;
 + (NSString *)transition:(NSString *)code asin:(NSString *)type;
 + (NSString *)transitionToDateFromSecond:(long long)s;
-+ (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success;
 + (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month;
 + (UIImage *)imageWithColor:(UIColor *)color;
 
 // AFNetworking 网络连接通用方法
 + (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong id))success failure:(void (^__strong)(__strong NSString *))failure;
++ (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id)) success;
++ (void)DownloadFileWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id)) success;
 
 // 编码转换
 + (NSString *)transitionOfFundingType:(NSString *)type;
