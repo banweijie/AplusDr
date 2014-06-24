@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WeAppDelegate.h"
+#import "WeFunMySup2ViewController.h"
 
 @interface WeFunMySupViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 

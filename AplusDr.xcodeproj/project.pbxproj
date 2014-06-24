@@ -32,6 +32,7 @@
 		900E2992193223A0008BF61C /* WeExaminationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E2991193223A0008BF61C /* WeExaminationItem.m */; };
 		900E2995193223B8008BF61C /* WeExaminationItemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E2994193223B8008BF61C /* WeExaminationItemConfig.m */; };
 		900E29981935F7C2008BF61C /* WeImageViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E29971935F7C2008BF61C /* WeImageViewerViewController.m */; };
+		900EB75119588CC9006BBA04 /* WeFunMySup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900EB75019588CC9006BBA04 /* WeFunMySup2ViewController.m */; };
 		90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */; };
 		9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE191904E8A700CE4A7A /* Foundation.framework */; };
 		9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */; };
@@ -162,6 +163,8 @@
 		900E2994193223B8008BF61C /* WeExaminationItemConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeExaminationItemConfig.m; sourceTree = "<group>"; };
 		900E29961935F7C2008BF61C /* WeImageViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeImageViewerViewController.h; sourceTree = "<group>"; };
 		900E29971935F7C2008BF61C /* WeImageViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeImageViewerViewController.m; sourceTree = "<group>"; };
+		900EB74F19588CC9006BBA04 /* WeFunMySup2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunMySup2ViewController.h; sourceTree = "<group>"; };
+		900EB75019588CC9006BBA04 /* WeFunMySup2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunMySup2ViewController.m; sourceTree = "<group>"; };
 		90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrJiaViewController.h; sourceTree = "<group>"; };
 		90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrJiaViewController.m; sourceTree = "<group>"; };
 		9026EE161904E8A700CE4A7A /* AplusDr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AplusDr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -726,6 +729,8 @@
 			children = (
 				90B31A821958343300A19CD7 /* WeFunMySupViewController.h */,
 				90B31A831958343300A19CD7 /* WeFunMySupViewController.m */,
+				900EB74F19588CC9006BBA04 /* WeFunMySup2ViewController.h */,
+				900EB75019588CC9006BBA04 /* WeFunMySup2ViewController.m */,
 			);
 			name = MySupports;
 			sourceTree = "<group>";
@@ -908,6 +913,7 @@
 				9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */,
 				9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */,
 				907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */,
+				900EB75119588CC9006BBA04 /* WeFunMySup2ViewController.m in Sources */,
 				900E2966192FE8DC008BF61C /* WeCsrCosSelGenViewController.m in Sources */,
 				900E28C81928F8E6008BF61C /* WeToolButton.m in Sources */,
 				907D5B681920D9DA0006EAE0 /* UIBubbleHeaderTableViewCell.m in Sources */,

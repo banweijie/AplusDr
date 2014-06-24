@@ -30,6 +30,10 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)path
 {
+    WeFunMySup2ViewController * vc = [[WeFunMySup2ViewController alloc] init];
+    vc.currentSupportId = supportList[path.row][@"supportId"];
+    [self.navigationController pushViewController:vc animated:YES];
+    
     [tableView deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
