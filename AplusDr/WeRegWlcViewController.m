@@ -320,35 +320,46 @@
                               parameters:@{
                                            }
                                  success:^(NSArray * response) {
-                                     for (int i = 0; i < [response count]; i++) {
-                                         WeMessage * message = [[WeMessage alloc] initWithNSDictionary:response[i]];
-                                         NSMutableArray * result = [globalHelper search:[WeMessage class]
-                                                                                  where:[NSString stringWithFormat:@"messageId = %@", message.messageId]
-                                                                                orderBy:nil offset:0 count:0];
-                                         if ([result count] == 0) {
-                                             // 文字消息
-                                             if ([message.messageType isEqualToString:@"T"]) {
-                                                 [globalHelper insertToDB:message];
+                                     NSLog(@"%@", [response class]);
+                                     if (![response isKindOfClass:[NSArray class]]) {
+                                         NSLog(@"!!!!");
+                                         lastMessageId = (long long) response;
+                                     }
+                                     else {
+                                         for (int i = 0; i < [response count]; i++) {
+                                             WeMessage * message = [[WeMessage alloc] initWithNSDictionary:response[i]];
+                                             if ([message.messageId longLongValue] > lastMessageId) {
+                                                 lastMessageId = [message.messageId longLongValue];
+                                                 NSLog(@"%lld", lastMessageId);
                                              }
-                                             // 图片消息
-                                             if ([message.messageType isEqualToString:@"I"]) {
-                                                 [globalHelper insertToDB:message];
-                                                 [WeAppDelegate DownloadImageWithURL:yijiarenImageUrl(message.content)
-                                                                   successCompletion:^(id image) {
-                                                                       NSLog(@"!!!");
-                                                                       message.imageContent = (UIImage *)image;
-                                                                       [globalHelper updateToDB:message where:nil];
-                                                                   }];
-                                             }
-                                             // 语音消息
-                                             if ([message.messageType isEqualToString:@"A"]) {
-                                                 [globalHelper insertToDB:message];
-                                                 [WeAppDelegate DownloadFileWithURL:yijiarenImageUrl(message.content)
-                                                                  successCompletion:^(NSURL * filePath) {
-                                                                      [VoiceConverter amrToWav:filePath.path wavSavePath:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
-                                                                      message.audioContent = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
-                                                                      [globalHelper updateToDB:message where:nil];
-                                                                  }];
+                                             NSMutableArray * result = [globalHelper search:[WeMessage class]
+                                                                                      where:[NSString stringWithFormat:@"messageId = %@", message.messageId]
+                                                                                    orderBy:nil offset:0 count:0];
+                                             if ([result count] == 0) {
+                                                 // 文字消息
+                                                 if ([message.messageType isEqualToString:@"T"]) {
+                                                     [globalHelper insertToDB:message];
+                                                 }
+                                                 // 图片消息
+                                                 if ([message.messageType isEqualToString:@"I"]) {
+                                                     [globalHelper insertToDB:message];
+                                                     [WeAppDelegate DownloadImageWithURL:yijiarenImageUrl(message.content)
+                                                                       successCompletion:^(id image) {
+                                                                           NSLog(@"!!!");
+                                                                           message.imageContent = (UIImage *)image;
+                                                                           [globalHelper updateToDB:message where:nil];
+                                                                       }];
+                                                 }
+                                                 // 语音消息
+                                                 if ([message.messageType isEqualToString:@"A"]) {
+                                                     [globalHelper insertToDB:message];
+                                                     [WeAppDelegate DownloadFileWithURL:yijiarenImageUrl(message.content)
+                                                                      successCompletion:^(NSURL * filePath) {
+                                                                          [VoiceConverter amrToWav:filePath.path wavSavePath:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
+                                                                          message.audioContent = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
+                                                                          [globalHelper updateToDB:message where:nil];
+                                                                      }];
+                                                 }
                                              }
                                          }
                                      }

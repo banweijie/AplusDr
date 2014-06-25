@@ -47,6 +47,7 @@
 
 // AFNetworking 网络连接通用方法
 + (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong id))success failure:(void (^__strong)(__strong NSString *))failure;
++ (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters fileData:(NSData *)fileData fileName:(NSString *)fileName success:(void (^)(id))success failure:(void (^)(NSString *))failure;
 + (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id)) success;
 + (void)DownloadFileWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id)) success;
 
@@ -62,6 +63,7 @@ LKDBHelper * globalHelper;
 
 // 全局变量
 WePatient * currentUser;
+long long lastMessageId;
 NSMutableDictionary * favorDoctorList;
 NSMutableArray * caseRecords;
 NSMutableArray * examinations;

@@ -137,6 +137,45 @@
           }];
 }
 
++ (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters fileData:(NSData *)fileData fileName:(NSString *)fileName success:(void (^)(id))success failure:(void (^)(NSString *))failure {
+    NSLog(@"\npost to api: <%@, %@>\nparameters: %@\nfileName: %@", field, action, parameters, fileName);
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+    [manager POST:yijiarenUrl(field, action)
+       parameters:parameters
+constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [formData appendPartWithFileData:fileData name:@"file" fileName:fileName mimeType:@"YJR/FILE"];
+}
+          success:^(NSURLSessionDataTask * task, id responseObject) {
+              NSString * errorMessage = @"未知的错误";
+              NSString * result = [NSString stringWithFormat:@"%@", responseObject[@"result"]];
+              if ([result isEqualToString:@"1"]) {
+                  success(responseObject[@"response"]);
+                  return;
+              }
+              if ([result isEqualToString:@"2"]) {
+                  NSDictionary *fields = responseObject[@"fields"];
+                  NSEnumerator *enumerator = [fields keyEnumerator];
+                  id key;
+                  while ((key = [enumerator nextObject])) {
+                      NSString * tmp1 = [fields objectForKey:key];
+                      if (tmp1 != NULL) errorMessage = tmp1;
+                  }
+              }
+              else if ([result isEqualToString:@"3"]) {
+                  errorMessage = responseObject[@"info"];
+              }
+              else if ([result isEqualToString:@"4"]) {
+                  errorMessage = responseObject[@"info"];
+              }
+              failure(errorMessage);
+          }
+          failure:^(NSURLSessionDataTask *task, NSError *error) {
+              failure([NSString stringWithFormat:@"%@", @"连接服务器失败"]);
+          }];
+}
+
+
 // 编码转换
 + (NSString *)transitionOfFundingType:(NSString *)type {
     if ([type isEqualToString:@""]) return @"全部";
@@ -289,10 +328,55 @@
 
 - (void)refreshMessage:(id)sender {
     // 判断登录状态
-    if (!we_logined) return;
+    if (currentUser == nil) return;
     
-    NSLog(@"refreshMessage(lastMessageId = %@)", [userDefaults stringForKey:@"lastMessageId"]);
+    // 访问接口
+    [WeAppDelegate postToServerWithField:@"message" action:@"getMsg"
+                              parameters:@{
+                                           @"lastMessageId":[NSString stringWithFormat:@"%lld", lastMessageId]
+                                           }
+                                 success:^(NSArray * response) {
+                                     for (int i = 0; i < [response count]; i++) {
+                                         WeMessage * message = [[WeMessage alloc] initWithNSDictionary:response[i]];
+                                         if ([message.messageId longLongValue] > lastMessageId) {
+                                             lastMessageId = [message.messageId longLongValue];
+                                         }
+                                         NSMutableArray * result = [globalHelper search:[WeMessage class]
+                                                                                  where:[NSString stringWithFormat:@"messageId = %@", message.messageId]
+                                                                                orderBy:nil offset:0 count:0];
+                                         if ([result count] == 0) {
+                                             // 文字消息
+                                             if ([message.messageType isEqualToString:@"T"]) {
+                                                 [globalHelper insertToDB:message];
+                                             }
+                                             // 图片消息
+                                             if ([message.messageType isEqualToString:@"I"]) {
+                                                 [globalHelper insertToDB:message];
+                                                 [WeAppDelegate DownloadImageWithURL:yijiarenImageUrl(message.content)
+                                                                   successCompletion:^(id image) {
+                                                                       NSLog(@"!!!");
+                                                                       message.imageContent = (UIImage *)image;
+                                                                       [globalHelper updateToDB:message where:nil];
+                                                                   }];
+                                             }
+                                             // 语音消息
+                                             if ([message.messageType isEqualToString:@"A"]) {
+                                                 [globalHelper insertToDB:message];
+                                                 [WeAppDelegate DownloadFileWithURL:yijiarenImageUrl(message.content)
+                                                                  successCompletion:^(NSURL * filePath) {
+                                                                      [VoiceConverter amrToWav:filePath.path wavSavePath:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
+                                                                      message.audioContent = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
+                                                                      [globalHelper updateToDB:message where:nil];
+                                                                  }];
+                                             }
+                                         }
+                                     }
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     NSLog(@"%@", errorMessage);
+                                 }];
     
+    /*
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSDictionary * parameters = @{@"lastMessageId":[userDefaults stringForKey:@"lastMessageId"]};
@@ -388,7 +472,7 @@
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
          }
-     ];
+     ];*/
 }
 
 /*
