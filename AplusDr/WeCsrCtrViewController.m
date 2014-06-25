@@ -217,7 +217,9 @@
             }
             return MAX(imageSize.height + 2 * bubbleImageGaspVertical + 2 * gasp, rowLeastHeight);
         }
-        
+        if ([currentMessage.messageType isEqualToString:@"A"]) {
+            return 40 + 2 * gasp;
+        }
     }
     else {
         if ([currentMessage.messageType isEqualToString:@"T"]) {
@@ -237,6 +239,9 @@
                 imageSize.height = maxImageHeight;
             }
             return MAX(imageSize.height + 2 * bubbleImageGaspVertical + 2 * gasp, rowLeastHeight);
+        }
+        if ([currentMessage.messageType isEqualToString:@"A"]) {
+            return 40 + 2 * gasp;
         }
     }
     return [tableView rowHeight] * 2;
@@ -303,12 +308,51 @@
     }
     cell.opaque = NO;
     cell.backgroundColor = [UIColor clearColor];
-
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     WeMessage * currentMessage = chatData[indexPath.section][indexPath.row];
     
     // 判断是谁发出的信息
     if ([currentMessage.senderId isEqualToString:currentUser.userId]) {
-        
+        if ([currentMessage.messageType isEqualToString:@"T"]) {
+            // 头像
+            UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(320 - gasp - avatarWidth, gasp, avatarWidth, avatarWidth)];
+            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentUser.avatarPath)]];
+            [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
+            [avatarView.layer setMasksToBounds:YES];
+            [cell.contentView addSubview:avatarView];
+            
+            // 计算文字大小
+            CGSize textSize = [WeAppDelegate calcSizeForString:currentMessage.content Font:We_font_textfield_zh_cn expectWidth:maxTextWidth];
+            
+            // 泡泡
+            UIImageView * bubbleView = [[UIImageView alloc] initWithFrame:CGRectMake(320 - 2 * gasp - avatarWidth - (textSize.width + bubbleGaspShort + bubbleGaspLong), gasp, textSize.width + bubbleGaspShort + bubbleGaspLong, textSize.height + bubbleGaspVertical * 2)];
+            [bubbleView setImage:[[UIImage imageNamed:@"chatbubble-right"] stretchableImageWithLeftCapWidth:6 topCapHeight:30]];
+            [cell.contentView addSubview:bubbleView];
+            
+            // 文字
+            UILabel * textView = [[UILabel alloc] initWithFrame:CGRectMake(320 - 2 * gasp - avatarWidth - bubbleGaspShort - textSize.width, gasp + bubbleGaspVertical, textSize.width, textSize.height)];
+            [textView setFont:We_font_textfield_zh_cn];
+            [textView setText:currentMessage.content];
+            [textView setTextColor:We_foreground_black_general];
+            [textView setNumberOfLines:0];
+            [cell.contentView addSubview:textView];
+            
+            // 发送失败图标
+            if (currentMessage.failed) {
+                UIButton * failedButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+                [failedButton setFrame:CGRectMake(320 - 2 * gasp - avatarWidth - (textSize.width + bubbleGaspShort + bubbleGaspLong) - 50, gasp, 40, 40)];
+                [cell.contentView addSubview:failedButton];
+            }
+            
+            // 发送中图标
+            if (currentMessage.sending) {
+                UIActivityIndicatorView * sendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                [sendingView setFrame:CGRectMake(320 - 2 * gasp - avatarWidth - (textSize.width + bubbleGaspShort + bubbleGaspLong) - 50, gasp, 40, 40)];
+                [sendingView startAnimating];
+                [cell.contentView addSubview:sendingView];
+            }
+        }
     }
     else {
         if ([currentMessage.messageType isEqualToString:@"T"]) {
@@ -373,6 +417,39 @@
             [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
             [avatarView.layer setMasksToBounds:YES];
             [cell.contentView addSubview:avatarView];
+            
+            // 计算音频长度
+            NSError * error;
+            AVAudioPlayer * tmpPlayer = [[AVAudioPlayer alloc] initWithData:currentMessage.audioContent error:&error];
+            if (error) NSLog(@"%@", error);
+            else {
+                // 计算泡泡大小
+                CGSize bubbleSize = CGSizeMake(MIN(maxTextWidth, 50 + 8 * tmpPlayer.duration), 40);
+                
+                // 泡泡
+                WeImageButton * buttonView = [WeImageButton buttonWithType:UIButtonTypeCustom];
+                [buttonView setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
+                [buttonView setFrame:CGRectMake(2 * gasp + avatarWidth, gasp, bubbleSize.width, bubbleSize.height)];
+                [buttonView setTintColor:We_foreground_white_general];
+                [buttonView setImage:[[UIImage imageNamed:@"chatbubble-left"] stretchableImageWithLeftCapWidth:10 topCapHeight:30] forState:UIControlStateNormal];
+                [buttonView setUserData:currentMessage];
+                [buttonView addTarget:self action:@selector(playAudio:) forControlEvents:UIControlEventTouchUpInside];
+                [cell.contentView addSubview:buttonView];
+                
+                // 音频图标
+                UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(2 * gasp + avatarWidth + bubbleImageGaspShort, gasp + (40 - 20) / 2, 20, 20)];
+                [imageView setContentMode:UIViewContentModeScaleAspectFit];
+                [imageView setImage:[UIImage imageNamed:@"chatroom-audio-left"]];
+                [cell.contentView addSubview:imageView];
+                
+                // 时间
+                UILabel * timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(2 * gasp + avatarWidth + bubbleSize.width + 10, gasp + 10, 30, bubbleSize.height - 10)];
+                [timeLabel setText:[NSString stringWithFormat:@"%d ''", (int)tmpPlayer.duration]];
+                [timeLabel setFont:We_font_textfield_zh_cn];
+                [timeLabel setTextColor:We_foreground_gray_general];
+                [cell.contentView addSubview:timeLabel];
+            }
+            
         }
     }
     
@@ -389,7 +466,7 @@
     return self;
 }
 
-- (void)refreshMessage:(id)sender {
+- (void)refreshMessage:(BOOL)forced {
     // 从数据库中提取信息
     NSMutableArray * messageList = [globalHelper search:[WeMessage class]
                                                   where:[NSString stringWithFormat:@"(senderId = %@ and receiverId = %@) or (senderId = %@ and receiverId = %@)", currentUser.userId, doctorChating.userId, doctorChating.userId, currentUser.userId]
@@ -399,7 +476,7 @@
     NSLog(@"\nSelect %lu message(s) from database.", (unsigned long)[messageList count]);
     
     // 根据信息数量判断是否需要刷新
-    if ([messageList count] == currentCount) return;
+    if ([messageList count] == currentCount && !forced) return;
     currentCount = [messageList count];
     
     // 处理信息分组
@@ -422,68 +499,7 @@
     
     // 重载数据并滑至最底
     [chatTableView reloadData];
-    //[bubbletTableView scrollBubbleViewToBottomAnimated:YES];
-    
-    /*
-    
-    
-    // 初始化信息数组
-    bubbleData = [[NSMutableArray alloc] init];
-    
-    // 依次访问每条信息
-    for (int i = 0; i < [messageList count]; i++) {
-        // 提取当前处理的信息
-        WeMessage * message = (WeMessage *) messageList[i];
-        
-        // 判断发送方
-        NSBubbleType senderType;
-        UIImage * senderAvatar;
-        if ([message.senderId isEqualToString:we_doctorChating]) {
-            senderType = BubbleTypeSomeoneElse;
-            senderAvatar = [(WeFavorDoctor *)favorDoctorList[we_doctorChating] avatar];
-        }
-        else {
-            senderType = BubbleTypeMine;
-            //senderAvatar = currentUser.avatar;
-        }
-        
-        // 判断信息类型
-        NSBubbleData * bubble;
-        
-        if ([message.messageType isEqualToString:@"T"]) {
-            bubble = [NSBubbleData dataWithText:message.content date:[NSDate dateWithTimeIntervalSince1970:message.time] type:senderType];
-        }
-        else if ([message.messageType isEqualToString:@"I"]) {
-            bubble = [NSBubbleData dataWithImage:message.imageContent date:[NSDate dateWithTimeIntervalSince1970:message.time] type:senderType];
-        }
-        else if ([message.messageType isEqualToString:@"A"]) {
-            WeInfoedButton * tmpButton = [WeInfoedButton buttonWithType:UIButtonTypeRoundedRect];
-            [tmpButton setFrame:CGRectMake(0, 0, 80, 50)];
-            [tmpButton setTitle:@"语音" forState:UIControlStateNormal];
-            [tmpButton setUserData:message];
-            [tmpButton addTarget:self action:@selector(playAudio:) forControlEvents:UIControlEventTouchUpInside];
-            
-            if (senderType == BubbleTypeMine) {
-                bubble = [NSBubbleData dataWithView:tmpButton date:[NSDate dateWithTimeIntervalSince1970:message.time] type:senderType insets:UIEdgeInsetsMake(10, 10, 10, 15)];
-            }
-            else {
-                bubble = [NSBubbleData dataWithView:tmpButton date:[NSDate dateWithTimeIntervalSince1970:message.time] type:senderType insets:UIEdgeInsetsMake(10, 15, 10, 10)];
-            }
-        }
-        else if ([message.messageType isEqualToString:@"C"]) {
-            currentCount ++;
-            continue;
-        }
-        else {
-            bubble = [NSBubbleData dataWithText:message.content date:[NSDate dateWithTimeIntervalSince1970:message.time] type:senderType];
-        }
-        bubble.avatar = senderAvatar;
-        
-        // 添加到数组中
-        [bubbleData addObject:bubble];
-        
-        currentCount ++;
-    }*/
+    [chatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:[[chatData lastObject] count] - 1 inSection:[chatData count] - 1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 - (void)playAudio:(WeInfoedButton *)sender {
@@ -498,59 +514,40 @@
     }
 }
 
+// 发送信息接口
 - (void)sendMessage:(id)sender {
-    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [manager GET:yijiarenUrl(@"message", @"postMsg") parameters:@{@"m.receiverId":we_doctorChating, @"m.content":inputTextField.text, @"m.type":@"T"}
-         success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
-             NSString * errorMessage;
-             
-             NSString *result = [HTTPResponse objectForKey:@"result"];
-             result = [NSString stringWithFormat:@"%@", result];
-             if ([result isEqualToString:@"1"]) {
-                 NSLog(@"response : %@", HTTPResponse[@"response"]);
-                 WeMessage * newMessage = [[WeMessage alloc] initWithNSDictionary:HTTPResponse[@"response"]];
-                 newMessage.loading = NO;
-                 [we_messagesWithDoctor[we_doctorChating] addObject:newMessage];
-                 inputTextField.text = @"";
-                 [self textFieldDidChange:self];
-                 return;
-             }
-             if ([result isEqualToString:@"2"]) {
-                 NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-                 NSEnumerator *enumerator = [fields keyEnumerator];
-                 id key;
-                 while ((key = [enumerator nextObject])) {
-                     NSString * tmp1 = [fields objectForKey:key];
-                     if (tmp1 != NULL) errorMessage = tmp1;
-                 }
-             }
-             if ([result isEqualToString:@"3"]) {
-                 errorMessage = [HTTPResponse objectForKey:@"info"];
-             }
-             if ([result isEqualToString:@"4"]) {
-                 errorMessage = [HTTPResponse objectForKey:@"info"];
-             }
-             UIAlertView *notPermitted = [[UIAlertView alloc]
-                                          initWithTitle:@"发送信息失败"
-                                          message:errorMessage
-                                          delegate:nil
-                                          cancelButtonTitle:@"确定"
-                                          otherButtonTitles:nil];
-             [notPermitted show];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Error: %@", error);
-             UIAlertView *notPermitted = [[UIAlertView alloc]
-                                          initWithTitle:@"发送信息失败"
-                                          message:@"未能连接服务器，请重试"
-                                          delegate:nil
-                                          cancelButtonTitle:@"确定"
-                                          otherButtonTitles:nil];
-             [notPermitted show];
-         }
-     ];
+    WeMessage * message = [[WeMessage alloc] init];
+    message.messageType = @"T";
+    message.senderId = currentUser.userId;
+    message.receiverId = doctorChating.userId;
+    message.content = inputTextField.text;
+    message.time = [[NSDate date] timeIntervalSince1970];
+    message.failed = NO;
+    message.sending = YES;
+    [globalHelper insertToDB:message];
+    inputTextField.text = @"";
+    [self textFieldDidChange:self];
     
+    [WeAppDelegate postToServerWithField:@"message" action:@"postMsg"
+                              parameters:@{
+                                           @"m.receiverId":message.receiverId,
+                                           @"m.content":message.content,
+                                           @"m.type":message.messageType
+                                           }
+                                 success:^(id response) {
+                                     NSLog(@"\n%@", response);
+                                     [message setWithNSDictionary:response];
+                                     [message setSending:NO];
+                                     [globalHelper updateToDB:message where:nil];
+                                     [self refreshView:YES];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     NSLog(@"\n%@", errorMessage);
+                                     [message setSending:NO];
+                                     [message setFailed:YES];
+                                     [globalHelper updateToDB:message where:nil];
+                                     [self refreshView:YES];
+                                 }];
 }
 
 // Audio
@@ -707,8 +704,8 @@
     chatTableView.delegate = self;
     chatTableView.dataSource = self;
     chatTableView.backgroundColor = [UIColor clearColor];
-    //[chatTableView setSeparatorColor:[UIColor clearColor]];
-    [self.view addSubview:chatTableView];
+    [chatTableView setSeparatorColor:[UIColor clearColor]];
+    [unionView addSubview:chatTableView];
     
     
     
@@ -1000,9 +997,9 @@
     timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(refreshView:) userInfo:nil repeats:YES];
 }
 
-- (void)refreshView:(id)sender {
-    [self refreshMessage:sender];
-    [self refreshKeyboard:sender];
+- (void)refreshView:(BOOL)forced {
+    [self refreshMessage:forced];
+    [self refreshKeyboard];
     
     self.navigationItem.title = [NSString stringWithFormat:@"%@(%@)", doctorChating.userName, doctorChating.consultStatus];
     if ([doctorChating.consultStatus isEqualToString:@"A"]) {
@@ -1019,13 +1016,9 @@
     }
 }
 
-- (void)refreshKeyboard:(id)sender {
-    //NSLog(@"%hhd", doctorChating.sendable);
-    NSLog(@"!!!!");
-    WeFavorDoctor * favorDoctor = favorDoctorList[we_doctorChating];
+- (void)refreshKeyboard {
     [newConsultOrPlusView setHidden:YES];
-    /*
-    if ([favorDoctor.consultStatus isEqualToString:@"N"]) {
+    if (doctorChating.sendable || ![doctorChating.consultStatus isEqualToString:@"N"]) {
         [newConsultOrPlusView setHidden:YES];
     }
     else {
@@ -1034,7 +1027,7 @@
         [self changeInputMode:0];
         [self moveUnionView:0 withDuration:0];
         [inputTextField resignFirstResponder];
-    }*/
+    }
 }
 
 - (void)didReceiveMemoryWarning

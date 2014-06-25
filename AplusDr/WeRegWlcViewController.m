@@ -320,7 +320,6 @@
                               parameters:@{
                                            }
                                  success:^(NSArray * response) {
-                                     NSLog(@"%@", response);
                                      for (int i = 0; i < [response count]; i++) {
                                          WeMessage * message = [[WeMessage alloc] initWithNSDictionary:response[i]];
                                          NSMutableArray * result = [globalHelper search:[WeMessage class]
