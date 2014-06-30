@@ -71,6 +71,7 @@
 		907D5B6A1920D9DA0006EAE0 /* UIBubbleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B631920D9DA0006EAE0 /* UIBubbleTableViewCell.m */; };
 		907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B661920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m */; };
 		907D5B6E1920DB430006EAE0 /* WeSPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B6D1920DB430006EAE0 /* WeSPViewController.m */; };
+		90A198F119614C7400C43534 /* WeInfoedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A198F019614C7400C43534 /* WeInfoedTextField.m */; };
 		90B31A3C1947AA6C00A19CD7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B31A3B1947AA6C00A19CD7 /* libsqlite3.dylib */; };
 		90B31A4F194BF61B00A19CD7 /* WePatient.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A4C194BF61B00A19CD7 /* WePatient.m */; };
 		90B31A50194BF61B00A19CD7 /* WeFavorPatient.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A4E194BF61B00A19CD7 /* WeFavorPatient.m */; };
@@ -237,6 +238,8 @@
 		907D5B661920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBubbleTypingTableViewCell.m; sourceTree = "<group>"; };
 		907D5B6C1920DB430006EAE0 /* WeSPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSPViewController.h; sourceTree = "<group>"; };
 		907D5B6D1920DB430006EAE0 /* WeSPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSPViewController.m; sourceTree = "<group>"; };
+		90A198EF19614C7400C43534 /* WeInfoedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeInfoedTextField.h; sourceTree = "<group>"; };
+		90A198F019614C7400C43534 /* WeInfoedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeInfoedTextField.m; sourceTree = "<group>"; };
 		90B31A3B1947AA6C00A19CD7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		90B31A4B194BF61B00A19CD7 /* WePatient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WePatient.h; sourceTree = "<group>"; };
 		90B31A4C194BF61B00A19CD7 /* WePatient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePatient.m; sourceTree = "<group>"; };
@@ -541,6 +544,8 @@
 				900EB762195A2DC2006BBA04 /* WeImageButton.m */,
 				900E295C1929C380008BF61C /* WeInfoedButton.h */,
 				900E295D1929C380008BF61C /* WeInfoedButton.m */,
+				90A198EF19614C7400C43534 /* WeInfoedTextField.h */,
+				90A198F019614C7400C43534 /* WeInfoedTextField.m */,
 				900E29961935F7C2008BF61C /* WeImageViewerViewController.h */,
 				900E29971935F7C2008BF61C /* WeImageViewerViewController.m */,
 				90B31A7A195802A200A19CD7 /* WeSentenceModifyViewController.h */,
@@ -956,6 +961,7 @@
 				900E29581929B44C008BF61C /* wav.mm in Sources */,
 				9026EEFC1904EE5500CE4A7A /* WePecPeaViewController.m in Sources */,
 				90B31A6319554BCA00A19CD7 /* WeFunDetViewController.m in Sources */,
+				90A198F119614C7400C43534 /* WeInfoedTextField.m in Sources */,
 				900E295E1929C380008BF61C /* WeInfoedButton.m in Sources */,
 				907D5B5A1920D9AD0006EAE0 /* WeCsrCtrViewController.m in Sources */,
 				90F0CE831926F820006A4605 /* WeCsrSelArea2ViewController.m in Sources */,

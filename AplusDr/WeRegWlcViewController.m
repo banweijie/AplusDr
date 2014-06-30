@@ -11,9 +11,10 @@
 
 @interface WeRegWlcViewController () {
     UIActivityIndicatorView * sys_pendingView;
-    UITableView * sys_tableView;
-    UITextField * user_phone_input;
-    UITextField * user_password_input;
+    
+    WeInfoedTextField * user_phone_input;
+    WeInfoedTextField * user_password_input;
+    
     UIView * user_forgetPassView;
     UIView * sys_titles;
     UILabel * title_en;
@@ -23,7 +24,6 @@
 @end
 
 @implementation WeRegWlcViewController
-
 
 #pragma mark - UITableView Delegate & DataSource
 
@@ -48,7 +48,8 @@
         [self api_user_login];
     }
     if (path.section == 3) {
-        [self send_register:self];
+        WeRegIpnViewController * vc = [[WeRegIpnViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
@@ -123,6 +124,7 @@
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
                     cell.imageView.image = [UIImage imageNamed:@"login-phonenum"];
+                    [user_phone_input setUserData:indexPath];
                     [cell.contentView addSubview:user_phone_input];
                     break;
                 case 1:
@@ -130,6 +132,7 @@
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
                     cell.imageView.image = [UIImage imageNamed:@"login-password"];
+                    [user_password_input setUserData:indexPath];
                     [cell.contentView addSubview:user_password_input];
                     break;
                 default:
@@ -199,12 +202,24 @@
     [title_zh setTextAlignment:NSTextAlignmentCenter];
     [sys_titles addSubview:title_zh];
     
-    We_init_textFieldInCell_pholder(user_phone_input, @"请输入您的手机号码", We_font_textfield_zh_cn);
-    We_init_textFieldInCell_pholder(user_password_input, @"请输入您的登录密码", We_font_textfield_zh_cn);
-    user_password_input.secureTextEntry = YES;
+    // 用于输入手机号码的文本框
+    user_phone_input = [[WeInfoedTextField alloc] initWithFrame:We_frame_textFieldInCell_general];
+    [user_phone_input setTextAlignment:NSTextAlignmentRight];
+    [user_phone_input setText:@"18810521330"];
+    [user_phone_input setFont:We_font_textfield_zh_cn];
+    [user_phone_input setPlaceholder:@"请输入您的手机号码"];
+    [user_phone_input setTextColor:We_foreground_black_general];
+    [user_phone_input setDelegate:self];
     
-    user_phone_input.text = @"18810521330";
-    user_password_input.text = @"52yuqing";
+    // 用于输入登录密码的文本框
+    user_password_input = [[WeInfoedTextField alloc] initWithFrame:We_frame_textFieldInCell_general];
+    [user_password_input setTextAlignment:NSTextAlignmentRight];
+    [user_password_input setText:@"52yuqing"];
+    [user_password_input setFont:We_font_textfield_zh_cn];
+    [user_password_input setPlaceholder:@"请输入您的登录密码"];
+    [user_password_input setTextColor:We_foreground_black_general];
+    [user_password_input setDelegate:self];
+    [user_password_input setSecureTextEntry:YES];
     
     // user_forgetpass
     user_forgetPassView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 35)];
@@ -215,19 +230,20 @@
     [user_forgetpass setTintColor:UIColorFromRGB(51, 51, 51, 1)];
     [user_forgetPassView addSubview:user_forgetpass];
     
-    // cancel_button
-    UIBarButtonItem * user_cancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(segue_to_MapIdx:)];
-    self.navigationItem.leftBarButtonItem = user_cancel;
+    // 取消按钮
+    UIBarButtonItem * cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton_onPress:)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
-    sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    sys_tableView.delegate = self;
-    sys_tableView.dataSource = self;
-    sys_tableView.backgroundColor = [UIColor clearColor];
-    sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    sys_tableView.scrollEnabled = NO;
-    [self.view addSubview:sys_tableView];
+    self.sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];
+    self.sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    self.sys_tableView.delegate = self;
+    self.sys_tableView.dataSource = self;
+    self.sys_tableView.backgroundColor = [UIColor clearColor];
+    self.sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.sys_tableView.scrollEnabled = NO;
+    self.sys_tableView_originHeight = self.sys_tableView.frame.size.height;
+    [self.view addSubview:self.sys_tableView];
     
     // 转圈圈
     sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -235,6 +251,7 @@
     [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
     [sys_pendingView setAlpha:1.0];
     [self.view addSubview:sys_pendingView];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -243,7 +260,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - api
+#pragma mark - callbacks
+- (void)cancelButton_onPress:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - apis
 
 // 访问登录接口
 - (void)api_user_login {
@@ -382,14 +404,5 @@
 
 - (void)send_forgetpass:(id)sender {
     NSLog(@"forget password:");
-}
-
-- (void)send_register:(id)sender {
-    NSLog(@"segue~~:");
-    [self performSegueWithIdentifier:@"wlc2ipn" sender:self];
-}
-- (void)segue_to_MapIdx:(id)sender {
-    we_targetView = targetViewNone;
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

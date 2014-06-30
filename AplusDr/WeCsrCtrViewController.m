@@ -943,7 +943,7 @@
     [newConsultOrPlusView addSubview:newAppointmentButton];
     
     //
-    [self refreshView:self];
+    [self refreshView:NO];
 }
 
 // 发起咨询按钮被按下
