@@ -27,16 +27,11 @@
     [AREA] 
         UITableView dataSource & delegate interfaces
 */
-// 调整格子的透明度
-- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.alpha = We_alpha_cell_general;;
-    cell.opaque = YES;
-}
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section == 0) {
-        return nil;
+        [user_phone_input becomeFirstResponder];
     }
     return path;
 }
@@ -50,6 +45,7 @@
         we_phone_onReg = user_phone_input.text;
         [self push_to_ivc:nil];
     }
+    [tableView deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个段落的头部标题
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -88,23 +84,21 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
     }
-    NSLog(@"%ld, %ld",(long)indexPath.section, (long)indexPath.row);
+    cell.opaque = NO;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            cell.contentView.backgroundColor = We_background_cell_general;
+            cell.backgroundColor = We_background_cell_general;
             cell.textLabel.text = @"手机号";
             cell.textLabel.font = [UIFont fontWithName:@"Heiti SC" size:16];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             [cell addSubview:user_phone_input];
         }
     }
     if (indexPath.section == 1) {
-        cell.contentView.backgroundColor = We_background_red_tableviewcell;
+        cell.backgroundColor = We_background_red_tableviewcell;
         cell.textLabel.text = @"下一步";
         cell.textLabel.font = We_font_button_zh_cn;
         cell.textLabel.textColor = We_foreground_white_general;
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return cell;
 }

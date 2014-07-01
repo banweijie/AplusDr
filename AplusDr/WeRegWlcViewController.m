@@ -210,6 +210,7 @@
     [user_phone_input setPlaceholder:@"请输入您的手机号码"];
     [user_phone_input setTextColor:We_foreground_black_general];
     [user_phone_input setDelegate:self];
+    [user_phone_input setReturnKeyType:UIReturnKeyNext];
     
     // 用于输入登录密码的文本框
     user_password_input = [[WeInfoedTextField alloc] initWithFrame:We_frame_textFieldInCell_general];
@@ -219,6 +220,7 @@
     [user_password_input setPlaceholder:@"请输入您的登录密码"];
     [user_password_input setTextColor:We_foreground_black_general];
     [user_password_input setDelegate:self];
+    [user_password_input setReturnKeyType:UIReturnKeyJoin];
     [user_password_input setSecureTextEntry:YES];
     
     // user_forgetpass
@@ -254,6 +256,18 @@
     
 }
 
+#pragma mark - textField
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == user_phone_input) {
+        [user_password_input becomeFirstResponder];
+    }
+    if (textField == user_password_input) {
+        [user_password_input resignFirstResponder];
+        [self api_user_login];
+    }
+    return YES;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -264,6 +278,8 @@
 - (void)cancelButton_onPress:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 #pragma mark - apis
 
