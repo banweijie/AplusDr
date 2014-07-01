@@ -220,7 +220,7 @@
     [user_password_input setPlaceholder:@"请输入您的登录密码"];
     [user_password_input setTextColor:We_foreground_black_general];
     [user_password_input setDelegate:self];
-    [user_password_input setReturnKeyType:UIReturnKeyJoin];
+    [user_password_input setReturnKeyType:UIReturnKeyDefault];
     [user_password_input setSecureTextEntry:YES];
     
     // user_forgetpass
@@ -263,8 +263,9 @@
     }
     if (textField == user_password_input) {
         [user_password_input resignFirstResponder];
-        [self api_user_login];
+        //[self api_user_login];
     }
+    [textField resignFirstResponder];
     return YES;
 }
 
