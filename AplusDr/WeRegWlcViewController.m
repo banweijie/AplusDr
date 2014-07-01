@@ -49,6 +49,9 @@
     }
     if (path.section == 3) {
         WeRegIpnViewController * vc = [[WeRegIpnViewController alloc] init];
+        
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+        
         [self.navigationController pushViewController:vc animated:YES];
     }
     [tv deselectRowAtIndexPath:path animated:YES];

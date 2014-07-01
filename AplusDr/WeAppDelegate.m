@@ -107,6 +107,7 @@
     NSLog(@"\npost to api: <%@, %@>\nparameters: %@", field, action, parameters);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+    [manager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"yijiaren"];
     [manager POST:yijiarenUrl(field, action) parameters:parameters
           success:^(NSURLSessionDataTask *task, id responseObject) {
               NSString * errorMessage = @"未知的错误";
@@ -141,6 +142,7 @@
     NSLog(@"\npost to api: <%@, %@>\nparameters: %@\nfileName: %@", field, action, parameters, fileName);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+    [manager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"yijiaren"];
     [manager POST:yijiarenUrl(field, action)
        parameters:parameters
 constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {

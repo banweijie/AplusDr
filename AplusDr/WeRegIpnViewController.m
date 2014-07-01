@@ -20,7 +20,7 @@
     UIButton * sys_nextStep_button;
     UIView * sys_userAgreement_demo;
     UITableView * sys_tableView;
-    int count;
+    UIActivityIndicatorView * sys_pendingView;
 }
 
 /*
@@ -32,6 +32,7 @@
 {
     if (path.section == 0) {
         [user_phone_input becomeFirstResponder];
+        return nil;
     }
     return path;
 }
@@ -39,11 +40,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section == 1 && path.row == 0) {
-        count ++;
-        if (!self.sendVeriCode) return;
-        we_vericode_type = @"NewPassword";
-        we_phone_onReg = user_phone_input.text;
-        [self push_to_ivc:nil];
+        [self api_user_sendVerificationCode];
     }
     [tableView deselectRowAtIndexPath:path animated:YES];
 }
@@ -107,16 +104,8 @@
     [AREA]
         Actions of all views
 */
-- (void)resignFirstResponder:(id)sender {
-    NSLog(@"resignFirstResponder:");
-    [sender resignFirstResponder];
-}
 - (void)checkForUserAgreement:(id)sender {
     NSLog(@"checkForUserAgreement:");
-}
-- (void)push_to_ivc:(id)sender {
-    NSLog(@"segue~~:");
-    [self performSegueWithIdentifier:@"ipn2ivc" sender:self];
 }
 /*
     [AREA]
@@ -172,16 +161,14 @@
 {
     [super viewDidLoad];
     
-    count = 0;
-    // navigation return button init
-    //self.navigationController.navigationBar.TintColor = We_foreground_white_general;
+    // 标题
+    self.navigationItem.title = @"手机号码";
     
     // user_phone_input init
-    user_phone_input = [[UITextField alloc] initWithFrame:CGRectMake(100, 9, 220, 30)];
+    user_phone_input = [[UITextField alloc] initWithFrame:We_frame_textFieldInCell_general];
     user_phone_input.placeholder = @"请输入您的手机号码";
     user_phone_input.font = We_font_textfield_zh_cn;
-    user_phone_input.autocorrectionType = UITextAutocorrectionTypeNo;
-    [user_phone_input setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [user_phone_input setTextAlignment:NSTextAlignmentRight];
     
     // sys_nextStep_button init
     sys_nextStep_button = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -221,6 +208,13 @@
     sys_tableView.backgroundColor = [UIColor clearColor];
     sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
+    
+    // 转圈圈
+    sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    [sys_pendingView setAlpha:1.0];
+    [self.view addSubview:sys_pendingView];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -228,14 +222,31 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Navigation
+# pragma mark - apis
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)api_user_sendVerificationCode {
+    [sys_pendingView startAnimating];
     
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"上一步" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [WeAppDelegate postToServerWithField:@"user" action:@"sendVerificationCode"
+                              parameters:@{
+                                           @"phone":user_phone_input.text
+                                           }
+                                 success:^(id response) {
+                                     WeRegIvcViewController * vc = [[WeRegIvcViewController alloc] init];
+                                     
+                                     [self.navigationController pushViewController:vc animated:YES];
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"发送验证码失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                     [sys_pendingView stopAnimating];
+                                 }];
 }
+
 @end
