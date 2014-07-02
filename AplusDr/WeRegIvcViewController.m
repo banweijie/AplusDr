@@ -9,7 +9,9 @@
 #import "WeRegIvcViewController.h"
 #import "WeAppDelegate.h"
 
-@interface WeRegIvcViewController ()
+@interface WeRegIvcViewController () {
+    UIActivityIndicatorView * sys_pendingView;
+}
 
 @end
 
@@ -26,11 +28,6 @@
  [AREA]
  UITableView dataSource & delegate interfaces
  */
-// 调整格子的透明度
-- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.alpha = We_alpha_cell_general;;
-    cell.opaque = YES;
-}
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
@@ -44,18 +41,15 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section == 0) {
-        [self performSelector:@selector(unselectCurrentRow) withObject:nil afterDelay:0];
     }
     if (path.section == 1) {
-        [self performSelector:@selector(unselectCurrentRow) withObject:nil afterDelay:0];
         sys_countDown_time = 60;
         sys_countDown_timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(sys_countDown_passTime) userInfo:nil repeats:YES];
     }
     if (path.section == 2) {
-        [self performSelector:@selector(unselectCurrentRow) withObject:nil afterDelay:0];
-        if (!self.checkVeriCode) return;
-        [self push_to_irp:nil];
+        [self api_user_checkVerificationCode];
     }
+    [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
@@ -96,7 +90,8 @@
     }
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            cell.contentView.backgroundColor = We_background_cell_general;
+            cell.backgroundColor = We_background_cell_general;
+            //cell.contentView.backgroundColor = We_background_cell_general;
             cell.textLabel.text = @"验证码";
             cell.textLabel.font = We_font_textfield_zh_cn;
             cell.textLabel.textColor = We_foreground_black_general;
@@ -104,19 +99,11 @@
         }
     }
     if (indexPath.section == 1) {
-        cell.contentView.backgroundColor = We_background_cell_general;
-        if (sys_countDown_time == 0) {
-            cell.textLabel.text = @"重发验证码";
-        }
-        else {
-            cell.textLabel.text = [NSString stringWithFormat:@"重发验证码(%d)", sys_countDown_time];
-        }
-        cell.textLabel.font = We_font_textfield_zh_cn;
-        cell.textLabel.textColor = We_foreground_red_general;
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.backgroundColor = We_background_cell_general;
+        [cell.contentView addSubview:sys_countDown_demo_text];
     }
     if (indexPath.section == 2) {
-        cell.contentView.backgroundColor = We_background_red_tableviewcell;
+        cell.backgroundColor = We_background_red_tableviewcell;
         cell.textLabel.text = @"下一步";
         cell.textLabel.font = We_font_button_zh_cn;
         cell.textLabel.textColor = We_foreground_white_general;
@@ -124,20 +111,6 @@
         
     }
     return cell;
-}
-
-
-/*
- [AREA]
- Actions of all views
- */
-- (void)resignFirstResponder:(id)sender {
-    NSLog(@"resignFirstResponder:");
-    [sender resignFirstResponder];
-}
-- (void)push_to_irp:(id)sender {
-    NSLog(@"segue:ivc2irp~~:");
-    [self performSegueWithIdentifier:@"ivc2irp" sender:self];
 }
 /*
  [AREA]
@@ -147,15 +120,10 @@
     if (sys_countDown_time == 0) return @"";
     else return [NSString stringWithFormat:@"还有%d秒", sys_countDown_time];
 }
-// 取消Table的当前选中行
-- (void) unselectCurrentRow
-{
-    [sys_tableView deselectRowAtIndexPath: [sys_tableView indexPathForSelectedRow] animated:NO];
-}
 - (void) sys_countDown_passTime {
     sys_countDown_time --;
-    sys_countDown_demo_text.text = [self sys_countDown_string];
-    [sys_tableView reloadRowsAtIndexPaths:[[NSArray alloc] initWithObjects:[NSIndexPath indexPathForRow:0 inSection:1], nil] withRowAnimation:UITableViewRowAnimationNone];
+    sys_countDown_demo_text.text = [NSString stringWithFormat:@"重发验证码(%d)", sys_countDown_time];
+    
     if (sys_countDown_time == 0) {
         [sys_countDown_timer invalidate];
     }
@@ -196,10 +164,12 @@
     [notPermitted show];
     return NO;
 }
-/*
- [AREA]
- View releated
- */
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -213,26 +183,26 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // 标题
+    self.navigationItem.title = @"输入验证码";
+    
     // sys_countDown_time
     sys_countDown_time = 60;
     sys_countDown_timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(sys_countDown_passTime) userInfo:nil repeats:YES];
     
     // user_veriCode_input init
-    user_veriCode_input = [[UITextField alloc] initWithFrame:CGRectMake(100, 9, 220, 30)];
+    user_veriCode_input = [[UITextField alloc] initWithFrame:We_frame_textFieldInCell_general];
     user_veriCode_input.placeholder = @"请输入收到的短信验证码";
-    user_veriCode_input.font = We_font_textfield_en_us;
-    user_veriCode_input.autocorrectionType = UITextAutocorrectionTypeNo;
-    [user_veriCode_input setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [user_veriCode_input addTarget:self action:@selector(resignFirstResponder:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    user_veriCode_input.textAlignment = NSTextAlignmentRight;
+    user_veriCode_input.delegate = self;
+    user_veriCode_input.font = We_font_textfield_zh_cn;
     
     // sys_countDown_demo init
-    sys_countDown_demo = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-    sys_countDown_demo_text = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-    sys_countDown_demo_text.text = [self sys_countDown_string];
+    sys_countDown_demo_text = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    sys_countDown_demo_text.text = [NSString stringWithFormat:@"重发验证码(%d)", sys_countDown_time];
     sys_countDown_demo_text.font = We_font_textfield_zh_cn;
     sys_countDown_demo_text.textColor = We_foreground_gray_general;
     sys_countDown_demo_text.textAlignment = NSTextAlignmentCenter;
-    [sys_countDown_demo addSubview:sys_countDown_demo_text];
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -249,21 +219,44 @@
     sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
     
+    
+    // 转圈圈
+    sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    [sys_pendingView setAlpha:1.0];
+    [self.view addSubview:sys_pendingView];
 }
+
+- (void)api_user_checkVerificationCode {
+    [sys_pendingView startAnimating];
+    
+    [WeAppDelegate postToServerWithField:@"user" action:@"checkVerificationCode"
+                              parameters:@{
+                                           @"verificationCode":user_veriCode_input.text
+                                           }
+                                 success:^(id response) {
+                                     WeRegIrpViewController * vc = [[WeRegIrpViewController alloc] init];
+                                     
+                                     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"上一步" style:UIBarButtonItemStylePlain target:nil action:nil];
+                                     [self.navigationController pushViewController:vc animated:YES];
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"验证码验证失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                     [sys_pendingView stopAnimating];
+                                 }];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"上一步" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 @end

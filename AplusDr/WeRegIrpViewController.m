@@ -25,11 +25,6 @@ extern int we_targetTabId;
  [AREA]
  UITableView dataSource & delegate interfaces
  */
-// 调整格子的透明度
-- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.alpha = We_alpha_cell_general;;
-    cell.opaque = YES;
-}
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {

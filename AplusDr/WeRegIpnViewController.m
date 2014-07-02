@@ -100,55 +100,6 @@
     return cell;
 }
 
-/*
-    [AREA]
-        Actions of all views
-*/
-- (void)checkForUserAgreement:(id)sender {
-    NSLog(@"checkForUserAgreement:");
-}
-/*
-    [AREA]
-        Functional
-*/
-- (BOOL) sendVeriCode
-{
-    NSLog(@"sendVeriCode");
-    NSString *errorMessage = @"无法连接网络，请重试";
-    NSString *urlString = @"http://115.28.222.1/yijiaren/user/sendVerificationCode.action";
-    NSString *parasString = [NSString stringWithFormat:@"phone=%@", user_phone_input.text];
-    NSData * DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:parasString];
-    if (DataResponse != NULL) {
-        NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
-    NSString *result = [HTTPResponse objectForKey:@"result"];
-    result = [NSString stringWithFormat:@"%@", result];
-    if ([result isEqualToString:@"1"]) {
-        return YES;
-    }
-    if ([result isEqualToString:@"2"]) {
-        NSString *fields = [HTTPResponse objectForKey:@"fields"];
-        if (fields != NULL) errorMessage = [[HTTPResponse objectForKey:@"fields"] objectForKey:@"phone"];
-    }
-    if ([result isEqualToString:@"3"]) {
-        errorMessage = [HTTPResponse objectForKey:@"info"];
-    }
-    if ([result isEqualToString:@"4"]) {
-        errorMessage = [HTTPResponse objectForKey:@"info"];
-    }
-    }
-    UIAlertView *notPermitted = [[UIAlertView alloc]
-                                 initWithTitle:@"发送验证码失败"
-                                 message:errorMessage
-                                 delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-    [notPermitted show];
-    return NO;
-}
-/*
-    [AREA]
-        View releated
-*/
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -157,12 +108,13 @@
     }
     return self;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     // 标题
-    self.navigationItem.title = @"手机号码";
+    self.navigationItem.title = @"输入手机号";
     
     // user_phone_input init
     user_phone_input = [[UITextField alloc] initWithFrame:We_frame_textFieldInCell_general];
@@ -191,7 +143,7 @@
     sys_userAgreement_demo_button.frame = CGRectMake(172, 0, 60, 30);
     [sys_userAgreement_demo_button setTitle:@"用户协议" forState:UIControlStateNormal];
     [sys_userAgreement_demo_button.titleLabel setFont:We_font_button_zh_cn];
-    [sys_userAgreement_demo_button addTarget:self action:@selector(checkForUserAgreement:) forControlEvents:UIControlEventTouchUpInside];
+    //[sys_userAgreement_demo_button addTarget:self action:@selector(checkForUserAgreement:) forControlEvents:UIControlEventTouchUpInside];
     [sys_userAgreement_demo addSubview:sys_userAgreement_demo_button];
     
     // Background
@@ -234,6 +186,7 @@
                                  success:^(id response) {
                                      WeRegIvcViewController * vc = [[WeRegIvcViewController alloc] init];
                                      
+                                     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"上一步" style:UIBarButtonItemStylePlain target:nil action:nil];
                                      [self.navigationController pushViewController:vc animated:YES];
                                      [sys_pendingView stopAnimating];
                                  }

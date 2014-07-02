@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeRegIrpViewController.h"
 
-@interface WeRegIvcViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface WeRegIvcViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @end
