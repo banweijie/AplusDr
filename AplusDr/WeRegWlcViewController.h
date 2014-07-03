@@ -14,4 +14,7 @@
 
 @property (nonatomic, strong) UIViewController * originTargetViewController;
 
+- (void)api_user_login:(NSString *)phone password:(NSString *)password;
+
 @end
+

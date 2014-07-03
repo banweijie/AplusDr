@@ -11,4 +11,6 @@
 
 @interface WeRegIvcViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
+@property(nonatomic, strong) NSString * user_phone_value;
+
 @end

@@ -185,7 +185,7 @@
                                            }
                                  success:^(id response) {
                                      WeRegIvcViewController * vc = [[WeRegIvcViewController alloc] init];
-                                     
+                                     vc.user_phone_value = user_phone_input.text;
                                      self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"上一步" style:UIBarButtonItemStylePlain target:nil action:nil];
                                      [self.navigationController pushViewController:vc animated:YES];
                                      [sys_pendingView stopAnimating];

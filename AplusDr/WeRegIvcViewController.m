@@ -24,6 +24,7 @@
     NSTimer * sys_countDown_timer;
     UILabel * sys_countDown_demo_text;
 }
+
 /*
  [AREA]
  UITableView dataSource & delegate interfaces
@@ -116,10 +117,6 @@
  [AREA]
  Functional
  */
-- (NSString *)sys_countDown_string {
-    if (sys_countDown_time == 0) return @"";
-    else return [NSString stringWithFormat:@"还有%d秒", sys_countDown_time];
-}
 - (void) sys_countDown_passTime {
     sys_countDown_time --;
     sys_countDown_demo_text.text = [NSString stringWithFormat:@"重发验证码(%d)", sys_countDown_time];
@@ -127,42 +124,6 @@
     if (sys_countDown_time == 0) {
         [sys_countDown_timer invalidate];
     }
-}
-- (BOOL) checkVeriCode {
-    NSLog(@"checkVeriCode");
-    NSString *errorMessege = @"无法连接网络，请重试";
-    NSString *urlString = @"http://115.28.222.1/yijiaren/user/checkVerificationCode.action";
-    NSString *paraString = [NSString stringWithFormat:@"verificationCode=%@", user_veriCode_input.text];
-    NSData *DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:paraString];
-    if (DataResponse != NULL) {
-        NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
-        NSString *result = [HTTPResponse objectForKey:@"result"];
-        result = [NSString stringWithFormat:@"%@", result];
-        if ([result isEqualToString:@"1"]) {
-            return YES;
-        }
-        else {
-            if ([result isEqualToString:@"2"]) {
-                NSString *fields = [HTTPResponse objectForKey:@"fields"];
-                if (fields != NULL) errorMessege = [[HTTPResponse objectForKey:@"fields"] objectForKey:@"phone"];
-            }
-            if ([result isEqualToString:@"3"]) {
-                errorMessege = [HTTPResponse objectForKey:@"info"];
-            }
-            if ([result isEqualToString:@"4"]) {
-                errorMessege = [HTTPResponse objectForKey:@"info"];
-            }
-        }
-    }
-    // alert error messege
-    UIAlertView *notPermitted = [[UIAlertView alloc]
-                                 initWithTitle:@"验证手机验证码失败"
-                                 message:errorMessege
-                                 delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-    [notPermitted show];
-    return NO;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -237,6 +198,7 @@
                                            }
                                  success:^(id response) {
                                      WeRegIrpViewController * vc = [[WeRegIrpViewController alloc] init];
+                                     vc.user_phone_value = self.user_phone_value;
                                      
                                      self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"上一步" style:UIBarButtonItemStylePlain target:nil action:nil];
                                      [self.navigationController pushViewController:vc animated:YES];

@@ -18,16 +18,12 @@
     // Override point for customization after application launch.
     currentUser = nil;
     
-    //we_logined = NO;
-    //we_targetTabId = 0;
-    
     // 设置TabBar的delegate
     UITabBarController<UITabBarControllerDelegate> * _tabBarController = (UITabBarController<UITabBarControllerDelegate> *)_window.rootViewController;
     _tabBarController.delegate = _tabBarController;
     
     we_hospitalList = [[NSMutableDictionary alloc] init];
     we_sectionList = [[NSMutableDictionary alloc] init];
-    we_messagesWithDoctor = [[NSMutableDictionary alloc] init];
     caseRecords = [[NSMutableArray alloc] init];
     examinations = [[NSMutableArray alloc] init];
     
@@ -39,8 +35,6 @@
     //timer0 = [NSTimer scheduledTimerWithTimeInterval:refreshInterval target:self selector:@selector(refreshDoctorList:) userInfo:nil repeats:YES];
     
     timer1 = [NSTimer scheduledTimerWithTimeInterval:refreshInterval target:self selector:@selector(refreshMessage:) userInfo:nil repeats:YES];
-    
-    //NSLog(@"%@", [userDefaults stringForKey:@"lastMessageId"]);
     
     globalHelper = [LKDBHelper getUsingLKDBHelper];
     
@@ -102,7 +96,8 @@
     
 }
 
-// AFNetworking 网络连接通用方法
+# pragma mark - Networking
+
 + (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong id))success failure:(void (^__strong)(__strong NSString *))failure {
     NSLog(@"\npost to api: <%@, %@>\nparameters: %@", field, action, parameters);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
@@ -177,6 +172,50 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
           }];
 }
 
+
++ (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success {
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
+    AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"DownloadImageWithURL error: %@", error);
+    }];
+    [requestOperation start];
+}
+
+- (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success {
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
+    AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"DownloadImageWithURL error: %@", error);
+    }];
+    [requestOperation start];
+}
+
++ (void)DownloadFileWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id)) success {
+    NSURLSessionConfiguration * configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager * manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
+    
+    NSURLSessionDownloadTask * downloadTask = [manager downloadTaskWithRequest:request
+                                                                      progress:nil
+                                                                   destination:^NSURL * (NSURL * targetPath, NSURLResponse * response) {
+                                                                       NSURL * documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+                                                                       return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+                                                                   }
+                                                             completionHandler:^(NSURLResponse * response, NSURL * filePath, NSError * error) {
+                                                                 if (error) NSLog(@"%@", error);
+                                                                 else {
+                                                                     success(filePath);
+                                                                 }
+                                                             }];
+    [downloadTask resume];
+}
 
 // 编码转换
 + (NSString *)transitionOfFundingType:(NSString *)type {
@@ -294,6 +333,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     return we_codings[type][code];
 }
 
+#pragma mark - APIs
+
 - (void)refreshInitialData {
     NSString * urlString = yijiarenUrl(@"data", @"initData");
     NSString * paraString = @"";
@@ -377,209 +418,9 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                  failure:^(NSString * errorMessage) {
                                      NSLog(@"%@", errorMessage);
                                  }];
-    
-    /*
-    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary * parameters = @{@"lastMessageId":[userDefaults stringForKey:@"lastMessageId"]};
-    [manager GET:yijiarenUrl(@"message", @"getMsg") parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
-             NSString * errorMessage;
-             
-             NSString * result = [NSString stringWithFormat:@"%@", [HTTPResponse objectForKey:@"result"]];
-             
-             if ([result isEqualToString:@"1"]) {
-                 // 获取所有信息
-                 NSArray * messages = [HTTPResponse objectForKey:@"response"];
-                 
-                 // 依次处理所有信息
-                 if ([messages count] > 0) {
-                     WeMessage * message;
-                     for (int i = 0; i < [messages count]; i ++) {
-                         // 取出某一条消息
-                         message = [[WeMessage alloc] initWithNSDictionary:messages[i]];
-                         // 如果是图片消息则去读取图片
-                         if ([message.messageType isEqualToString:@"I"]) {
-                             [self DownloadImageWithURL:yijiarenImageUrl(message.content) successCompletion:^(id image) {
-                                 message.imageContent = (UIImage *) image;
-                                 message.loading = NO;
-                             }];
-                         }
-                         else if ([message.messageType isEqualToString:@"A"]) {
-                             NSURLSessionConfiguration * configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-                             AFURLSessionManager * manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-                             
-                             NSURL * URL = [NSURL URLWithString:yijiarenImageUrl(message.content)];
-                             NSURLRequest * request = [NSURLRequest requestWithURL:URL];
-                             
-                             NSURLSessionDownloadTask * downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-                                 NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-                                 return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
-                             } completionHandler:^(NSURLResponse * response, NSURL *filePath, NSError *error) {
-                                 if (error) NSLog(@"%@", error);
-                                 [VoiceConverter amrToWav:filePath.path wavSavePath:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
-                                 message.audioContent = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
-                                 message.loading = NO;
-                             }];
-                             [downloadTask resume];
-                         }
-                         else if ([message.messageType isEqualToString:@"C"]) {
-                             if ([message.content isEqualToString:@"sendable=0"]) {
-                                 WeFavorDoctor * favorDoctor = favorDoctorList[message.senderId];
-                                 NSLog(@"%@ %@ %@", message.content, message.senderId, favorDoctor.userName);
-                                 if (favorDoctor != NULL) {
-                                     favorDoctor.sendable = NO;
-                                 }
-                             }
-                             if ([message.content isEqualToString:@"sendable=1"]) {
-                                 WeFavorDoctor * favorDoctor = favorDoctorList[message.senderId];
-                                 NSLog(@"%@ %@ %@", message.content, message.senderId, favorDoctor.userName);
-                                 if (favorDoctor != NULL) {
-                                     favorDoctor.sendable = YES;
-                                 }
-                             }
-                             message.loading = NO;
-                         }
-                         else {
-                             message.loading = NO;
-                         }
-                         // 添加到所属医生的信息列表中
-                         if (we_messagesWithDoctor[message.senderId] == NULL) {
-                             we_messagesWithDoctor[message.senderId] = [[NSMutableArray alloc] init];
-                         }
-                         [we_messagesWithDoctor[message.senderId] addObject:message];
-                     }
-                     // 设置最后读取的信息
-                     [userDefaults setValue:message.messageId forKey:@"lastMessageId"];
-                 }
-                 return;
-             }
-             if ([result isEqualToString:@"2"]) {
-                 NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-                 NSEnumerator *enumerator = [fields keyEnumerator];
-                 id key;
-                 while ((key = [enumerator nextObject])) {
-                     NSString * tmp1 = [fields objectForKey:key];
-                     if (tmp1 != NULL) errorMessage = tmp1;
-                 }
-             }
-             if ([result isEqualToString:@"3"]) {
-                 errorMessage = [HTTPResponse objectForKey:@"info"];
-             }
-             if ([result isEqualToString:@"4"]) {
-                 errorMessage = [HTTPResponse objectForKey:@"info"];
-             }
-             NSLog(@"Fail: %@", errorMessage);
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Error: %@", error);
-         }
-     ];*/
 }
 
-/*
-- (void)refreshDoctorList:(id)sender {
-    // 判断登录状态
-    if (!we_logined) return;
-    
-    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [manager GET:yijiarenUrl(@"patient", @"listFavorDoctors") parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
-             NSString * errorMessage;
-             
-             NSString *result = [HTTPResponse objectForKey:@"result"];
-             result = [NSString stringWithFormat:@"%@", result];
-             if ([result isEqualToString:@"1"]) {
-                 NSMutableDictionary * newFavorDoctors = [[NSMutableDictionary alloc] init];
-                 NSArray * favorDoctorArray = HTTPResponse[@"response"];
-                 for (int i = 0; i < [favorDoctorArray count]; i++) {
-                     // 取出原来的医生和现在的医生
-                     WeFavorDoctor * newDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:favorDoctorArray[i]];
-                     WeFavorDoctor * oldDoctor = (WeFavorDoctor *) favorDoctorList[newDoctor.userId];
-                     
-                     // 如果头像变化则前往更新，否则沿用之前的
-                     if (![oldDoctor.avatarPath isEqualToString:newDoctor.avatarPath]) {
-                         [self DownloadImageWithURL:yijiarenAvatarUrl(newDoctor.avatarPath) successCompletion:^(id image) {
-                             newDoctor.avatar = image;
-                             //NSLog(@"Download Image(%@) succeed, doctor(%@)' avatar has been changed.", newDoctor.avatarPath, newDoctor.userName);
-                         }];
-                     }
-                     else {
-                         newDoctor.avatar = oldDoctor.avatar;
-                     }
-                     
-                     newFavorDoctors[newDoctor.userId] = newDoctor;
-                 }
-                 favorDoctorList = newFavorDoctors;
-                 return;
-             }
-             if ([result isEqualToString:@"2"]) {
-                 NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-                 NSEnumerator *enumerator = [fields keyEnumerator];
-                 id key;
-                 while ((key = [enumerator nextObject])) {
-                     NSString * tmp1 = [fields objectForKey:key];
-                     if (tmp1 != NULL) errorMessage = tmp1;
-                 }
-             }
-             if ([result isEqualToString:@"3"]) {
-                 errorMessage = [HTTPResponse objectForKey:@"info"];
-             }
-             if ([result isEqualToString:@"4"]) {
-                 errorMessage = [HTTPResponse objectForKey:@"info"];
-             }
-             NSLog(@"Error: %@", errorMessage);
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Error: %@", error);
-         }
-     ];
-}*/
-
-+ (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success {
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
-    AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
-    requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
-    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (success) success(responseObject);
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         NSLog(@"DownloadImageWithURL error: %@", error);
-     }];
-    [requestOperation start];
-}
-
-- (void)DownloadImageWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id))success {
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
-    AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
-    requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
-    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (success) success(responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"DownloadImageWithURL error: %@", error);
-    }];
-    [requestOperation start];
-}
-
-+ (void)DownloadFileWithURL:(NSString *)URL successCompletion:(void (^__strong)(__strong id)) success {
-    NSURLSessionConfiguration * configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager * manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
-    
-    NSURLSessionDownloadTask * downloadTask = [manager downloadTaskWithRequest:request
-                                                                      progress:nil
-                                                                   destination:^NSURL * (NSURL * targetPath, NSURLResponse * response) {
-                                                                       NSURL * documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-                                                                       return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
-                                                                   }
-                                                             completionHandler:^(NSURLResponse * response, NSURL * filePath, NSError * error) {
-                                                                 if (error) NSLog(@"%@", error);
-                                                                 else {
-                                                                     success(filePath);
-                                                                 }
-                                                             }];
-    [downloadTask resume];
-}
+#pragma mark - No Idea
 
 + (UIImage *)imageWithColor:(UIColor *)color {
     CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
@@ -620,7 +461,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 - (NSString *)urlencode {
     NSMutableString *output = [NSMutableString string];
     const unsigned char *source = (const unsigned char *)[self UTF8String];
-    int sourceLen = strlen((const char *)source);
+    int sourceLen = (int)strlen((const char *)source);
     for (int i = 0; i < sourceLen; ++i) {
         const unsigned char thisChar = source[i];
         if (thisChar == ' '){
@@ -642,7 +483,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 - (NSString*)md5
 {
     unsigned char result[CC_MD5_DIGEST_LENGTH];
-    CC_MD5( self.bytes, self.length, result ); // This is the md5 call
+    CC_MD5( self.bytes, (unsigned int)self.length, result ); // This is the md5 call
     return [NSString stringWithFormat:
             @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
             result[0], result[1], result[2], result[3],

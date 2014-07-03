@@ -45,7 +45,7 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section == 2) {
-        [self api_user_login];
+        [self api_user_login:user_phone_input.text password:user_password_input.text];
     }
     if (path.section == 3) {
         WeRegIpnViewController * vc = [[WeRegIpnViewController alloc] init];
@@ -278,22 +278,22 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - callbacks
+#pragma mark - Callbacks
 - (void)cancelButton_onPress:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
 
-#pragma mark - apis
+#pragma mark - Apis
 
 // 访问登录接口
-- (void)api_user_login {
+- (void)api_user_login:(NSString *)phone password:(NSString *)password {
     [sys_pendingView startAnimating];
     [WeAppDelegate postToServerWithField:@"user" action:@"login"
                               parameters:@{
-                                           @"phone":user_phone_input.text,
-                                           @"password":[user_password_input.text md5]
+                                           @"phone":phone,
+                                           @"password":[password md5]
                                            }
                                  success:^(NSDictionary * response) {
                                      [self api_patient_listFavorDoctors];
