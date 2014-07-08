@@ -71,6 +71,7 @@
     self.tabBar.tintColor = We_foreground_red_general;
     self.tabBar.translucent = YES;
     
+    /*
     UITabBarItem * tmp0 = [self.tabBar.items objectAtIndex:0];
     tmp0.selectedImage = [UIImage imageNamed:@"tab-home-selected"];
     UITabBarItem * tmp1 = [self.tabBar.items objectAtIndex:1];
@@ -81,7 +82,7 @@
     tmp3.selectedImage = [UIImage imageNamed:@"tab-casehistory-selected"];
     UITabBarItem * tmp4 = [self.tabBar.items objectAtIndex:4];
     tmp4.selectedImage = [UIImage imageNamed:@"tab-me-selected"];
-    
+    */
     [super viewWillAppear:animated];
 }
 

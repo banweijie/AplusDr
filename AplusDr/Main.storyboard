@@ -286,9 +286,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="ZGO-u0-7yk" kind="modal" identifier="TabBar_Modalto_RegWlc" id="kGw-7E-Cpt"/>
-                        <segue destination="bni-Ri-avn" kind="relationship" relationship="viewControllers" id="rex-yh-AU6"/>
-                        <segue destination="G9f-X1-J9c" kind="relationship" relationship="viewControllers" id="tXO-bP-Iow"/>
                         <segue destination="FbH-Go-jOX" kind="relationship" relationship="viewControllers" id="gV7-Zh-poc"/>
+                        <segue destination="G9f-X1-J9c" kind="relationship" relationship="viewControllers" id="tXO-bP-Iow"/>
                         <segue destination="CZg-W4-mch" kind="relationship" relationship="viewControllers" id="kr6-zr-IQE"/>
                         <segue destination="bHV-1f-jWO" kind="relationship" relationship="viewControllers" id="Pfd-v9-efB"/>
                     </connections>
@@ -334,25 +333,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BSR-D4-aq0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1152" y="1504"/>
-        </scene>
-        <!--We Map Idx View Controller - 首页-->
-        <scene sceneID="W7F-be-9tS">
-            <objects>
-                <viewController id="ae2-c6-YeX" customClass="WeMapIdxViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Siw-kl-HU3"/>
-                        <viewControllerLayoutGuide type="bottom" id="ure-ov-wEf"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="D0c-uU-7Xp">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="首页" id="Bfm-mW-1KY"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aCp-4c-zUy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1149" y="2216"/>
         </scene>
         <!--We Csr Idx View Controller - 咨询室-->
         <scene sceneID="0Sn-tC-NUq">
@@ -653,25 +633,6 @@
             </objects>
             <point key="canvasLocation" x="626" y="1504"/>
         </scene>
-        <!--We Map Nav Controller - 首页-->
-        <scene sceneID="uc0-Nf-QG3">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bni-Ri-avn" customClass="WeMapNavController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="首页" image="tab-home" id="cEs-2e-fmZ"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WtN-4z-h99">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="ae2-c6-YeX" kind="relationship" relationship="rootViewController" id="Jju-lf-vTr"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3YG-Oc-SAI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="623" y="2216"/>
-        </scene>
         <!--We Nav View Controller - 咨询室-->
         <scene sceneID="vRA-4K-jvF">
             <objects>
@@ -886,7 +847,6 @@
         <image name="tab-casehistory" width="22" height="25"/>
         <image name="tab-chatroom" width="25" height="24"/>
         <image name="tab-crowdfunding" width="33" height="24"/>
-        <image name="tab-home" width="24" height="24"/>
         <image name="tab-me" width="25" height="24"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

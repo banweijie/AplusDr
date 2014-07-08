@@ -51,7 +51,6 @@
 		9026EEF11904EE5500CE4A7A /* WeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB41904EE5500CE4A7A /* WeTableViewCell.m */; };
 		9026EEF21904EE5500CE4A7A /* WeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */; };
 		9026EEF31904EE5500CE4A7A /* WeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */; };
-		9026EEF41904EE5500CE4A7A /* WeMapNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEBA1904EE5500CE4A7A /* WeMapNavController.m */; };
 		9026EEF61904EE5500CE4A7A /* WeRegWlcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEBE1904EE5500CE4A7A /* WeRegWlcViewController.m */; };
 		9026EEF71904EE5500CE4A7A /* WeRegIpnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEC01904EE5500CE4A7A /* WeRegIpnViewController.m */; };
 		9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEC21904EE5500CE4A7A /* WeRegIvcViewController.m */; };
@@ -198,8 +197,6 @@
 		9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeAppDelegate.m; sourceTree = "<group>"; };
 		9026EEB71904EE5500CE4A7A /* WeTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeTabBarViewController.h; sourceTree = "<group>"; };
 		9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeTabBarViewController.m; sourceTree = "<group>"; };
-		9026EEB91904EE5500CE4A7A /* WeMapNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeMapNavController.h; sourceTree = "<group>"; };
-		9026EEBA1904EE5500CE4A7A /* WeMapNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeMapNavController.m; sourceTree = "<group>"; };
 		9026EEBD1904EE5500CE4A7A /* WeRegWlcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeRegWlcViewController.h; sourceTree = "<group>"; };
 		9026EEBE1904EE5500CE4A7A /* WeRegWlcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeRegWlcViewController.m; sourceTree = "<group>"; };
 		9026EEBF1904EE5500CE4A7A /* WeRegIpnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeRegIpnViewController.h; sourceTree = "<group>"; };
@@ -559,8 +556,6 @@
 		9026EF121904EF1600CE4A7A /* MainPage */ = {
 			isa = PBXGroup;
 			children = (
-				9026EEB91904EE5500CE4A7A /* WeMapNavController.h */,
-				9026EEBA1904EE5500CE4A7A /* WeMapNavController.m */,
 				90F0CE5F192234E8006A4605 /* WeMapIdxViewController.h */,
 				90F0CE60192234E8006A4605 /* WeMapIdxViewController.m */,
 			);
@@ -973,7 +968,6 @@
 				900E297619318EF9008BF61C /* WeCahCahAddDruViewController.m in Sources */,
 				90B31A7C195802A300A19CD7 /* WeSentenceModifyViewController.m in Sources */,
 				90F0CE8C19271226006A4605 /* WeCsrSelSec2ViewController.m in Sources */,
-				9026EEF41904EE5500CE4A7A /* WeMapNavController.m in Sources */,
 				90266C3C19276CEC00478A89 /* WeCsrJiaViewController.m in Sources */,
 				900E2970193087AF008BF61C /* WeCahCahViewController.m in Sources */,
 				907D5B571920CD4B0006EAE0 /* WeCsrCosViewController.m in Sources */,
