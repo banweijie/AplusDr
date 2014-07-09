@@ -373,7 +373,13 @@
                                      [sys_pendingView stopAnimating];
                                  }
                                  failure:^(NSString * errorMessage) {
-                                     NSLog(@"%@", errorMessage);
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"支持失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
                                      [sys_pendingView stopAnimating];
                                  }];
 }

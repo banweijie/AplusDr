@@ -25,6 +25,10 @@
     NSMutableString * sel_topSectionName;
     NSMutableString * sel_secSectionId;
     NSMutableString * sel_secSectionName;
+    
+    UIButton * lastPressedButton;
+    
+    UIToolbar * selectView;
 }
 
 @end
@@ -339,6 +343,7 @@
     
     UIButton * titleButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [titleButton setTitle:@"医家仁推荐 ∇" forState:UIControlStateNormal];
+    [titleButton addTarget:self action:@selector(titleButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [titleButton.titleLabel setFont:We_font_textfield_huge_zh_cn];
     
     self.navigationItem.titleView = titleButton;
@@ -419,7 +424,30 @@
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
     sys_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [sys_tableView setHidden:YES];
     [self.view addSubview:sys_tableView];
+    
+    // 筛选
+    selectView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 64, 320, 200)];
+    for (int i = 0; i < 5; i++) {
+        WeInfoedButton * optionButton = [WeInfoedButton buttonWithType:UIButtonTypeRoundedRect];
+        [optionButton setFrame:CGRectMake(0, 40 * i, 320, 40)];
+        [optionButton setTintColor:We_foreground_black_general];
+        [optionButton setUserData:[NSString stringWithFormat:@"%d", i]];
+        [optionButton addTarget:self action:@selector(optionButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
+        if (i == 0) {
+            [optionButton setTintColor:We_foreground_red_general];
+            lastPressedButton = optionButton;
+        }
+        if (i == 0) [optionButton setTitle:@"医家仁推荐" forState:UIControlStateNormal];
+        if (i == 1) [optionButton setTitle:@"全部" forState:UIControlStateNormal];
+        if (i == 2) [optionButton setTitle:@"科研类" forState:UIControlStateNormal];
+        if (i == 3) [optionButton setTitle:@"公益类" forState:UIControlStateNormal];
+        if (i == 4) [optionButton setTitle:@"招募类" forState:UIControlStateNormal];
+        [selectView addSubview:optionButton];
+    }
+    [selectView setHidden:YES];
+    [self.view addSubview:selectView];
     
     // 转圈圈
     sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -437,7 +465,7 @@
     [self.view addSubview:refreshButton];
     
     // 访问获取众筹列表接口
-    [self api_data_listFunding];
+    [self api_data_listHomeFundings];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -473,6 +501,37 @@
     [self api_data_listFunding];
 }
 
+//
+- (void)titleButton_onPress:(id)sender {
+    [selectView setHidden:!selectView.isHidden];
+}
+
+- (void)optionButton_onPress:(WeInfoedButton *)sender {
+    NSString * order = sender.userData;
+    if (lastPressedButton) {
+        [lastPressedButton setTitleColor:We_foreground_black_general forState:UIControlStateNormal];
+    }
+    lastPressedButton = sender;
+    [sender setTitleColor:We_foreground_red_general forState:UIControlStateNormal];
+    
+    if ([order isEqualToString:@"0"]) {
+        [self api_data_listHomeFundings];
+    }
+    if ([order isEqualToString:@"1"]) {
+        [self api_data_listFunding:@{}];
+    }
+    if ([order isEqualToString:@"2"]) {
+        [self api_data_listFunding:@{@"f.type":@"B"}];
+    }
+    if ([order isEqualToString:@"3"]) {
+        [self api_data_listFunding:@{@"f.type":@"A"}];
+    }
+    if ([order isEqualToString:@"4"]) {
+        [self api_data_listFunding:@{@"f.type":@"D"}];
+    }
+    [selectView setHidden:YES];
+}
+
 // 筛选按钮被按下
 - (void)selectButton_onPress:(id)sender {
     WeFunSelViewController * vc = [[WeFunSelViewController alloc] init];
@@ -501,16 +560,10 @@
 }
 
 // 获取众筹列表接口
-- (void)api_data_listFunding {
+- (void)api_data_listFunding:(NSDictionary *)parameters {
     [refreshButton setHidden:YES];
-    [contentView setHidden:YES];
+    [sys_tableView setHidden:YES];
     [sys_pendingView startAnimating];
-    
-    NSMutableDictionary * parameters = [[NSMutableDictionary alloc] init];
-    if (![sel_type isEqualToString:@""]) [parameters setValue:sel_type forKey:@"f.type"];
-    if (![sel_topSectionId isEqualToString:@""]) [parameters setValue:sel_topSectionId forKey:@"f.topSectionId"];
-    if (![sel_secSectionId isEqualToString:@""]) [parameters setValue:sel_secSectionId forKey:@"f.sectionId"];
-    if (![sel_keyword isEqualToString:@""]) [parameters setValue:sel_keyword forKey:@"f.words"];
     
     [WeAppDelegate postToServerWithField:@"data" action:@"listFunding"
                               parameters:parameters
@@ -521,7 +574,31 @@
                                          [fundingList addObject:[[WeFunding alloc] initWithNSDictionary:fundingJsonList[i]]];
                                      }
                                      [sys_tableView reloadData];
-                                     [contentView setHidden:NO];
+                                     [sys_tableView setHidden:NO];
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     [refreshButton setHidden:NO];
+                                     [sys_pendingView stopAnimating];
+                                 }];
+}
+
+// 获取众筹列表接口
+- (void)api_data_listHomeFundings {
+    [refreshButton setHidden:YES];
+    [sys_tableView setHidden:YES];
+    [sys_pendingView startAnimating];
+    
+    [WeAppDelegate postToServerWithField:@"data" action:@"listHomeFundings"
+                              parameters:nil
+                                 success:^(id response) {
+                                     fundingList = [[NSMutableArray alloc] init];
+                                     NSArray * fundingJsonList = response;
+                                     for (int i = 0; i < [fundingJsonList count]; i++) {
+                                         [fundingList addObject:[[WeFunding alloc] initWithNSDictionary:fundingJsonList[i]]];
+                                     }
+                                     [sys_tableView reloadData];
+                                     [sys_tableView setHidden:NO];
                                      [sys_pendingView stopAnimating];
                                  }
                                  failure:^(NSString * errorMessage) {
