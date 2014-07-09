@@ -161,7 +161,7 @@
     levels = [[NSMutableArray alloc] init];
     for (int i = 0; i < [self.currentFunding.levels count]; i++) {
         WeFundingLevel * currentLevel = self.currentFunding.levels[i];
-        if ([currentLevel.type isEqualToString:@"B"]) {
+        if ([currentLevel.type isEqualToString:@"B"] || [currentLevel.type isEqualToString:@"E"]) {
             [levels addObject:currentLevel];
         }
     }
