@@ -406,7 +406,9 @@
                                          }
                                      }
                                      currentUser = newUser;
-                                     [(UITabBarController *)self.navigationController.presentingViewController setSelectedViewController:self.originTargetViewController];
+                                     if (self.originTargetViewController != nil) {
+                                         [self.tabBarController setSelectedViewController:self.originTargetViewController];
+                                     }
                                      [self dismissViewControllerAnimated:YES completion:nil];
                                      [sys_pendingView stopAnimating];
                                  }

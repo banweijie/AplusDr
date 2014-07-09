@@ -13,6 +13,7 @@
 @interface WeRegWlcViewController : WeViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UIViewController * originTargetViewController;
+@property (nonatomic, strong) UITabBarController * tabBarController;
 
 - (void)api_user_login:(NSString *)phone password:(NSString *)password;
 

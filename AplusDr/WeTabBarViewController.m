@@ -20,6 +20,7 @@
     if (currentUser == nil && viewController != [tabBarController.viewControllers objectAtIndex:0]) {
         WeRegWlcViewController * vc = [[WeRegWlcViewController alloc] init];
         vc.originTargetViewController = viewController;
+        vc.tabBarController = tabBarController;
         
         WeNavViewController * nav = [[WeNavViewController alloc] init];
         [nav pushViewController:vc animated:NO];

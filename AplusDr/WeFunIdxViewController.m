@@ -308,13 +308,13 @@
     
     // 框框1
     UIView * frame1 = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 300, 220 + 5 + 20 * 2 + [WeAppDelegate calcSizeForString:currentFunding.title Font:We_font_textfield_large_zh_cn expectWidth:260].height + 40)];
-    [frame1.layer setBorderWidth:0.5];
+    [frame1.layer setBorderWidth:0.3];
     [frame1.layer setBorderColor:We_foreground_gray_general.CGColor];
     [cell.contentView addSubview:frame1];
     
     // 框框2
     UIView * frame2 = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 300, 220 + 5 + 20 * 2 + [WeAppDelegate calcSizeForString:currentFunding.title Font:We_font_textfield_large_zh_cn expectWidth:260].height + 40 + 60)];
-    [frame2.layer setBorderWidth:0.5];
+    [frame2.layer setBorderWidth:0.3];
     [frame2.layer setBorderColor:We_foreground_gray_general.CGColor];
     [cell.contentView addSubview:frame2];
     

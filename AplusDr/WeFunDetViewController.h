@@ -13,6 +13,7 @@
 #import "WeFunDesViewController.h"
 #import "WeFunSupViewController.h"
 #import "WeNavViewController.h"
+#import "WeRegWlcViewController.h"
 
 @interface WeFunDetViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
