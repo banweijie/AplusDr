@@ -343,9 +343,12 @@
     
     self.navigationItem.titleView = titleButton;
     
+    /*
     // 我的众筹按钮
     UIBarButtonItem * myFundingButton = [[UIBarButtonItem alloc] initWithTitle:@"我的参与" style:UIBarButtonItemStylePlain target:self action:@selector(myFundingButton_onPress:)];
-    self.navigationItem.rightBarButtonItem = myFundingButton;
+    self.navigationItem.rightBarButtonItem = myFundingButton;*/
+    
+    // 搜索按钮
     
     // 背景图片
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];

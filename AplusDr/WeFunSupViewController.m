@@ -10,6 +10,7 @@
 
 @interface WeFunSupViewController () {
     UITableView * sys_tableView;
+    NSMutableArray * levels;
 }
 
 @end
@@ -30,7 +31,7 @@
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WeFundingLevel * currentLevel = _currentFunding.levels[indexPath.section];
+    WeFundingLevel * currentLevel = levels[indexPath.section];
     CGSize sizezz = [currentLevel.repay sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
     return sizezz.height + 80;
 }
@@ -58,7 +59,7 @@
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
-    return [_currentFunding.levels count];
+    return [levels count];
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
@@ -75,7 +76,7 @@
     cell.backgroundColor = We_background_cell_general;
     
     // 当前处理的支持方案
-    WeFundingLevel * currentLevel = _currentFunding.levels[indexPath.section];
+    WeFundingLevel * currentLevel = levels[indexPath.section];
 
     UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 220 - 16, 60)];
     if ([currentLevel.type isEqualToString:@"E"]) {
@@ -155,6 +156,15 @@
     // 取消按钮
     UIBarButtonItem * cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton_onPress:)];
     self.navigationItem.leftBarButtonItem = cancelButton;
+    
+    // 取出需要显示的级别
+    levels = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [self.currentFunding.levels count]; i++) {
+        WeFundingLevel * currentLevel = self.currentFunding.levels[i];
+        if ([currentLevel.type isEqualToString:@"B"]) {
+            [levels addObject:currentLevel];
+        }
+    }
     
     // 表格
     sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
