@@ -29,6 +29,8 @@
     UIButton * lastPressedButton;
     
     UIToolbar * selectView;
+    UIToolbar * searchView;
+    UIButton * titleButton;
 }
 
 @end
@@ -341,7 +343,8 @@
     
     //self.navigationItem.title = @"众筹项目";
     
-    UIButton * titleButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    titleButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [titleButton setFrame:CGRectMake(30, 0, 260, 64)];
     [titleButton setTitle:@"医家仁推荐 ∇" forState:UIControlStateNormal];
     [titleButton addTarget:self action:@selector(titleButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [titleButton.titleLabel setFont:We_font_textfield_huge_zh_cn];
@@ -398,24 +401,7 @@
     [selectButton addTarget:self action:@selector(selectButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:selectButton];
     
-    // search bar
-    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 104, 320, 45)];
-    searchBar.placeholder = @"搜索";
-    searchBar.translucent = YES;
-    searchBar.backgroundImage = [UIImage new];
-    searchBar.scopeBarBackgroundImage = [UIImage new];
-    [searchBar setTranslucent:YES];
-    searchBar.delegate = self;
-    
-    // cover button
-    coverButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    coverButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
-    coverButton.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
-    [coverButton addTarget:self action:@selector(coverButtonOnPress:) forControlEvents:UIControlEventTouchUpInside];
-    coverButton.hidden = YES;
-    [self.view addSubview:coverButton];
-    
-    [self.view addSubview:searchBar];*/
+    */
     
     // 表格
     sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
@@ -426,6 +412,10 @@
     sys_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [sys_tableView setHidden:YES];
     [self.view addSubview:sys_tableView];
+    
+    // 搜索按钮
+    UIBarButtonItem * searchButton = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(searchButton_onPress)];
+    self.navigationItem.rightBarButtonItem = searchButton;
     
     // 筛选
     selectView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 64, 320, 200)];
@@ -448,6 +438,31 @@
     }
     [selectView setHidden:YES];
     [self.view addSubview:selectView];
+    
+    
+    //
+    searchView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 64, 320, 45)];
+    [searchView setHidden:YES];
+    [self.view addSubview:searchView];
+    
+    // search bar
+    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 45)];
+    searchBar.placeholder = @"搜索";
+    searchBar.translucent = YES;
+    searchBar.backgroundImage = [UIImage new];
+    searchBar.scopeBarBackgroundImage = [UIImage new];
+    [searchBar setTranslucent:YES];
+    searchBar.delegate = self;
+    [searchView addSubview:searchBar];
+    
+    // cover button
+    coverButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    coverButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    coverButton.frame = CGRectMake(0, 64 + 45, 320, self.view.frame.size.height);
+    [coverButton addTarget:self action:@selector(coverButtonOnPress:) forControlEvents:UIControlEventTouchUpInside];
+    coverButton.hidden = YES;
+    [self.view addSubview:coverButton];
+    
     
     // 转圈圈
     sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -492,13 +507,17 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)sbar {
     [sel_keyword setString:searchBar.text];
     [searchBar resignFirstResponder];
-    [self api_data_listFunding];
+    [searchView setHidden:YES];
+    [self api_data_listFunding:@{@"f.words":searchBar.text}];
+    [titleButton setTitle:[NSString stringWithFormat:@"搜索：%@ ∇", searchBar.text] forState:UIControlStateNormal];
 }
 
 - (void)coverButtonOnPress:(id)sender {
     [sel_keyword setString:searchBar.text];
     [searchBar resignFirstResponder];
-    [self api_data_listFunding];
+    [searchView setHidden:YES];
+    [self api_data_listFunding:@{@"f.words":searchBar.text}];
+    [titleButton setTitle:[NSString stringWithFormat:@"搜索：%@ ∇", searchBar.text] forState:UIControlStateNormal];
 }
 
 //
@@ -515,18 +534,23 @@
     [sender setTitleColor:We_foreground_red_general forState:UIControlStateNormal];
     
     if ([order isEqualToString:@"0"]) {
+        [titleButton setTitle:@"医家仁推荐 ∇" forState:UIControlStateNormal];
         [self api_data_listHomeFundings];
     }
     if ([order isEqualToString:@"1"]) {
+        [titleButton setTitle:@"全部 ∇" forState:UIControlStateNormal];
         [self api_data_listFunding:@{}];
     }
     if ([order isEqualToString:@"2"]) {
+        [titleButton setTitle:@"科研类 ∇" forState:UIControlStateNormal];
         [self api_data_listFunding:@{@"f.type":@"B"}];
     }
     if ([order isEqualToString:@"3"]) {
+        [titleButton setTitle:@"公益类 ∇" forState:UIControlStateNormal];
         [self api_data_listFunding:@{@"f.type":@"A"}];
     }
     if ([order isEqualToString:@"4"]) {
+        [titleButton setTitle:@"招募类 ∇" forState:UIControlStateNormal];
         [self api_data_listFunding:@{@"f.type":@"D"}];
     }
     [selectView setHidden:YES];
@@ -546,6 +570,12 @@
     [nav pushViewController:vc animated:NO];
     
     [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)searchButton_onPress {
+    [selectView setHidden:YES];
+    [searchView setHidden:!searchView.isHidden];
+    
 }
 
 // 刷新按钮被按下
