@@ -183,10 +183,14 @@
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
-    sys_tableView.backgroundColor = We_background_cell_general;
+    sys_tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:sys_tableView];
     
     // 访问获取众筹详情列表
+    [self api_patient_listOrders];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [self api_patient_listOrders];
 }
 
