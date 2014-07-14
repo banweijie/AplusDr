@@ -52,7 +52,8 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     doctorViewing = doctorList[path.section];
-    [self performSegueWithIdentifier:@"CsrAdd_pushto_CsrDci" sender:self];
+    UIViewController * vc = [[WeCsrDciViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
@@ -155,7 +156,12 @@
 }
 
 - (void)selection:(id)sender {
-    [self performSegueWithIdentifier:@"CsrAdd_pushto_CsrSel" sender:self];
+    WeNavViewController * nav = [[WeNavViewController alloc] init];
+    
+    UIViewController * vc = [[WeCsrSelViewController alloc] init];
+    [nav pushViewController:vc animated:NO];
+    
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)clearSelectionCondition {
@@ -194,6 +200,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.navigationItem.title = @"搜索医生";
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];

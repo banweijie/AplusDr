@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeCsrSelViewController.h"
+#import "WeCsrDciViewController.h"
 
 @interface WeCsrAddViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 

@@ -186,8 +186,10 @@
     bg.contentMode = UIViewContentModeCenter;
     [self.view addSubview:bg];
     
+    /*
     UIBarButtonItem * addDoctorButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chatroom-adddoctor"] style:UIBarButtonItemStylePlain target:self action:@selector(addDoctorButton_onPress:)];
     self.navigationItem.rightBarButtonItem = addDoctorButton;
+    */
     
     // sys_tableView
     sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, 300, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) style:UITableViewStyleGrouped];

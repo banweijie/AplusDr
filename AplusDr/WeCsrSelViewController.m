@@ -220,6 +220,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.navigationItem.title = @"设置筛选条件";
+    
     // Default Value
     [self setConditionToDefault:self];
     
