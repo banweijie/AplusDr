@@ -101,7 +101,15 @@
     [l1 setFont:We_font_textfield_large_zh_cn];
     [l1 setTextColor:We_foreground_black_general];
     [l1 setTextAlignment:NSTextAlignmentLeft];
-    [l1 setText:currentOrder.type];
+    if ([currentOrder.type isEqualToString:@"C"]) {
+        [l1 setText:@"在线咨询"];
+    }
+    else if ([currentOrder.type isEqualToString:@"F"]) {
+        [l1 setText:@"众筹支持"];
+    }
+    else if ([currentOrder.type isEqualToString:@"J"]) {
+        [l1 setText:@"加号预诊"];
+    }
     [cell.contentView addSubview:l1];
     
     UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 38, 200, 40)];
@@ -113,9 +121,17 @@
     
     UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 260, 88)];
     [l3 setFont:We_font_textfield_large_zh_cn];
-    [l3 setTextColor:We_foreground_gray_general];
+    if ([currentOrder.status isEqualToString:@"C"]) {
+        [l3 setTextColor:We_foreground_gray_general];
+    }
+    else if ([currentOrder.status isEqualToString:@"W"]) {
+        [l3 setTextColor:We_foreground_red_general];
+    }
+    else if ([currentOrder.status isEqualToString:@"P"]) {
+        [l3 setTextColor:We_foreground_black_general];
+    }
     [l3 setTextAlignment:NSTextAlignmentRight];
-    [l3 setText:[NSString stringWithFormat:@"￥%f", currentOrder.amount]];
+    [l3 setText:[NSString stringWithFormat:@"￥%.0f", currentOrder.amount]];
     [cell.contentView addSubview:l3];
     
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
@@ -136,6 +152,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    // 标题
+    self.navigationItem.title = @"交易记录";
     
     // 背景图片
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -164,11 +183,8 @@
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
-    sys_tableView.backgroundColor = [UIColor clearColor];
+    sys_tableView.backgroundColor = We_background_cell_general;
     [self.view addSubview:sys_tableView];
-    
-    // 标题
-    self.navigationItem.title = @"我的参与";
     
     // 访问获取众筹详情列表
     [self api_patient_listOrders];
@@ -190,7 +206,10 @@
     [sys_tableView setHidden:YES];
     
     [WeAppDelegate postToServerWithField:@"patient" action:@"listOrders"
-                              parameters:nil
+                              parameters:@{
+                                           @"from":@"0",
+                                           @"num":@"1000"
+                                           }
                                  success:^(id response) {
                                      orderList = [self preworkOnOrderList:[NSMutableArray arrayWithArray:response[@"list"]]];
                                      [sys_tableView reloadData];
@@ -210,7 +229,7 @@
     }
     
     [sourceData sortUsingComparator:^NSComparisonResult(id rA, id rB) {
-        return (WeOrder *)rA < (WeOrder *)rB;
+        return [(WeOrder *)rA createTime] < [(WeOrder *)rB createTime];
     }];
     
     NSMutableArray * tableViewData0 = [[NSMutableArray alloc] init];
