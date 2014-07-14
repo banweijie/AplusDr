@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WeViewController.h"
 #import "WeAppDelegate.h"
+#import "WeCsrCosSelGenViewController.h"
 
 @interface WeCsrCosViewController :  WeViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 

@@ -575,7 +575,9 @@
 - (void)searchButton_onPress {
     [selectView setHidden:YES];
     [searchView setHidden:!searchView.isHidden];
-    
+    if (!searchView.isHidden) {
+        [searchBar becomeFirstResponder];
+    }
 }
 
 // 刷新按钮被按下

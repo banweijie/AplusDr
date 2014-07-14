@@ -39,7 +39,8 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section == 1 && path.row == 0) {
-        [self performSegueWithIdentifier:@"CsrCos_pushto_CsrCosSelGen" sender:self];
+        WeCsrCosSelGenViewController * vc = [[WeCsrCosSelGenViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
     if (path.section == 1 && path.row == 1) {
         [user_age_input becomeFirstResponder];
@@ -365,6 +366,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [sys_tableView reloadData];
 }
 
 /*
