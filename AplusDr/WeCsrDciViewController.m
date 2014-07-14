@@ -246,7 +246,7 @@
 - (void)consulting:(id)sender {
     WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
     vc.pushType = @"consultingRoom";
-    vc.favorDoctor = doctorViewing;
+    vc.currentDoctor = doctorViewing;
     //doctorViewing = favorDoctors[we_doctorChating];
     
     WeNavViewController * nav = [[WeNavViewController alloc] init];

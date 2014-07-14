@@ -193,7 +193,7 @@
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:yijiarenUrl(@"patient", @"addConsult") parameters:@{
-                                                                      @"consult.doctor.id":self.favorDoctor.userId,
+                                                                      @"consult.doctor.id":self.currentDoctor.userId,
                                                                       @"consult.gender":csrcos_selected_gender,
                                                                       @"consult.age":user_age_input.text,
                                                                       @"consult.emergent":user_ifemergent_switch.on?@"true":@"false"
@@ -209,7 +209,27 @@
                   NSLog(@"%@", HTTPResponse);
                   NSString * orderId = [NSString stringWithFormat:@"%@", HTTPResponse[@"response"][@"order"][@"id"]];
                   NSLog(@"\norderId = %@", orderId);
-                  [self finishOrder:orderId];
+                  //[self finishOrder:orderId];
+                  
+                  AlixPayOrder * newOrder = [[AlixPayOrder alloc] init];
+                  newOrder.partner = PartnerID;
+                  newOrder.seller = SellerID;
+                  newOrder.tradeNO = orderId;
+                  newOrder.productName = @"在线咨询";
+                  newOrder.productDescription = @"在线咨询的描述";
+                  newOrder.amount = self.currentDoctor.consultPrice;
+                  newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
+                  
+                  NSString * appScheme = @"AlipaySdkDemo";
+                  NSString * orderInfo = [newOrder description];
+                  NSString * signedStr = [CreateRSADataSigner(PartnerPrivKey) signString:orderInfo];
+                  
+                  NSLog(@"%@",signedStr);
+                  
+                  NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                                           orderInfo, signedStr, @"RSA"];
+                  
+                  [AlixLibService payOrder:orderString AndScheme:appScheme seletor:@selector(paymentResult:) target:self];
                   return;
               }
               if ([result isEqualToString:@"2"]) {
@@ -264,7 +284,7 @@
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
-                  self.favorDoctor.consultStatus = @"A";
+                  //self.currentDoctor.consultStatus = @"A";
                   [self dismissViewControllerAnimated:YES completion:nil];
                   return;
               }
@@ -371,6 +391,45 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [sys_tableView reloadData];
+}
+
+-(void)paymentResult:(NSString *)resultd
+{
+    //结果处理
+#if ! __has_feature(objc_arc)
+    AlixPayResult* result = [[[AlixPayResult alloc] initWithString:resultd] autorelease];
+#else
+    AlixPayResult* result = [[AlixPayResult alloc] initWithString:resultd];
+#endif
+	if (result)
+    {
+		
+		if (result.statusCode == 9000)
+        {
+			/*
+			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
+			 */
+            
+            //交易成功
+            NSString* key = AlipayPubKey;//签约帐户后获取到的支付宝公钥
+			id<DataVerifier> verifier;
+            verifier = CreateRSADataVerifier(key);
+            
+			if ([verifier verifyString:result.resultString withSign:result.signString])
+            {
+                //验证签名成功，交易结果无篡改
+			}
+        }
+        else
+        {
+            //交易失败
+        }
+    }
+    else
+    {
+        //失败
+    }
+    
 }
 
 /*

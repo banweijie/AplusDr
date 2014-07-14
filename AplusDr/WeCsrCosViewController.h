@@ -11,9 +11,16 @@
 #import "WeAppDelegate.h"
 #import "WeCsrCosSelGenViewController.h"
 
+#import "AlixLibService.h"
+#import "PartnerConfig.h"
+#import "DataSigner.h"
+#import "AlixPayResult.h"
+#import "DataVerifier.h"
+#import "AlixPayOrder.h"
+
 @interface WeCsrCosViewController :  WeViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property(strong, nonatomic) NSString * pushType;
-@property(strong, nonatomic) WeFavorDoctor * favorDoctor;
+@property(strong, nonatomic) WeDoctor * currentDoctor;
 
 @end

@@ -58,6 +58,20 @@
 		9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEC81904EE5500CE4A7A /* WePecIdxViewController.m */; };
 		9026EEFC1904EE5500CE4A7A /* WePecPeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EECA1904EE5500CE4A7A /* WePecPeaViewController.m */; };
 		9026EF0F1904EE5500CE4A7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9026EEEF1904EE5500CE4A7A /* Main.storyboard */; };
+		906F4DD01973D0AD007807FE /* AlipayRsaLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DB31973D0AD007807FE /* AlipayRsaLib.a */; };
+		906F4DD11973D0AD007807FE /* Alixpay.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 906F4DB51973D0AD007807FE /* Alixpay.bundle */; };
+		906F4DD21973D0AD007807FE /* AlixPaylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DB61973D0AD007807FE /* AlixPaylib.a */; };
+		906F4DD41973D0AD007807FE /* AlixPayOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DB91973D0AD007807FE /* AlixPayOrder.m */; };
+		906F4DD51973D0AD007807FE /* AlixPayResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DBB1973D0AD007807FE /* AlixPayResult.m */; };
+		906F4DD61973D0AD007807FE /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DBF1973D0AD007807FE /* NSObject+SBJSON.m */; };
+		906F4DD71973D0AD007807FE /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DC11973D0AD007807FE /* NSString+SBJSON.m */; };
+		906F4DD81973D0AD007807FE /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DC31973D0AD007807FE /* SBJSON.m */; };
+		906F4DD91973D0AD007807FE /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DC51973D0AD007807FE /* SBJsonBase.m */; };
+		906F4DDA1973D0AD007807FE /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DC71973D0AD007807FE /* SBJsonParser.m */; };
+		906F4DDB1973D0AD007807FE /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DC91973D0AD007807FE /* SBJsonWriter.m */; };
+		906F4DDC1973D0AD007807FE /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DCA1973D0AD007807FE /* libcrypto.a */; };
+		906F4DDD1973D0AD007807FE /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DCB1973D0AD007807FE /* libssl.a */; };
+		906F4DDE1973E303007807FE /* AlixPaylib.a in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DB61973D0AD007807FE /* AlixPaylib.a */; };
 		907D5B37192014230006EAE0 /* WeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B36192014230006EAE0 /* WeViewController.m */; };
 		907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B3D1920164B0006EAE0 /* WeCsrIdxViewController.m */; };
 		907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */; };
@@ -209,6 +223,32 @@
 		9026EEC91904EE5500CE4A7A /* WePecPeaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WePecPeaViewController.h; sourceTree = "<group>"; };
 		9026EECA1904EE5500CE4A7A /* WePecPeaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePecPeaViewController.m; sourceTree = "<group>"; };
 		9026EEEF1904EE5500CE4A7A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		906F4DB31973D0AD007807FE /* AlipayRsaLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AlipayRsaLib.a; sourceTree = "<group>"; };
+		906F4DB41973D0AD007807FE /* AlixLibService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlixLibService.h; sourceTree = "<group>"; };
+		906F4DB51973D0AD007807FE /* Alixpay.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Alixpay.bundle; sourceTree = "<group>"; };
+		906F4DB61973D0AD007807FE /* AlixPaylib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AlixPaylib.a; sourceTree = "<group>"; };
+		906F4DB81973D0AD007807FE /* AlixPayOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlixPayOrder.h; sourceTree = "<group>"; };
+		906F4DB91973D0AD007807FE /* AlixPayOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlixPayOrder.m; sourceTree = "<group>"; };
+		906F4DBA1973D0AD007807FE /* AlixPayResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlixPayResult.h; sourceTree = "<group>"; };
+		906F4DBB1973D0AD007807FE /* AlixPayResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlixPayResult.m; sourceTree = "<group>"; };
+		906F4DBD1973D0AD007807FE /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		906F4DBE1973D0AD007807FE /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		906F4DBF1973D0AD007807FE /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		906F4DC01973D0AD007807FE /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		906F4DC11973D0AD007807FE /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		906F4DC21973D0AD007807FE /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		906F4DC31973D0AD007807FE /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		906F4DC41973D0AD007807FE /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		906F4DC51973D0AD007807FE /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		906F4DC61973D0AD007807FE /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		906F4DC71973D0AD007807FE /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		906F4DC81973D0AD007807FE /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		906F4DC91973D0AD007807FE /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		906F4DCA1973D0AD007807FE /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		906F4DCB1973D0AD007807FE /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		906F4DCD1973D0AD007807FE /* DataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSigner.h; sourceTree = "<group>"; };
+		906F4DCE1973D0AD007807FE /* DataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVerifier.h; sourceTree = "<group>"; };
+		906F4DCF1973D0AD007807FE /* PartnerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartnerConfig.h; sourceTree = "<group>"; };
 		907D5B35192014230006EAE0 /* WeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeViewController.h; sourceTree = "<group>"; };
 		907D5B36192014230006EAE0 /* WeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeViewController.m; sourceTree = "<group>"; };
 		907D5B3C1920164B0006EAE0 /* WeCsrIdxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrIdxViewController.h; sourceTree = "<group>"; };
@@ -305,10 +345,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				906F4DD21973D0AD007807FE /* AlixPaylib.a in Frameworks */,
 				90B31A3C1947AA6C00A19CD7 /* libsqlite3.dylib in Frameworks */,
 				9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */,
+				906F4DD01973D0AD007807FE /* AlipayRsaLib.a in Frameworks */,
 				9026EE1E1904E8A700CE4A7A /* UIKit.framework in Frameworks */,
+				906F4DDC1973D0AD007807FE /* libcrypto.a in Frameworks */,
 				9026EE1A1904E8A700CE4A7A /* Foundation.framework in Frameworks */,
+				906F4DDD1973D0AD007807FE /* libssl.a in Frameworks */,
 				900E29591929B44C008BF61C /* libopencore-amrnb.a in Frameworks */,
 				900E295A1929B44C008BF61C /* libopencore-amrwb.a in Frameworks */,
 				1E50538D81C24E6FA4893A80 /* libPods.a in Frameworks */,
@@ -587,6 +631,63 @@
 			name = PersonalAccount;
 			sourceTree = "<group>";
 		};
+		906F4D9D1973CF80007807FE /* Alipay */ = {
+			isa = PBXGroup;
+			children = (
+				906F4DB21973D0AD007807FE /* alipay */,
+				906F4DCF1973D0AD007807FE /* PartnerConfig.h */,
+			);
+			name = Alipay;
+			sourceTree = "<group>";
+		};
+		906F4DB21973D0AD007807FE /* alipay */ = {
+			isa = PBXGroup;
+			children = (
+				906F4DB31973D0AD007807FE /* AlipayRsaLib.a */,
+				906F4DB41973D0AD007807FE /* AlixLibService.h */,
+				906F4DB51973D0AD007807FE /* Alixpay.bundle */,
+				906F4DB61973D0AD007807FE /* AlixPaylib.a */,
+				906F4DB81973D0AD007807FE /* AlixPayOrder.h */,
+				906F4DB91973D0AD007807FE /* AlixPayOrder.m */,
+				906F4DBA1973D0AD007807FE /* AlixPayResult.h */,
+				906F4DBB1973D0AD007807FE /* AlixPayResult.m */,
+				906F4DBC1973D0AD007807FE /* json */,
+				906F4DCA1973D0AD007807FE /* libcrypto.a */,
+				906F4DCB1973D0AD007807FE /* libssl.a */,
+				906F4DCC1973D0AD007807FE /* RSA */,
+			);
+			path = alipay;
+			sourceTree = "<group>";
+		};
+		906F4DBC1973D0AD007807FE /* json */ = {
+			isa = PBXGroup;
+			children = (
+				906F4DBD1973D0AD007807FE /* JSON.h */,
+				906F4DBE1973D0AD007807FE /* NSObject+SBJSON.h */,
+				906F4DBF1973D0AD007807FE /* NSObject+SBJSON.m */,
+				906F4DC01973D0AD007807FE /* NSString+SBJSON.h */,
+				906F4DC11973D0AD007807FE /* NSString+SBJSON.m */,
+				906F4DC21973D0AD007807FE /* SBJSON.h */,
+				906F4DC31973D0AD007807FE /* SBJSON.m */,
+				906F4DC41973D0AD007807FE /* SBJsonBase.h */,
+				906F4DC51973D0AD007807FE /* SBJsonBase.m */,
+				906F4DC61973D0AD007807FE /* SBJsonParser.h */,
+				906F4DC71973D0AD007807FE /* SBJsonParser.m */,
+				906F4DC81973D0AD007807FE /* SBJsonWriter.h */,
+				906F4DC91973D0AD007807FE /* SBJsonWriter.m */,
+			);
+			path = json;
+			sourceTree = "<group>";
+		};
+		906F4DCC1973D0AD007807FE /* RSA */ = {
+			isa = PBXGroup;
+			children = (
+				906F4DCD1973D0AD007807FE /* DataSigner.h */,
+				906F4DCE1973D0AD007807FE /* DataVerifier.h */,
+			);
+			path = RSA;
+			sourceTree = "<group>";
+		};
 		907D5B42192016580006EAE0 /* ConsultingRoom */ = {
 			isa = PBXGroup;
 			children = (
@@ -647,6 +748,7 @@
 		90B31A48194BF1AC00A19CD7 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				906F4D9D1973CF80007807FE /* Alipay */,
 				900E29461929B44C008BF61C /* VoiceConvert */,
 				907D5B5B1920D9C50006EAE0 /* UIBubbleTableView */,
 				9026EF101904EEEF00CE4A7A /* VPImageCropper */,
@@ -841,6 +943,7 @@
 			files = (
 				9026EF0F1904EE5500CE4A7A /* Main.storyboard in Resources */,
 				9026EE241904E8A700CE4A7A /* InfoPlist.strings in Resources */,
+				906F4DD11973D0AD007807FE /* Alixpay.bundle in Resources */,
 				900EB75D195A2139006BBA04 /* Resource.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -893,6 +996,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				906F4DDE1973E303007807FE /* AlixPaylib.a in Sources */,
 				9026EEF31904EE5500CE4A7A /* WeTabBarViewController.m in Sources */,
 				900E2989193202F7008BF61C /* WeCahAddExaViewController.m in Sources */,
 				907D5B6E1920DB430006EAE0 /* WeSPViewController.m in Sources */,
@@ -906,6 +1010,8 @@
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
 				900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */,
 				900EB75B195945EB006BBA04 /* WeOrder.m in Sources */,
+				906F4DDB1973D0AD007807FE /* SBJsonWriter.m in Sources */,
+				906F4DD61973D0AD007807FE /* NSObject+SBJSON.m in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
 				90B31A6F19579A6F00A19CD7 /* WeFunSelViewController.m in Sources */,
 				90B31A69195750C000A19CD7 /* WeFunSupViewController.m in Sources */,
@@ -921,6 +1027,7 @@
 				900E2995193223B8008BF61C /* WeExaminationItemConfig.m in Sources */,
 				9026EEF61904EE5500CE4A7A /* WeRegWlcViewController.m in Sources */,
 				90B31A7F19582C0000A19CD7 /* WeParagraphModifyViewController.m in Sources */,
+				906F4DD81973D0AD007807FE /* SBJSON.m in Sources */,
 				9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */,
 				9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */,
 				907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */,
@@ -934,12 +1041,15 @@
 				90B31A731957A75400A19CD7 /* WeFunSelTypeViewController.m in Sources */,
 				907D5B691920D9DA0006EAE0 /* UIBubbleTableView.m in Sources */,
 				90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */,
+				906F4DD91973D0AD007807FE /* SBJsonBase.m in Sources */,
 				900E2992193223A0008BF61C /* WeExaminationItem.m in Sources */,
 				900E29571929B44C008BF61C /* amrFileCodec.mm in Sources */,
+				906F4DD51973D0AD007807FE /* AlixPayResult.m in Sources */,
 				90F0CE7119229973006A4605 /* WeNavViewController.m in Sources */,
 				90F0CE741922CF55006A4605 /* WeInpNamViewController.m in Sources */,
 				9026EEF11904EE5500CE4A7A /* WeTableViewCell.m in Sources */,
 				900E29581929B44C008BF61C /* wav.mm in Sources */,
+				906F4DDA1973D0AD007807FE /* SBJsonParser.m in Sources */,
 				9026EEFC1904EE5500CE4A7A /* WePecPeaViewController.m in Sources */,
 				90B31A6319554BCA00A19CD7 /* WeFunDetViewController.m in Sources */,
 				90A198F119614C7400C43534 /* WeInfoedTextField.m in Sources */,
@@ -962,6 +1072,7 @@
 				90F0CE92192717AC006A4605 /* WeCsrSelTilViewController.m in Sources */,
 				900E29821931BE88008BF61C /* WeExamination.m in Sources */,
 				90B31A5719544BAF00A19CD7 /* WeFunIdxViewController.m in Sources */,
+				906F4DD41973D0AD007807FE /* AlixPayOrder.m in Sources */,
 				90B31A50194BF61B00A19CD7 /* WeFavorPatient.m in Sources */,
 				90B31A871958548900A19CD7 /* WeFundingSupport.m in Sources */,
 				90B31A6C195785DA00A19CD7 /* WeFunSup2ViewController.m in Sources */,
@@ -972,6 +1083,7 @@
 				900E298F193220C5008BF61C /* WeCahExaAddIteViewController.m in Sources */,
 				900E28CB19290239008BF61C /* WeMessage.m in Sources */,
 				900EB758195941D9006BBA04 /* WePecTrhViewController.m in Sources */,
+				906F4DD71973D0AD007807FE /* NSString+SBJSON.m in Sources */,
 				90B31A761957AE1A00A19CD7 /* WeFunSelTopSecViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1100,6 +1212,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/AplusDr/arm/lib",
 					"$(PROJECT_DIR)/AplusDr/VoiceConvert/lib",
+					"$(PROJECT_DIR)/AplusDr",
+					"$(PROJECT_DIR)/AplusDr/alipay",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1124,6 +1238,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/AplusDr/arm/lib",
 					"$(PROJECT_DIR)/AplusDr/VoiceConvert/lib",
+					"$(PROJECT_DIR)/AplusDr",
+					"$(PROJECT_DIR)/AplusDr/alipay",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

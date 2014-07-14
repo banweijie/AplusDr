@@ -950,7 +950,7 @@
 - (void)newConsultButton_onPress:(id)sender {
     WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
     vc.pushType = @"consultingRoom";
-    vc.favorDoctor = favorDoctorList[we_doctorChating];
+    vc.currentDoctor = favorDoctorList[we_doctorChating];
     //doctorViewing = favorDoctors[we_doctorChating];
     
     WeNavViewController * nav = [[WeNavViewController alloc] init];
