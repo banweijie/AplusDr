@@ -22,14 +22,14 @@
 #import "WeCaseRecord.h"
 #import "WeRecordDrug.h"
 #import "WeExamination.h"
-
+#import "WeOrder.h"
+#import "WeTabBarViewController.h"
 
 @interface WeAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 //@property (strong, atomic) WeUser * currentUser;
 
-+ (id)toArrayOrNSDictionary:(NSData *)jsonData;
 + (NSData *)sendPhoneNumberToServer:(NSString *)urlString paras:(NSString *)parasString;
 //+ (NSData *)post:(NSString *)urlString paras:(NSString *)parasString;
 + (NSData *)postToServer:(NSString *)urlString withParas:(NSString *)parasString;
@@ -42,6 +42,7 @@
 + (NSString *)transitionGenderFromChar:(NSString *)TypeOfPeriod;
 + (NSString *)transition:(NSString *)code asin:(NSString *)type;
 + (NSString *)transitionToDateFromSecond:(long long)s;
++ (NSString *)transitionToYearAndMonthFromSecond:(long long)s;
 + (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month;
 + (UIImage *)imageWithColor:(UIColor *)color;
 

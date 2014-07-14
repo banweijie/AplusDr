@@ -25,21 +25,14 @@
 
 - (void)setWithNSDictionary:(NSDictionary *)info {
     // 提取信息
-    /*
-    self.foreignId = [NSString stringWithFormat:@"%@", info[@"id"]];
-    self.orderId = [NSString stringWithFormat:@"%@", info[@"order"][@"id"]];
-    if (![info[@"supporter"] isEqual:[NSNull null]]) {
-        self.supporter = [[WePatient alloc] initWithNSDictionary:info[@"supporter"]];
-    }
-    self.paid = [[NSString stringWithFormat:@"%@", info[@"paid"]] isEqualToString:@"1"];
     
-    self.email = [NSString stringWithFormat:@"%@", info[@"email"]];
-    self.name = [NSString stringWithFormat:@"%@", info[@"name"]];
-    self.phone = [NSString stringWithFormat:@"%@", info[@"phone"]];
-    self.zip = [NSString stringWithFormat:@"%@", info[@"zip"]];
-    self.address = [NSString stringWithFormat:@"%@", info[@"address"]];
-    self.description = [NSString stringWithFormat:@"%@", info[@"description"]];
-    self.remark = [NSString stringWithFormat:@"%@", info[@"remark"]];*/
+    self.orderId = [NSString stringWithFormat:@"%@", info[@"id"]];
+    self.foreignId = [NSString stringWithFormat:@"%@", info[@"foreignId"]];
+    self.status = [NSString stringWithFormat:@"%@", info[@"status"]];
+    self.type = [NSString stringWithFormat:@"%@", info[@"type"]];
+    self.createTime = [info[@"createTime"] longLongValue] / 1000;
+    self.endTime = [info[@"endTime"] longLongValue] / 1000;
+    self.amount = [info[@"amount"] doubleValue];
 }
 
 @end

@@ -22,6 +22,8 @@
     UITabBarController<UITabBarControllerDelegate> * _tabBarController = (UITabBarController<UITabBarControllerDelegate> *)_window.rootViewController;
     _tabBarController.delegate = _tabBarController;
     
+    NSLog(@"%@", [WeTabBarViewController class]);
+    
     we_hospitalList = [[NSMutableDictionary alloc] init];
     we_sectionList = [[NSMutableDictionary alloc] init];
     caseRecords = [[NSMutableArray alloc] init];
@@ -79,21 +81,6 @@
     }
     if (month == 4 || month == 6 || month == 9 || month == 11) return 30;
     return 31;
-}
-
-+ (NSDictionary *)toArrayOrNSDictionary:(NSData *)jsonData{
-    NSError *error = nil;
-    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                               options:kNilOptions
-                                                                 error:&error];
-    
-    if (jsonObject != nil && error == nil){
-        return jsonObject;
-    }else{
-        // 解析错误
-        return nil;
-    }
-    
 }
 
 # pragma mark - Networking
@@ -244,6 +231,15 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         }
     }
     return [NSString stringWithFormat:@"%lld", s];
+}
+
++ (NSString *)transitionToYearAndMonthFromSecond:(long long)s {
+    NSDate * t = [NSDate dateWithTimeIntervalSince1970:s];
+    NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents * the = [calendar components:unitFlags fromDate:t];
+    
+    return [NSString stringWithFormat:@"%d年%02d月", [the year], [the month]];
 }
 
 + (NSData *)sendPhoneNumberToServer:(NSString *)urlString paras:(NSString *)parasString

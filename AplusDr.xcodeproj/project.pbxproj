@@ -50,7 +50,6 @@
 		9026EEF01904EE5500CE4A7A /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB21904EE5500CE4A7A /* VPImageCropperViewController.m */; };
 		9026EEF11904EE5500CE4A7A /* WeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB41904EE5500CE4A7A /* WeTableViewCell.m */; };
 		9026EEF21904EE5500CE4A7A /* WeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */; };
-		9026EEF31904EE5500CE4A7A /* WeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */; };
 		9026EEF61904EE5500CE4A7A /* WeRegWlcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEBE1904EE5500CE4A7A /* WeRegWlcViewController.m */; };
 		9026EEF71904EE5500CE4A7A /* WeRegIpnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEC01904EE5500CE4A7A /* WeRegIpnViewController.m */; };
 		9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEC21904EE5500CE4A7A /* WeRegIvcViewController.m */; };
@@ -71,7 +70,7 @@
 		906F4DDB1973D0AD007807FE /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DC91973D0AD007807FE /* SBJsonWriter.m */; };
 		906F4DDC1973D0AD007807FE /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DCA1973D0AD007807FE /* libcrypto.a */; };
 		906F4DDD1973D0AD007807FE /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DCB1973D0AD007807FE /* libssl.a */; };
-		906F4DDE1973E303007807FE /* AlixPaylib.a in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DB61973D0AD007807FE /* AlixPaylib.a */; };
+		906F4DE719743EA7007807FE /* WeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */; };
 		907D5B37192014230006EAE0 /* WeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B36192014230006EAE0 /* WeViewController.m */; };
 		907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B3D1920164B0006EAE0 /* WeCsrIdxViewController.m */; };
 		907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */; };
@@ -249,6 +248,8 @@
 		906F4DCD1973D0AD007807FE /* DataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSigner.h; sourceTree = "<group>"; };
 		906F4DCE1973D0AD007807FE /* DataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVerifier.h; sourceTree = "<group>"; };
 		906F4DCF1973D0AD007807FE /* PartnerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartnerConfig.h; sourceTree = "<group>"; };
+		906F4DE319740296007807FE /* libPods-LKDBHelper.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-LKDBHelper.a"; path = "Pods/build/Debug-iphoneos/libPods-LKDBHelper.a"; sourceTree = "<group>"; };
+		906F4DE51974029B007807FE /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
 		907D5B35192014230006EAE0 /* WeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeViewController.h; sourceTree = "<group>"; };
 		907D5B36192014230006EAE0 /* WeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeViewController.m; sourceTree = "<group>"; };
 		907D5B3C1920164B0006EAE0 /* WeCsrIdxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrIdxViewController.h; sourceTree = "<group>"; };
@@ -499,6 +500,8 @@
 		9026EE181904E8A700CE4A7A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				906F4DE51974029B007807FE /* libPods-AFNetworking.a */,
+				906F4DE319740296007807FE /* libPods-LKDBHelper.a */,
 				90B31A3B1947AA6C00A19CD7 /* libsqlite3.dylib */,
 				9026EE191904E8A700CE4A7A /* Foundation.framework */,
 				9026EE1B1904E8A700CE4A7A /* CoreGraphics.framework */,
@@ -996,8 +999,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				906F4DDE1973E303007807FE /* AlixPaylib.a in Sources */,
-				9026EEF31904EE5500CE4A7A /* WeTabBarViewController.m in Sources */,
+				906F4DE719743EA7007807FE /* WeTabBarViewController.m in Sources */,
 				900E2989193202F7008BF61C /* WeCahAddExaViewController.m in Sources */,
 				907D5B6E1920DB430006EAE0 /* WeSPViewController.m in Sources */,
 				90B31A841958343300A19CD7 /* WeFunMySupViewController.m in Sources */,
@@ -1200,6 +1202,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B7BF13CDE3A84113994A769D /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = armv7s;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1214,10 +1217,13 @@
 					"$(PROJECT_DIR)/AplusDr/VoiceConvert/lib",
 					"$(PROJECT_DIR)/AplusDr",
 					"$(PROJECT_DIR)/AplusDr/alipay",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = armv7s;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1226,6 +1232,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B7BF13CDE3A84113994A769D /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = armv7s;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1240,10 +1247,13 @@
 					"$(PROJECT_DIR)/AplusDr/VoiceConvert/lib",
 					"$(PROJECT_DIR)/AplusDr",
 					"$(PROJECT_DIR)/AplusDr/alipay",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = armv7s;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

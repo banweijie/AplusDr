@@ -13,12 +13,115 @@
     UITableView * sys_tableView;
     UIButton * refreshButton;
     
-    NSArray * orderList;
+    NSMutableArray * orderList;
 }
 
 @end
 
 @implementation WePecTrhViewController
+
+#pragma mark - UITableView Delegate & DataSource
+
+// 将展示某个Cell触发的事件
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.alpha = We_alpha_cell_general;;
+    cell.opaque = YES;
+}
+// 欲选中某个Cell触发的事件
+- (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
+{
+    return path;
+}
+// 选中某个Cell触发的事件
+- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
+{
+    [tv deselectRowAtIndexPath:path animated:YES];
+}
+// 询问每个cell的高度
+- (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return tv.rowHeight * 2;
+}
+// 询问每个段落的头部高度
+- (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) return 30;
+    return 30;
+}
+// 询问每个段落的头部标题
+- (NSString *)tableView:(UITableView *)tv titleForHeaderInSection:(NSInteger)section {
+    return @"";
+}
+// 询问每个段落的头部
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
+    [view setBackgroundColor:We_background_red_general];
+    UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 100, 30)];
+    l1.font = We_font_textfield_zh_cn;
+    l1.textColor = We_foreground_white_general;
+    l1.text = [WeAppDelegate transitionToYearAndMonthFromSecond:[(WeOrder *)orderList[section][0] createTime]];
+    [view addSubview:l1];
+    return view;
+}
+// 询问每个段落的尾部高度
+- (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
+    if (section == [self numberOfSectionsInTableView:tv] - 1) {
+        return 1 + self.tabBarController.tabBar.frame.size.height;
+    }
+    return 1;
+}
+// 询问每个段落的尾部标题
+- (NSString *)tableView:(UITableView *)tv titleForFooterInSection:(NSInteger)section {
+    return @"";
+}
+// 询问每个段落的尾部
+-(UIView *)tableView:(UITableView *)tv viewForFooterInSection:(NSInteger)section{
+    //if (section == 1) return sys_countDown_demo;
+    return nil;
+}
+// 询问共有多少个段落
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
+    return [orderList count];
+}
+// 询问每个段落有多少条目
+- (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
+    return [orderList[section] count];
+}
+// 询问每个具体条目的内容
+- (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *MyIdentifier = @"MyReuseIdentifier";
+    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
+    }
+    cell.opaque = NO;
+    cell.backgroundColor = We_background_cell_general;
+    
+    WeOrder * currentOrder = orderList[indexPath.section][indexPath.row];
+    
+    UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 200, 40)];
+    [l1 setFont:We_font_textfield_large_zh_cn];
+    [l1 setTextColor:We_foreground_black_general];
+    [l1 setTextAlignment:NSTextAlignmentLeft];
+    [l1 setText:currentOrder.type];
+    [cell.contentView addSubview:l1];
+    
+    UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 38, 200, 40)];
+    [l2 setFont:We_font_textfield_zh_cn];
+    [l2 setTextColor:We_foreground_gray_general];
+    [l2 setTextAlignment:NSTextAlignmentLeft];
+    [l2 setText:[WeAppDelegate transitionToDateFromSecond:currentOrder.createTime]];
+    [cell.contentView addSubview:l2];
+    
+    UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 260, 88)];
+    [l3 setFont:We_font_textfield_large_zh_cn];
+    [l3 setTextColor:We_foreground_gray_general];
+    [l3 setTextAlignment:NSTextAlignmentRight];
+    [l3 setText:[NSString stringWithFormat:@"￥%f", currentOrder.amount]];
+    [cell.contentView addSubview:l3];
+    
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    
+    return cell;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,12 +155,12 @@
     refreshButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     refreshButton.frame = self.view.frame;
     [refreshButton setTitle:@"获取交易记录列表失败，点击刷新" forState:UIControlStateNormal];
-    [refreshButton addTarget:self action:@selector(refreshButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
+    [refreshButton addTarget:self action:@selector(refreshButton_onPress) forControlEvents:UIControlEventTouchUpInside];
     [refreshButton setTintColor:We_foreground_red_general];
     [self.view addSubview:refreshButton];
     
     // 表格
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64 - 85) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
@@ -77,16 +180,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)refreshButton_onPress {
+    [self api_patient_listOrders];
+}
+
 - (void)api_patient_listOrders {
     [sys_pendingView startAnimating];
     [refreshButton setHidden:YES];
     [sys_tableView setHidden:YES];
     
-    [WeAppDelegate postToServerWithField:@"patient" action:@"listMySupports"
+    [WeAppDelegate postToServerWithField:@"patient" action:@"listOrders"
                               parameters:nil
                                  success:^(id response) {
-                                     orderList = response;
-                                     
+                                     orderList = [self preworkOnOrderList:[NSMutableArray arrayWithArray:response[@"list"]]];
                                      [sys_tableView reloadData];
                                      [sys_tableView setHidden:NO];
                                      [sys_pendingView stopAnimating];
@@ -97,20 +203,28 @@
                                  }];
 }
 
-- (void)preworkOnOrderList:(id)sender {
-    /*
-    [caseRecords sortUsingComparator:^NSComparisonResult(id rA, id rB) {
-        return [[(WeCaseRecord *)rB date] compare:[(WeCaseRecord *)rA date]];
+- (NSMutableArray *)preworkOnOrderList:(id)response {
+    NSMutableArray * sourceData = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [response count]; i ++) {
+        [sourceData addObject:[[WeOrder alloc] initWithNSDictionary:response[i]]];
+    }
+    
+    [sourceData sortUsingComparator:^NSComparisonResult(id rA, id rB) {
+        return (WeOrder *)rA < (WeOrder *)rB;
     }];
+    
+    NSMutableArray * tableViewData0 = [[NSMutableArray alloc] init];
     tableViewData0 = [[NSMutableArray alloc] init];
     int j = -1;
-    for (int i = 0; i < [caseRecords count]; i ++) {
-        if (i == 0 || ![[self getYearAndMonth:[(WeCaseRecord *)caseRecords[i] date]] isEqualToString:[self getYearAndMonth:[(WeCaseRecord *)caseRecords[i - 1] date]]]) {
+    for (int i = 0; i < [sourceData count]; i ++) {
+        if (i == 0 || ![[WeAppDelegate transitionToYearAndMonthFromSecond:[(WeOrder *)sourceData[i] createTime]] isEqualToString:[WeAppDelegate transitionToYearAndMonthFromSecond:[(WeOrder *)sourceData[i - 1] createTime]]]) {
             j ++;
             tableViewData0[j] = [[NSMutableArray alloc] init];
         }
-        [tableViewData0[j] addObject:caseRecords[i]];
-    }*/
+        [tableViewData0[j] addObject:sourceData[i]];
+    }
+    
+    return tableViewData0;
 }
 
 /*

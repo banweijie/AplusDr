@@ -13,8 +13,8 @@
 @property(nonatomic, strong) NSString * orderId;
 @property(nonatomic, strong) NSString * foreignId;
 @property(nonatomic, strong) NSString * type;
-@property(nonatomic) long createTime;
-@property(nonatomic) long endTime;
+@property(nonatomic) long long createTime;
+@property(nonatomic) long long endTime;
 @property(nonatomic, strong) NSString * status;
 @property(nonatomic) double amount;
 

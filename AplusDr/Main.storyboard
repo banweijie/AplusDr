@@ -865,7 +865,7 @@
         <scene sceneID="en2-Pj-vxV">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XGd-ZI-Fqp" customClass="WeNavViewController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="搜索医生" id="Ivp-sT-xm9"/>
+                    <tabBarItem key="tabBarItem" title="搜索医生" image="tab-adddoctor" id="Ivp-sT-xm9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tFC-Sr-fjw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -882,6 +882,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="tab-adddoctor" width="26" height="23"/>
         <image name="tab-casehistory" width="22" height="25"/>
         <image name="tab-chatroom" width="25" height="24"/>
         <image name="tab-crowdfunding" width="33" height="24"/>
