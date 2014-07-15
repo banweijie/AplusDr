@@ -465,13 +465,13 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 #pragma mark - Alipay
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    NSLog(@"!!!!");
+    NSLog(@"AppDelegate!!!!");
 	[self parse:url application:application];
     return YES;
 }
 //独立客户端回调函数
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-	NSLog(@"!!!!");
+	NSLog(@"AppDelegate!!!!");
 	[self parse:url application:application];
 	return YES;
 }

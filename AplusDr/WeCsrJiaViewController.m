@@ -11,8 +11,10 @@
 @interface WeCsrJiaViewController () {
     UIView * sys_explaination_view;
     UILabel * sys_explaination_label;
+    UIActivityIndicatorView * sys_pendingView;
     UITableView * sys_tableView;
     
+    /*
     // 日历
     UIScrollView * sys_calenderView;
     UIButton * lastMonth;
@@ -27,7 +29,16 @@
     
     NSInteger centerYear;
     NSInteger centerMonth;
-    NSMutableArray * calenderViews;
+    NSMutableArray * calenderViews;*/
+    
+    NSMutableString * dates;
+    NSMutableString * datesToDemo;
+    
+    // 加号预诊信息
+    NSMutableString * user_gender;
+    NSMutableString * user_age;
+    NSMutableString * user_name;
+    NSMutableString * user_idNum;
 }
 #define cacheWidth 5
 @end
@@ -38,10 +49,6 @@
  [AREA]
  UITableView dataSource & delegate interfaces
  */
-- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.alpha = We_alpha_cell_general;
-    cell.opaque = YES;
-}
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
@@ -50,11 +57,54 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
+    if (path.section == 2) {
+        WeCsrJiaChooseTimeViewController * vc = [[WeCsrJiaChooseTimeViewController alloc] init];
+        vc.currentDoctor = self.currentDoctor;
+        vc.dates = dates;
+        vc.datesToDemo = datesToDemo;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (path.section == 3 && path.row == 0) {
+        WeSentenceModifyViewController * vc = [[WeSentenceModifyViewController alloc] init];
+        vc.stringToBeTitle = @"年龄";
+        vc.stringToModify = user_age;
+        vc.stringToPlaceHolder = @"";
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (path.section == 3 && path.row == 1) {
+        WeGenderPickerViewController * vc = [[WeGenderPickerViewController alloc] init];
+        vc.stringToBeTitle = @"性别";
+        vc.stringToModify = user_gender;
+        vc.stringToPlaceHolder = @"";
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (path.section == 3 && path.row == 2) {
+        WeSentenceModifyViewController * vc = [[WeSentenceModifyViewController alloc] init];
+        vc.stringToBeTitle = @"真实姓名";
+        vc.stringToModify = user_name;
+        vc.stringToPlaceHolder = @"";
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (path.section == 3 && path.row == 3) {
+        WeSentenceModifyViewController * vc = [[WeSentenceModifyViewController alloc] init];
+        vc.stringToBeTitle = @"身份证号";
+        vc.stringToModify = user_idNum;
+        vc.stringToPlaceHolder = @"";
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (path.section == 4 && path.row == 0) {
+        [self api_patient_addJiahao];
+    }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 2) return sys_calenderView.frame.size.height;
+    if (indexPath.section == 2) return tv.rowHeight * 1.5; //sys_calenderView.frame.size.height;
     return tv.rowHeight;
 }
 // 询问每个段落的头部高度
@@ -67,13 +117,14 @@
     if (section == 0) return @"医生业务设置";
     if (section == 1) return @"出诊时间";
     if (section == 2) return @"选择加号时间";
+    if (section == 3) return @"加号预诊信息";
     return @"";
 }
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
     //if (section == 1) return 30;
     if (section == 0) return 60;
-    if (section == [self numberOfSectionsInTableView:tv] - 1) return 100;
+    if (section == [self numberOfSectionsInTableView:tv] - 1) return 30;
     return 10;
 }
 -(UIView *)tableView:(UITableView *)tv viewForFooterInSection:(NSInteger)section{
@@ -82,14 +133,15 @@
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
-    return 4;
+    return 5;
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
     if (section == 0) return 1;
     if (section == 1) return [self.currentDoctor.workPeriod length] / 4;
     if (section == 2) return 1;
-    if (section == 3) return 1;
+    if (section == 3) return 4;
+    if (section == 4) return 1;
     return 0;
 }
 // 询问每个具体条目的内容
@@ -99,6 +151,8 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
     }
+    [cell setBackgroundColor:We_background_cell_general];
+    
     [[cell imageView] setContentMode:UIViewContentModeCenter];
     if (indexPath.section == 0 && indexPath.row == 0) {
         cell.contentView.backgroundColor = We_background_cell_general;
@@ -121,7 +175,57 @@
         cell.detailTextLabel.textColor = We_foreground_gray_general;
     }
     if (indexPath.section == 2) {
-        [cell.contentView addSubview:sys_calenderView];
+        [cell.textLabel setNumberOfLines:0];
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        if ([datesToDemo isEqualToString:@""]) {
+            [cell.textLabel setText:@"任意时刻均可"];
+        }
+        else {
+            [cell.textLabel setText:datesToDemo];
+        }
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 3 && indexPath.row == 0) {
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setTextColor:We_foreground_black_general];
+        [cell.textLabel setText:@"年龄"];
+        [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+        [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+        [cell.detailTextLabel setText:user_age];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 3 && indexPath.row == 1) {
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setTextColor:We_foreground_black_general];
+        [cell.textLabel setText:@"性别"];
+        [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+        [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+        [cell.detailTextLabel setText:[WeAppDelegate transitionGenderFromChar:user_gender]];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 3 && indexPath.row == 2) {
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setTextColor:We_foreground_black_general];
+        [cell.textLabel setText:@"真实姓名"];
+        [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+        [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+        [cell.detailTextLabel setText:user_name];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 3 && indexPath.row == 3) {
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setTextColor:We_foreground_black_general];
+        [cell.textLabel setText:@"身份证号"];
+        [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+        [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+        [cell.detailTextLabel setText:user_idNum];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 4 && indexPath.row == 0) {
+        [cell setBackgroundColor:We_background_red_tableviewcell];
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setText:@"确认加号"];
+        [cell.textLabel setTextColor:We_foreground_white_general];
     }
     return cell;
 }
@@ -139,6 +243,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+/*
 - (UIView *)newCalenderAtBias:(NSInteger)Bias withFrame:(CGRect)frame {
     int month = centerMonth;
     int year = centerYear;
@@ -180,7 +285,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSLog(@"!!!!!!!!!!");
     [self resetCenter];
-}
+}*/
 
 - (void)viewDidLoad
 {
@@ -217,7 +322,24 @@
     sys_tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:sys_tableView];
     
+    // 转圈圈
+    sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    [sys_pendingView setAlpha:1.0];
+    [self.view addSubview:sys_pendingView];
     
+    // 加号时间
+    dates = [[NSMutableString alloc] init];
+    datesToDemo = [[NSMutableString alloc] init];
+    
+    // 加号预诊信息
+    user_gender = [[NSMutableString alloc] initWithString:currentUser.gender];
+    user_age = [[NSMutableString alloc] initWithString:@""];
+    user_name = [[NSMutableString alloc] initWithString:currentUser.trueName];
+    user_idNum = [[NSMutableString alloc] initWithString:currentUser.idNum];
+    
+    /*
     // Calender
     NSDate * date = [NSDate date];
     NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -228,8 +350,9 @@
     centerMonth = [now month];
     
     sys_calenderView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 8 * 45 + 10)];
-    sys_calenderView.contentSize = CGSizeMake(320 * 5, 150);
-    [sys_calenderView scrollRectToVisible:CGRectMake(0, 0, 320, 150) animated:NO];
+    [sys_calenderView setBackgroundColor:[UIColor clearColor]];
+    sys_calenderView.contentSize = CGSizeMake(320, 150);
+    //[sys_calenderView scrollRectToVisible:CGRectMake(0, 0, 320, 150) animated:NO];
     for (int i = 0; i < cacheWidth; i++) calenderViews[i] = [self newCalenderAtBias:i - cacheWidth / 2 withFrame:CGRectMake(0, 320 * i, 320, 150)];
     for (int i = 0; i < cacheWidth; i++) [sys_calenderView addSubview:calenderViews[i]];
     sys_calenderView.pagingEnabled = YES;
@@ -283,8 +406,11 @@
         [calenderDayPart1 addObject:[[NSMutableArray alloc] init]];
         [calenderDayPart2 addObject:[[NSMutableArray alloc] init]];
         for (int j = 0; j < 7; j++) {
-            UIView * tmpView = [[UIView alloc] initWithFrame:CGRectMake(3 + 45 * j, 45 * (i + 2), 44, 44)];
+            WeInfoedButton * tmpView = [WeInfoedButton buttonWithType:UIButtonTypeRoundedRect];
+            [tmpView setUserData:@{@"i":[NSNumber numberWithInt:i], @"j":[NSNumber numberWithInt:j]}];
+            [tmpView setFrame:CGRectMake(3 + 45 * j, 45 * (i + 2), 44, 44)];
             [tmpView setBackgroundColor:[UIColor grayColor]];
+            [tmpView addTarget:self action:@selector(chooseDate:) forControlEvents:UIControlEventTouchUpInside];
             [calenderDayView[i] addObject:tmpView];
             
             UILabel * tmpDate = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
@@ -317,11 +443,16 @@
     
     currentYear = 2014;
     currentMonth = 6;
-    [self setCalender];
+    [self setCalender];*/
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [sys_tableView reloadData];
+}
+
+/*
 - (void)lastMonth_onPress:(id)sender {
-    NSLog(@"!!!!");
     currentMonth --;
     if (currentMonth < 1) {
         currentYear --;
@@ -332,7 +463,6 @@
 }
 
 - (void)nextMonth_onPress:(id)sender {
-    NSLog(@"!!!!");
     currentMonth ++;
     if (currentMonth > 12) {
         currentYear ++;
@@ -357,15 +487,25 @@
         for (int j = 0; j < 7; j++) {
             UIView * tmpView = calenderDayView[i][j];
             [tmpView setBackgroundColor:We_foreground_white_general];
+            
+            UILabel * tmpPart1 = calenderDayPart1[i][j];
+            [tmpPart1 setText:@""];
+            
+            UILabel * tmpPart2 = calenderDayPart2[i][j];
+            [tmpPart2 setText:@""];
+            
+            UILabel * tmpDate = calenderDayDate[i][j];
+            [tmpDate setText:@""];
         }
     
     int i = 0, j = (the.weekday + 5) % 7;
     for (int k = 0; k < [WeAppDelegate calcDaysByYear:currentYear andMonth:currentMonth]; k++) {
         UIView * tmpView = calenderDayView[i][j];
-        [tmpView setBackgroundColor:We_foreground_gray_general];
+        [tmpView setBackgroundColor:We_foreground_white_general];
         
         UILabel * tmpDate = calenderDayDate[i][j];
         tmpDate.text = [NSString stringWithFormat:@"%d", k + 1];
+        [tmpDate setTextColor:We_foreground_gray_general];
         
         UILabel * tmpPart1 = calenderDayPart1[i][j];
         UILabel * tmpPart2 = calenderDayPart2[i][j];
@@ -407,10 +547,10 @@
         j ++; if (j == 7) { i ++; j = 0; }
     }
 
-    /*
-    NSString *newDateString = [outputFormatter stringFromDate:formatterDate];
-    */
-}
+ 
+    //NSString *newDateString = [outputFormatter stringFromDate:formatterDate];
+ 
+}*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -418,6 +558,101 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - apis
+
+- (void)api_patient_addJiahao {
+    [sys_pendingView startAnimating];
+    [WeAppDelegate postToServerWithField:@"patient" action:@"addJiahao"
+                              parameters:@{
+                                           @"jiahao.doctor.id":self.currentDoctor.userId,
+                                           @"jiahao.gender":user_gender,
+                                           @"jiahao.age":user_age,
+                                           @"jiahao.name":user_name,
+                                           @"jiahao.idNum":user_idNum,
+                                           @"jiahao.dates":dates
+                                           }
+                                 success:^(id response) {
+                                     NSString * orderId = [NSString stringWithFormat:@"%@", response[@"order"][@"id"]];
+                                     NSLog(@"\norderId = %@", orderId);
+                                     
+                                     AlixPayOrder * newOrder = [[AlixPayOrder alloc] init];
+                                     newOrder.partner = PartnerID;
+                                     newOrder.seller = SellerID;
+                                     newOrder.tradeNO = orderId;
+                                     newOrder.productName = @"加号预诊费";
+                                     newOrder.productDescription = @"加号预诊费的描述";
+                                     newOrder.amount = self.currentDoctor.plusPrice;
+                                     newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
+                                     
+                                     NSString * appScheme = @"AplusDr";
+                                     NSString * orderInfo = [newOrder description];
+                                     NSString * signedStr = [CreateRSADataSigner(PartnerPrivKey) signString:orderInfo];
+                                     
+                                     NSLog(@"%@",signedStr);
+                                     
+                                     NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                                                              orderInfo, signedStr, @"RSA"];
+                                     
+                                     paymentCallback = self;
+                                     [AlixLibService payOrder:orderString AndScheme:appScheme seletor:@selector(paymentResult:) target:self];
+
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     [[[UIAlertView alloc] initWithTitle:@"加号失败" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                     [sys_pendingView stopAnimating];
+                                 }];
+}
+
+#pragma mark - callBacks
+-(void)paymentHasBeenPayed {
+    NSLog(@"!!!!!!!!");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+-(void)paymentResult:(NSString *)resultd
+{
+    //结果处理
+#if ! __has_feature(objc_arc)
+    AlixPayResult* result = [[[AlixPayResult alloc] initWithString:resultd] autorelease];
+#else
+    AlixPayResult* result = [[AlixPayResult alloc] initWithString:resultd];
+#endif
+	if (result)
+    {
+		
+		if (result.statusCode == 9000)
+        {
+			/*
+			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
+			 */
+            
+            //交易成功
+            NSString* key = AlipayPubKey;//签约帐户后获取到的支付宝公钥
+			id<DataVerifier> verifier;
+            verifier = CreateRSADataVerifier(key);
+            
+			if ([verifier verifyString:result.resultString withSign:result.signString])
+            {
+                NSLog(@"success!");
+                [self paymentHasBeenPayed];
+                //验证签名成功，交易结果无篡改
+			}
+        }
+        else
+        {
+            NSLog(@"fail!");
+            //交易失败
+        }
+    }
+    else
+    {
+        NSLog(@"fail!");
+        //失败
+    }
+    
+}
 /*
  #pragma mark - Navigation
  

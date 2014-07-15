@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "WeAppDelegate.h"
+#import "WeInfoedButton.h"
+#import "WeCsrJiaChooseTimeViewController.h"
+#import "WeSentenceModifyViewController.h"
+#import "WeGenderPickerViewController.h"
 
-@interface WeCsrJiaViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface WeCsrJiaViewController : UIViewController <WePaymentCallback, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
-@property(strong, nonatomic) WeFavorDoctor * currentDoctor;
+@property(strong, nonatomic) WeDoctor * currentDoctor;
 
 @end

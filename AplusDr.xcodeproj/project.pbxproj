@@ -73,6 +73,8 @@
 		906F4DE719743EA7007807FE /* WeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */; };
 		906F4DEA19744ACE007807FE /* WePecTrdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DE919744ACE007807FE /* WePecTrdViewController.m */; };
 		906F4DED1974502C007807FE /* WeConsult.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DEC1974502C007807FE /* WeConsult.m */; };
+		906F4DF119756443007807FE /* WeCsrJiaChooseTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DF019756443007807FE /* WeCsrJiaChooseTimeViewController.m */; };
+		906F4DF419758637007807FE /* WeGenderPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DF319758637007807FE /* WeGenderPickerViewController.m */; };
 		907D5B37192014230006EAE0 /* WeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B36192014230006EAE0 /* WeViewController.m */; };
 		907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B3D1920164B0006EAE0 /* WeCsrIdxViewController.m */; };
 		907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */; };
@@ -257,6 +259,10 @@
 		906F4DEB1974502C007807FE /* WeConsult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeConsult.h; sourceTree = "<group>"; };
 		906F4DEC1974502C007807FE /* WeConsult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeConsult.m; sourceTree = "<group>"; };
 		906F4DEE1974E51A007807FE /* WePaymentCallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WePaymentCallback.h; sourceTree = "<group>"; };
+		906F4DEF19756443007807FE /* WeCsrJiaChooseTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrJiaChooseTimeViewController.h; sourceTree = "<group>"; };
+		906F4DF019756443007807FE /* WeCsrJiaChooseTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrJiaChooseTimeViewController.m; sourceTree = "<group>"; };
+		906F4DF219758637007807FE /* WeGenderPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeGenderPickerViewController.h; sourceTree = "<group>"; };
+		906F4DF319758637007807FE /* WeGenderPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeGenderPickerViewController.m; sourceTree = "<group>"; };
 		907D5B35192014230006EAE0 /* WeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeViewController.h; sourceTree = "<group>"; };
 		907D5B36192014230006EAE0 /* WeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeViewController.m; sourceTree = "<group>"; };
 		907D5B3C1920164B0006EAE0 /* WeCsrIdxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrIdxViewController.h; sourceTree = "<group>"; };
@@ -603,6 +609,8 @@
 				90B31A7B195802A300A19CD7 /* WeSentenceModifyViewController.m */,
 				90B31A7D19582C0000A19CD7 /* WeParagraphModifyViewController.h */,
 				90B31A7E19582C0000A19CD7 /* WeParagraphModifyViewController.m */,
+				906F4DF219758637007807FE /* WeGenderPickerViewController.h */,
+				906F4DF319758637007807FE /* WeGenderPickerViewController.m */,
 			);
 			name = CustomsView;
 			sourceTree = "<group>";
@@ -719,6 +727,8 @@
 				900E2965192FE8DC008BF61C /* WeCsrCosSelGenViewController.m */,
 				90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */,
 				90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */,
+				906F4DEF19756443007807FE /* WeCsrJiaChooseTimeViewController.h */,
+				906F4DF019756443007807FE /* WeCsrJiaChooseTimeViewController.m */,
 			);
 			name = ConsultingRoom;
 			sourceTree = "<group>";
@@ -1029,6 +1039,7 @@
 				906F4DD61973D0AD007807FE /* NSObject+SBJSON.m in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
 				90B31A6F19579A6F00A19CD7 /* WeFunSelViewController.m in Sources */,
+				906F4DF119756443007807FE /* WeCsrJiaChooseTimeViewController.m in Sources */,
 				90B31A69195750C000A19CD7 /* WeFunSupViewController.m in Sources */,
 				90B31A601955348100A19CD7 /* WeFundingLevel.m in Sources */,
 				900E296D193080EA008BF61C /* WeCaseRecord.m in Sources */,
@@ -1065,6 +1076,7 @@
 				90F0CE741922CF55006A4605 /* WeInpNamViewController.m in Sources */,
 				9026EEF11904EE5500CE4A7A /* WeTableViewCell.m in Sources */,
 				900E29581929B44C008BF61C /* wav.mm in Sources */,
+				906F4DF419758637007807FE /* WeGenderPickerViewController.m in Sources */,
 				906F4DDA1973D0AD007807FE /* SBJsonParser.m in Sources */,
 				9026EEFC1904EE5500CE4A7A /* WePecPeaViewController.m in Sources */,
 				90B31A6319554BCA00A19CD7 /* WeFunDetViewController.m in Sources */,

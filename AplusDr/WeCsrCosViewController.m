@@ -397,7 +397,7 @@
 #pragma mark - callBacks
 -(void)paymentHasBeenPayed {
     NSLog(@"!!!!!!!!");
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -426,6 +426,7 @@
 			if ([verifier verifyString:result.resultString withSign:result.signString])
             {
                 NSLog(@"success!");
+                [self paymentHasBeenPayed];
                 //验证签名成功，交易结果无篡改
 			}
         }
