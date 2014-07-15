@@ -123,20 +123,29 @@
     [l2 setText:[WeAppDelegate transitionToDateFromSecond:currentOrder.createTime]];
     [cell.contentView addSubview:l2];
     
-    UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 260, 88)];
+    UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 260, 40)];
     [l3 setFont:We_font_textfield_large_zh_cn];
-    if ([currentOrder.status isEqualToString:@"C"]) {
-        [l3 setTextColor:We_foreground_gray_general];
-    }
-    else if ([currentOrder.status isEqualToString:@"W"]) {
-        [l3 setTextColor:We_foreground_red_general];
-    }
-    else if ([currentOrder.status isEqualToString:@"P"]) {
-        [l3 setTextColor:We_foreground_black_general];
-    }
+    [l3 setTextColor:We_foreground_black_general];
     [l3 setTextAlignment:NSTextAlignmentRight];
     [l3 setText:[NSString stringWithFormat:@"￥%.0f", currentOrder.amount]];
     [cell.contentView addSubview:l3];
+    
+    UILabel * l4 = [[UILabel alloc] initWithFrame:CGRectMake(20, 38, 260, 40)];
+    [l4 setFont:We_font_textfield_zh_cn];
+    if ([currentOrder.status isEqualToString:@"C"]) {
+        [l4 setTextColor:We_foreground_gray_general];
+        [l4 setText:@"交易取消"];
+    }
+    else if ([currentOrder.status isEqualToString:@"W"]) {
+        [l4 setTextColor:We_foreground_red_general];
+        [l4 setText:@"等待支付"];
+    }
+    else if ([currentOrder.status isEqualToString:@"P"]) {
+        [l4 setTextColor:We_foreground_black_general];
+        [l4 setText:@"交易完成"];
+    }
+    [l4 setTextAlignment:NSTextAlignmentRight];
+    [cell.contentView addSubview:l4];
     
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     

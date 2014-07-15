@@ -269,7 +269,6 @@
                                            @"orderId":self.currentOrderId
                                            }
                                  success:^(id response) {
-                                     NSLog(@"%@", response);
                                      currentOrder = [[WeOrder alloc] initWithNSDictionary:response];
                                      if ([currentOrder.type isEqualToString:@"C"]) {
                                          currentConsult = [[WeConsult alloc] initWithNSDictionary:response[@"foreignObject"]];
