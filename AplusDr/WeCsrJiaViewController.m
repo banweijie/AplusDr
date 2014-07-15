@@ -34,7 +34,6 @@
 
 @implementation WeCsrJiaViewController
 
-@synthesize favorDoctor;
 /*
  [AREA]
  UITableView dataSource & delegate interfaces
@@ -88,7 +87,7 @@
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
     if (section == 0) return 1;
-    if (section == 1) return [self.favorDoctor.workPeriod length] / 4;
+    if (section == 1) return [self.currentDoctor.workPeriod length] / 4;
     if (section == 2) return 1;
     if (section == 3) return 1;
     return 0;
@@ -108,16 +107,16 @@
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
         
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@元/次", favorDoctor.plusPrice];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@元/次", self.currentDoctor.plusPrice];
         cell.detailTextLabel.font = We_font_textfield_zh_cn;
         cell.detailTextLabel.textColor = We_foreground_black_general;
     }
     if (indexPath.section == 1) {
         cell.contentView.backgroundColor = We_background_cell_general;
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [WeAppDelegate transitionDayOfWeekFromChar:[favorDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 1, 1)]], [WeAppDelegate transitionPeriodOfDayFromChar:[favorDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 2, 1)]]];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [WeAppDelegate transitionDayOfWeekFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 1, 1)]], [WeAppDelegate transitionPeriodOfDayFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 2, 1)]]];
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
-        cell.detailTextLabel.text = [WeAppDelegate transitionTypeOfPeriodFromChar:[favorDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 3, 1)]];
+        cell.detailTextLabel.text = [WeAppDelegate transitionTypeOfPeriodFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 3, 1)]];
         cell.detailTextLabel.font = We_font_textfield_zh_cn;
         cell.detailTextLabel.textColor = We_foreground_gray_general;
     }
@@ -370,11 +369,11 @@
         
         UILabel * tmpPart1 = calenderDayPart1[i][j];
         UILabel * tmpPart2 = calenderDayPart2[i][j];
-        for (int p = 0; p < [self.favorDoctor.workPeriod length] / 4; p++) {
-            NSString * workWeekday = [self.favorDoctor.workPeriod substringWithRange:NSMakeRange(p * 4 + 1, 1)];
+        for (int p = 0; p < [self.currentDoctor.workPeriod length] / 4; p++) {
+            NSString * workWeekday = [self.currentDoctor.workPeriod substringWithRange:NSMakeRange(p * 4 + 1, 1)];
             if ([workWeekday intValue] != j + 1) continue;
-            NSString * workDayPeriod = [self.favorDoctor.workPeriod substringWithRange:NSMakeRange(p * 4 + 2, 1)];
-            NSString * workPeriodType = [self.favorDoctor.workPeriod substringWithRange:NSMakeRange(p * 4 + 3, 1)];
+            NSString * workDayPeriod = [self.currentDoctor.workPeriod substringWithRange:NSMakeRange(p * 4 + 2, 1)];
+            NSString * workPeriodType = [self.currentDoctor.workPeriod substringWithRange:NSMakeRange(p * 4 + 3, 1)];
             
             if ([workDayPeriod isEqualToString:@"A"]) {
                 if ([workPeriodType isEqualToString:@"T"]) {

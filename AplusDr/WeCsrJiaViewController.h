@@ -11,6 +11,6 @@
 
 @interface WeCsrJiaViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
-@property(strong, nonatomic) WeFavorDoctor * favorDoctor;
+@property(strong, nonatomic) WeFavorDoctor * currentDoctor;
 
 @end
