@@ -71,6 +71,8 @@
 		906F4DDC1973D0AD007807FE /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DCA1973D0AD007807FE /* libcrypto.a */; };
 		906F4DDD1973D0AD007807FE /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DCB1973D0AD007807FE /* libssl.a */; };
 		906F4DE719743EA7007807FE /* WeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EEB81904EE5500CE4A7A /* WeTabBarViewController.m */; };
+		906F4DEA19744ACE007807FE /* WePecTrdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DE919744ACE007807FE /* WePecTrdViewController.m */; };
+		906F4DED1974502C007807FE /* WeConsult.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F4DEC1974502C007807FE /* WeConsult.m */; };
 		907D5B37192014230006EAE0 /* WeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B36192014230006EAE0 /* WeViewController.m */; };
 		907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B3D1920164B0006EAE0 /* WeCsrIdxViewController.m */; };
 		907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */; };
@@ -250,6 +252,10 @@
 		906F4DCF1973D0AD007807FE /* PartnerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartnerConfig.h; sourceTree = "<group>"; };
 		906F4DE319740296007807FE /* libPods-LKDBHelper.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-LKDBHelper.a"; path = "Pods/build/Debug-iphoneos/libPods-LKDBHelper.a"; sourceTree = "<group>"; };
 		906F4DE51974029B007807FE /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
+		906F4DE819744ACE007807FE /* WePecTrdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WePecTrdViewController.h; sourceTree = "<group>"; };
+		906F4DE919744ACE007807FE /* WePecTrdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePecTrdViewController.m; sourceTree = "<group>"; };
+		906F4DEB1974502C007807FE /* WeConsult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeConsult.h; sourceTree = "<group>"; };
+		906F4DEC1974502C007807FE /* WeConsult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeConsult.m; sourceTree = "<group>"; };
 		907D5B35192014230006EAE0 /* WeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeViewController.h; sourceTree = "<group>"; };
 		907D5B36192014230006EAE0 /* WeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeViewController.m; sourceTree = "<group>"; };
 		907D5B3C1920164B0006EAE0 /* WeCsrIdxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrIdxViewController.h; sourceTree = "<group>"; };
@@ -450,6 +456,8 @@
 			children = (
 				900EB756195941D9006BBA04 /* WePecTrhViewController.h */,
 				900EB757195941D9006BBA04 /* WePecTrhViewController.m */,
+				906F4DE819744ACE007807FE /* WePecTrdViewController.h */,
+				906F4DE919744ACE007807FE /* WePecTrdViewController.m */,
 			);
 			name = TransactionHistory;
 			sourceTree = "<group>";
@@ -856,6 +864,8 @@
 				90B31A47194BF19B00A19CD7 /* User */,
 				900E28C919290239008BF61C /* WeMessage.h */,
 				900E28CA19290239008BF61C /* WeMessage.m */,
+				906F4DEB1974502C007807FE /* WeConsult.h */,
+				906F4DEC1974502C007807FE /* WeConsult.m */,
 				900EB759195945EB006BBA04 /* WeOrder.h */,
 				900EB75A195945EB006BBA04 /* WeOrder.m */,
 			);
@@ -1007,6 +1017,7 @@
 				907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */,
 				900E29731930C847008BF61C /* WeCahAddCahViewController.m in Sources */,
 				90F0CE801926D0CA006A4605 /* WeCsrSelAreaViewController.m in Sources */,
+				906F4DED1974502C007807FE /* WeConsult.m in Sources */,
 				90B31A791957B4CE00A19CD7 /* WeFunSelSecSecViewController.m in Sources */,
 				90B31A4F194BF61B00A19CD7 /* WePatient.m in Sources */,
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
@@ -1032,6 +1043,7 @@
 				906F4DD81973D0AD007807FE /* SBJSON.m in Sources */,
 				9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */,
 				9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */,
+				906F4DEA19744ACE007807FE /* WePecTrdViewController.m in Sources */,
 				907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */,
 				900EB763195A2DC2006BBA04 /* WeImageButton.m in Sources */,
 				900EB75119588CC9006BBA04 /* WeFunMySup2ViewController.m in Sources */,

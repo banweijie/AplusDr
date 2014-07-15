@@ -23,7 +23,10 @@
 #import "WeRecordDrug.h"
 #import "WeExamination.h"
 #import "WeOrder.h"
+#import "WeConsult.h"
 #import "WeTabBarViewController.h"
+#import "WeFunding.h"
+#import "WeFundingSupport.h"
 
 @interface WeAppDelegate : UIResponder <UIApplicationDelegate>
 
