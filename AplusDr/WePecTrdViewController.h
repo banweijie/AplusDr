@@ -17,7 +17,7 @@
 #import "DataVerifier.h"
 #import "AlixPayOrder.h"
 
-@interface WePecTrdViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface WePecTrdViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, WePaymentCallback>
 
 @property(nonatomic, strong) NSString * currentOrderId;
 

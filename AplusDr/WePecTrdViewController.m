@@ -45,7 +45,7 @@
             newOrder.amount = [NSString stringWithFormat:@"%.0f", currentOrder.amount];
             newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
             
-            NSString * appScheme = @"ALIALIALI";
+            NSString * appScheme = @"AplusDr";
             NSString * orderInfo = [newOrder description];
             NSString * signedStr = [CreateRSADataSigner(PartnerPrivKey) signString:orderInfo];
             
@@ -54,6 +54,7 @@
             NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
                                      orderInfo, signedStr, @"RSA"];
             
+            paymentCallback = self;
             [AlixLibService payOrder:orderString AndScheme:appScheme seletor:@selector(paymentResult:) target:self];
         }
     }
@@ -228,6 +229,7 @@
 			if ([verifier verifyString:result.resultString withSign:result.signString])
             {
                 NSLog(@"success!");
+                [self paymentHasBeenPayed];
                 //验证签名成功，交易结果无篡改
 			}
         }
@@ -243,6 +245,11 @@
         //失败
     }
     
+}
+
+- (void)paymentHasBeenPayed {
+    currentOrder.status = @"P";
+    [sys_tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
