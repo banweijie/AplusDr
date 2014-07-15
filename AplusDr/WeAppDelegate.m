@@ -95,7 +95,12 @@
               NSString * errorMessage = @"未知的错误";
               NSString * result = [NSString stringWithFormat:@"%@", responseObject[@"result"]];
               if ([result isEqualToString:@"1"]) {
-                  success(responseObject[@"response"]);
+                  if ([action isEqualToString:@"getUnviewedMsg"] && [responseObject[@"response"] count] == 0) {
+                      success(responseObject[@"info"]);
+                  }
+                  else {
+                      success(responseObject[@"response"]);
+                  }
                   return;
               }
               if ([result isEqualToString:@"2"]) {

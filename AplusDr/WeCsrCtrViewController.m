@@ -683,70 +683,6 @@
     }
     
     [self sendAmrAudio:amrData wavAudio:wavData];
-    
-    /*
-    // 将图片上传至服务器
-    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [manager POST:yijiarenUrl(@"message", @"postFileMsg") parameters:@{
-                                                                       @"receiverId":we_doctorChating,
-                                                                       @"fileFileName":@"a.amr",
-                                                                       @"type":@"A",
-                                                                       @"fileContentType":@"audio/AMR"
-                                                                       }
-            constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                [formData appendPartWithFileData:amrData name:@"file" fileName:@"a.amr" mimeType:@"image/jpeg"];
-            }
-          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
-              NSString * errorMessage;
-              
-              NSString *result = [HTTPResponse objectForKey:@"result"];
-              result = [NSString stringWithFormat:@"%@", result];
-              if ([result isEqualToString:@"1"]) {
-                  NSLog(@"response : %@", HTTPResponse[@"response"]);
-                  WeMessage * newMessage = [[WeMessage alloc] initWithNSDictionary:HTTPResponse[@"response"]];
-                  newMessage.audioContent = wavData;
-                  newMessage.loading = NO;
-                  [we_messagesWithDoctor[we_doctorChating] addObject:newMessage];
-                  inputTextField.text = @"";
-                  [self textFieldDidChange:self];
-                  return;
-              }
-              if ([result isEqualToString:@"2"]) {
-                  NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-                  NSEnumerator *enumerator = [fields keyEnumerator];
-                  id key;
-                  while ((key = [enumerator nextObject])) {
-                      NSString * tmp1 = [fields objectForKey:key];
-                      if (tmp1 != NULL) errorMessage = tmp1;
-                  }
-              }
-              if ([result isEqualToString:@"3"]) {
-                  errorMessage = [HTTPResponse objectForKey:@"info"];
-              }
-              if ([result isEqualToString:@"4"]) {
-                  errorMessage = [HTTPResponse objectForKey:@"info"];
-              }
-              UIAlertView *notPermitted = [[UIAlertView alloc]
-                                           initWithTitle:@"发送信息失败"
-                                           message:errorMessage
-                                           delegate:nil
-                                           cancelButtonTitle:@"确定"
-                                           otherButtonTitles:nil];
-              [notPermitted show];
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Error: %@", error);
-              UIAlertView *notPermitted = [[UIAlertView alloc]
-                                           initWithTitle:@"发送信息失败"
-                                           message:@"未能连接服务器，请重试"
-                                           delegate:nil
-                                           cancelButtonTitle:@"确定"
-                                           otherButtonTitles:nil];
-              [notPermitted show];
-          }
-     ];
-    NSLog(@"Inside");*/
 }
 
 - (void)audioRecorderButtonTouchUpOutside:(id)sender {
@@ -951,8 +887,7 @@
     WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
     vc.pushType = @"consultingRoom";
     vc.currentDoctor = favorDoctorList[we_doctorChating];
-    //doctorViewing = favorDoctors[we_doctorChating];
-    
+        
     WeNavViewController * nav = [[WeNavViewController alloc] init];
     [nav pushViewController:vc animated:NO];
     
