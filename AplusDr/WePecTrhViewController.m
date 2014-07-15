@@ -35,6 +35,10 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
+    WePecTrdViewController * vc = [[WePecTrdViewController alloc] init];
+    vc.currentOrderId = [(WeOrder *)orderList[path.section][path.row] orderId];
+    [self.navigationController pushViewController:vc animated:YES];
+    
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
@@ -221,6 +225,7 @@
                                      [sys_pendingView stopAnimating];
                                  }
                                  failure:^(NSString * errorMessage) {
+                                     NSLog(@"%@", errorMessage);
                                      [refreshButton setHidden:NO];
                                      [sys_pendingView stopAnimating];
                                  }];

@@ -256,6 +256,7 @@
 		906F4DE919744ACE007807FE /* WePecTrdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePecTrdViewController.m; sourceTree = "<group>"; };
 		906F4DEB1974502C007807FE /* WeConsult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeConsult.h; sourceTree = "<group>"; };
 		906F4DEC1974502C007807FE /* WeConsult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeConsult.m; sourceTree = "<group>"; };
+		906F4DEE1974E51A007807FE /* WePaymentCallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WePaymentCallback.h; sourceTree = "<group>"; };
 		907D5B35192014230006EAE0 /* WeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeViewController.h; sourceTree = "<group>"; };
 		907D5B36192014230006EAE0 /* WeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeViewController.m; sourceTree = "<group>"; };
 		907D5B3C1920164B0006EAE0 /* WeCsrIdxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrIdxViewController.h; sourceTree = "<group>"; };
@@ -525,6 +526,7 @@
 			children = (
 				9026EEB51904EE5500CE4A7A /* WeAppDelegate.h */,
 				9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */,
+				906F4DEE1974E51A007807FE /* WePaymentCallback.h */,
 				9026EF111904EEFC00CE4A7A /* CustomsView */,
 				90F0CE6219228C97006A4605 /* Model */,
 				90B31A4A194BF1DD00A19CD7 /* View&Controller */,

@@ -458,6 +458,79 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
    return size;
 }
 
+#pragma mark - Alipay
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    NSLog(@"!!!!");
+	[self parse:url application:application];
+    return YES;
+}
+//独立客户端回调函数
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+	NSLog(@"!!!!");
+	[self parse:url application:application];
+	return YES;
+}
+
+- (void)parse:(NSURL *)url application:(UIApplication *)application {
+    
+    //结果处理
+    AlixPayResult* result = [self handleOpenURL:url];
+    
+	if (result)
+    {
+		
+		if (result.statusCode == 9000)
+        {
+			/*
+			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
+			 */
+            
+            NSLog(@"success!");
+            [paymentCallback paymentHasBeenPayed];
+            //交易成功
+            //            NSString* key = @"签约帐户后获取到的支付宝公钥";
+            //			id<DataVerifier> verifier;
+            //            verifier = CreateRSADataVerifier(key);
+            //
+            //			if ([verifier verifyString:result.resultString withSign:result.signString])
+            //            {
+            //                //验证签名成功，交易结果无篡改
+            //			}
+            
+        }
+        else
+        {
+            NSLog(@"failed");
+            //交易失败
+        }
+    }
+    else
+    {
+        NSLog(@"failed");
+        //失败
+    }
+    
+}
+
+- (AlixPayResult *)resultFromURL:(NSURL *)url {
+	NSString * query = [[url query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+#if ! __has_feature(objc_arc)
+    return [[[AlixPayResult alloc] initWithString:query] autorelease];
+#else
+	return [[AlixPayResult alloc] initWithString:query];
+#endif
+}
+
+- (AlixPayResult *)handleOpenURL:(NSURL *)url {
+	AlixPayResult * result = nil;
+	
+	if (url != nil && [[url host] compare:@"safepay"] == 0) {
+		result = [self resultFromURL:url];
+	}
+    
+	return result;
+}
+
 @end
 
 #import <CommonCrypto/CommonDigest.h> // Need to import for CC_MD5 access

@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "WeAppDelegate.h"
 
+// Alipay
+#import "AlixLibService.h"
+#import "PartnerConfig.h"
+#import "DataSigner.h"
+#import "AlixPayResult.h"
+#import "DataVerifier.h"
+#import "AlixPayOrder.h"
+
 @interface WePecTrdViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic, strong) NSString * currentOrderId;

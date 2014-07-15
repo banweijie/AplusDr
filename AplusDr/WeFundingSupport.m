@@ -30,7 +30,9 @@
 - (void)setWithNSDictionary:(NSDictionary *)info {
     // 提取信息
     self.supportId = [NSString stringWithFormat:@"%@", info[@"id"]];
-    self.orderId = [NSString stringWithFormat:@"%@", info[@"order"][@"id"]];
+    if (![info[@"order"] isEqual:[NSNull null]]) {
+        self.orderId = [NSString stringWithFormat:@"%@", info[@"order"][@"id"]];
+    }
     if (![info[@"supporter"] isEqual:[NSNull null]]) {
         self.supporter = [[WePatient alloc] initWithNSDictionary:info[@"supporter"]];
     }

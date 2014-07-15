@@ -11,6 +11,7 @@
 #import "WeAppDelegate.h"
 #import "WeCsrCosSelGenViewController.h"
 
+// Alipay
 #import "AlixLibService.h"
 #import "PartnerConfig.h"
 #import "DataSigner.h"
@@ -18,7 +19,7 @@
 #import "DataVerifier.h"
 #import "AlixPayOrder.h"
 
-@interface WeCsrCosViewController :  WeViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface WeCsrCosViewController :  WeViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, WePaymentCallback>
 
 @property(strong, nonatomic) NSString * pushType;
 @property(strong, nonatomic) WeDoctor * currentDoctor;

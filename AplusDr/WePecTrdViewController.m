@@ -24,6 +24,123 @@
 
 @implementation WePecTrdViewController
 
+#pragma mark - UITableView Delegate & DataSource
+
+// 欲选中某个Cell触发的事件
+- (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
+{
+    return path;
+}
+// 选中某个Cell触发的事件
+- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
+{
+    if (path.section == 2 && path.row == 0) {
+        if ([currentOrder.status isEqualToString:@"W"]) {
+            AlixPayOrder * newOrder = [[AlixPayOrder alloc] init];
+            newOrder.partner = PartnerID;
+            newOrder.seller = SellerID;
+            newOrder.tradeNO = currentOrder.orderId;
+            newOrder.productName = @"在线咨询";
+            newOrder.productDescription = @"在线咨询的描述";
+            newOrder.amount = [NSString stringWithFormat:@"%.0f", currentOrder.amount];
+            newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
+            
+            NSString * appScheme = @"ALIALIALI";
+            NSString * orderInfo = [newOrder description];
+            NSString * signedStr = [CreateRSADataSigner(PartnerPrivKey) signString:orderInfo];
+            
+            NSLog(@"%@",signedStr);
+            
+            NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                                     orderInfo, signedStr, @"RSA"];
+            
+            [AlixLibService payOrder:orderString AndScheme:appScheme seletor:@selector(paymentResult:) target:self];
+        }
+    }
+    if (path.section == 2 && path.row == 1) {
+        if ([currentOrder.status isEqualToString:@"W"]) {
+            [self api_patient_cancelOrder];
+        }
+    }
+    [tv deselectRowAtIndexPath:path animated:YES];
+}
+// 询问每个cell的高度
+- (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0 && indexPath.row == 0) return tv.rowHeight * 2;
+    return [tv rowHeight];
+}
+// 询问每个段落的头部高度
+- (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) return 20 + 64;
+    return 20;
+}
+// 询问每个段落的头部标题
+- (NSString *)tableView:(UITableView *)tv titleForHeaderInSection:(NSInteger)section {
+    return @"";
+}
+// 询问每个段落的头部
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return nil;
+}
+// 询问每个段落的尾部高度
+- (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
+    if (section == [self numberOfSectionsInTableView:tv] - 1) {
+        return 1 + self.tabBarController.tabBar.frame.size.height;
+    }
+    return 1;
+}
+// 询问每个段落的尾部标题
+- (NSString *)tableView:(UITableView *)tv titleForFooterInSection:(NSInteger)section {
+    return @"";
+}
+// 询问每个段落的尾部
+-(UIView *)tableView:(UITableView *)tv viewForFooterInSection:(NSInteger)section{
+    //if (section == 1) return sys_countDown_demo;
+    return nil;
+}
+// 询问共有多少个段落
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
+    if (currentOrder == nil) return 0;
+    return 3;
+}
+// 询问每个段落有多少条目
+- (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) return 1;
+    if (section == 1) return 4;
+    if (section == 2) {
+        if ([currentOrder.status isEqualToString:@"W"]) return 2;
+        return 1;
+    }
+    return 1;
+}
+// 询问每个具体条目的内容
+- (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *MyIdentifier = @"MyReuseIdentifier";
+    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:MyIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
+    }
+    cell.opaque = NO;
+    cell.backgroundColor = We_background_cell_general;
+    [cell.textLabel setFont:We_font_textfield_zh_cn];
+    
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        if ([currentOrder.status isEqualToString:@"W"]) {
+            [cell setBackgroundColor:We_background_red_general];
+            [cell.textLabel setText:@"继续支付"];
+            [cell.textLabel setTextColor:We_foreground_white_general];
+        }
+    }
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        if ([currentOrder.status isEqualToString:@"W"]) {
+            [cell.textLabel setText:@"取消订单"];
+            [cell.textLabel setTextColor:We_foreground_red_general];
+        }
+    }
+    
+    return cell;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,9 +155,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
     // 标题
-    self.navigationItem.title = @"交易记录";
+    self.navigationItem.title = @"交易详情";
     
     // 背景图片
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -65,7 +181,7 @@
     [self.view addSubview:refreshButton];
     
     // 表格
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
@@ -81,8 +197,52 @@
     [self api_patient_viewOrder];
 }
 
+#pragma mark - callbacks
+
 - (void)refreshButton_onPress {
     [self api_patient_viewOrder];
+}
+
+-(void)paymentResult:(NSString *)resultd
+{
+    //结果处理
+#if ! __has_feature(objc_arc)
+    AlixPayResult* result = [[[AlixPayResult alloc] initWithString:resultd] autorelease];
+#else
+    AlixPayResult* result = [[AlixPayResult alloc] initWithString:resultd];
+#endif
+	if (result)
+    {
+		
+		if (result.statusCode == 9000)
+        {
+			/*
+			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
+			 */
+            
+            //交易成功
+            NSString* key = AlipayPubKey;//签约帐户后获取到的支付宝公钥
+			id<DataVerifier> verifier;
+            verifier = CreateRSADataVerifier(key);
+            
+			if ([verifier verifyString:result.resultString withSign:result.signString])
+            {
+                NSLog(@"success!");
+                //验证签名成功，交易结果无篡改
+			}
+        }
+        else
+        {
+            NSLog(@"fail!");
+            //交易失败
+        }
+    }
+    else
+    {
+        NSLog(@"fail!");
+        //失败
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,6 +262,7 @@
                                            @"orderId":self.currentOrderId
                                            }
                                  success:^(id response) {
+                                     NSLog(@"%@", response);
                                      currentOrder = [[WeOrder alloc] initWithNSDictionary:response];
                                      if ([currentOrder.type isEqualToString:@"C"]) {
                                          currentConsult = [[WeConsult alloc] initWithNSDictionary:response[@"foreignObject"]];
@@ -117,6 +278,30 @@
                                      [sys_pendingView stopAnimating];
                                  }
                                  failure:^(NSString * errorMessage) {
+                                     NSLog(@"%@", errorMessage);
+                                     [refreshButton setHidden:NO];
+                                     [sys_pendingView stopAnimating];
+                                 }];
+}
+
+- (void)api_patient_cancelOrder {
+    [sys_pendingView startAnimating];
+    [refreshButton setHidden:YES];
+    [sys_tableView setHidden:YES];
+    
+    [WeAppDelegate postToServerWithField:@"patient" action:@"cancelOrder"
+                              parameters:@{
+                                           @"orderId":self.currentOrderId
+                                           }
+                                 success:^(id response) {
+                                     currentOrder.status = @"C";
+                                     
+                                     [sys_tableView reloadData];
+                                     [sys_tableView setHidden:NO];
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     NSLog(@"%@", errorMessage);
                                      [refreshButton setHidden:NO];
                                      [sys_pendingView stopAnimating];
                                  }];

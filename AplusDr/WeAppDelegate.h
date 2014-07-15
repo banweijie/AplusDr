@@ -27,6 +27,15 @@
 #import "WeTabBarViewController.h"
 #import "WeFunding.h"
 #import "WeFundingSupport.h"
+#import "WePaymentCallback.h"
+
+// Alipay
+#import "AlixLibService.h"
+#import "PartnerConfig.h"
+#import "DataSigner.h"
+#import "AlixPayResult.h"
+#import "DataVerifier.h"
+#import "AlixPayOrder.h"
 
 @interface WeAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -61,6 +70,9 @@
 // 计算文本高度
 + (CGSize)calcSizeForString:(NSString *)text Font:(UIFont *)font expectWidth:(int)width;
 @end
+
+// 用于支付的回调
+id<WePaymentCallback> paymentCallback;
 
 // 数据库
 LKDBHelper * globalHelper;

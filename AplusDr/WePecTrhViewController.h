@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WeAppDelegate.h"
+#import "WePecTrdViewController.h"
 
 @interface WePecTrhViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
