@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "WePecTrhViewController.h"
+#import "WeFunMySupViewController.h"
+#import "WeCahIdxViewController.h"
 
 @interface WePecIdxViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

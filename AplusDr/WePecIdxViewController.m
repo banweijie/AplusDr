@@ -53,6 +53,14 @@
         WePecTrhViewController * vc = [[WePecTrhViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
+    if (path.section == 2 && path.row == 2) {
+        WeFunMySupViewController * vc = [[WeFunMySupViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (path.section == 2 && path.row == 3) {
+        WeCahIdxViewController * vc = [[WeCahIdxViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -97,7 +105,7 @@
             return 1;
             break;
         case 2:
-            return 2;
+            return 4;
             break;
         case 3:
             return 1;
@@ -176,6 +184,22 @@
                 case 1:
                     cell.contentView.backgroundColor = We_background_cell_general;
                     cell.textLabel.text = @"交易记录";
+                    cell.textLabel.font = We_font_textfield_zh_cn;
+                    cell.textLabel.textColor = We_foreground_black_general;
+                    cell.imageView.image = [UIImage imageNamed:@"me-moneyhistory"];
+                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                    break;
+                case 2:
+                    cell.contentView.backgroundColor = We_background_cell_general;
+                    cell.textLabel.text = @"我的支持";
+                    cell.textLabel.font = We_font_textfield_zh_cn;
+                    cell.textLabel.textColor = We_foreground_black_general;
+                    cell.imageView.image = [UIImage imageNamed:@"me-moneyhistory"];
+                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                    break;
+                case 3:
+                    cell.contentView.backgroundColor = We_background_cell_general;
+                    cell.textLabel.text = @"病历管理";
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
                     cell.imageView.image = [UIImage imageNamed:@"me-moneyhistory"];
