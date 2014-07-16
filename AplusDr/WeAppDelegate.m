@@ -395,6 +395,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                          if ([message.messageId longLongValue] > lastMessageId) {
                                              lastMessageId = [message.messageId longLongValue];
                                          }
+                                         
                                          NSMutableArray * result = [globalHelper search:[WeMessage class]
                                                                                   where:[NSString stringWithFormat:@"messageId = %@", message.messageId]
                                                                                 orderBy:nil offset:0 count:0];

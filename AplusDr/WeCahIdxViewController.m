@@ -96,7 +96,9 @@
 {
     if (tv == tableView_view0) {
         caseRecordChanging = tableViewData0[path.section][path.row];
-        [self performSegueWithIdentifier:@"CahIdx_pushto_CahCah" sender:self];
+        
+        WeCahCahViewController * vc = [[WeCahCahViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
     if (tv == tableView_view1) {
         examinationChanging = tableViewData1[path.section][path.row];
@@ -244,6 +246,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
+    self.navigationItem.title = @"病历管理";
+    
     // 切换“就诊历史"和"检查结果"
     UIView * segControlView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 320, 44)];
     segControlView.backgroundColor = We_background_red_general;

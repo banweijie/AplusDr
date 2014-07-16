@@ -13,6 +13,7 @@
 #import "WeCahAddExaViewController.h"
 #import "WeCahExaViewController.h"
 #import "WeNavViewController.h"
+#import "WeCahCahViewController.h"
 
 @interface WeCahIdxViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate>
 
