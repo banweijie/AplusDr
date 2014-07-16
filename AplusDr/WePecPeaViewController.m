@@ -84,7 +84,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [picker dismissViewControllerAnimated:YES completion:^{
-        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
         VPImageCropperViewController *imgCropperVC = [[VPImageCropperViewController alloc] initWithImage:image cropFrame:CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.width) limitScaleRatio:3.0];
         imgCropperVC.delegate = self;
         [self presentViewController:imgCropperVC animated:YES completion:^{
@@ -283,8 +283,9 @@
 }
 
 - (BOOL)updateAvatar:(UIImage *)image {
-    NSLog(@"%f",image.size.width * image.size.width / 4900);
-    NSData * imageData = UIImageJPEGRepresentation(image, 1.0);
+    NSLog(@"%f",image.size.width * image.size.width / 36000);
+    float factor = 360000 / image.size.width / image.size.width;
+    NSData * imageData = UIImageJPEGRepresentation(image, factor);
     NSString * encodedString = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     encodedString = [encodedString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
     
