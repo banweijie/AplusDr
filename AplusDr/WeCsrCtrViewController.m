@@ -137,6 +137,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     WeMessage * currentMessage = chatData[indexPath.section][indexPath.row];
     
+    if ([currentMessage.messageType isEqualToString:@"X"]) {
+        return 40;
+    }
+    
     // 判断是谁发出的信息
     if ([currentMessage.senderId isEqualToString:currentUser.userId]) {
         if ([currentMessage.messageType isEqualToString:@"T"]) {
@@ -252,8 +256,24 @@
     
     WeMessage * currentMessage = chatData[indexPath.section][indexPath.row];
     
+    // 系统消息
+    if ([currentMessage.messageType isEqualToString:@"X"]) {
+        NSLog(@"XXXXXXXXXXXXXXXXXXXXXXXXX");
+        NSString * title = currentMessage.content;
+        
+        CGSize titleSize = [WeAppDelegate calcSizeForString:title Font:We_font_textfield_small_zh_cn expectWidth:320];
+        
+        UIButton * titleButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [titleButton setTitle:title forState:UIControlStateNormal];
+        [titleButton setTintColor:We_foreground_white_general];
+        [titleButton setBackgroundColor:We_foreground_gray_general];
+        [titleButton setFrame:CGRectMake((320 - titleSize.width - 20) / 2, 40 - 25, titleSize.width + 20, 20)];
+        [titleButton.titleLabel setFont:We_font_textfield_small_zh_cn];
+        [titleButton.layer setCornerRadius:4];
+        [cell.contentView addSubview:titleButton];
+    }
     // 判断是谁发出的信息
-    if ([currentMessage.senderId isEqualToString:currentUser.userId]) {
+    else if ([currentMessage.senderId isEqualToString:currentUser.userId]) {
         if ([currentMessage.messageType isEqualToString:@"T"]) {
             // 头像
             UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(320 - gasp - avatarWidth, gasp, avatarWidth, avatarWidth)];
@@ -827,7 +847,7 @@
     [uploadHiButton setTitle:@"上传病例" forState:UIControlStateNormal];
     [uploadHiButton setImage:[UIImage imageNamed:@"chatroom-sendcasehistory"] forState:UIControlStateNormal];
     uploadHiButton.titleLabel.font = We_font_textfield_zh_cn;
-    uploadHiButton.tintColor = We_foreground_red_general;
+    uploadHiButton.tintColor = We_foreground_gray_general;
     [moreInputView addSubview:uploadHiButton];
     
     WeToolButton * uploadVedioButton = [WeToolButton buttonWithType:UIButtonTypeRoundedRect];
@@ -835,13 +855,14 @@
     [uploadVedioButton setTitle:@"上传视频" forState:UIControlStateNormal];
     [uploadVedioButton setImage:[UIImage imageNamed:@"chatroom-sendvideo"] forState:UIControlStateNormal];
     uploadVedioButton.titleLabel.font = We_font_textfield_zh_cn;
-    uploadVedioButton.tintColor = We_foreground_red_general;
+    uploadVedioButton.tintColor = We_foreground_gray_general;
     [moreInputView addSubview:uploadVedioButton];
     
     WeToolButton * jiahaoButton = [WeToolButton buttonWithType:UIButtonTypeRoundedRect];
     [jiahaoButton setFrame:CGRectMake(240, 0, 80, 100)];
     [jiahaoButton setTitle:@"我要加号" forState:UIControlStateNormal];
     [jiahaoButton setImage:[UIImage imageNamed:@"chatroom-makeappointment"] forState:UIControlStateNormal];
+    [jiahaoButton addTarget:self action:@selector(newAppointmentButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     jiahaoButton.titleLabel.font = We_font_textfield_zh_cn;
     jiahaoButton.tintColor = We_foreground_red_general;
     [moreInputView addSubview:jiahaoButton];
