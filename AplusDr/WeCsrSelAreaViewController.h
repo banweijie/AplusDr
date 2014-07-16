@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WeAppDelegate.h"
+#import "WeCsrSelArea2ViewController.h"
 
 @interface WeCsrSelAreaViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

@@ -39,7 +39,7 @@
     }
     else {
         condition_category_tmp = [WeAppDelegate toString:keyCategory[path.row - 1]];
-        [self performSegueWithIdentifier:@"CsrSelCat_pushto_CsrSelTil" sender:self];
+        [self.navigationController pushViewController:[[WeCsrSelTilViewController alloc] init] animated:YES];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
 }

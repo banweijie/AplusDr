@@ -34,16 +34,16 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section == 0 && path.row == 0) {
-        [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelArea" sender:self];
+        [self.navigationController pushViewController:[[WeCsrSelAreaViewController alloc] init] animated:YES];
     }
     if (path.section == 0 && path.row == 1) {
-        [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelHos" sender:self];
+        [self.navigationController pushViewController:[[WeCsrSelHosViewController alloc] init] animated:YES];
     }
     if (path.section == 0 && path.row == 2) {
-        [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelSec" sender:self];
+        [self.navigationController pushViewController:[[WeCsrSelSecViewController alloc] init] animated:YES];
     }
     if (path.section == 0 && path.row == 3) {
-        [self performSegueWithIdentifier:@"CsrSel_pushto_CsrSelCat" sender:self];
+        [self.navigationController pushViewController:[[WeCsrSelCatViewController alloc] init] animated:YES];
     }
     if (path.section == 1 && path.row == 0) {
         selection_provinceId = condition_provinceId;

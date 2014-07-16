@@ -240,62 +240,28 @@
 }
 
 - (void)appointing:(id)sender {
-    [self performSegueWithIdentifier:@"CsrDci_pushto_CsrJia" sender:self];
+    WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
+    vc.currentDoctor = doctorViewing;
+    
+    WeNavViewController * nav =[[WeNavViewController alloc] init];
+    [nav pushViewController:vc animated:NO];
+    
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)consulting:(id)sender {
     WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
     vc.pushType = @"consultingRoom";
     vc.currentDoctor = doctorViewing;
-    //doctorViewing = favorDoctors[we_doctorChating];
     
     WeNavViewController * nav = [[WeNavViewController alloc] init];
     [nav pushViewController:vc animated:NO];
     
     [self presentViewController:nav animated:YES completion:nil];
     return;
-    
-    
-    NSString *urlString = yijiarenUrl(@"patient", @"addConsult");
-    NSString *parasString = [NSString stringWithFormat:@"consult.doctor.id=%@&consult.order.id=3&consult.gender=M&consult.age=20", doctorViewing.userId];
-    NSData * DataResponse = [WeAppDelegate sendPhoneNumberToServer:urlString paras:parasString];
-    
-    NSString *errorMessage = @"连接失败，请检查网络";
-    if (DataResponse != NULL) {
-        NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
-        NSLog(@"%@", HTTPResponse);
-        NSString *result = [HTTPResponse objectForKey:@"result"];
-        result = [NSString stringWithFormat:@"%@", result];
-        if ([result isEqualToString:@"1"]) {
-            return;
-        }
-        if ([result isEqualToString:@"2"]) {
-            NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-            NSEnumerator *enumerator = [fields keyEnumerator];
-            id key;
-            while ((key = [enumerator nextObject])) {
-                NSString * tmp = [fields objectForKey:key];
-                if (tmp != NULL) errorMessage = tmp;
-            }
-        }
-        if ([result isEqualToString:@"3"]) {
-            errorMessage = [HTTPResponse objectForKey:@"info"];
-        }
-        if ([result isEqualToString:@"4"]) {
-            errorMessage = [HTTPResponse objectForKey:@"info"];
-        }
-    }
-    UIAlertView *notPermitted = [[UIAlertView alloc]
-                                 initWithTitle:@"登陆失败"
-                                 message:errorMessage
-                                 delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-    [notPermitted show];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"11111");
     CGRect rect = selectSign.frame;
     rect.origin.x = 15 + 100 * scrollView.contentOffset.x / 320;
     selectSign.frame = rect;
@@ -388,6 +354,7 @@
     [tableViews addSubview:sys_tableView_1];
     [tableViews addSubview:sys_tableView_2];
     tableViews.pagingEnabled = YES;
+    [tableViews.layer setMasksToBounds:YES];
     tableViews.delegate = self;
     
     // controlPanel
@@ -464,8 +431,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    if (selectPanel > 0) sys_tableView_0.hidden = YES;
-    if (selectPanel > 1) sys_tableView_1.hidden = YES;
+    //if (selectPanel > 0) sys_tableView_0.hidden = YES;
+    //if (selectPanel > 1) sys_tableView_1.hidden = YES;
     [super viewWillDisappear:animated];
 }
 

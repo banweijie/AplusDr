@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WeAppDelegate.h"
+#import "WeCsrSelSec2ViewController.h"
 
 @interface WeCsrSelSecViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

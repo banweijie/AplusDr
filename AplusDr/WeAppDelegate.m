@@ -424,6 +424,10 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                                              WeFavorDoctor * currentDoctor = favorDoctorList[message.senderId];
                                                              currentDoctor.consultStatus = right;
                                                          }
+                                                         if ([left isEqualToString:@"sendable"]) {
+                                                             WeFavorDoctor * currentDoctor = favorDoctorList[message.senderId];
+                                                             currentDoctor.sendable = [right isEqualToString:@"1"];
+                                                         }
                                                      }
                                                  }
                                              }

@@ -41,7 +41,7 @@
     else {
         condition_topSectionId_tmp = [WeAppDelegate toString:topSectionList[path.row - 1][@"id"]];
         condition_topSectionName_tmp = [WeAppDelegate toString:topSectionList[path.row - 1][@"text"]];
-        [self performSegueWithIdentifier:@"CsrSelSec_pushto_CsrSelSec2" sender:self];
+        [self.navigationController pushViewController:[[WeCsrSelSec2ViewController alloc] init] animated:YES];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
 }

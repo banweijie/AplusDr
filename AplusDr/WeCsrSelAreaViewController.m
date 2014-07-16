@@ -41,7 +41,7 @@
     else {
         condition_provinceId_tmp = [WeAppDelegate toString:provinceList[path.row - 1][@"id"]];
         condition_provinceName_tmp = [WeAppDelegate toString:provinceList[path.row - 1][@"text"]];
-        [self performSegueWithIdentifier:@"CsrSelArea_pushto_CsrSelArea2" sender:self];
+        [self.navigationController pushViewController:[[WeCsrSelArea2ViewController alloc] init] animated:YES];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
 }

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WeCsrCosViewController.h"
 #import "WeNavViewController.h"
+#import "WeCsrJiaViewController.h"
 
 @interface WeCsrDciViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIScrollViewDelegate>
 
