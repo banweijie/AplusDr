@@ -54,6 +54,7 @@
     [self setMaxResponseGap:[NSString stringWithFormat:@"%@", info[@"maxResponseGap"]]];
     [self setPlusPrice:[NSString stringWithFormat:@"%@", info[@"plusPrice"]]];
     [self setWorkPeriod:[NSString stringWithFormat:@"%@", info[@"workPeriod"]]];
+    self.languages = [NSString stringWithFormat:@"%@", info[@"languages"]];
     
     if (![info[@"currentFunding"] isEqual:[NSNull null]]) {
         self.currentFundingId = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"id"]];

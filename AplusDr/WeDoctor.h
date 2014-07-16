@@ -23,6 +23,7 @@
 @property(strong, nonatomic) NSString * gender;
 @property(strong, nonatomic) NSString * maxResponseGap;
 @property(strong, nonatomic) NSString * plusPrice;
+@property(strong, nonatomic) NSString * languages;
 
 @property(strong, nonatomic) NSString * currentFundingId;
 @property(strong, nonatomic) NSString * currentFundingName;

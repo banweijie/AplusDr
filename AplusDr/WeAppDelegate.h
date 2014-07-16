@@ -55,6 +55,7 @@
 + (NSString *)transition:(NSString *)code asin:(NSString *)type;
 + (NSString *)transitionToDateFromSecond:(long long)s;
 + (NSString *)transitionToYearAndMonthFromSecond:(long long)s;
++ (NSString *)deCodeOfLanguages:(NSString *)languages;
 + (NSInteger)calcDaysByYear:(NSInteger)year andMonth:(NSInteger)month;
 + (UIImage *)imageWithColor:(UIColor *)color;
 

@@ -59,6 +59,9 @@
                 CGSize sizezz = [groupIntro sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
                 return sizezz.height + 60;
             }
+            if (indexPath.row == 4) {
+                return [WeAppDelegate calcSizeForString:[WeAppDelegate deCodeOfLanguages:doctorViewing.languages] Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
+            }
         }
     }
     if (tableView == sys_tableView_1) {
@@ -104,7 +107,7 @@
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == sys_tableView_0) {
-        if (section == 0) return 4;
+        if (section == 0) return 5;
     }
     if (tableView == sys_tableView_1) {
         if (section == 0) return 1;
@@ -167,6 +170,21 @@
                         label.numberOfLines = 0;
                         label.lineBreakMode = NSLineBreakByWordWrapping;
                         label.text = groupIntro;
+                        label.font = We_font_textfield_zh_cn;
+                        label.textColor = We_foreground_gray_general;
+                        [cell.contentView addSubview:label];
+                        break;
+                    case 4:
+                        l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 280, 40)];
+                        l1.text = @"工作语言";
+                        l1.font = We_font_textfield_zh_cn;
+                        l1.textColor = We_foreground_black_general;
+                        [cell.contentView addSubview:l1];
+                        sizezz = [[WeAppDelegate deCodeOfLanguages:doctorViewing.languages] sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+                        label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
+                        label.numberOfLines = 0;
+                        label.lineBreakMode = NSLineBreakByWordWrapping;
+                        label.text = [WeAppDelegate deCodeOfLanguages:doctorViewing.languages];
                         label.font = We_font_textfield_zh_cn;
                         label.textColor = We_foreground_gray_general;
                         [cell.contentView addSubview:label];
