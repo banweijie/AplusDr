@@ -463,6 +463,12 @@
     [self api_data_viewFunding];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [sys_tableView reloadData];
+}
+
 - (void)supportButton_onPress:(id)sender {
     if (currentUser == nil) {
         WeRegWlcViewController * vc = [[WeRegWlcViewController alloc] init];
