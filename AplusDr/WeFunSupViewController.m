@@ -123,6 +123,7 @@
     
     WeFunSup2ViewController * vc = [[WeFunSup2ViewController alloc] init];
     vc.currentLevel = (WeFundingLevel *)[senderButton userData];
+    vc.currentFunding = self.currentFunding;
     
     UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"选择" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backItem;
@@ -155,7 +156,7 @@
     
     // 取消按钮
     UIBarButtonItem * cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton_onPress:)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
+    //self.navigationItem.leftBarButtonItem = cancelButton;
     
     // 取出需要显示的级别
     levels = [[NSMutableArray alloc] init];

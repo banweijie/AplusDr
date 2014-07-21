@@ -12,8 +12,8 @@
 #import "WeSentenceModifyViewController.h"
 #import "WeParagraphModifyViewController.h"
 
-@interface WeFunSup2ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface WeFunSup2ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, WePaymentCallback>
 
 @property(nonatomic, strong) WeFundingLevel * currentLevel;
-
+@property(nonatomic, strong) WeFunding * currentFunding;
 @end

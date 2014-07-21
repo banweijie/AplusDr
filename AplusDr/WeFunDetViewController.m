@@ -39,8 +39,6 @@
     if (path.section == 2 && path.row == 1) {
         WeFunDesViewController * vc = [[WeFunDesViewController alloc] init];
         vc.HTMLContent = currentFunding.description;
-        UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"基本信息" style:UIBarButtonItemStylePlain target:nil action:nil];
-        self.navigationItem.backBarButtonItem = backItem;
         [self.navigationController pushViewController:vc animated:YES];
     }
     [tableView deselectRowAtIndexPath:path animated:YES];
@@ -330,6 +328,8 @@
     
     // 标题
     self.navigationItem.title = @"读取中...";
+    UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"基本信息" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backItem;
     
     // 分享按钮
     /*
@@ -478,10 +478,10 @@
         WeFunSupViewController * vc = [[WeFunSupViewController alloc] init];
         vc.currentFunding = currentFunding;
         
-        WeNavViewController * nav = [[WeNavViewController alloc] init];
-        [nav pushViewController:vc animated:NO];
+        //WeNavViewController * nav = [[WeNavViewController alloc] init];
+        //[nav pushViewController:vc animated:NO];
         
-        [self presentViewController:nav animated:YES completion:nil];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
