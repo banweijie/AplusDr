@@ -70,7 +70,7 @@
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
     //if (section == 1) return 30;
     if (section == 0) return 60;
-    if (section == [self numberOfSectionsInTableView:tv] - 1) return 100;
+    if (section == [self numberOfSectionsInTableView:tv] - 1) return 50;
     return 10;
 }
 -(UIView *)tableView:(UITableView *)tv viewForFooterInSection:(NSInteger)section{
@@ -205,11 +205,9 @@
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
-                  //[self dismissViewControllerAnimated:YES completion:nil];
                   NSLog(@"%@", HTTPResponse);
                   NSString * orderId = [NSString stringWithFormat:@"%@", HTTPResponse[@"response"][@"order"][@"id"]];
                   NSLog(@"\norderId = %@", orderId);
-                  //[self finishOrder:orderId];
                   
                   AlixPayOrder * newOrder = [[AlixPayOrder alloc] init];
                   newOrder.partner = PartnerID;
@@ -368,7 +366,7 @@
     [self.view addSubview:bg];
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 550) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;

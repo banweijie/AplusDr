@@ -1073,7 +1073,7 @@
 
 - (void)refreshKeyboard {
     [newConsultOrPlusView setHidden:YES];
-    if (doctorChating.sendable || ![doctorChating.consultStatus isEqualToString:@"N"]) {
+    if (doctorChating.sendable || [doctorChating.consultStatus isEqualToString:@"C"]) {
         [newConsultOrPlusView setHidden:YES];
     }
     else {

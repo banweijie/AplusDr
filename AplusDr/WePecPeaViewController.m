@@ -95,15 +95,9 @@
  [AREA]
  UITableView dataSource & delegate interfaces
  */
-// 调整格子的透明度
-- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.alpha = We_alpha_cell_general;;
-    cell.opaque = YES;
-}
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
-    //    if (path.section == 0 && path.row == 0) [user_exp_startyear becomeFirstResponder];
     return path;
 }
 
