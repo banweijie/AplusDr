@@ -344,8 +344,8 @@
     //self.navigationItem.title = @"众筹项目";
     
     titleButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [titleButton setFrame:CGRectMake(30, 0, 260, 64)];
-    [titleButton setTitle:@"医家仁推荐 ∇" forState:UIControlStateNormal];
+    [titleButton setFrame:CGRectMake(30, 0, 120, 64)];
+    [titleButton setTitle:@"医家仁推荐 v" forState:UIControlStateNormal];
     [titleButton addTarget:self action:@selector(titleButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [titleButton.titleLabel setFont:We_font_textfield_huge_zh_cn];
     
@@ -509,15 +509,24 @@
     [searchBar resignFirstResponder];
     [searchView setHidden:YES];
     [self api_data_listFunding:@{@"f.words":searchBar.text}];
-    [titleButton setTitle:[NSString stringWithFormat:@"搜索：%@ ∇", searchBar.text] forState:UIControlStateNormal];
+    if ([searchBar.text isEqualToString:@""]) {
+        [titleButton setTitle:@"全部 v" forState:UIControlStateNormal];
+    }
+    else {
+        [titleButton setTitle:[NSString stringWithFormat:@"搜索：%@ v", searchBar.text] forState:UIControlStateNormal];
+    }
 }
 
 - (void)coverButtonOnPress:(id)sender {
     [sel_keyword setString:searchBar.text];
     [searchBar resignFirstResponder];
     [searchView setHidden:YES];
-    [self api_data_listFunding:@{@"f.words":searchBar.text}];
-    [titleButton setTitle:[NSString stringWithFormat:@"搜索：%@ ∇", searchBar.text] forState:UIControlStateNormal];
+    [self api_data_listFunding:@{@"f.words":searchBar.text}];if ([searchBar.text isEqualToString:@""]) {
+        [titleButton setTitle:@"全部 v" forState:UIControlStateNormal];
+    }
+    else {
+        [titleButton setTitle:[NSString stringWithFormat:@"搜索：%@ v", searchBar.text] forState:UIControlStateNormal];
+    }
 }
 
 //
@@ -534,23 +543,23 @@
     [sender setTitleColor:We_foreground_red_general forState:UIControlStateNormal];
     
     if ([order isEqualToString:@"0"]) {
-        [titleButton setTitle:@"医家仁推荐 ∇" forState:UIControlStateNormal];
+        [titleButton setTitle:@"医家仁推荐 v" forState:UIControlStateNormal];
         [self api_data_listHomeFundings];
     }
     if ([order isEqualToString:@"1"]) {
-        [titleButton setTitle:@"全部 ∇" forState:UIControlStateNormal];
+        [titleButton setTitle:@"全部 v" forState:UIControlStateNormal];
         [self api_data_listFunding:@{}];
     }
     if ([order isEqualToString:@"2"]) {
-        [titleButton setTitle:@"科研类 ∇" forState:UIControlStateNormal];
+        [titleButton setTitle:@"科研类 v" forState:UIControlStateNormal];
         [self api_data_listFunding:@{@"f.type":@"B"}];
     }
     if ([order isEqualToString:@"3"]) {
-        [titleButton setTitle:@"公益类 ∇" forState:UIControlStateNormal];
+        [titleButton setTitle:@"公益类 v" forState:UIControlStateNormal];
         [self api_data_listFunding:@{@"f.type":@"A"}];
     }
     if ([order isEqualToString:@"4"]) {
-        [titleButton setTitle:@"招募类 ∇" forState:UIControlStateNormal];
+        [titleButton setTitle:@"招募类 v" forState:UIControlStateNormal];
         [self api_data_listFunding:@{@"f.type":@"D"}];
     }
     [selectView setHidden:YES];
