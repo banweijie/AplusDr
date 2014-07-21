@@ -462,6 +462,30 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                  }];
 }
 
++ (void)updateFavorDoctorList {
+    [WeAppDelegate postToServerWithField:@"patient" action:@"listFavorDoctors"
+                              parameters:@{
+                                           }
+                                 success:^(NSArray * response) {
+                                     for (int i = 0; i < [response count]; i++) {
+                                         WeFavorDoctor * newFavorDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:response[i]];
+                                         if (favorDoctorList[newFavorDoctor.userId] == nil) {
+                                             NSLog(@"!!!!!!New Doctor!!!!!");
+                                             favorDoctorList[newFavorDoctor.userId] = newFavorDoctor;
+                                         }
+                                     }
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"更新保健医列表失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                 }];
+}
+
 #pragma mark - No Idea
 
 + (UIImage *)imageWithColor:(UIColor *)color {

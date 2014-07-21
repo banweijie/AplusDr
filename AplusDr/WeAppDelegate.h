@@ -70,6 +70,9 @@
 
 // 计算文本高度
 + (CGSize)calcSizeForString:(NSString *)text Font:(UIFont *)font expectWidth:(int)width;
+
+// apis
++ (void)updateFavorDoctorList;
 @end
 
 // 用于支付的回调

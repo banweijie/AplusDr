@@ -575,6 +575,8 @@
                                      NSString * orderId = [NSString stringWithFormat:@"%@", response[@"order"][@"id"]];
                                      NSLog(@"\norderId = %@", orderId);
                                      
+                                     [WeAppDelegate updateFavorDoctorList];
+                                     
                                      AlixPayOrder * newOrder = [[AlixPayOrder alloc] init];
                                      newOrder.partner = PartnerID;
                                      newOrder.seller = SellerID;

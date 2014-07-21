@@ -371,29 +371,37 @@
                                  success:^(id response) {
                                      NSLog(@"%@", response);
                                      
-                                     NSString * orderId = [NSString stringWithFormat:@"%@", response[@"order"][@"id"]];
-                                     NSLog(@"\norderId = %@", orderId);
-                                     
-                                     AlixPayOrder * newOrder = [[AlixPayOrder alloc] init];
-                                     newOrder.partner = PartnerID;
-                                     newOrder.seller = SellerID;
-                                     newOrder.tradeNO = orderId;
-                                     newOrder.productName = @"众筹支持";
-                                     newOrder.productDescription = @"众筹支持的描述";
-                                     newOrder.amount = self.currentLevel.money;
-                                     newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
-                                     
-                                     NSString * appScheme = @"AplusDr";
-                                     NSString * orderInfo = [newOrder description];
-                                     NSString * signedStr = [CreateRSADataSigner(PartnerPrivKey) signString:orderInfo];
-                                     
-                                     NSLog(@"%@",signedStr);
-                                     
-                                     NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                                                              orderInfo, signedStr, @"RSA"];
-                                     
-                                     paymentCallback = self;
-                                     [AlixLibService payOrder:orderString AndScheme:appScheme seletor:@selector(paymentResult:) target:self];
+                                     if ([response[@"order"] isEqual:[NSNull null]]) {
+                                         
+                                         self.currentLevel.supportCount = [NSString stringWithFormat:@"%d", [self.currentLevel.supportCount intValue] + 1];
+                                         self.currentFunding.supportCount = [NSString stringWithFormat:@"%d", [self.currentFunding.supportCount intValue] + 1];
+                                         
+                                     }
+                                     else {
+                                         NSString * orderId = [NSString stringWithFormat:@"%@", response[@"order"][@"id"]];
+                                         NSLog(@"\norderId = %@", orderId);
+                                         
+                                         AlixPayOrder * newOrder = [[AlixPayOrder alloc] init];
+                                         newOrder.partner = PartnerID;
+                                         newOrder.seller = SellerID;
+                                         newOrder.tradeNO = orderId;
+                                         newOrder.productName = @"众筹支持";
+                                         newOrder.productDescription = @"众筹支持的描述";
+                                         newOrder.amount = self.currentLevel.money;
+                                         newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
+                                         
+                                         NSString * appScheme = @"AplusDr";
+                                         NSString * orderInfo = [newOrder description];
+                                         NSString * signedStr = [CreateRSADataSigner(PartnerPrivKey) signString:orderInfo];
+                                         
+                                         NSLog(@"%@",signedStr);
+                                         
+                                         NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                                                                  orderInfo, signedStr, @"RSA"];
+                                         
+                                         paymentCallback = self;
+                                         [AlixLibService payOrder:orderString AndScheme:appScheme seletor:@selector(paymentResult:) target:self];
+                                     }
                                      
                                      [sys_pendingView stopAnimating];
                                  }
