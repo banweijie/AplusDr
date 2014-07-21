@@ -176,6 +176,12 @@
     [self.view addSubview:sys_tableView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [sys_tableView reloadData];
+}
+
 - (void)cancelButton_onPress:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

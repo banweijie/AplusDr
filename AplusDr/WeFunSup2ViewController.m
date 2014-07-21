@@ -415,6 +415,8 @@
     [[[UIAlertView alloc] initWithTitle:@"支持成功！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
     self.currentLevel.supportCount = [NSString stringWithFormat:@"%d", [self.currentLevel.supportCount intValue] + 1];
     self.currentFunding.sum = [NSString stringWithFormat:@"%d", [self.currentFunding.sum intValue] + [self.currentLevel.money intValue]];
+    
+    [sys_tableView reloadData];
 }
 
 -(void)paymentResult:(NSString *)resultd
