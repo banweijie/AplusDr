@@ -262,9 +262,9 @@
     vc.currentDoctor = doctorViewing;
     
     WeNavViewController * nav =[[WeNavViewController alloc] init];
-    [nav pushViewController:vc animated:NO];
+    [self.navigationController pushViewController:vc animated:YES];
     
-    [self presentViewController:nav animated:YES completion:nil];
+    //[self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)consulting:(id)sender {
@@ -273,9 +273,9 @@
     vc.currentDoctor = doctorViewing;
     
     WeNavViewController * nav = [[WeNavViewController alloc] init];
-    [nav pushViewController:vc animated:NO];
+    [self.navigationController pushViewController:vc animated:YES];
     
-    [self presentViewController:nav animated:YES completion:nil];
+    //[self presentViewController:nav animated:YES completion:nil];
     return;
 }
 
@@ -325,6 +325,7 @@
     // Do any additional setup after loading the view.
     
     self.navigationItem.title = [NSString stringWithFormat:@"%@ %@", doctorViewing.userName, we_codings[@"doctorCategory"][doctorViewing.category][@"title"][doctorViewing.title]];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"基本资料" style:UIBarButtonItemStylePlain target:self action:nil];
     
     notice = doctorViewing.notice;
     if ([notice isEqualToString:@"<null>"]) notice = @"该医生未设置公告";

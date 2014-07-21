@@ -295,7 +295,7 @@
     self.navigationItem.title = @"申请加号";
     
     UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
-    self.navigationItem.leftBarButtonItem = user_save;
+    //self.navigationItem.leftBarButtonItem = user_save;
     
     // sys_explaination
     sys_explaination_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
@@ -609,7 +609,8 @@
 #pragma mark - callBacks
 -(void)paymentHasBeenPayed {
     NSLog(@"!!!!!!!!");
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

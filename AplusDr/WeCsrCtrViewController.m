@@ -721,6 +721,8 @@
     currentInputMode = 0;
     // Setup Timer
     
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"聊天室" style:UIBarButtonItemStylePlain target:self action:nil];
+    
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
     bg.image = [UIImage imageNamed:@"Background-2"];
@@ -910,9 +912,9 @@
     vc.currentDoctor = favorDoctorList[we_doctorChating];
         
     WeNavViewController * nav = [[WeNavViewController alloc] init];
-    [nav pushViewController:vc animated:NO];
+    [self.navigationController pushViewController:vc animated:YES];
     
-    [self presentViewController:nav animated:YES completion:nil];
+    //[self presentViewController:nav animated:YES completion:nil];
 }
 
 // 申请加号按钮被按下
@@ -921,9 +923,9 @@
     vc.currentDoctor = favorDoctorList[we_doctorChating];
     
     WeNavViewController * nav = [[WeNavViewController alloc] init];
-    [nav pushViewController:vc animated:NO];
+    [self.navigationController pushViewController:vc animated:YES];
     
-    [self presentViewController:nav animated:YES completion:nil];
+    //[self presentViewController:nav animated:YES completion:nil];
 }
 
 // 输入框右侧更多选项

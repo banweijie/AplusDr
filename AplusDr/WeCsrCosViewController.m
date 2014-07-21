@@ -271,62 +271,6 @@
     
 }
 
-- (void)finishOrder:(NSString *)orderId {
-    [sys_pendingView startAnimating];
-    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [manager POST:yijiarenUrl(@"patient", @"finishOrder") parameters:@{
-                                                                      @"orderId":orderId,
-                                                                      }
-          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
-              [sys_pendingView stopAnimating];
-              NSString * errorMessage;
-              
-              NSString *result = [HTTPResponse objectForKey:@"result"];
-              result = [NSString stringWithFormat:@"%@", result];
-              if ([result isEqualToString:@"1"]) {
-                  //self.currentDoctor.consultStatus = @"A";
-                  [self dismissViewControllerAnimated:YES completion:nil];
-                  return;
-              }
-              if ([result isEqualToString:@"2"]) {
-                  NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
-                  NSEnumerator *enumerator = [fields keyEnumerator];
-                  id key;
-                  while ((key = [enumerator nextObject])) {
-                      NSString * tmp1 = [fields objectForKey:key];
-                      if (tmp1 != NULL) errorMessage = tmp1;
-                  }
-              }
-              if ([result isEqualToString:@"3"]) {
-                  errorMessage = [HTTPResponse objectForKey:@"info"];
-              }
-              if ([result isEqualToString:@"4"]) {
-                  errorMessage = [HTTPResponse objectForKey:@"info"];
-              }
-              UIAlertView *notPermitted = [[UIAlertView alloc]
-                                           initWithTitle:@"发送信息失败"
-                                           message:errorMessage
-                                           delegate:nil
-                                           cancelButtonTitle:@"确定"
-                                           otherButtonTitles:nil];
-              [notPermitted show];
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [sys_pendingView stopAnimating];
-              NSLog(@"Error: %@", error);
-              UIAlertView *notPermitted = [[UIAlertView alloc]
-                                           initWithTitle:@"发送信息失败"
-                                           message:@"未能连接服务器，请重试"
-                                           delegate:nil
-                                           cancelButtonTitle:@"确定"
-                                           otherButtonTitles:nil];
-              [notPermitted show];
-          }
-     ];
-    
-}
-
 - (void)user_cancel_onPress:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -348,7 +292,7 @@
     user_ifemergent_switch = [[UISwitch alloc] initWithFrame:CGRectMake(250, 5, 60, 30)];
     
     UIBarButtonItem * user_cancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(user_cancel_onPress:)];
-    self.navigationItem.leftBarButtonItem = user_cancel;
+    //self.navigationItem.leftBarButtonItem = user_cancel;
     
     // sys_explaination
     sys_explaination_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
@@ -397,7 +341,7 @@
 #pragma mark - callBacks
 -(void)paymentHasBeenPayed {
     NSLog(@"!!!!!!!!");
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
