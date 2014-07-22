@@ -10,6 +10,7 @@
 #import "WeAppDelegate.h"
 
 @interface WeCsrDciViewController () {
+    UIActivityIndicatorView * sys_pendingView;
     UITableView * sys_tableView_0;
     UITableView * sys_tableView_1;
     UITableView * sys_tableView_2;
@@ -261,10 +262,7 @@
     WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
     vc.currentDoctor = doctorViewing;
     
-    WeNavViewController * nav =[[WeNavViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
-    
-    //[self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)consulting:(id)sender {
@@ -272,11 +270,7 @@
     vc.pushType = @"consultingRoom";
     vc.currentDoctor = doctorViewing;
     
-    WeNavViewController * nav = [[WeNavViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
-    
-    //[self presentViewController:nav animated:YES completion:nil];
-    return;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -380,37 +374,40 @@
     selectPanel = 0;
     controlPanel = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 320, 156 - 64)];
     
-    button0 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button0 = [WeToolButton buttonWithType:UIButtonTypeRoundedRect];
     [button0 setFrame:CGRectMake(0, 2, 89, 48)];
+    [button0 setImage:[UIImage imageNamed:@"docinfo-applychatting"] forState:UIControlStateNormal];
     [button0 setTitle:@"发起咨询" forState:UIControlStateNormal];
     [button0 addTarget:self action:@selector(consulting:) forControlEvents:UIControlEventTouchUpInside];
     button0.tintColor = We_foreground_white_general;
     button0.backgroundColor = [UIColor colorWithRed:90 / 255.0 green:41 / 255.0 blue:45 / 255.0 alpha:1.0];
-    button0.titleLabel.font = We_font_textfield_zh_cn;
+    button0.titleLabel.font = We_font_textfield_small_zh_cn;
     [controlPanel addSubview:button0];
     
-    button1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button1 = [WeToolButton buttonWithType:UIButtonTypeRoundedRect];
     [button1 setFrame:CGRectMake(91, 2, 138, 48)];
-    //NSLog(@"%@ %@", we_doctors, we_doctorViewing[@"id"]);
-    if (favorDoctorList[doctorViewing.userId] == NULL) {
+    if (favorDoctorList[doctorViewing.userId] == nil) {
         [button1 setTitle:@"添加为保健医" forState:UIControlStateNormal];
+        [button1 setImage:[UIImage imageNamed:@"docinfo-addfavorite"] forState:UIControlStateNormal];
     }
     else {
         [button1 setTitle:@"已添加为保健医" forState:UIControlStateNormal];
+        [button1 setImage:[UIImage imageNamed:@"docinfo-favorited"] forState:UIControlStateNormal];
     }
-    [button1 addTarget:self action:@selector(transferTo0:) forControlEvents:UIControlEventTouchUpInside];
+    [button1 addTarget:self action:@selector(api_patient_addFav) forControlEvents:UIControlEventTouchUpInside];
     button1.tintColor = We_foreground_white_general;
     button1.backgroundColor = We_background_red_general;
-    button1.titleLabel.font = We_font_textfield_zh_cn;
+    button1.titleLabel.font = We_font_textfield_small_zh_cn;
     [controlPanel addSubview:button1];
     
-    button2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button2 = [WeToolButton buttonWithType:UIButtonTypeRoundedRect];
     [button2 setFrame:CGRectMake(231, 2, 89, 48)];
+    [button2 setImage:[UIImage imageNamed:@"docinfo-makeappointment"] forState:UIControlStateNormal];
     [button2 setTitle:@"申请加号" forState:UIControlStateNormal];
     [button2 addTarget:self action:@selector(appointing:) forControlEvents:UIControlEventTouchUpInside];
     button2.tintColor = We_foreground_white_general;
     button2.backgroundColor = [UIColor colorWithRed:90 / 255.0 green:41 / 255.0 blue:45 / 255.0 alpha:1.0];
-    button2.titleLabel.font = We_font_textfield_zh_cn;
+    button2.titleLabel.font = We_font_textfield_small_zh_cn;
     [controlPanel addSubview:button2];
     
     panel0 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -448,20 +445,55 @@
     [self.view addSubview:tableViews];
     [self.view addSubview:controlPanel];
     
+    // sys_pendingView
+    sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    [sys_pendingView setAlpha:1.0];
+    //[sys_pendingView startAnimating];
+    [self.view addSubview:sys_pendingView];
+    
     
     [tableViews scrollRectToVisible:sys_tableView_1.frame animated:NO];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    //if (selectPanel > 0) sys_tableView_0.hidden = YES;
-    //if (selectPanel > 1) sys_tableView_1.hidden = YES;
-    [super viewWillDisappear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    // refresh Page
+    if (favorDoctorList[doctorViewing.userId] == nil) {
+        [button1 setTitle:@"添加为保健医" forState:UIControlStateNormal];
+        [button1 setImage:[UIImage imageNamed:@"docinfo-addfavorite"] forState:UIControlStateNormal];
+    }
+    else {
+        [button1 setTitle:@"已添加为保健医" forState:UIControlStateNormal];
+        [button1 setImage:[UIImage imageNamed:@"docinfo-favorited"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - apis
+- (void)api_patient_addFav {
+    if ([button1.titleLabel.text isEqualToString:@"已添加为保健医"]) return;
+    [sys_pendingView startAnimating];
+    [WeAppDelegate postToServerWithField:@"patient" action:@"addFav"
+                              parameters:@{
+                                           @"doctorId":doctorViewing.userId
+                                           }
+                                 success:^(id response) {
+                                     [[[UIAlertView alloc] initWithTitle:@"添加保健医成功" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                     [button1 setTitle:@"已添加为保健医" forState:UIControlStateNormal];
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     [[[UIAlertView alloc] initWithTitle:@"添加保健医失败" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                     [sys_pendingView stopAnimating];
+                                 }];
 }
 
 /*
