@@ -17,7 +17,7 @@
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     
-    if (currentUser == nil && viewController != [tabBarController.viewControllers objectAtIndex:0]) {
+    if (currentUser == nil && viewController != [tabBarController.viewControllers objectAtIndex:0] && viewController != [tabBarController.viewControllers objectAtIndex:1]) {
         WeRegWlcViewController * vc = [[WeRegWlcViewController alloc] init];
         vc.originTargetViewController = viewController;
         vc.tabBarController = tabBarController;

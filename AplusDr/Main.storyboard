@@ -287,8 +287,8 @@
                     <connections>
                         <segue destination="ZGO-u0-7yk" kind="modal" identifier="TabBar_Modalto_RegWlc" id="kGw-7E-Cpt"/>
                         <segue destination="FbH-Go-jOX" kind="relationship" relationship="viewControllers" id="gV7-Zh-poc"/>
-                        <segue destination="G9f-X1-J9c" kind="relationship" relationship="viewControllers" id="tXO-bP-Iow"/>
                         <segue destination="XGd-ZI-Fqp" kind="relationship" relationship="viewControllers" id="Oov-Ek-ldl"/>
+                        <segue destination="G9f-X1-J9c" kind="relationship" relationship="viewControllers" id="tXO-bP-Iow"/>
                         <segue destination="bHV-1f-jWO" kind="relationship" relationship="viewControllers" id="Pfd-v9-efB"/>
                     </connections>
                 </tabBarController>
