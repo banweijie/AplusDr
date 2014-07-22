@@ -217,7 +217,7 @@
                   newOrder.tradeNO = orderId;
                   newOrder.productName = @"在线咨询";
                   newOrder.productDescription = @"在线咨询的描述";
-                  newOrder.amount = self.currentDoctor.consultPrice;
+                  newOrder.amount = [NSString stringWithFormat:@"%@", HTTPResponse[@"response"][@"order"][@"amount"]];;
                   newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
                   
                   NSString * appScheme = @"AplusDr";
