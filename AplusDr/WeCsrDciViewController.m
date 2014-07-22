@@ -333,8 +333,8 @@
     groupIntro = doctorViewing.groupIntro;
     if ([groupIntro isEqualToString:@"<null>"]) groupIntro = @"该医生未设置团队介绍";
     
-    UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me-appointment"] style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
-    self.navigationItem.rightBarButtonItem = user_save;
+    //UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me-appointment"] style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
+    //self.navigationItem.rightBarButtonItem = user_save;
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -447,6 +447,9 @@
     
     [self.view addSubview:tableViews];
     [self.view addSubview:controlPanel];
+    
+    
+    [tableViews scrollRectToVisible:sys_tableView_1.frame animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

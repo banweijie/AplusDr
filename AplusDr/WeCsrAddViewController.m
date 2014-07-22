@@ -202,6 +202,7 @@
     // Do any additional setup after loading the view.
     
     self.navigationItem.title = @"搜索医生";
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
