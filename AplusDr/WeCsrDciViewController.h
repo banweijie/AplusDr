@@ -14,4 +14,8 @@
 
 @interface WeCsrDciViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIScrollViewDelegate>
 
+
+@property(nonatomic, strong) WeDoctor * currentDoctor;
+
+
 @end

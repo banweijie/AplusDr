@@ -61,7 +61,7 @@
                 return sizezz.height + 60;
             }
             if (indexPath.row == 4) {
-                return [WeAppDelegate calcSizeForString:[WeAppDelegate deCodeOfLanguages:doctorViewing.languages] Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
+                return [WeAppDelegate calcSizeForString:[WeAppDelegate deCodeOfLanguages:self.currentDoctor.languages] Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
             }
         }
     }
@@ -113,8 +113,8 @@
     if (tableView == sys_tableView_1) {
         if (section == 0) return 1;
         if (section == 1) {
-            if ([doctorViewing.workPeriod isEqualToString:@"<null>"]) return 0;
-            else return [doctorViewing.workPeriod length] / 4;
+            if ([self.currentDoctor.workPeriod isEqualToString:@"<null>"]) return 0;
+            else return [self.currentDoctor.workPeriod length] / 4;
         }
     }
     return 2;
@@ -138,7 +138,7 @@
                         cell.textLabel.text = @"医院";
                         cell.textLabel.font = We_font_textfield_zh_cn;
                         cell.textLabel.textColor = We_foreground_black_general;
-                        cell.detailTextLabel.text = doctorViewing.hospitalName;
+                        cell.detailTextLabel.text = self.currentDoctor.hospitalName;
                         cell.detailTextLabel.font = We_font_textfield_zh_cn;
                         cell.detailTextLabel.textColor = We_foreground_gray_general;
                         break;
@@ -147,7 +147,7 @@
                         cell.textLabel.text = @"科室";
                         cell.textLabel.font = We_font_textfield_zh_cn;
                         cell.textLabel.textColor = We_foreground_black_general;
-                        cell.detailTextLabel.text = doctorViewing.sectionName;
+                        cell.detailTextLabel.text = self.currentDoctor.sectionName;
                         cell.detailTextLabel.font = We_font_textfield_zh_cn;
                         cell.detailTextLabel.textColor = We_foreground_gray_general;
                         break;
@@ -156,7 +156,7 @@
                         cell.textLabel.text = @"职称";
                         cell.textLabel.font = We_font_textfield_zh_cn;
                         cell.textLabel.textColor = We_foreground_black_general;
-                        cell.detailTextLabel.text = we_codings[@"doctorCategory"][doctorViewing.category][@"title"][doctorViewing.title];
+                        cell.detailTextLabel.text = we_codings[@"doctorCategory"][self.currentDoctor.category][@"title"][self.currentDoctor.title];
                         cell.detailTextLabel.font = We_font_textfield_zh_cn;
                         cell.detailTextLabel.textColor = We_foreground_gray_general;
                         break;
@@ -166,7 +166,7 @@
                         l1.font = We_font_textfield_zh_cn;
                         l1.textColor = We_foreground_black_general;
                         [cell.contentView addSubview:l1];
-                        sizezz = [groupIntro sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+                        sizezz = [WeAppDelegate calcSizeForString:groupIntro Font:We_font_textfield_zh_cn expectWidth:280];
                         label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
                         label.numberOfLines = 0;
                         label.lineBreakMode = NSLineBreakByWordWrapping;
@@ -181,11 +181,12 @@
                         l1.font = We_font_textfield_zh_cn;
                         l1.textColor = We_foreground_black_general;
                         [cell.contentView addSubview:l1];
-                        sizezz = [[WeAppDelegate deCodeOfLanguages:doctorViewing.languages] sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+                        
+                        sizezz = [WeAppDelegate calcSizeForString:[WeAppDelegate deCodeOfLanguages:self.currentDoctor.languages] Font:We_font_textfield_zh_cn expectWidth:280];
                         label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
                         label.numberOfLines = 0;
                         label.lineBreakMode = NSLineBreakByWordWrapping;
-                        label.text = [WeAppDelegate deCodeOfLanguages:doctorViewing.languages];
+                        label.text = [WeAppDelegate deCodeOfLanguages:self.currentDoctor.languages];
                         label.font = We_font_textfield_zh_cn;
                         label.textColor = We_foreground_gray_general;
                         [cell.contentView addSubview:label];
@@ -212,10 +213,10 @@
                 break;
             case 1:
                 cell.contentView.backgroundColor = We_background_cell_general;
-                cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [WeAppDelegate transitionDayOfWeekFromChar:[doctorViewing.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 1, 1)]], [WeAppDelegate transitionPeriodOfDayFromChar:[doctorViewing.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 2, 1)]]];
+                cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [WeAppDelegate transitionDayOfWeekFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 1, 1)]], [WeAppDelegate transitionPeriodOfDayFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 2, 1)]]];
                 cell.textLabel.font = We_font_textfield_zh_cn;
                 cell.textLabel.textColor = We_foreground_black_general;
-                cell.detailTextLabel.text = [WeAppDelegate transitionTypeOfPeriodFromChar:[doctorViewing.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 3, 1)]];
+                cell.detailTextLabel.text = [WeAppDelegate transitionTypeOfPeriodFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 3, 1)]];
                 cell.detailTextLabel.font = We_font_textfield_zh_cn;
                 cell.detailTextLabel.textColor = We_foreground_gray_general;
             default:
@@ -260,7 +261,7 @@
 
 - (void)appointing:(id)sender {
     WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
-    vc.currentDoctor = doctorViewing;
+    vc.currentDoctor = self.currentDoctor;
     
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -268,7 +269,7 @@
 - (void)consulting:(id)sender {
     WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
     vc.pushType = @"consultingRoom";
-    vc.currentDoctor = doctorViewing;
+    vc.currentDoctor = self.currentDoctor;
     
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -318,13 +319,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationItem.title = [NSString stringWithFormat:@"%@ %@", doctorViewing.userName, we_codings[@"doctorCategory"][doctorViewing.category][@"title"][doctorViewing.title]];
+    self.navigationItem.title = [NSString stringWithFormat:@"%@ %@", self.currentDoctor.userName, we_codings[@"doctorCategory"][self.currentDoctor.category][@"title"][self.currentDoctor.title]];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"基本资料" style:UIBarButtonItemStylePlain target:self action:nil];
     
-    notice = doctorViewing.notice;
+    notice = self.currentDoctor.notice;
     if ([notice isEqualToString:@"<null>"]) notice = @"该医生未设置公告";
     
-    groupIntro = doctorViewing.groupIntro;
+    groupIntro = self.currentDoctor.groupIntro;
     if ([groupIntro isEqualToString:@"<null>"]) groupIntro = @"该医生未设置团队介绍";
     
     //UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me-appointment"] style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
@@ -386,7 +387,7 @@
     
     button1 = [WeToolButton buttonWithType:UIButtonTypeRoundedRect];
     [button1 setFrame:CGRectMake(91, 2, 138, 48)];
-    if (favorDoctorList[doctorViewing.userId] == nil) {
+    if (favorDoctorList[self.currentDoctor.userId] == nil) {
         [button1 setTitle:@"添加为保健医" forState:UIControlStateNormal];
         [button1 setImage:[UIImage imageNamed:@"docinfo-addfavorite"] forState:UIControlStateNormal];
     }
@@ -461,7 +462,7 @@
     [super viewWillAppear:animated];
     
     // refresh Page
-    if (favorDoctorList[doctorViewing.userId] == nil) {
+    if (favorDoctorList[self.currentDoctor.userId] == nil) {
         [button1 setTitle:@"添加为保健医" forState:UIControlStateNormal];
         [button1 setImage:[UIImage imageNamed:@"docinfo-addfavorite"] forState:UIControlStateNormal];
     }
@@ -483,7 +484,7 @@
     [sys_pendingView startAnimating];
     [WeAppDelegate postToServerWithField:@"patient" action:@"addFav"
                               parameters:@{
-                                           @"doctorId":doctorViewing.userId
+                                           @"doctorId":self.currentDoctor.userId
                                            }
                                  success:^(id response) {
                                      [[[UIAlertView alloc] initWithTitle:@"添加保健医成功" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

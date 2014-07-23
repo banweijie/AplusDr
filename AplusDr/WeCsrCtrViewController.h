@@ -20,7 +20,7 @@
 #import "WeCsrJiaViewController.h"
 #import "WeImageButton.h"
 
-@interface WeCsrCtrViewController : UIViewController  <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface WeCsrCtrViewController : UIViewController  <UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) AVAudioRecorder * audioRecorder;
 @property (strong, nonatomic) AVAudioPlayer * audioPlayer;

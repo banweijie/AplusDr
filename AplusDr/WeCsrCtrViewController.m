@@ -50,6 +50,9 @@
     
     // 发起咨询和加号
     UIView * newConsultOrPlusView;
+    
+    // 双方头像
+    UIImage * avatar1;
 }
 
 @end
@@ -272,8 +275,10 @@
         [titleButton.layer setCornerRadius:4];
         [cell.contentView addSubview:titleButton];
     }
-    // 判断是谁发出的信息
+    // 我发出的消息
     else if ([currentMessage.senderId isEqualToString:currentUser.userId]) {
+        
+        // 文本信息
         if ([currentMessage.messageType isEqualToString:@"T"]) {
             // 头像
             UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(320 - gasp - avatarWidth, gasp, avatarWidth, avatarWidth)];
@@ -313,6 +318,8 @@
                 [cell.contentView addSubview:sendingView];
             }
         }
+        
+        // 图像信息
         if ([currentMessage.messageType isEqualToString:@"I"]) {
             // 头像
             UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(320 - gasp - avatarWidth, gasp, avatarWidth, avatarWidth)];
@@ -359,6 +366,8 @@
                 [cell.contentView addSubview:sendingView];
             }
         }
+        
+        // 声音信息
         if ([currentMessage.messageType isEqualToString:@"A"]) {
             // 头像
             UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(320 - gasp - avatarWidth, gasp, avatarWidth, avatarWidth)];
@@ -402,11 +411,13 @@
         }
 
     }
+    // 别人发出的消息
     else {
         if ([currentMessage.messageType isEqualToString:@"T"]) {
             // 头像
-            UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(gasp, gasp, avatarWidth, avatarWidth)];
-            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(doctorChating.avatarPath)]];
+            WeImageButton * avatarView = [[WeImageButton alloc] initWithFrame:CGRectMake(gasp, gasp, avatarWidth, avatarWidth)];
+            [avatarView setImage:avatar1 forState:UIControlStateNormal];
+            [avatarView addTarget:self action:@selector(othersAvatarOnPress) forControlEvents:UIControlEventTouchUpInside];
             [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
             [avatarView.layer setMasksToBounds:YES];
             [cell.contentView addSubview:avatarView];
@@ -504,6 +515,8 @@
     
     return cell;
 }
+
+#pragma mark - View related
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -716,6 +729,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // 双方头像获取
+    avatar1 = [[UIImage alloc] init];
+    
+    [WeAppDelegate DownloadImageWithURL:yijiarenAvatarUrl(self.doctorChating.avatarPath) successCompletion:^(UIImage * image) {
+        avatar1 = image;
+        [chatTableView reloadData];
+    }];
+    
+    
     we_doctorChating = [NSString stringWithFormat:@"%@", we_doctorChating];
     currentKeyboardState = 0;
     currentInputMode = 0;
@@ -910,22 +932,14 @@
     WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
     vc.pushType = @"consultingRoom";
     vc.currentDoctor = favorDoctorList[we_doctorChating];
-        
-    WeNavViewController * nav = [[WeNavViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
-    
-    //[self presentViewController:nav animated:YES completion:nil];
 }
 
 // 申请加号按钮被按下
 - (void)newAppointmentButton_onPress:(id)sender {
     WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
     vc.currentDoctor = favorDoctorList[we_doctorChating];
-    
-    WeNavViewController * nav = [[WeNavViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
-    
-    //[self presentViewController:nav animated:YES completion:nil];
 }
 
 // 输入框右侧更多选项
@@ -1104,16 +1118,9 @@
     timer = nil;
 }
 
-#pragma mark - UIBubbleTableViewDataSource implementation
-
-- (NSInteger)rowsForBubbleTable:(UIBubbleTableView *)tableView
-{
-    return [bubbleData count];
-}
-
-- (NSBubbleData *)bubbleTableView:(UIBubbleTableView *)tableView dataForRow:(NSInteger)row
-{
-    return [bubbleData objectAtIndex:row];
+#pragma mark - Callbacks
+- (void)othersAvatarOnPress {
+    NSLog(@"!!!!!!!");
 }
 
 @end
