@@ -27,6 +27,12 @@
     
     NSString * notice;
     NSString * groupIntro;
+    
+    // 海报效果
+    UIView * posterView;
+    
+    // 标题
+    UIView * titleView;
 }
 
 @end
@@ -83,12 +89,27 @@
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (tableView == sys_tableView_0) return 20;
-    if (tableView == sys_tableView_1) return 40;
+    if (tableView == sys_tableView_0) {
+        if (section == 0) return 20 + 320 + 156 - 64;
+        return 20;
+    }
+    if (tableView == sys_tableView_1) {
+        if (section == 0) return 40 + 320 + 156 - 64;
+        return 40;
+    }
     return 1;
 }
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
+    if (tv == sys_tableView_0) {
+        if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 300;
+    }
+    if (tv == sys_tableView_1) {
+        if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 300;
+    }
+    if (tv == sys_tableView_2) {
+        if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 500;
+    }
     return 1;
 }
 // 询问共有多少个段落
@@ -303,42 +324,134 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView != tableViews) return;
-    CGRect rect = selectSign.frame;
-    rect.origin.x = 15 + 100 * scrollView.contentOffset.x / 320;
-    selectSign.frame = rect;
-    
-    NSInteger targetPanel = (scrollView.contentOffset.x + 160) / 320;
-    
-    switch (selectPanel) {
-        case 0:
-            panel0.tintColor = We_foreground_black_general;
-            break;
-        case 1:
-            panel1.tintColor = We_foreground_black_general;
-            break;
-        case 2:
-            panel2.tintColor = We_foreground_black_general;
-        default:
-            break;
+    if (scrollView == tableViews) {
+        CGRect rect = selectSign.frame;
+        rect.origin.x = 15 + 100 * scrollView.contentOffset.x / 320;
+        selectSign.frame = rect;
+        
+        NSInteger targetPanel = (scrollView.contentOffset.x + 160) / 320;
+        
+        switch (selectPanel) {
+            case 0:
+                panel0.tintColor = We_foreground_black_general;
+                break;
+            case 1:
+                panel1.tintColor = We_foreground_black_general;
+                break;
+            case 2:
+                panel2.tintColor = We_foreground_black_general;
+            default:
+                break;
+        }
+        
+        switch (targetPanel) {
+            case 0:
+                panel0.tintColor = We_foreground_red_general;
+                break;
+            case 1:
+                panel1.tintColor = We_foreground_red_general;
+                break;
+            case 2:
+                panel2.tintColor = We_foreground_red_general;
+            default:
+                break;
+        }
+        selectPanel = targetPanel;
     }
-    
-    switch (targetPanel) {
-        case 0:
-            panel0.tintColor = We_foreground_red_general;
-            break;
-        case 1:
-            panel1.tintColor = We_foreground_red_general;
-            break;
-        case 2:
-            panel2.tintColor = We_foreground_red_general;
-        default:
-            break;
+    if (scrollView == sys_tableView_0) {
+        CGRect rect = controlPanel.frame;
+        rect.origin.y = MAX(320 - scrollView.contentOffset.y, 64);
+        controlPanel.frame = rect;
+        
+        rect = posterView.frame;
+        rect.origin.y = - scrollView.contentOffset.y;
+        posterView.frame = rect;
+        
+        [posterView setAlpha:MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
+        [titleView setAlpha:1 - MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
+        
+        if (scrollView.contentOffset.y < 320 - 64) {
+            CGPoint rect = sys_tableView_1.contentOffset;
+            rect.y = scrollView.contentOffset.y;
+            sys_tableView_1.contentOffset = rect;
+        }
+        if (scrollView.contentOffset.y < 320 - 64) {
+            CGPoint rect = sys_tableView_2.contentOffset;
+            rect.y = scrollView.contentOffset.y;
+            sys_tableView_2.contentOffset = rect;
+        }
     }
-    selectPanel = targetPanel;
+    if (scrollView == sys_tableView_1) {
+        CGRect rect = controlPanel.frame;
+        rect.origin.y = MAX(320 - scrollView.contentOffset.y, 64);
+        controlPanel.frame = rect;
+        
+        rect = posterView.frame;
+        rect.origin.y = - scrollView.contentOffset.y;
+        posterView.frame = rect;
+        
+        [posterView setAlpha:MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
+        [titleView setAlpha:1 - MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
+        
+        if (scrollView.contentOffset.y < 320 - 64) {
+            CGPoint rect = sys_tableView_0.contentOffset;
+            rect.y = scrollView.contentOffset.y;
+            sys_tableView_0.contentOffset = rect;
+        }
+        if (scrollView.contentOffset.y < 320 - 64) {
+            CGPoint rect = sys_tableView_2.contentOffset;
+            rect.y = scrollView.contentOffset.y;
+            sys_tableView_2.contentOffset = rect;
+        }
+    }
+    if (scrollView == sys_tableView_2) {
+        CGRect rect = controlPanel.frame;
+        rect.origin.y = MAX(320 - scrollView.contentOffset.y, 64);
+        controlPanel.frame = rect;
+        
+        rect = posterView.frame;
+        rect.origin.y = - scrollView.contentOffset.y;
+        posterView.frame = rect;
+        
+        [posterView setAlpha:MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
+        [titleView setAlpha:1 - MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
+        
+        if (scrollView.contentOffset.y < 320 - 64) {
+            CGPoint rect = sys_tableView_1.contentOffset;
+            rect.y = scrollView.contentOffset.y;
+            sys_tableView_1.contentOffset = rect;
+        }
+        if (scrollView.contentOffset.y < 320 - 64) {
+            CGPoint rect = sys_tableView_0.contentOffset;
+            rect.y = scrollView.contentOffset.y;
+            sys_tableView_0.contentOffset = rect;
+        }
+    }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+// 滑动结束
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (scrollView == tableViews) return;
+    NSLog(@"!!!!! %d", decelerate);
+    if (scrollView.contentOffset.y < 160) {
+        [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
+    
+    if (scrollView.contentOffset.y > 160 && scrollView.contentOffset.y < 320 - 64) {
+        [scrollView setContentOffset:CGPointMake(0, 320 - 64) animated:YES];
+    }
+}
+
+// 防治惯性滑动
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    if (scrollView == tableViews) return;
+    if (scrollView.contentOffset.y < 160) {
+        [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
+    
+    if (scrollView.contentOffset.y > 160 && scrollView.contentOffset.y < 320 - 64) {
+        [scrollView setContentOffset:CGPointMake(0, 320 - 64) animated:YES];
+    }
 }
 
 - (void)viewDidLoad
@@ -346,17 +459,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationItem.title = [NSString stringWithFormat:@"%@ %@", self.currentDoctor.userName, we_codings[@"doctorCategory"][self.currentDoctor.category][@"title"][self.currentDoctor.title]];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"基本资料" style:UIBarButtonItemStylePlain target:self action:nil];
     
+    // 标题和用于返回的文字
+    //self.navigationItem.title = [NSString stringWithFormat:@"%@ %@", self.currentDoctor.userName, we_codings[@"doctorCategory"][self.currentDoctor.category][@"title"][self.currentDoctor.title]];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"基本资料" style:UIBarButtonItemStylePlain target:self action:nil];
+    [self.navigationController.navigationBar setBackgroundImage:[WeAppDelegate imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
+    
+    // 预处理
     notice = self.currentDoctor.notice;
     if ([notice isEqualToString:@"<null>"]) notice = @"该医生未设置公告";
-    
     groupIntro = self.currentDoctor.groupIntro;
     if ([groupIntro isEqualToString:@"<null>"]) groupIntro = @"该医生未设置团队介绍";
-    
-    //UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me-appointment"] style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
-    //self.navigationItem.rightBarButtonItem = user_save;
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -365,7 +478,7 @@
     [self.view addSubview:bg];
     
     // sys_tableView - 0
-    sys_tableView_0 = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 578 - 154) style:UITableViewStyleGrouped];
+    sys_tableView_0 = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView_0.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView_0.delegate = self;
     sys_tableView_0.dataSource = self;
@@ -373,7 +486,7 @@
     sys_tableView_0.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     
     // sys_tableView - 1
-    sys_tableView_1 = [[UITableView alloc] initWithFrame:CGRectMake(320, 0, 320, 578 - 154) style:UITableViewStyleGrouped];
+    sys_tableView_1 = [[UITableView alloc] initWithFrame:CGRectMake(320, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView_1.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView_1.delegate = self;
     sys_tableView_1.dataSource = self;
@@ -381,7 +494,7 @@
     sys_tableView_1.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     
     // sys_tableView - 2
-    sys_tableView_2 = [[UITableView alloc] initWithFrame:CGRectMake(640, 0, 320, 578 - 154) style:UITableViewStyleGrouped];
+    sys_tableView_2 = [[UITableView alloc] initWithFrame:CGRectMake(640, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView_2.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView_2.delegate = self;
     sys_tableView_2.dataSource = self;
@@ -389,7 +502,7 @@
     sys_tableView_2.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     
     // tableViews
-    tableViews = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 154, 320, 578 - 154)];
+    tableViews = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
     tableViews.contentSize = CGSizeMake(960, 568 - 154);
     [tableViews addSubview:sys_tableView_0];
     [tableViews addSubview:sys_tableView_1];
@@ -400,7 +513,7 @@
     
     // controlPanel
     selectPanel = 0;
-    controlPanel = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 320, 156 - 64)];
+    controlPanel = [[UIView alloc] initWithFrame:CGRectMake(0, 320, 320, 156 - 64)];
     
     button0 = [WeToolButton buttonWithType:UIButtonTypeRoundedRect];
     [button0 setFrame:CGRectMake(0, 2, 89, 48)];
@@ -473,6 +586,43 @@
     [self.view addSubview:tableViews];
     [self.view addSubview:controlPanel];
     
+    // 所有内容
+    posterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+    [self.view addSubview:posterView];
+    
+    // 海报背景图片
+    UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+    [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(self.currentDoctor.avatarPath)]];
+    [avatarView setContentMode:UIViewContentModeScaleAspectFill];
+    [posterView addSubview:avatarView];
+    
+    // 海报上的标题
+    /*
+    posterTitle = [[UILabel alloc] initWithFrame:CGRectMake(20, 235 - 64, 280, 64)];
+    [posterTitle setTextAlignment:NSTextAlignmentCenter];
+    [posterTitle setText:currentFunding.title];
+    [posterTitle setFont:We_font_textfield_huge_zh_cn];
+    [posterTitle setTextColor:We_foreground_white_general];
+    [posterTitle setNumberOfLines:2];
+    [posterView addSubview:posterTitle];*/
+    
+    // 标题
+    titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 64)];
+    
+    UIImageView * titleImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 64)];
+    [titleImage setImage:[UIImage imageNamed:@"texture"]];
+    [titleView addSubview:titleImage];
+    
+    [titleView setAlpha:0.0];
+    [self.view addSubview:titleView];
+    
+    UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 320, 40)];
+    [titleLabel setText:[NSString stringWithFormat:@"%@ %@", self.currentDoctor.userName, we_codings[@"doctorCategory"][self.currentDoctor.category][@"title"][self.currentDoctor.title]]];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [titleLabel setFont:We_font_textfield_huge_zh_cn];
+    [titleLabel setTextColor:We_foreground_white_general];
+    [titleView addSubview: titleLabel];
+    
     // sys_pendingView
     sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
@@ -487,6 +637,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[WeAppDelegate imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
     
     // refresh Page
     if (favorDoctorList[self.currentDoctor.userId] == nil) {
@@ -497,6 +648,10 @@
         [button1 setTitle:@"已添加为保健医" forState:UIControlStateNormal];
         [button1 setImage:[UIImage imageNamed:@"docinfo-favorited"] forState:UIControlStateNormal];
     }
+}
+
+-  (void)viewWillDisappear:(BOOL)animated {
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"texture"] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)didReceiveMemoryWarning
