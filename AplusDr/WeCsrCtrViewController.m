@@ -1120,7 +1120,9 @@
 
 #pragma mark - Callbacks
 - (void)othersAvatarOnPress {
-    NSLog(@"!!!!!!!");
+    WeCsrDciViewController * vc = [[WeCsrDciViewController alloc] init];
+    vc.currentDoctor = doctorChating;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

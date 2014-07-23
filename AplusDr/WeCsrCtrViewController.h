@@ -19,6 +19,7 @@
 #import "WeNavViewController.h"
 #import "WeCsrJiaViewController.h"
 #import "WeImageButton.h"
+#import "WeCsrDciViewController.h"
 
 @interface WeCsrCtrViewController : UIViewController  <UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
 
