@@ -27,7 +27,6 @@
     
     NSString * notice;
     NSString * groupIntro;
-    BOOL scrolling;
 }
 
 @end
@@ -113,7 +112,7 @@
     if (tableView == sys_tableView_1) {
         if (section == 0) return 1;
         if (section == 1) {
-            if ([self.currentDoctor.workPeriod isEqualToString:@"<null>"]) return 0;
+            if ([self.currentDoctor.workPeriod isEqualToString:@"<null>"]) return 1;
             else return [self.currentDoctor.workPeriod length] / 4;
         }
     }
@@ -213,10 +212,15 @@
                 break;
             case 1:
                 cell.contentView.backgroundColor = We_background_cell_general;
-                cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [WeAppDelegate transitionDayOfWeekFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 1, 1)]], [WeAppDelegate transitionPeriodOfDayFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 2, 1)]]];
+                if ([self.currentDoctor.workPeriod isEqualToString:@"<null>"]) {
+                    cell.textLabel.text = @"该医生没有设置出诊时间";
+                }
+                else {
+                    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [WeAppDelegate transitionDayOfWeekFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 1, 1)]], [WeAppDelegate transitionPeriodOfDayFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 2, 1)]]];
+                    cell.detailTextLabel.text = [WeAppDelegate transitionTypeOfPeriodFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 3, 1)]];
+                }
                 cell.textLabel.font = We_font_textfield_zh_cn;
                 cell.textLabel.textColor = We_foreground_black_general;
-                cell.detailTextLabel.text = [WeAppDelegate transitionTypeOfPeriodFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 3, 1)]];
                 cell.detailTextLabel.font = We_font_textfield_zh_cn;
                 cell.detailTextLabel.textColor = We_foreground_gray_general;
             default:
@@ -260,21 +264,46 @@
 }
 
 - (void)appointing:(id)sender {
-    WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
-    vc.currentDoctor = self.currentDoctor;
-    
-    [self.navigationController pushViewController:vc animated:YES];
+    if (currentUser == nil) {
+        WeRegWlcViewController * vc = [[WeRegWlcViewController alloc] init];
+        vc.originTargetViewController = nil;
+        vc.tabBarController = self.tabBarController;
+        
+        WeNavViewController * nav = [[WeNavViewController alloc] init];
+        [nav pushViewController:vc animated:NO];
+        
+        [self presentViewController:nav animated:YES completion:nil];
+    }
+    else {
+        WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
+        vc.currentDoctor = self.currentDoctor;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)consulting:(id)sender {
-    WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
-    vc.pushType = @"consultingRoom";
-    vc.currentDoctor = self.currentDoctor;
-    
-    [self.navigationController pushViewController:vc animated:YES];
+    if (currentUser == nil) {
+        WeRegWlcViewController * vc = [[WeRegWlcViewController alloc] init];
+        vc.originTargetViewController = nil;
+        vc.tabBarController = self.tabBarController;
+        
+        WeNavViewController * nav = [[WeNavViewController alloc] init];
+        [nav pushViewController:vc animated:NO];
+        
+        [self presentViewController:nav animated:YES completion:nil];
+    }
+    else {
+        WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
+        vc.pushType = @"consultingRoom";
+        vc.currentDoctor = self.currentDoctor;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView != tableViews) return;
     CGRect rect = selectSign.frame;
     rect.origin.x = 15 + 100 * scrollView.contentOffset.x / 320;
     selectSign.frame = rect;
@@ -310,8 +339,6 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    scrolling = NO;
-    NSLog(@"!!!!!!!!!!");
 }
 
 - (void)viewDidLoad
@@ -480,6 +507,18 @@
 
 #pragma mark - apis
 - (void)api_patient_addFav {
+    // 判断登录状态
+    if (currentUser == nil) {
+        WeRegWlcViewController * vc = [[WeRegWlcViewController alloc] init];
+        vc.originTargetViewController = nil;
+        vc.tabBarController = self.tabBarController;
+        
+        WeNavViewController * nav = [[WeNavViewController alloc] init];
+        [nav pushViewController:vc animated:NO];
+        
+        [self presentViewController:nav animated:YES completion:nil];
+        return;
+    }
     if ([button1.titleLabel.text isEqualToString:@"已添加为保健医"]) return;
     [sys_pendingView startAnimating];
     [WeAppDelegate postToServerWithField:@"patient" action:@"addFav"
