@@ -119,16 +119,28 @@
 }
 
 - (void)supportButton_onPress:(id)sender {
-    WeInfoedButton * senderButton = sender;
-    
-    WeFunSup2ViewController * vc = [[WeFunSup2ViewController alloc] init];
-    vc.currentLevel = (WeFundingLevel *)[senderButton userData];
-    vc.currentFunding = self.currentFunding;
-    
-    UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"选择" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backItem;
-    
-    [self.navigationController pushViewController:vc animated:YES];
+    if (currentUser == nil) {
+        WeRegWlcViewController * vc = [[WeRegWlcViewController alloc] init];
+        vc.originTargetViewController = nil;
+        vc.tabBarController = self.tabBarController;
+        
+        WeNavViewController * nav = [[WeNavViewController alloc] init];
+        [nav pushViewController:vc animated:NO];
+        
+        [self presentViewController:nav animated:YES completion:nil];
+    }
+    else {
+        WeInfoedButton * senderButton = sender;
+        
+        WeFunSup2ViewController * vc = [[WeFunSup2ViewController alloc] init];
+        vc.currentLevel = (WeFundingLevel *)[senderButton userData];
+        vc.currentFunding = self.currentFunding;
+        
+        UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"选择" style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.navigationItem.backBarButtonItem = backItem;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -153,10 +165,6 @@
     
     // 标题
     [self.navigationItem setTitle:@"选择支持方案"];
-    
-    // 取消按钮
-    UIBarButtonItem * cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton_onPress:)];
-    //self.navigationItem.leftBarButtonItem = cancelButton;
     
     // 取出需要显示的级别
     levels = [[NSMutableArray alloc] init];
