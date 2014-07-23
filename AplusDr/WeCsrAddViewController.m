@@ -51,8 +51,8 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
-    doctorViewing = doctorList[path.section];
-    UIViewController * vc = [[WeCsrDciViewController alloc] init];
+    WeCsrDciViewController * vc = [[WeCsrDciViewController alloc] init];
+    vc.currentDoctor = doctorList[path.section];
     [self.navigationController pushViewController:vc animated:YES];
     [tv deselectRowAtIndexPath:path animated:YES];
 }

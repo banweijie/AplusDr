@@ -633,6 +633,7 @@
 		9026EF141904EF8300CE4A7A /* PersonalCenter */ = {
 			isa = PBXGroup;
 			children = (
+				900E2967193079F3008BF61C /* CaseManage */,
 				900EB752195940DE006BBA04 /* TransactionHistory */,
 				9026EF151904EFA300CE4A7A /* PersonalAccount */,
 				9026EEC71904EE5500CE4A7A /* WePecIdxViewController.h */,
@@ -650,6 +651,26 @@
 				90F0CE731922CF55006A4605 /* WeInpNamViewController.m */,
 			);
 			name = PersonalAccount;
+			sourceTree = "<group>";
+		};
+		9028C5B0197FA400003CA70F /* SearchDoctor */ = {
+			isa = PBXGroup;
+			children = (
+				90266C3919276CB200478A89 /* Selection */,
+				907D5B4719201CF20006EAE0 /* WeCsrAddViewController.h */,
+				907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */,
+				907D5B4A19202BC10006EAE0 /* WeCsrDciViewController.h */,
+				907D5B4B19202BC10006EAE0 /* WeCsrDciViewController.m */,
+				907D5B551920CD4B0006EAE0 /* WeCsrCosViewController.h */,
+				907D5B561920CD4B0006EAE0 /* WeCsrCosViewController.m */,
+				900E2964192FE8DC008BF61C /* WeCsrCosSelGenViewController.h */,
+				900E2965192FE8DC008BF61C /* WeCsrCosSelGenViewController.m */,
+				90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */,
+				90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */,
+				906F4DEF19756443007807FE /* WeCsrJiaChooseTimeViewController.h */,
+				906F4DF019756443007807FE /* WeCsrJiaChooseTimeViewController.m */,
+			);
+			name = SearchDoctor;
 			sourceTree = "<group>";
 		};
 		906F4D9D1973CF80007807FE /* Alipay */ = {
@@ -716,19 +737,6 @@
 				907D5B3D1920164B0006EAE0 /* WeCsrIdxViewController.m */,
 				907D5B581920D9AD0006EAE0 /* WeCsrCtrViewController.h */,
 				907D5B591920D9AD0006EAE0 /* WeCsrCtrViewController.m */,
-				907D5B4719201CF20006EAE0 /* WeCsrAddViewController.h */,
-				907D5B4819201CF20006EAE0 /* WeCsrAddViewController.m */,
-				90266C3919276CB200478A89 /* Selection */,
-				907D5B4A19202BC10006EAE0 /* WeCsrDciViewController.h */,
-				907D5B4B19202BC10006EAE0 /* WeCsrDciViewController.m */,
-				907D5B551920CD4B0006EAE0 /* WeCsrCosViewController.h */,
-				907D5B561920CD4B0006EAE0 /* WeCsrCosViewController.m */,
-				900E2964192FE8DC008BF61C /* WeCsrCosSelGenViewController.h */,
-				900E2965192FE8DC008BF61C /* WeCsrCosSelGenViewController.m */,
-				90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */,
-				90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */,
-				906F4DEF19756443007807FE /* WeCsrJiaChooseTimeViewController.h */,
-				906F4DF019756443007807FE /* WeCsrJiaChooseTimeViewController.m */,
 			);
 			name = ConsultingRoom;
 			sourceTree = "<group>";
@@ -782,8 +790,8 @@
 		90B31A4A194BF1DD00A19CD7 /* View&Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9028C5B0197FA400003CA70F /* SearchDoctor */,
 				90B31A5419544B7B00A19CD7 /* RaisePublic */,
-				900E2967193079F3008BF61C /* CaseManage */,
 				9026EF131904EF2800CE4A7A /* Register&Login */,
 				9026EF141904EF8300CE4A7A /* PersonalCenter */,
 				907D5B42192016580006EAE0 /* ConsultingRoom */,

@@ -88,7 +88,6 @@ NSMutableDictionary * favorDoctorList;
 NSMutableArray * caseRecords;
 NSMutableArray * examinations;
 
-WeDoctor * doctorViewing;
 WeCaseRecord * caseRecordChanging;
 WeRecordDrug * recordDrugChanging;
 WeExamination * examinationChanging;
