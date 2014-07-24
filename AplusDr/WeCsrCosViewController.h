@@ -10,6 +10,9 @@
 #import "WeViewController.h"
 #import "WeAppDelegate.h"
 #import "WeCsrCosSelGenViewController.h"
+#import "WeSentenceModifyViewController.h"
+#import "WeParagraphModifyViewController.h"
+#import "WeGenderPickerViewController.h"
 
 // Alipay
 #import "AlixLibService.h"

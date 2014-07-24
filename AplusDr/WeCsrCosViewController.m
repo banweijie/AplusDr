@@ -13,9 +13,12 @@
     UIView * sys_explaination_view;
     UILabel * sys_explaination_label;
     UITableView * sys_tableView;
-    UITextField * user_age_input;
     UISwitch * user_ifemergent_switch;
     UIActivityIndicatorView * sys_pendingView;
+    
+    NSMutableString * user_gender;
+    NSMutableString * user_age;
+    NSMutableString * user_description;
 }
 
 @end
@@ -39,11 +42,25 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section == 1 && path.row == 0) {
-        WeCsrCosSelGenViewController * vc = [[WeCsrCosSelGenViewController alloc] init];
+        WeGenderPickerViewController * vc = [[WeGenderPickerViewController alloc] init];
+        vc.stringToBeTitle = @"性别";
+        vc.stringToModify = user_gender;
+        
         [self.navigationController pushViewController:vc animated:YES];
     }
     if (path.section == 1 && path.row == 1) {
-        [user_age_input becomeFirstResponder];
+        WeSentenceModifyViewController * vc = [[WeSentenceModifyViewController alloc] init];
+        vc.stringToBeTitle = @"年龄";
+        vc.stringToModify = user_age;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (path.section == 1 && path.row == 3) {
+        WeParagraphModifyViewController * vc = [[WeParagraphModifyViewController alloc] init];
+        vc.stringToBeTitle = @"更多描述";
+        vc.stringToModify = user_description;
+        
+        [self.navigationController pushViewController:vc animated:YES];
     }
     if (path.section == 2 && path.row == 0) {
         [self addConsult:self];
@@ -52,7 +69,14 @@
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //if (indexPath.row == 0) return tv.rowHeight * 1.5;
+    if (indexPath.section == 1 && indexPath.row == 3) {
+        if ([user_description isEqualToString:@""]) {
+            return [WeAppDelegate calcSizeForString:@"无" Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
+        }
+        else {
+            return [WeAppDelegate calcSizeForString:user_description Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
+        }
+    }
     return tv.rowHeight;
 }
 // 询问每个段落的头部高度
@@ -70,7 +94,7 @@
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
     //if (section == 1) return 30;
     if (section == 0) return 60;
-    if (section == [self numberOfSectionsInTableView:tv] - 1) return 50;
+    if (section == [self numberOfSectionsInTableView:tv] - 1) return 50 + self.tabBarController.tabBar.frame.size.height;
     return 10;
 }
 -(UIView *)tableView:(UITableView *)tv viewForFooterInSection:(NSInteger)section{
@@ -84,7 +108,7 @@
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
     if (section == 0) return 2;
-    if (section == 1) return 3;
+    if (section == 1) return 4;
     if (section == 2) return 1;
     return 0;
 }
@@ -144,9 +168,11 @@
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
         
-        cell.detailTextLabel.text = [WeAppDelegate transitionGenderFromChar:csrcos_selected_gender];
+        cell.detailTextLabel.text = [WeAppDelegate transitionGenderFromChar:user_gender];
         cell.detailTextLabel.font = We_font_textfield_zh_cn;
         cell.detailTextLabel.textColor = We_foreground_black_general;
+        
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     if (indexPath.section == 1 && indexPath.row == 1) {
         
@@ -156,7 +182,10 @@
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
         
-        [cell.contentView addSubview:user_age_input];
+        cell.detailTextLabel.text = user_age;
+        cell.detailTextLabel.font = We_font_textfield_zh_cn;
+        cell.detailTextLabel.textColor = We_foreground_black_general;
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     if (indexPath.section == 1 && indexPath.row == 2) {
         
@@ -167,6 +196,36 @@
         cell.textLabel.textColor = We_foreground_black_general;
         
         [cell.contentView addSubview:user_ifemergent_switch];
+    }
+    if (indexPath.section == 1 && indexPath.row == 3) {
+        UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 280, 40)];
+        l1.text = @"更多描述";
+        l1.font = We_font_textfield_zh_cn;
+        l1.textColor = We_foreground_black_general;
+        [cell.contentView addSubview:l1];
+        
+        if ([user_description isEqualToString:@""]) {
+            CGSize sizezz = [WeAppDelegate calcSizeForString:@"无" Font:We_font_textfield_zh_cn expectWidth:280];
+            UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.text = @"无";
+            label.font = We_font_textfield_zh_cn;
+            label.textColor = We_foreground_gray_general;
+            [cell.contentView addSubview:label];
+        }
+        else {
+            CGSize sizezz = [WeAppDelegate calcSizeForString:user_description Font:We_font_textfield_zh_cn expectWidth:280];
+            UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.text = user_description;
+            label.font = We_font_textfield_zh_cn;
+            label.textColor = We_foreground_gray_general;
+            [cell.contentView addSubview:label];
+        }
+        
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     if (indexPath.section == 2 && indexPath.row == 0) {
         cell.backgroundColor = We_foreground_red_general;
@@ -194,9 +253,10 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:yijiarenUrl(@"patient", @"addConsult") parameters:@{
                                                                       @"consult.doctor.id":self.currentDoctor.userId,
-                                                                      @"consult.gender":csrcos_selected_gender,
-                                                                      @"consult.age":user_age_input.text,
-                                                                      @"consult.emergent":user_ifemergent_switch.on?@"true":@"false"
+                                                                      @"consult.gender":user_gender,
+                                                                      @"consult.age":user_age,
+                                                                      @"consult.emergent":user_ifemergent_switch.on?@"true":@"false",
+                                                                      @"consult.description":user_description
                                                                       }
           success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
               [sys_pendingView stopAnimating];
@@ -283,16 +343,12 @@
     self.navigationItem.title = @"发起咨询";
     
     // Initial conditions
-    csrcos_selected_gender = @"M";
-    
-    // 年龄输入
-    We_init_textFieldInCell_general(user_age_input, @"20", We_font_textfield_en_us);
+    user_age = [[NSMutableString alloc] init];
+    user_description = [[NSMutableString alloc] init];
+    user_gender = [[NSMutableString alloc] initWithString:@"U"];
     
     // 是否紧急
     user_ifemergent_switch = [[UISwitch alloc] initWithFrame:CGRectMake(250, 5, 60, 30)];
-    
-    UIBarButtonItem * user_cancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(user_cancel_onPress:)];
-    //self.navigationItem.leftBarButtonItem = user_cancel;
     
     // sys_explaination
     sys_explaination_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
