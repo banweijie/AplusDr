@@ -200,13 +200,21 @@
 }
 
 - (void)setConditionToDefault:(id)sender {
+    /*
     condition_provinceId = selection_provinceId;
     condition_cityId = selection_cityId;
     condition_hospitalId = selection_hospitalId;
     condition_topSectionId = selection_topSectionId;
     condition_sectionId = selection_sectionId;
     condition_category = selection_category;
-    condition_title = selection_title;
+     condition_title = selection_title;*/
+    condition_provinceId = @"<null>";
+    condition_cityId = @"<null>";
+    condition_hospitalId = @"<null>";
+    condition_topSectionId = @"<null>";
+    condition_sectionId = @"<null>";
+    condition_category = @"<null>";
+    condition_title = @"<null>";
     [sys_recommand_switch setOn:([selection_recommend isEqualToString:@"true"])];
     [sys_tableView reloadData];
 }
