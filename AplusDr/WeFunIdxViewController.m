@@ -302,7 +302,12 @@
     [restData setTextAlignment:NSTextAlignmentRight];
     [restData setFont:We_font_textfield_small_zh_cn];
     int restSec =  [currentFunding.endTime longLongValue] / 1000 - [[NSDate date] timeIntervalSince1970];
-    [restData setText:[NSString stringWithFormat:@"%d天", restSec / 86400 + 1]];
+    if (restSec < 0) {
+        [restData setText:[NSString stringWithFormat:@"已结束"]];
+    }
+    else {
+        [restData setText:[NSString stringWithFormat:@"%d天", restSec / 86400 + 1]];
+    }
     [cell.contentView addSubview:restData];
     
     UILabel * restLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 220 + 5 + 20 * 2 + [WeAppDelegate calcSizeForString:currentFunding.title Font:We_font_textfield_large_zh_cn expectWidth:260].height + 20 + 20 + 20 + 10, 260, 20)];
