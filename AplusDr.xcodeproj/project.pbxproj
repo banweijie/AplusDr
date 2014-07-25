@@ -58,6 +58,9 @@
 		9026EEFC1904EE5500CE4A7A /* WePecPeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9026EECA1904EE5500CE4A7A /* WePecPeaViewController.m */; };
 		9026EF0F1904EE5500CE4A7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9026EEEF1904EE5500CE4A7A /* Main.storyboard */; };
 		9028C5B319825C5F003CA70F /* WePecMyaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9028C5B219825C5F003CA70F /* WePecMyaViewController.m */; };
+		9028C5B61982624D003CA70F /* WeJiaMangementIndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9028C5B51982624D003CA70F /* WeJiaMangementIndexViewController.m */; };
+		9028C5B9198262A8003CA70F /* WeJiahao.m in Sources */ = {isa = PBXBuildFile; fileRef = 9028C5B8198262A8003CA70F /* WeJiahao.m */; };
+		9028C5BC198262BD003CA70F /* WeJiahaoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9028C5BB198262BD003CA70F /* WeJiahaoDetailViewController.m */; };
 		906F4DD01973D0AD007807FE /* AlipayRsaLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DB31973D0AD007807FE /* AlipayRsaLib.a */; };
 		906F4DD11973D0AD007807FE /* Alixpay.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 906F4DB51973D0AD007807FE /* Alixpay.bundle */; };
 		906F4DD21973D0AD007807FE /* AlixPaylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DB61973D0AD007807FE /* AlixPaylib.a */; };
@@ -229,6 +232,12 @@
 		9026EEEF1904EE5500CE4A7A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9028C5B119825C5F003CA70F /* WePecMyaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WePecMyaViewController.h; sourceTree = "<group>"; };
 		9028C5B219825C5F003CA70F /* WePecMyaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePecMyaViewController.m; sourceTree = "<group>"; };
+		9028C5B41982624D003CA70F /* WeJiaMangementIndexViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeJiaMangementIndexViewController.h; sourceTree = "<group>"; };
+		9028C5B51982624D003CA70F /* WeJiaMangementIndexViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeJiaMangementIndexViewController.m; sourceTree = "<group>"; };
+		9028C5B7198262A8003CA70F /* WeJiahao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeJiahao.h; sourceTree = "<group>"; };
+		9028C5B8198262A8003CA70F /* WeJiahao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeJiahao.m; sourceTree = "<group>"; };
+		9028C5BA198262BD003CA70F /* WeJiahaoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeJiahaoDetailViewController.h; sourceTree = "<group>"; };
+		9028C5BB198262BD003CA70F /* WeJiahaoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeJiahaoDetailViewController.m; sourceTree = "<group>"; };
 		906F4DB31973D0AD007807FE /* AlipayRsaLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AlipayRsaLib.a; sourceTree = "<group>"; };
 		906F4DB41973D0AD007807FE /* AlixLibService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlixLibService.h; sourceTree = "<group>"; };
 		906F4DB51973D0AD007807FE /* Alixpay.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Alixpay.bundle; sourceTree = "<group>"; };
@@ -643,6 +652,10 @@
 				9026EEC81904EE5500CE4A7A /* WePecIdxViewController.m */,
 				9028C5B119825C5F003CA70F /* WePecMyaViewController.h */,
 				9028C5B219825C5F003CA70F /* WePecMyaViewController.m */,
+				9028C5B41982624D003CA70F /* WeJiaMangementIndexViewController.h */,
+				9028C5B51982624D003CA70F /* WeJiaMangementIndexViewController.m */,
+				9028C5BA198262BD003CA70F /* WeJiahaoDetailViewController.h */,
+				9028C5BB198262BD003CA70F /* WeJiahaoDetailViewController.m */,
 			);
 			name = PersonalCenter;
 			sourceTree = "<group>";
@@ -893,6 +906,8 @@
 				906F4DEC1974502C007807FE /* WeConsult.m */,
 				900EB759195945EB006BBA04 /* WeOrder.h */,
 				900EB75A195945EB006BBA04 /* WeOrder.m */,
+				9028C5B7198262A8003CA70F /* WeJiahao.h */,
+				9028C5B8198262A8003CA70F /* WeJiahao.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1043,6 +1058,7 @@
 				900E29731930C847008BF61C /* WeCahAddCahViewController.m in Sources */,
 				90F0CE801926D0CA006A4605 /* WeCsrSelAreaViewController.m in Sources */,
 				906F4DED1974502C007807FE /* WeConsult.m in Sources */,
+				9028C5B9198262A8003CA70F /* WeJiahao.m in Sources */,
 				90B31A791957B4CE00A19CD7 /* WeFunSelSecSecViewController.m in Sources */,
 				90B31A4F194BF61B00A19CD7 /* WePatient.m in Sources */,
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
@@ -1069,6 +1085,7 @@
 				9028C5B319825C5F003CA70F /* WePecMyaViewController.m in Sources */,
 				906F4DD81973D0AD007807FE /* SBJSON.m in Sources */,
 				9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */,
+				9028C5B61982624D003CA70F /* WeJiaMangementIndexViewController.m in Sources */,
 				9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */,
 				906F4DEA19744ACE007807FE /* WePecTrdViewController.m in Sources */,
 				907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */,
@@ -1083,6 +1100,7 @@
 				907D5B691920D9DA0006EAE0 /* UIBubbleTableView.m in Sources */,
 				90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */,
 				906F4DD91973D0AD007807FE /* SBJsonBase.m in Sources */,
+				9028C5BC198262BD003CA70F /* WeJiahaoDetailViewController.m in Sources */,
 				900E2992193223A0008BF61C /* WeExaminationItem.m in Sources */,
 				900E29571929B44C008BF61C /* amrFileCodec.mm in Sources */,
 				906F4DD51973D0AD007807FE /* AlixPayResult.m in Sources */,

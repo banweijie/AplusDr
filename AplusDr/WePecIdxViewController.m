@@ -46,6 +46,10 @@
         WePecMyaViewController * vc = [[WePecMyaViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
+    if (path.section == 2 && path.row == 0) {
+        WeJiaMangementIndexViewController * vc = [[WeJiaMangementIndexViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     if (path.section == 2 && path.row == 1) {
         WePecTrhViewController * vc = [[WePecTrhViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
