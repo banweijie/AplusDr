@@ -42,6 +42,10 @@
         default:
             break;
     }
+    if (path.section == 1 && path.row == 0) {
+        WePecMyaViewController * vc = [[WePecMyaViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     if (path.section == 2 && path.row == 1) {
         WePecTrhViewController * vc = [[WePecTrhViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
@@ -120,6 +124,8 @@
     UILabel * l1;
     UILabel * l2;
     UIImageView * imageView;
+    [cell.imageView setContentMode:UIViewContentModeCenter];
+    
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row) {
@@ -187,7 +193,7 @@
                     cell.textLabel.text = @"我的支持";
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
-                    cell.imageView.image = [UIImage imageNamed:@"me-moneyhistory"];
+                    cell.imageView.image = [UIImage imageNamed:@"me-crowdfunding"];
                     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                     break;
                 case 3:
@@ -195,7 +201,7 @@
                     cell.textLabel.text = @"病历管理";
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
-                    cell.imageView.image = [UIImage imageNamed:@"me-moneyhistory"];
+                    cell.imageView.image = [UIImage imageNamed:@"tab-casehistory-selected"];
                     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                     break;
                 default:
