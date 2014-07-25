@@ -20,6 +20,8 @@
     UIButton * coverButton;
     BOOL hasMore;
     BOOL isWaiting;
+    
+    UIView * searchView;
 }
 
 @end
@@ -63,6 +65,7 @@
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) return 10 + 64;
     return 10;
 }
 // 询问每个段落的尾部高度
@@ -176,26 +179,6 @@
     selection_keyword = @"<null>";
 }
 
-- (void)coverButtonOnPress:(id)sender {
-    [searchBar resignFirstResponder];
-}
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    coverButton.hidden = NO;
-    return YES;
-}
-
-- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
-    coverButton.hidden = YES;
-    return YES;
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)sbar {
-    selection_keyword = sbar.text;
-    [searchBar resignFirstResponder];
-    [self initialDoctorList:self];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -218,7 +201,7 @@
     
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 64 + 85, 310, self.view.frame.size.height - 64 - 85) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 0, 310, self.view.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
@@ -234,6 +217,7 @@
     [loadingViewContainer addSubview:loadingView];
     
     // bar background image
+    /*
     UIImageView * barBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, 320, 85)];
     barBackground.image = [UIImage imageNamed:@"bar"];
     [self.view addSubview:barBackground];
@@ -253,8 +237,18 @@
     [selectButton.titleLabel setFont:We_font_textfield_zh_cn];
     [selectButton setTintColor:We_foreground_red_general];
     [selectButton addTarget:self action:@selector(selection:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:selectButton];
+    [self.view addSubview:selectButton];*/
     
+    // 搜索按钮
+    UIBarButtonItem * searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"list-search"] style:UIBarButtonItemStylePlain target:self action:@selector(searchButton_onPress)];
+    
+    // 筛选按钮
+    UIBarButtonItem * filterButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"list-filter"] style:UIBarButtonItemStylePlain target:self action:@selector(selection:)];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:searchButton, filterButton, nil];
+    
+    searchView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 64, 320, 45)];
+    [searchView setHidden:YES];
+    [self.view addSubview:searchView];
     
     // sys_pendingView
     sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -265,7 +259,7 @@
     [self.view addSubview:sys_pendingView];
     
     // search bar
-    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 104, 320, 45)];
+    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 45)];
     searchBar.placeholder = @"搜索";
     searchBar.translucent = YES;
     searchBar.backgroundImage = [UIImage new];
@@ -276,12 +270,12 @@
     // cover button
     coverButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     coverButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
-    coverButton.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
+    coverButton.frame = CGRectMake(0, 64 + 45, 320, self.view.frame.size.height - 64 - 45);
     [coverButton addTarget:self action:@selector(coverButtonOnPress:) forControlEvents:UIControlEventTouchUpInside];
     coverButton.hidden = YES;
     [self.view addSubview:coverButton];
     
-    [self.view addSubview:searchBar];
+    [searchView addSubview:searchBar];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -297,6 +291,40 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - searchBar Callbacks
+- (void)searchButton_onPress {
+    [searchView setHidden:!searchView.isHidden];
+    if (!searchView.isHidden) {
+        [searchBar becomeFirstResponder];
+    }
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    coverButton.hidden = NO;
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
+    coverButton.hidden = YES;
+    return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)sbar {
+    [self clearSelectionCondition];
+    selection_keyword = searchBar.text;
+    [searchBar resignFirstResponder];
+    [searchView setHidden:YES];
+    [self initialDoctorList:nil];
+}
+
+- (void)coverButtonOnPress:(id)sender {
+    [self clearSelectionCondition];
+    selection_keyword = searchBar.text;
+    [searchBar resignFirstResponder];
+    [searchView setHidden:YES];
+    [self initialDoctorList:nil];
 }
 
 - (void)queryMoreDoctors:(id)sender {
