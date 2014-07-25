@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AplusDr/WeFunIdxViewController.m"
-            timestampString = "427880091.832246"
+            timestampString = "427955109.38149"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "525"
-            endingLineNumber = "525"
+            startingLineNumber = "530"
+            endingLineNumber = "530"
             landmarkName = "-coverButtonOnPress:"
             landmarkType = "5">
          </BreakpointContent>

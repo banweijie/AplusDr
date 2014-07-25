@@ -15,10 +15,10 @@
 @property(strong, nonatomic) NSString * messageType;
 @property(strong, nonatomic) NSString * receiverId;
 @property(strong, nonatomic) NSString * senderId;
-@property(strong, nonatomic) NSString * viewed;
 @property(strong, nonatomic) NSString * content;
 @property(nonatomic) long long time;
 
+@property(nonatomic) BOOL viewed;
 @property(nonatomic) BOOL loading;
 @property(nonatomic) BOOL sending;
 @property(nonatomic) BOOL failed;
