@@ -59,10 +59,12 @@
     if (![info[@"currentFunding"] isEqual:[NSNull null]]) {
         self.currentFundingId = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"id"]];
         self.currentFundingName = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"title"]];
+        self.currentFundingPoster = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"poster2"]];
         self.currentFundingType = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"type"]];
         self.currentFundingSupportCount = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"supportCount"]];
         self.currentFundingLikeCount = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"likeCount"]];
         self.currentFundingSum = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"sum"]];
+        self.currentFundingEndTime = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"endTime"]];
     }
     else {
         self.currentFundingId = nil;

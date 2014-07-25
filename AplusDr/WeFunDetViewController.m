@@ -36,6 +36,11 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)path
 {
+    if (path.section == 0 && path.row == 2) {
+        WeCsrDciViewController * vc = [[WeCsrDciViewController alloc] init];
+        vc.currentDoctor = currentFunding.initiator;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     if (path.section == 2 && path.row == 1) {
         WeFunDesViewController * vc = [[WeFunDesViewController alloc] init];
         vc.HTMLContent = currentFunding.description;
@@ -328,7 +333,7 @@
     
     // 标题
     self.navigationItem.title = @"读取中...";
-    UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"基本信息" style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backItem;
     
     // 分享按钮

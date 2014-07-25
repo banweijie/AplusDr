@@ -14,6 +14,7 @@
 #import "WeFunSupViewController.h"
 #import "WeNavViewController.h"
 #import "WeRegWlcViewController.h"
+#import "WeCsrDciViewController.h"
 
 @interface WeFunDetViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
