@@ -808,9 +808,9 @@
 		90B31A4A194BF1DD00A19CD7 /* View&Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9028C5B0197FA400003CA70F /* SearchDoctor */,
-				90B31A5419544B7B00A19CD7 /* RaisePublic */,
 				9026EF131904EF2800CE4A7A /* Register&Login */,
+				90B31A5419544B7B00A19CD7 /* RaisePublic */,
+				9028C5B0197FA400003CA70F /* SearchDoctor */,
 				9026EF141904EF8300CE4A7A /* PersonalCenter */,
 				907D5B42192016580006EAE0 /* ConsultingRoom */,
 			);

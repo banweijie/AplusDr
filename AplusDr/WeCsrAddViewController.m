@@ -216,29 +216,6 @@
     [loadingView startAnimating];
     [loadingViewContainer addSubview:loadingView];
     
-    // bar background image
-    /*
-    UIImageView * barBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, 320, 85)];
-    barBackground.image = [UIImage imageNamed:@"bar"];
-    [self.view addSubview:barBackground];
-    
-    UIButton * sortButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [sortButton setFrame:CGRectMake(0, 64, 210, 40)];
-    [sortButton setImage:[UIImage imageNamed:@"crowdfunding-list-order"] forState:UIControlStateNormal];
-    [sortButton setTitle:@" 已筹募款从多到少" forState:UIControlStateNormal];
-    [sortButton.titleLabel setFont:We_font_textfield_zh_cn];
-    [sortButton setTintColor:We_foreground_red_general];
-    [self.view addSubview:sortButton];
-    
-    UIButton * selectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [selectButton setFrame:CGRectMake(210, 64, 110, 40)];
-    [selectButton setImage:[UIImage imageNamed:@"crowdfunding-list-filter"] forState:UIControlStateNormal];
-    [selectButton setTitle:@" 筛选" forState:UIControlStateNormal];
-    [selectButton.titleLabel setFont:We_font_textfield_zh_cn];
-    [selectButton setTintColor:We_foreground_red_general];
-    [selectButton addTarget:self action:@selector(selection:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:selectButton];*/
-    
     // 搜索按钮
     UIBarButtonItem * searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"list-search"] style:UIBarButtonItemStylePlain target:self action:@selector(searchButton_onPress)];
     
