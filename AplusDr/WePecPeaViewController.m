@@ -135,6 +135,7 @@
     if (path.section == 2) {
         we_logined = NO;
         currentUser = nil;
+        favorDoctorList = nil;
         [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
