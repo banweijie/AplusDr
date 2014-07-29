@@ -137,6 +137,11 @@
         currentUser = nil;
         favorDoctorList = nil;
         [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
+        [self.tabBarController.viewControllers[0] popToRootViewControllerAnimated:YES];
+        //TODO
+        
+        
+        //[self.tabBarController setSelectedViewController:[[WeFunIdxViewController alloc] init]];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     [tv deselectRowAtIndexPath:path animated:YES];

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "VPImageCropperViewController.h"
+#import "WeFunIdxViewController.h"
 
 @interface WePecPeaViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, VPImageCropperDelegate, UIActionSheetDelegate, UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
