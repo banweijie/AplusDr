@@ -65,6 +65,7 @@
         self.currentFundingLikeCount = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"likeCount"]];
         self.currentFundingSum = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"sum"]];
         self.currentFundingEndTime = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"endTime"]];
+        self.currentFundingGoal = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"goal"]];
     }
     else {
         self.currentFundingId = nil;

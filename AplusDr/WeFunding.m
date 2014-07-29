@@ -48,6 +48,7 @@
     self.initiator.currentFundingLikeCount = [NSString stringWithFormat:@"%@", info[@"likeCount"]];
     self.initiator.currentFundingSum = [NSString stringWithFormat:@"%@", info[@"sum"]];
     self.initiator.currentFundingEndTime = [NSString stringWithFormat:@"%@", info[@"endTime"]];
+    self.initiator.currentFundingGoal = [NSString stringWithFormat:@"%@", info[@"goal"]];
     
     self.status = [NSString stringWithFormat:@"%@", info[@"status"]];
     self.startTime = [NSString stringWithFormat:@"%@", info[@"startTime"]];

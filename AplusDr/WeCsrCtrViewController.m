@@ -743,7 +743,7 @@
     currentInputMode = 0;
     // Setup Timer
     
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"聊天室" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];

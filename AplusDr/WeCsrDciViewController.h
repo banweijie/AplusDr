@@ -16,6 +16,6 @@
 
 
 @property(nonatomic, strong) WeDoctor * currentDoctor;
-
+@property(nonatomic) bool forward;
 
 @end

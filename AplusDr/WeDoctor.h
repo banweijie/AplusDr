@@ -33,6 +33,7 @@
 @property(strong, nonatomic) NSString * currentFundingSum;
 @property(strong, nonatomic) NSString * currentFundingPoster;
 @property(strong, nonatomic) NSString * currentFundingEndTime;
+@property(strong, nonatomic) NSString * currentFundingGoal;
 
 - (WeDoctor *)initWithNSDictionary:(NSDictionary *)info;
 - (void)setWithNSDictionary:(NSDictionary *)info;
