@@ -129,6 +129,7 @@
     UILabel * l2;
     UIImageView * imageView;
     [cell.imageView setContentMode:UIViewContentModeCenter];
+    [cell.imageView setFrame:CGRectMake(0, 0, 20, 20)];
     
     switch (indexPath.section) {
         case 0:
