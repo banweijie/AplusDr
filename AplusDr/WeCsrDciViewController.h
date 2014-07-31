@@ -12,8 +12,7 @@
 #import "WeCsrJiaViewController.h"
 #import "WeToolButton.h"
 
-@interface WeCsrDciViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIScrollViewDelegate>
-
+@interface WeCsrDciViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIScrollViewDelegate, UIActionSheetDelegate>
 
 @property(nonatomic, strong) WeDoctor * currentDoctor;
 @property(nonatomic) bool forward;

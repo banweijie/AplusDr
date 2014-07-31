@@ -39,10 +39,27 @@
 
 @implementation WeCsrDciViewController
 
-/*
- [AREA]
- UITableView dataSource & delegate interfaces
- */
+#pragma mark - ActionSheet Delegate
+
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
+{
+    for (UIView * subview in actionSheet.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton * button = (UIButton *)subview;
+            [button setTitleColor:We_foreground_red_general forState:UIControlStateNormal];
+            button.titleLabel.font = We_font_textfield_zh_cn;
+        }
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self api_patient_cancelFav];
+    }
+}
+
+#pragma mark - TableView Delegate & DataSource
+
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.alpha = We_alpha_cell_general;;
     cell.opaque = YES;
@@ -676,7 +693,7 @@
         [button1 setTitle:@"已添加为保健医" forState:UIControlStateNormal];
         [button1 setImage:[UIImage imageNamed:@"docinfo-favorited"] forState:UIControlStateNormal];
     }
-    [button1 addTarget:self action:@selector(api_patient_addFav) forControlEvents:UIControlEventTouchUpInside];
+    [button1 addTarget:self action:@selector(button1_onPress) forControlEvents:UIControlEventTouchUpInside];
     button1.tintColor = We_foreground_white_general;
     button1.backgroundColor = We_background_red_general;
     button1.titleLabel.font = We_font_textfield_small_zh_cn;
@@ -772,7 +789,6 @@
     //[sys_pendingView startAnimating];
     [self.view addSubview:sys_pendingView];
     
-    
     [tableViews scrollRectToVisible:sys_tableView_1.frame animated:NO];
 }
 
@@ -801,9 +817,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - apis
-- (void)api_patient_addFav {
-    // 判断登录状态
+#pragma mark - callbacks
+- (void)button1_onPress {
+    // 未登录处理
     if (currentUser == nil) {
         WeRegWlcViewController * vc = [[WeRegWlcViewController alloc] init];
         vc.originTargetViewController = nil;
@@ -813,9 +829,29 @@
         [nav pushViewController:vc animated:NO];
         
         [self presentViewController:nav animated:YES completion:nil];
-        return;
     }
-    if ([button1.titleLabel.text isEqualToString:@"已添加为保健医"]) return;
+    else {
+        // 取消保健医
+        if ([button1.titleLabel.text isEqualToString:@"已添加为保健医"]) {
+            UIActionSheet * actionSheet = [[UIActionSheet alloc]
+                                          initWithTitle:@"请问是否要取消与该医生的保健医关系\n（取消保健医后，该医生将不会出现在您的咨询室当中，但你们的咨询记录仍然保存在本地）"
+                                          delegate:self
+                                          cancelButtonTitle:@"取消"
+                                          destructiveButtonTitle:nil
+                                          otherButtonTitles:@"确定", nil];
+            actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+            [actionSheet showInView:self.view];
+        }
+        // 添加保健医
+        else {
+            [self api_patient_addFav];
+        }
+    }
+}
+
+#pragma mark - apis
+- (void)api_patient_addFav {
+    // 判断登录状态
     [sys_pendingView startAnimating];
     [WeAppDelegate postToServerWithField:@"patient" action:@"addFav"
                               parameters:@{
@@ -828,6 +864,25 @@
                                  }
                                  failure:^(NSString * errorMessage) {
                                      [[[UIAlertView alloc] initWithTitle:@"添加保健医失败" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                     [sys_pendingView stopAnimating];
+                                 }];
+}
+
+- (void)api_patient_cancelFav {
+    // 判断登录状态
+    [sys_pendingView startAnimating];
+    [WeAppDelegate postToServerWithField:@"patient" action:@"cancelFav"
+                              parameters:@{
+                                           @"doctorId":self.currentDoctor.userId
+                                           }
+                                 success:^(id response) {
+                                     [[[UIAlertView alloc] initWithTitle:@"取消保健医成功" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                     [button1 setTitle:@"添加为保健医" forState:UIControlStateNormal];
+                                     [favorDoctorList removeObjectForKey:self.currentDoctor.userId];
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     [[[UIAlertView alloc] initWithTitle:@"取消保健医失败" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                      [sys_pendingView stopAnimating];
                                  }];
 }

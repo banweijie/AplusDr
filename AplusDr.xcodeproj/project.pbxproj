@@ -123,6 +123,7 @@
 		90F0CE8C19271226006A4605 /* WeCsrSelSec2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE8B19271226006A4605 /* WeCsrSelSec2ViewController.m */; };
 		90F0CE8F19271794006A4605 /* WeCsrSelCatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE8E19271794006A4605 /* WeCsrSelCatViewController.m */; };
 		90F0CE92192717AC006A4605 /* WeCsrSelTilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0CE91192717AC006A4605 /* WeCsrSelTilViewController.m */; };
+		90FB31821987EEC4008A001D /* WeActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB31811987EEC4008A001D /* WeActionSheet.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -363,6 +364,8 @@
 		90F0CE8E19271794006A4605 /* WeCsrSelCatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelCatViewController.m; sourceTree = "<group>"; };
 		90F0CE90192717AC006A4605 /* WeCsrSelTilViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCsrSelTilViewController.h; sourceTree = "<group>"; };
 		90F0CE91192717AC006A4605 /* WeCsrSelTilViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCsrSelTilViewController.m; sourceTree = "<group>"; };
+		90FB31801987EEC4008A001D /* WeActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeActionSheet.h; sourceTree = "<group>"; };
+		90FB31811987EEC4008A001D /* WeActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeActionSheet.m; sourceTree = "<group>"; };
 		B7BF13CDE3A84113994A769D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -623,6 +626,8 @@
 				90B31A7E19582C0000A19CD7 /* WeParagraphModifyViewController.m */,
 				906F4DF219758637007807FE /* WeGenderPickerViewController.h */,
 				906F4DF319758637007807FE /* WeGenderPickerViewController.m */,
+				90FB31801987EEC4008A001D /* WeActionSheet.h */,
+				90FB31811987EEC4008A001D /* WeActionSheet.m */,
 			);
 			name = CustomsView;
 			sourceTree = "<group>";
@@ -1065,6 +1070,7 @@
 				900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */,
 				900EB75B195945EB006BBA04 /* WeOrder.m in Sources */,
 				906F4DDB1973D0AD007807FE /* SBJsonWriter.m in Sources */,
+				90FB31821987EEC4008A001D /* WeActionSheet.m in Sources */,
 				906F4DD61973D0AD007807FE /* NSObject+SBJSON.m in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
 				90B31A6F19579A6F00A19CD7 /* WeFunSelViewController.m in Sources */,
