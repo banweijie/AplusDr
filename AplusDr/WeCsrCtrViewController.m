@@ -957,6 +957,8 @@
 }
 
 - (void)moveUnionView:(int)height withDuration:(CGFloat)duration {
+    //[chatTableView setContentOffset:CGPointMake(0, chatTableView.contentSize.height - chatTableView.frame.size.height) animated:YES];
+    
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:duration];
     
@@ -964,13 +966,16 @@
     rect.origin.y = - height;
     unionView.frame = rect;
     
-    
     rect = chatTableView.frame;
     rect.origin.y = height;
     rect.size.height = self.view.frame.size.height - 40 - height;
     chatTableView.frame = rect;
     
     [UIView commitAnimations];
+    
+    if ([chatData count] > 0) {
+        [chatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:[[chatData lastObject] count] - 1 inSection:[chatData count] - 1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
 
 - (void)changeModeButtonOnPress:(id)sender {

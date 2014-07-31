@@ -92,15 +92,15 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
     }
     [cell setOpaque:NO];
-    [cell setBackgroundColor:[UIColor clearColor]];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [cell setBackgroundColor:We_background_cell_general];
     
     WeFavorDoctor * doctor = favorDoctors[indexPath.section];
     
+    /*
     // 底色
     UIView * groundView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 300, 110)];
     [groundView setBackgroundColor:We_background_cell_general];
-    [cell.contentView addSubview:groundView];
+    [cell.contentView addSubview:groundView];*/
     
     // 姓名
     UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(85, 12, 240, 23)];
@@ -138,9 +138,10 @@
                                                  offset:0
                                                   count:100];
     
+    // 图标
     if ([unviewedMessageList count] > 0) {
         UIButton * imageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [imageButton setFrame:CGRectMake(25, 78, 30, 20)];
+        [imageButton setFrame:CGRectMake(30, 78, 30, 20)];
         if ([unviewedMessageList count] <= 100) {
             [imageButton setTitle:[NSString stringWithFormat:@"%d", [unviewedMessageList count]] forState:UIControlStateNormal];
         }
@@ -155,8 +156,14 @@
         [cell.contentView addSubview:imageButton];
     }
     else {
-        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(25, 78, 20, 20)];
-        [imageView setImage:[UIImage imageNamed:@"docinfo-chatroom"]];
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 78, 24, 24)];
+        if ([doctor.consultStatus isEqualToString:@"C"]) {
+            [imageView setImage:[UIImage imageNamed:@"docinfo-chatting"]];
+        }
+        else {
+            [imageView setImage:[UIImage imageNamed:@"docinfo-chatroom"]];
+        }
+        [imageView setContentMode:UIViewContentModeScaleAspectFit];
         [cell.contentView addSubview:imageView];
     }
     
@@ -195,10 +202,17 @@
         l2.text = [WeAppDelegate transitionToDateFromSecond:lastMsg.time];
     }
     
+    // 边框
+    UIView * frame1 = [[UIView alloc] initWithFrame:CGRectMake(30, 66, 260, 0.3)];
+    [frame1.layer setBorderWidth:0.3];
+    [frame1.layer setBorderColor:We_foreground_gray_general.CGColor];
+    [cell.contentView addSubview:frame1];
+    
+    /*
     UIView * frame2 = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 300, 110)];
     [frame2.layer setBorderWidth:0.3];
     [frame2.layer setBorderColor:We_foreground_gray_general.CGColor];
-    [cell.contentView addSubview:frame2];
+    [cell.contentView addSubview:frame2];*/
 
     return cell;
 }
@@ -278,6 +292,22 @@
         // 已结束
         if (currentPage == 2 && ([doctor.consultStatus isEqualToString:@"N"] || [doctor.consultStatus isEqualToString:@"W"])) [favorDoctors addObject:doctor];
     }
+    
+    /*
+    [favorDoctors sortUsingComparator:^NSComparisonResult(id rA, id rB) {
+        WeFavorDoctor * doctorA = rA, * doctorB = rB;
+        NSMutableArray * viewedmessageListA = [globalHelper search:[WeMessage class]
+                                                             where:[NSString stringWithFormat:@"(senderId = %@ || recieverId = %@)", doctorA.userId, doctorA.userId]
+                                                           orderBy:@"time desc"
+                                                            offset:0
+                                                             count:1];
+        NSMutableArray * viewedmessageListB = [globalHelper search:[WeMessage class]
+                                                             where:[NSString stringWithFormat:@"(senderId = %@ || recieverId = %@)", doctorB.userId, doctorB.userId]
+                                                           orderBy:@"time desc"
+                                                            offset:0
+                                                             count:1];
+        return [(WeMessage *)viewedmessageListA time] > [(WeMessage *)viewedmessageListB time];
+    }];*/
     
     [sys_tableView reloadData];
 }
