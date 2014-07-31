@@ -308,16 +308,16 @@
                                                              count:1];
         if ([viewedmessageListA count] == 0) return 1;
         if ([viewedmessageListB count] == 0) return -1;
-        return [(WeMessage *)viewedmessageListA time] > [(WeMessage *)viewedmessageListB time];
+        return [(WeMessage *)viewedmessageListA[0] time] < [(WeMessage *)viewedmessageListB[0] time];
     }];
     
     [sys_tableView reloadData];
-    [sys_tableView setContentOffset:CGPointMake(0, 0) animated:NO];
 }
 
 - (void)selectedSegmentChanged:(UISegmentedControl *)segControl {
     currentPage = segControl.selectedSegmentIndex;
     [self refreshData];
+    [sys_tableView setContentOffset:CGPointMake(0, 0) animated:NO];
 }
 
 @end

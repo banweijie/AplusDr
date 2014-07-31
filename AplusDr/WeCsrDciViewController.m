@@ -466,22 +466,22 @@
 
 // 滑动结束
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (scrollView.contentOffset.y < 160) {
+    if (scrollView.contentOffset.y < 100) {
         [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
     }
     
-    if (scrollView.contentOffset.y > 160 && scrollView.contentOffset.y < 320 - 64) {
+    if (scrollView.contentOffset.y > 100 && scrollView.contentOffset.y < 320 - 64) {
         [scrollView setContentOffset:CGPointMake(0, 320 - 64) animated:YES];
     }
 }
 
 // 防止惯性滑动
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    if (scrollView.contentOffset.y < 160) {
+    if (scrollView.contentOffset.y < 100) {
         [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
     }
     
-    if (scrollView.contentOffset.y > 160 && scrollView.contentOffset.y < 320 - 64) {
+    if (scrollView.contentOffset.y > 100 && scrollView.contentOffset.y < 320 - 64) {
         [scrollView setContentOffset:CGPointMake(0, 320 - 64) animated:YES];
     }
 }
@@ -594,25 +594,46 @@
     
     [self.view addSubview:controlPanel];
     
-    // 所有内容
+    // 头像
     posterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
     [sys_tableView addSubview:posterView];
     
-    // 海报背景图片
+    // 头像背景图片
     UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
     [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(self.currentDoctor.avatarPath)]];
     [avatarView setContentMode:UIViewContentModeScaleAspectFill];
     [posterView addSubview:avatarView];
     
-    // 海报上的标题
-    /*
-    posterTitle = [[UILabel alloc] initWithFrame:CGRectMake(20, 235 - 64, 280, 64)];
+    // 渐变黑色
+    UIToolbar * toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 320 - 80, 320, 80)];
+    [toolBar setBarStyle:UIBarStyleBlackTranslucent];
+    [toolBar setBarTintColor:[UIColor clearColor]];
+    [toolBar setAlpha:0.9];
+    //[toolBar setBackgroundColor:UIColorFromRGB(0, 0, 100, 0.0)];
+    //[toolBar setBackgroundImage:[UIImage imageNamed:@"crowdfunding-gradientcover"] forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    //[posterView addSubview:toolBar];
+    
+    UIImageView * shadowView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 320 - 80, 320, 80)];
+    [shadowView setImage:[UIImage imageNamed:@"crowdfunding-gradientcover"]];
+    [shadowView setContentMode:UIViewContentModeScaleToFill];
+    [posterView addSubview:shadowView];
+    
+    
+    // 头像上的标题
+    UILabel * posterTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 320 - 64, 320, 30)];
     [posterTitle setTextAlignment:NSTextAlignmentCenter];
-    [posterTitle setText:currentFunding.title];
+    [posterTitle setText:[NSString stringWithFormat:@"%@ %@", self.currentDoctor.userName, we_codings[@"doctorCategory"][self.currentDoctor.category][@"title"][self.currentDoctor.title]]];
     [posterTitle setFont:We_font_textfield_huge_zh_cn];
     [posterTitle setTextColor:We_foreground_white_general];
-    [posterTitle setNumberOfLines:2];
-    [posterView addSubview:posterTitle];*/
+    [posterView addSubview:posterTitle];
+    
+    // 头像上的副标题
+    UILabel * posterTitle2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 320 - 64 + 30, 320, 20)];
+    [posterTitle2 setTextAlignment:NSTextAlignmentCenter];
+    [posterTitle2 setText:[NSString stringWithFormat:@"%@ %@", self.currentDoctor.hospitalName, self.currentDoctor.sectionName]];
+    [posterTitle2 setFont:We_font_textfield_large_zh_cn];
+    [posterTitle2 setTextColor:We_foreground_white_general];
+    [posterView addSubview:posterTitle2];
     
     // 标题
     titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 64)];
