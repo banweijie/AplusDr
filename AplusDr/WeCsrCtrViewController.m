@@ -533,7 +533,7 @@
                                                 orderBy:nil
                                                  offset:0
                                                   count:100];
-    NSLog(@"\nSelect %lu message(s) from database.", (unsigned long)[messageList count]);
+    //NSLog(@"\nSelect %lu message(s) from database.", (unsigned long)[messageList count]);
     
     // 根据信息数量判断是否需要刷新
     if ([messageList count] == currentCount && !forced) return;

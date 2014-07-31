@@ -312,6 +312,7 @@
     }];
     
     [sys_tableView reloadData];
+    [sys_tableView setContentOffset:CGPointMake(0, 0) animated:NO];
 }
 
 - (void)selectedSegmentChanged:(UISegmentedControl *)segControl {

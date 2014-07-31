@@ -11,10 +11,9 @@
 
 @interface WeCsrDciViewController () {
     UIActivityIndicatorView * sys_pendingView;
-    UITableView * sys_tableView_0;
-    UITableView * sys_tableView_1;
-    UITableView * sys_tableView_2;
-    UIScrollView * tableViews;
+    UITableView * sys_tableView;
+    
+    
     UIView * controlPanel;
     UIButton * panel0;
     UIButton * panel1;
@@ -33,6 +32,8 @@
     
     // 标题
     UIView * titleView;
+    
+    int currentPage;
 }
 
 @end
@@ -76,32 +77,29 @@
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == sys_tableView_0) {
+    if (currentPage == 0) {
         if (indexPath.section == 0) {
             if (indexPath.row == 3) {
-                CGSize sizezz = [groupIntro sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
-                return sizezz.height + 60;
+                return [WeAppDelegate calcSizeForString:groupIntro Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
             }
             if (indexPath.row == 4) {
                 return [WeAppDelegate calcSizeForString:[WeAppDelegate deCodeOfLanguages:self.currentDoctor.languages] Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
             }
         }
     }
-    if (tableView == sys_tableView_1) {
+    if (currentPage == 1) {
         if (indexPath.section == 0) {
-            CGSize sizezz = [notice sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
-            return sizezz.height + 40;
-        }return [sys_tableView_1 rowHeight];
-        if (indexPath.section == 1) return [sys_tableView_1 rowHeight];
+            return [WeAppDelegate calcSizeForString:notice Font:We_font_textfield_zh_cn expectWidth:280].height + 40;
+        }
     }
-    if (tableView == sys_tableView_2) {
+    if (currentPage == 2) {
         return 220 + 5 + 40 + 60;
     }
-    return [sys_tableView_1 rowHeight];
+    return [sys_tableView rowHeight];
 }
 // 询问每个段落的头部标题
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (tableView == sys_tableView_1) {
+    if (currentPage == 1) {
         if (section == 0) return @"公告";
         if (section == 1) return @"出诊时间";
     }
@@ -109,15 +107,15 @@
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (tableView == sys_tableView_0) {
+    if (currentPage == 0) {
         if (section == 0) return 20 + 320 + 156 - 64;
         return 20;
     }
-    if (tableView == sys_tableView_1) {
+    if (currentPage == 1) {
         if (section == 0) return 40 + 320 + 156 - 64;
         return 40;
     }
-    if (tableView == sys_tableView_2) {
+    if (currentPage == 2) {
         if (section == 0) return 40 + 320 + 156 - 64;
         return 40;
     }
@@ -125,43 +123,43 @@
 }
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
-    if (tv == sys_tableView_0) {
+    if (currentPage == 0) {
         if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 300;
     }
-    if (tv == sys_tableView_1) {
+    if (currentPage == 1) {
         if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 300;
     }
-    if (tv == sys_tableView_2) {
+    if (currentPage == 2) {
         if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 300;
     }
     return 1;
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (tableView == sys_tableView_0) {
+    if (currentPage == 0) {
         return 1;
     }
-    if (tableView == sys_tableView_1) {
+    if (currentPage == 1) {
         return 2;
     }
-    if (tableView == sys_tableView_2) {
+    if (currentPage == 2) {
         return 1;
     }
     return 10;
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableView == sys_tableView_0) {
+    if (currentPage == 0) {
         if (section == 0) return 5;
     }
-    if (tableView == sys_tableView_1) {
+    if (currentPage == 1) {
         if (section == 0) return 1;
         if (section == 1) {
             if ([self.currentDoctor.workPeriod isEqualToString:@"<null>"]) return 1;
             else return [self.currentDoctor.workPeriod length] / 4;
         }
     }
-    if (tableView == sys_tableView_2) {
+    if (currentPage == 2) {
         return 1;
     }
     return 2;
@@ -176,7 +174,7 @@
     [[cell imageView] setContentMode:UIViewContentModeCenter];
     UILabel *label, * l1;
     CGSize sizezz;
-    if (tableView == sys_tableView_0) {
+    if (currentPage == 0) {
         switch (indexPath.section) {
             case 0:
                 switch (indexPath.row) {
@@ -246,7 +244,7 @@
                 break;
         }
     }
-    if (tableView == sys_tableView_1) {
+    if (currentPage == 1) {
         switch (indexPath.section) {
             case 0:
                 sizezz = [notice sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
@@ -275,8 +273,7 @@
                 break;
         }
     }
-    if (tableView == sys_tableView_2 && self.currentDoctor.currentFundingId != nil) {
-        NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    if (currentPage == 2 && self.currentDoctor.currentFundingId != nil) {
         cell.backgroundColor = [UIColor clearColor];
         
         // 底色
@@ -418,30 +415,6 @@
     return self;
 }
 
-- (void)transferTo:(NSInteger)targetPanel {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3]; // if you want to slide up the view
-    
-    [UIView commitAnimations];
-    
-    [tableViews scrollRectToVisible:CGRectMake(320 * targetPanel, 0, 320, tableViews.frame.size.height) animated:YES];
-}
-
-- (void)transferTo0:(id)sender {
-    [self transferTo:0];
-}
-
-- (void)transferTo1:(id)sender {
-    [self transferTo:1];
-}
-
-- (void)transferTo2:(id)sender {
-    [self transferTo:2];
-}
-
-- (void)press:(id)sender {
-}
-
 - (void)appointing:(id)sender {
     if (currentUser == nil) {
         WeRegWlcViewController * vc = [[WeRegWlcViewController alloc] init];
@@ -481,116 +454,19 @@
     }
 }
 
+#pragma mark - ScrollView Delegate
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView == tableViews) {
-        CGRect rect = selectSign.frame;
-        rect.origin.x = 15 + 100 * scrollView.contentOffset.x / 320;
-        selectSign.frame = rect;
-        
-        NSInteger targetPanel = (scrollView.contentOffset.x + 160) / 320;
-        
-        switch (selectPanel) {
-            case 0:
-                panel0.tintColor = We_foreground_black_general;
-                break;
-            case 1:
-                panel1.tintColor = We_foreground_black_general;
-                break;
-            case 2:
-                panel2.tintColor = We_foreground_black_general;
-            default:
-                break;
-        }
-        
-        switch (targetPanel) {
-            case 0:
-                panel0.tintColor = We_foreground_red_general;
-                break;
-            case 1:
-                panel1.tintColor = We_foreground_red_general;
-                break;
-            case 2:
-                panel2.tintColor = We_foreground_red_general;
-            default:
-                break;
-        }
-        selectPanel = targetPanel;
-    }
-    if (scrollView == sys_tableView_0) {
-        CGRect rect = controlPanel.frame;
-        rect.origin.y = MAX(320 - scrollView.contentOffset.y, 64);
-        controlPanel.frame = rect;
-        
-        rect = posterView.frame;
-        rect.origin.y = - scrollView.contentOffset.y;
-        posterView.frame = rect;
-        
-        [posterView setAlpha:MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
-        [titleView setAlpha:1 - MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
-        
-        if (scrollView.contentOffset.y < 320 - 64) {
-            CGPoint rect = sys_tableView_1.contentOffset;
-            rect.y = scrollView.contentOffset.y;
-            sys_tableView_1.contentOffset = rect;
-        }
-        if (scrollView.contentOffset.y < 320 - 64) {
-            CGPoint rect = sys_tableView_2.contentOffset;
-            rect.y = scrollView.contentOffset.y;
-            sys_tableView_2.contentOffset = rect;
-        }
-    }
-    if (scrollView == sys_tableView_1) {
-        CGRect rect = controlPanel.frame;
-        rect.origin.y = MAX(320 - scrollView.contentOffset.y, 64);
-        controlPanel.frame = rect;
-        
-        rect = posterView.frame;
-        rect.origin.y = - scrollView.contentOffset.y;
-        posterView.frame = rect;
-        
-        [posterView setAlpha:MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
-        [titleView setAlpha:1 - MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
-        
-        if (scrollView.contentOffset.y < 320 - 64) {
-            CGPoint rect = sys_tableView_0.contentOffset;
-            rect.y = scrollView.contentOffset.y;
-            sys_tableView_0.contentOffset = rect;
-        }
-        if (scrollView.contentOffset.y < 320 - 64) {
-            CGPoint rect = sys_tableView_2.contentOffset;
-            rect.y = scrollView.contentOffset.y;
-            sys_tableView_2.contentOffset = rect;
-        }
-    }
-    if (scrollView == sys_tableView_2) {
-        CGRect rect = controlPanel.frame;
-        rect.origin.y = MAX(320 - scrollView.contentOffset.y, 64);
-        controlPanel.frame = rect;
-        
-        rect = posterView.frame;
-        rect.origin.y = - scrollView.contentOffset.y;
-        posterView.frame = rect;
-        
-        [posterView setAlpha:MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
-        [titleView setAlpha:1 - MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
-        
-        if (scrollView.contentOffset.y < 320 - 64) {
-            CGPoint rect = sys_tableView_1.contentOffset;
-            rect.y = scrollView.contentOffset.y;
-            sys_tableView_1.contentOffset = rect;
-        }
-        if (scrollView.contentOffset.y < 320 - 64) {
-            CGPoint rect = sys_tableView_0.contentOffset;
-            rect.y = scrollView.contentOffset.y;
-            sys_tableView_0.contentOffset = rect;
-        }
-    }
+    CGRect rect = controlPanel.frame;
+    rect.origin.y = MAX(320 - scrollView.contentOffset.y, 64);
+    controlPanel.frame = rect;
+    
+    [posterView setAlpha:MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
+    [titleView setAlpha:1 - MIN(MAX((320 - 64 - scrollView.contentOffset.y) / 64, 0), 1)];
 }
 
 // 滑动结束
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (scrollView == tableViews) return;
-    NSLog(@"!!!!! %d", decelerate);
     if (scrollView.contentOffset.y < 160) {
         [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
     }
@@ -600,9 +476,8 @@
     }
 }
 
-// 防治惯性滑动
+// 防止惯性滑动
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    if (scrollView == tableViews) return;
     if (scrollView.contentOffset.y < 160) {
         [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
     }
@@ -611,6 +486,8 @@
         [scrollView setContentOffset:CGPointMake(0, 320 - 64) animated:YES];
     }
 }
+
+#pragma mark - View related
 
 - (void)viewDidLoad
 {
@@ -619,15 +496,16 @@
     
     
     // 标题和用于返回的文字
-    //self.navigationItem.title = [NSString stringWithFormat:@"%@ %@", self.currentDoctor.userName, we_codings[@"doctorCategory"][self.currentDoctor.category][@"title"][self.currentDoctor.title]];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"基本资料" style:UIBarButtonItemStylePlain target:self action:nil];
     [self.navigationController.navigationBar setBackgroundImage:[WeAppDelegate imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
     
-    // 预处理
+    // 初始化变量
     notice = self.currentDoctor.notice;
     if ([notice isEqualToString:@"<null>"]) notice = @"该医生未设置公告";
     groupIntro = self.currentDoctor.groupIntro;
     if ([groupIntro isEqualToString:@"<null>"]) groupIntro = @"该医生未设置团队介绍";
+    
+    currentPage = 1;
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -635,6 +513,16 @@
     bg.contentMode = UIViewContentModeCenter;
     [self.view addSubview:bg];
     
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
+    sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    sys_tableView.delegate = self;
+    sys_tableView.dataSource = self;
+    sys_tableView.backgroundColor = [UIColor clearColor];
+    sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    sys_tableView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:sys_tableView];
+    
+    /*
     // sys_tableView - 0
     sys_tableView_0 = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView_0.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
@@ -667,7 +555,7 @@
     [tableViews addSubview:sys_tableView_2];
     tableViews.pagingEnabled = YES;
     [tableViews.layer setMasksToBounds:YES];
-    tableViews.delegate = self;
+    tableViews.delegate = self;*/
     
     // controlPanel
     selectPanel = 0;
@@ -712,7 +600,7 @@
     panel0 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [panel0 setFrame:CGRectMake(0, 50, 120, 42)];
     [panel0 setTitle:@"基本资料" forState:UIControlStateNormal];
-    [panel0 addTarget:self action:@selector(transferTo0:) forControlEvents:UIControlEventTouchUpInside];
+    [panel0 addTarget:self action:@selector(panel0_onPress) forControlEvents:UIControlEventTouchUpInside];
     panel0.tintColor = We_foreground_red_general;
     panel0.backgroundColor = We_background_general;
     panel0.titleLabel.font = We_font_textfield_zh_cn;
@@ -721,7 +609,7 @@
     panel1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [panel1 setFrame:CGRectMake(120, 50, 80, 42)];
     [panel1 setTitle:@"业务公告" forState:UIControlStateNormal];
-    [panel1 addTarget:self action:@selector(transferTo1:) forControlEvents:UIControlEventTouchUpInside];
+    [panel1 addTarget:self action:@selector(panel1_onPress) forControlEvents:UIControlEventTouchUpInside];
     panel1.tintColor = We_foreground_black_general;
     panel1.backgroundColor = We_background_general;
     panel1.titleLabel.font = We_font_textfield_zh_cn;
@@ -730,7 +618,7 @@
     panel2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [panel2 setFrame:CGRectMake(200, 50, 120, 42)];
     [panel2 setTitle:@"众筹项目" forState:UIControlStateNormal];
-    [panel2 addTarget:self action:@selector(transferTo2:) forControlEvents:UIControlEventTouchUpInside];
+    [panel2 addTarget:self action:@selector(panel2_onPress) forControlEvents:UIControlEventTouchUpInside];
     panel2.tintColor = We_foreground_black_general;
     panel2.backgroundColor = We_background_general;
     panel2.titleLabel.font = We_font_textfield_zh_cn;
@@ -741,12 +629,11 @@
     selectSign.backgroundColor = We_foreground_red_general;
     [controlPanel addSubview:selectSign];
     
-    [self.view addSubview:tableViews];
     [self.view addSubview:controlPanel];
     
     // 所有内容
     posterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
-    [self.view addSubview:posterView];
+    [sys_tableView addSubview:posterView];
     
     // 海报背景图片
     UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
@@ -789,7 +676,7 @@
     //[sys_pendingView startAnimating];
     [self.view addSubview:sys_pendingView];
     
-    [tableViews scrollRectToVisible:sys_tableView_1.frame animated:NO];
+    [self refreshView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -817,7 +704,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - functional
+
+- (void)refreshView {
+    [sys_tableView reloadData];
+}
+
 #pragma mark - callbacks
+
+- (void)panel0_onPress {
+    currentPage = 0;
+    [self refreshView];
+    if (sys_tableView.contentOffset.y > 320 - 64) [sys_tableView setContentOffset:CGPointMake(0, 320 - 64) animated:NO];
+}
+
+- (void)panel1_onPress {
+    currentPage = 1;
+    [self refreshView];
+    if (sys_tableView.contentOffset.y > 320 - 64) [sys_tableView setContentOffset:CGPointMake(0, 320 - 64) animated:NO];
+}
+
+- (void)panel2_onPress {
+    currentPage = 2;
+    [self refreshView];
+    if (sys_tableView.contentOffset.y > 320 - 64) [sys_tableView setContentOffset:CGPointMake(0, 320 - 64) animated:NO];
+}
+
 - (void)button1_onPress {
     // 未登录处理
     if (currentUser == nil) {
@@ -850,6 +762,7 @@
 }
 
 #pragma mark - apis
+
 - (void)api_patient_addFav {
     // 判断登录状态
     [sys_pendingView startAnimating];
