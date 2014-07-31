@@ -650,6 +650,7 @@
 		9026EF141904EF8300CE4A7A /* PersonalCenter */ = {
 			isa = PBXGroup;
 			children = (
+				90A19C19198B060C0024FD41 /* MyCrowdFunding */,
 				900E2967193079F3008BF61C /* CaseManage */,
 				900EB752195940DE006BBA04 /* TransactionHistory */,
 				9026EF151904EFA300CE4A7A /* PersonalAccount */,
@@ -782,6 +783,17 @@
 			name = UIBubbleTableView;
 			sourceTree = "<group>";
 		};
+		90A19C19198B060C0024FD41 /* MyCrowdFunding */ = {
+			isa = PBXGroup;
+			children = (
+				90B31A821958343300A19CD7 /* WeFunMySupViewController.h */,
+				90B31A831958343300A19CD7 /* WeFunMySupViewController.m */,
+				900EB74F19588CC9006BBA04 /* WeFunMySup2ViewController.h */,
+				900EB75019588CC9006BBA04 /* WeFunMySup2ViewController.m */,
+			);
+			name = MyCrowdFunding;
+			sourceTree = "<group>";
+		};
 		90B31A47194BF19B00A19CD7 /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -825,7 +837,6 @@
 		90B31A5419544B7B00A19CD7 /* RaisePublic */ = {
 			isa = PBXGroup;
 			children = (
-				90B31A81195833E900A19CD7 /* MySupports */,
 				90B31A7019579F5B00A19CD7 /* Selection */,
 				90B31A5519544BAF00A19CD7 /* WeFunIdxViewController.h */,
 				90B31A5619544BAF00A19CD7 /* WeFunIdxViewController.m */,
@@ -886,17 +897,6 @@
 				90B31A781957B4CE00A19CD7 /* WeFunSelSecSecViewController.m */,
 			);
 			name = Selection;
-			sourceTree = "<group>";
-		};
-		90B31A81195833E900A19CD7 /* MySupports */ = {
-			isa = PBXGroup;
-			children = (
-				90B31A821958343300A19CD7 /* WeFunMySupViewController.h */,
-				90B31A831958343300A19CD7 /* WeFunMySupViewController.m */,
-				900EB74F19588CC9006BBA04 /* WeFunMySup2ViewController.h */,
-				900EB75019588CC9006BBA04 /* WeFunMySup2ViewController.m */,
-			);
-			name = MySupports;
 			sourceTree = "<group>";
 		};
 		90F0CE6219228C97006A4605 /* Model */ = {

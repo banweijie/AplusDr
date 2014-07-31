@@ -161,7 +161,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     // 标题
-    self.navigationItem.title = @"加号管理";
+    self.navigationItem.title = @"我的加号";
     
     // 背景图片
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];

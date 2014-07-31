@@ -42,7 +42,7 @@
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0) return 1;
+    if (section == 0) return 1 + 64;
     return 1;
 }
 // 询问每个段落的头部标题
@@ -145,7 +145,7 @@
     [self.view addSubview:refreshButton];
     
     // 表格
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height - 64 - 85) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
@@ -153,7 +153,7 @@
     [self.view addSubview:sys_tableView];
     
     // 标题
-    self.navigationItem.title = @"我的参与";
+    self.navigationItem.title = @"我的众筹";
     
     // 获取我的参与列表
     [self api_patient_listMySupports];

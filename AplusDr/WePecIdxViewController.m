@@ -195,7 +195,7 @@
                     break;
                 case 2:
                     cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.textLabel.text = @"我的支持";
+                    cell.textLabel.text = @"我的众筹";
                     cell.textLabel.font = We_font_textfield_zh_cn;
                     cell.textLabel.textColor = We_foreground_black_general;
                     cell.imageView.image = [UIImage imageNamed:@"me-crowdfunding"];
