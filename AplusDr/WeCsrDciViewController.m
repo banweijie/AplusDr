@@ -22,7 +22,6 @@
     UIButton * button1;
     UIButton * button2;
     UIButton * selectSign;
-    NSInteger selectPanel;
     
     NSString * notice;
     NSString * groupIntro;
@@ -247,7 +246,7 @@
     if (currentPage == 1) {
         switch (indexPath.section) {
             case 0:
-                sizezz = [notice sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+                sizezz = [WeAppDelegate calcSizeForString:notice Font:We_font_textfield_zh_cn expectWidth:280];
                 label = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, sizezz.width, sizezz.height)];
                 label.numberOfLines = 0;
                 label.lineBreakMode = NSLineBreakByWordWrapping;
@@ -522,43 +521,7 @@
     sys_tableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:sys_tableView];
     
-    /*
-    // sys_tableView - 0
-    sys_tableView_0 = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
-    sys_tableView_0.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    sys_tableView_0.delegate = self;
-    sys_tableView_0.dataSource = self;
-    sys_tableView_0.backgroundColor = [UIColor clearColor];
-    sys_tableView_0.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    
-    // sys_tableView - 1
-    sys_tableView_1 = [[UITableView alloc] initWithFrame:CGRectMake(320, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
-    sys_tableView_1.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    sys_tableView_1.delegate = self;
-    sys_tableView_1.dataSource = self;
-    sys_tableView_1.backgroundColor = [UIColor clearColor];
-    sys_tableView_1.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    
-    // sys_tableView - 2
-    sys_tableView_2 = [[UITableView alloc] initWithFrame:CGRectMake(640, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
-    sys_tableView_2.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    sys_tableView_2.delegate = self;
-    sys_tableView_2.dataSource = self;
-    sys_tableView_2.backgroundColor = [UIColor clearColor];
-    sys_tableView_2.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    
-    // tableViews
-    tableViews = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
-    tableViews.contentSize = CGSizeMake(960, 568 - 154);
-    [tableViews addSubview:sys_tableView_0];
-    [tableViews addSubview:sys_tableView_1];
-    [tableViews addSubview:sys_tableView_2];
-    tableViews.pagingEnabled = YES;
-    [tableViews.layer setMasksToBounds:YES];
-    tableViews.delegate = self;*/
-    
     // controlPanel
-    selectPanel = 0;
     controlPanel = [[UIView alloc] initWithFrame:CGRectMake(0, 320, 320, 156 - 64)];
     
     button0 = [WeToolButton buttonWithType:UIButtonTypeRoundedRect];
@@ -708,6 +671,18 @@
 
 - (void)refreshView {
     [sys_tableView reloadData];
+    
+    // 设置tab样式
+    [panel0 setTintColor:We_foreground_black_general];
+    [panel1 setTintColor:We_foreground_black_general];
+    [panel2 setTintColor:We_foreground_black_general];
+    if (currentPage == 0) [panel0 setTintColor:We_foreground_red_general];
+    if (currentPage == 1) [panel1 setTintColor:We_foreground_red_general];
+    if (currentPage == 2) [panel2 setTintColor:We_foreground_red_general];
+    
+    CGRect rect = selectSign.frame;
+    rect.origin.x = 15 + 100 * currentPage;
+    selectSign.frame = rect;
 }
 
 #pragma mark - callbacks
