@@ -127,13 +127,13 @@
     
     // 从数据库中提取信息
     NSMutableArray * unviewedMessageList = [globalHelper search:[WeMessage class]
-                                                  where:[NSString stringWithFormat:@"(senderId = %@ and viewed = 0)", doctor.userId]
+                                                  where:[NSString stringWithFormat:@"((senderId = %@ or receiverId = %@) and viewed = 0)", doctor.userId, doctor.userId]
                                                 orderBy:@"time desc"
                                                  offset:0
                                                   count:101];
     
     NSMutableArray * viewedmessageList = [globalHelper search:[WeMessage class]
-                                                  where:[NSString stringWithFormat:@"(senderId = %@)", doctor.userId]
+                                                  where:[NSString stringWithFormat:@"(senderId = %@ or receiverId = %@)", doctor.userId, doctor.userId]
                                                 orderBy:@"time desc"
                                                  offset:0
                                                   count:100];
@@ -293,21 +293,23 @@
         if (currentPage == 2 && ([doctor.consultStatus isEqualToString:@"N"] || [doctor.consultStatus isEqualToString:@"W"])) [favorDoctors addObject:doctor];
     }
     
-    /*
+    
     [favorDoctors sortUsingComparator:^NSComparisonResult(id rA, id rB) {
         WeFavorDoctor * doctorA = rA, * doctorB = rB;
         NSMutableArray * viewedmessageListA = [globalHelper search:[WeMessage class]
-                                                             where:[NSString stringWithFormat:@"(senderId = %@ || recieverId = %@)", doctorA.userId, doctorA.userId]
+                                                             where:[NSString stringWithFormat:@"(senderId = %@ or receiverId = %@)", doctorA.userId, doctorA.userId]
                                                            orderBy:@"time desc"
                                                             offset:0
                                                              count:1];
         NSMutableArray * viewedmessageListB = [globalHelper search:[WeMessage class]
-                                                             where:[NSString stringWithFormat:@"(senderId = %@ || recieverId = %@)", doctorB.userId, doctorB.userId]
+                                                             where:[NSString stringWithFormat:@"(senderId = %@ or receiverId = %@)", doctorB.userId, doctorB.userId]
                                                            orderBy:@"time desc"
                                                             offset:0
                                                              count:1];
+        if ([viewedmessageListA count] == 0) return 1;
+        if ([viewedmessageListB count] == 0) return -1;
         return [(WeMessage *)viewedmessageListA time] > [(WeMessage *)viewedmessageListB time];
-    }];*/
+    }];
     
     [sys_tableView reloadData];
 }

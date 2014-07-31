@@ -261,7 +261,6 @@
     
     // 系统消息
     if ([currentMessage.messageType isEqualToString:@"X"]) {
-        NSLog(@"XXXXXXXXXXXXXXXXXXXXXXXXX");
         NSString * title = currentMessage.content;
         
         CGSize titleSize = [WeAppDelegate calcSizeForString:title Font:We_font_textfield_small_zh_cn expectWidth:320];
@@ -1098,7 +1097,7 @@
     }
     
     NSMutableArray * unviewedMessageList = [globalHelper search:[WeMessage class]
-                                                          where:[NSString stringWithFormat:@"(senderId = %@ and viewed = 0)", self.doctorChating.userId]
+                                                          where:[NSString stringWithFormat:@"((senderId = %@ or receiverId = %@)and viewed = 0)", self.doctorChating.userId, self.doctorChating.userId]
                                                         orderBy:@"time desc"
                                                          offset:0
                                                           count:101];
