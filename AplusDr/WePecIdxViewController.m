@@ -43,7 +43,7 @@
             break;
     }
     if (path.section == 1 && path.row == 0) {
-        WePecMyaViewController * vc = [[WePecMyaViewController alloc] init];
+        WeCahIdxViewController * vc = [[WeCahIdxViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
     if (path.section == 2 && path.row == 0) {
@@ -51,15 +51,15 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     if (path.section == 2 && path.row == 1) {
-        WePecTrhViewController * vc = [[WePecTrhViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    if (path.section == 2 && path.row == 2) {
         WeFunMySupViewController * vc = [[WeFunMySupViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
-    if (path.section == 2 && path.row == 3) {
-        WeCahIdxViewController * vc = [[WeCahIdxViewController alloc] init];
+    if (path.section == 3 && path.row == 0) {
+        WePecMyaViewController * vc = [[WePecMyaViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (path.section == 3 && path.row == 1) {
+        WePecTrhViewController * vc = [[WePecTrhViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -94,7 +94,7 @@
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
-    return 5;
+    return 6;
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
@@ -106,12 +106,15 @@
             return 1;
             break;
         case 2:
-            return 4;
+            return 2;
             break;
         case 3:
-            return 1;
+            return 2;
             break;
         case 4:
+            return 1;
+            break;
+        case 5:
             return 1;
             break;
         default:
@@ -125,95 +128,75 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
     }
-    UILabel * l1;
-    UILabel * l2;
-    UIImageView * imageView;
     [cell.imageView setContentMode:UIViewContentModeCenter];
     [cell.imageView setFrame:CGRectMake(0, 0, 20, 20)];
     
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        
+        cell.contentView.backgroundColor = We_background_cell_general;
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        // 用户名
+        UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(90, 20, 240, 25)];
+        if ([currentUser.userName isEqualToString:@""]) l1.text = @"尚未设置名称";
+        else l1.text = currentUser.userName;
+        l1.font = We_font_textfield_zh_cn;
+        l1.textColor = We_foreground_black_general;
+        [cell.contentView addSubview:l1];
+        // 手机号
+        UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(90, 45, 240, 25)];
+        l2.text = currentUser.userPhone;
+        l2.textColor = We_foreground_gray_general;
+        l2.font = We_font_textfield_zh_cn;
+        [cell.contentView addSubview:l2];
+        // 头像
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 70, 70)];
+        [imageView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentUser.avatarPath)]];
+        imageView.layer.cornerRadius = imageView.frame.size.height / 2;
+        imageView.clipsToBounds = YES;
+        [cell.contentView addSubview:imageView];
+    }
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        cell.contentView.backgroundColor = We_background_cell_general;
+        cell.textLabel.text = @"病历管理";
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        cell.imageView.image = [UIImage imageNamed:@"tab-casehistory-selected"];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        cell.contentView.backgroundColor = We_background_cell_general;
+        cell.textLabel.text = @"我的加号";
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        cell.imageView.image = [UIImage imageNamed:@"me-appointment"];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        cell.contentView.backgroundColor = We_background_cell_general;
+        cell.textLabel.text = @"我的众筹";
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        cell.imageView.image = [UIImage imageNamed:@"me-crowdfunding"];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 3 && indexPath.row == 0) {
+        cell.contentView.backgroundColor = We_background_cell_general;
+        cell.textLabel.text = @"我的余额";
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        cell.imageView.image = [UIImage imageNamed:@"me-balance"];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section == 3 && indexPath.row == 1) {
+        cell.contentView.backgroundColor = We_background_cell_general;
+        cell.textLabel.text = @"交易记录";
+        cell.textLabel.font = We_font_textfield_zh_cn;
+        cell.textLabel.textColor = We_foreground_black_general;
+        cell.imageView.image = [UIImage imageNamed:@"me-moneyhistory"];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
     switch (indexPath.section) {
-        case 0:
-            switch (indexPath.row) {
-                case 0:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                    // 用户名
-                    l1 = [[UILabel alloc] initWithFrame:CGRectMake(90, 20, 240, 25)];
-                    if ([currentUser.userName isEqualToString:@""]) l1.text = @"尚未设置名称";
-                    else l1.text = currentUser.userName;
-                    l1.font = We_font_textfield_zh_cn;
-                    l1.textColor = We_foreground_black_general;
-                    [cell.contentView addSubview:l1];
-                    // 手机号
-                    l2 = [[UILabel alloc] initWithFrame:CGRectMake(90, 45, 240, 25)];
-                    l2.text = currentUser.userPhone;
-                    l2.textColor = We_foreground_gray_general;
-                    l2.font = We_font_textfield_zh_cn;
-                    [cell.contentView addSubview:l2];
-                    // 头像
-                    imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 70, 70)];
-                    [imageView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentUser.avatarPath)]];
-                    imageView.layer.cornerRadius = imageView.frame.size.height / 2;
-                    imageView.clipsToBounds = YES;
-                    [cell.contentView addSubview:imageView];
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.textLabel.text = @"我的余额";
-                    cell.textLabel.font = We_font_textfield_zh_cn;
-                    cell.textLabel.textColor = We_foreground_black_general;
-                    cell.imageView.image = [UIImage imageNamed:@"me-balance"];
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case 2:
-            switch (indexPath.row) {
-                case 0:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.textLabel.text = @"我的加号";
-                    cell.textLabel.font = We_font_textfield_zh_cn;
-                    cell.textLabel.textColor = We_foreground_black_general;
-                    cell.imageView.image = [UIImage imageNamed:@"me-appointment"];
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                    break;
-                case 1:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.textLabel.text = @"交易记录";
-                    cell.textLabel.font = We_font_textfield_zh_cn;
-                    cell.textLabel.textColor = We_foreground_black_general;
-                    cell.imageView.image = [UIImage imageNamed:@"me-moneyhistory"];
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                    break;
-                case 2:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.textLabel.text = @"我的众筹";
-                    cell.textLabel.font = We_font_textfield_zh_cn;
-                    cell.textLabel.textColor = We_foreground_black_general;
-                    cell.imageView.image = [UIImage imageNamed:@"me-crowdfunding"];
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                    break;
-                case 3:
-                    cell.contentView.backgroundColor = We_background_cell_general;
-                    cell.textLabel.text = @"病历管理";
-                    cell.textLabel.font = We_font_textfield_zh_cn;
-                    cell.textLabel.textColor = We_foreground_black_general;
-                    cell.imageView.image = [UIImage imageNamed:@"tab-casehistory-selected"];
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case 3:
+        case 4:
             switch (indexPath.row) {
                 case 0:
                     cell.contentView.backgroundColor = We_background_cell_general;
@@ -227,7 +210,7 @@
                     break;
             }
             break;
-        case 4:
+        case 5:
             switch (indexPath.row) {
                 case 0:
                     cell.contentView.backgroundColor = We_background_cell_general;
