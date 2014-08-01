@@ -491,7 +491,7 @@
 
 // 刷新按钮被按下
 - (void)refreshButton_onPress:(id)sender {
-    [self api_data_listFunding];
+    [self api_data_listFunding:@{}];
 }
 
 // 我的参与按钮被按下
