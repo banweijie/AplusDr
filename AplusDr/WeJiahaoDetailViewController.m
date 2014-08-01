@@ -216,7 +216,7 @@
 - (void)api_doctor_updateJiahaoStatus_finished {
     [sys_pendingView startAnimating];
     
-    [WeAppDelegate postToServerWithField:@"doctor" action:@"updateJiahaoStatus"
+    [WeAppDelegate postToServerWithField:@"patient" action:@"finishJiahao"
                               parameters:@{
                                            @"jiahaoId":self.currentJiahao.jiahaoId,
                                            @"status":@"Y"

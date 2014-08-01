@@ -569,7 +569,8 @@
                                            @"jiahao.age":user_age,
                                            @"jiahao.name":user_name,
                                            @"jiahao.idNum":user_idNum,
-                                           @"jiahao.dates":dates
+                                           @"jiahao.dates":dates,
+                                           @"jiahao.phone":@"18810521309"
                                            }
                                  success:^(id response) {
                                      NSString * orderId = [NSString stringWithFormat:@"%@", response[@"order"][@"id"]];
