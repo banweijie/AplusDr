@@ -374,7 +374,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"texture"] forBarMetrics:UIBarMetricsDefault];
     [super viewWillAppear:animated];
     
     [sys_tableView reloadData];
