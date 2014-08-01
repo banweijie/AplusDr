@@ -28,16 +28,12 @@
     [super viewDidLoad];
     
     self.navigationBar.translucent = YES;
-    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"texture"] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationBar setAlpha:0.7];
+    //[self.navigationBar setBackgroundImage:[UIImage imageNamed:@"texture"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationBar setBarTintColor:We_background_red_general];
+    //[self.navigationBar setAlpha:1.0];
     [self.navigationBar setShadowImage:[UIImage new]];
-    [self.navigationBar setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      UIColorFromRGB(255, 255, 255, 1), NSForegroundColorAttributeName,
-      [UIFont fontWithName:@"HeiTi SC-medium" size:18], NSFontAttributeName,
-      nil
-      ]
-     ];
+    
+    [self.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:UIColorFromRGB(255, 255, 255, 1), NSForegroundColorAttributeName, [UIFont fontWithName:@"HeiTi SC-medium" size:18], NSFontAttributeName, nil]];
     self.navigationBar.TintColor = We_foreground_white_general;
     // Do any additional setup after loading the view.
 }
