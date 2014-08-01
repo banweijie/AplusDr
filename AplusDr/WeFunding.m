@@ -39,16 +39,18 @@
     // 提取信息
     self.fundingId = [NSString stringWithFormat:@"%@", info[@"id"]];
     
-    self.initiator = [[WeDoctor alloc] initWithNSDictionary:info[@"initiator"]];
-    self.initiator.currentFundingId = [NSString stringWithFormat:@"%@", info[@"id"]];
-    self.initiator.currentFundingName = [NSString stringWithFormat:@"%@", info[@"title"]];
-    self.initiator.currentFundingPoster = [NSString stringWithFormat:@"%@", info[@"poster2"]];
-    self.initiator.currentFundingType = [NSString stringWithFormat:@"%@", info[@"type"]];
-    self.initiator.currentFundingSupportCount = [NSString stringWithFormat:@"%@", info[@"supportCount"]];
-    self.initiator.currentFundingLikeCount = [NSString stringWithFormat:@"%@", info[@"likeCount"]];
-    self.initiator.currentFundingSum = [NSString stringWithFormat:@"%@", info[@"sum"]];
-    self.initiator.currentFundingEndTime = [NSString stringWithFormat:@"%@", info[@"endTime"]];
-    self.initiator.currentFundingGoal = [NSString stringWithFormat:@"%@", info[@"goal"]];
+    if (info[@"initiator"] != [NSNull null]) {
+        self.initiator = [[WeDoctor alloc] initWithNSDictionary:info[@"initiator"]];
+        self.initiator.currentFundingId = [NSString stringWithFormat:@"%@", info[@"id"]];
+        self.initiator.currentFundingName = [NSString stringWithFormat:@"%@", info[@"title"]];
+        self.initiator.currentFundingPoster = [NSString stringWithFormat:@"%@", info[@"poster2"]];
+        self.initiator.currentFundingType = [NSString stringWithFormat:@"%@", info[@"type"]];
+        self.initiator.currentFundingSupportCount = [NSString stringWithFormat:@"%@", info[@"supportCount"]];
+        self.initiator.currentFundingLikeCount = [NSString stringWithFormat:@"%@", info[@"likeCount"]];
+        self.initiator.currentFundingSum = [NSString stringWithFormat:@"%@", info[@"sum"]];
+        self.initiator.currentFundingEndTime = [NSString stringWithFormat:@"%@", info[@"endTime"]];
+        self.initiator.currentFundingGoal = [NSString stringWithFormat:@"%@", info[@"goal"]];
+    }
     
     self.status = [NSString stringWithFormat:@"%@", info[@"status"]];
     self.startTime = [NSString stringWithFormat:@"%@", info[@"startTime"]];

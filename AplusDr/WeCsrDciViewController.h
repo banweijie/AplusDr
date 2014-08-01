@@ -15,6 +15,7 @@
 @interface WeCsrDciViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIScrollViewDelegate, UIActionSheetDelegate>
 
 @property(nonatomic, strong) WeDoctor * currentDoctor;
+
 @property(nonatomic) bool forward;
 
 @end

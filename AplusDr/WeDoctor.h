@@ -8,6 +8,8 @@
 
 #import "WeUser.h"
 
+@class WeFunding;
+
 @interface WeDoctor : WeUser
 
 @property(strong, nonatomic) NSString * title;
@@ -24,6 +26,9 @@
 @property(strong, nonatomic) NSString * maxResponseGap;
 @property(strong, nonatomic) NSString * plusPrice;
 @property(strong, nonatomic) NSString * languages;
+
+@property(strong, nonatomic) WeFunding * currentFunding;
+@property(strong, nonatomic) NSMutableArray * finishedFundings;
 
 @property(strong, nonatomic) NSString * currentFundingId;
 @property(strong, nonatomic) NSString * currentFundingName;

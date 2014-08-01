@@ -56,6 +56,7 @@
     [self setWorkPeriod:[NSString stringWithFormat:@"%@", info[@"workPeriod"]]];
     self.languages = [NSString stringWithFormat:@"%@", info[@"languages"]];
     
+    /*
     if (![info[@"currentFunding"] isEqual:[NSNull null]]) {
         self.currentFundingId = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"id"]];
         self.currentFundingName = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"title"]];
@@ -69,7 +70,7 @@
     }
     else {
         self.currentFundingId = nil;
-    }
+    }*/
 }
 
 @end
