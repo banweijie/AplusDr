@@ -313,7 +313,7 @@
 - (void)clickButton_onPress:(id)sender {
     UINavigationController * nav = self.navigationController;
     
-    [self.navigationController popToRootViewControllerAnimated:NO];
+    //[self.navigationController popToRootViewControllerAnimated:NO];
     WeFunDetViewController * vc = [[WeFunDetViewController alloc] init];
     vc.currentFundingId = currentFunding.fundingId;
     

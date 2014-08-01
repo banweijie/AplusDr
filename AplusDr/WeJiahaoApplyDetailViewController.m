@@ -1,21 +1,24 @@
 //
-//  WeJiahaoDetailViewController.m
+//  WeJiahaoApplyDetailViewController.m
 //  We_Doc
 //
 //  Created by WeDoctor on 14-7-16.
 //  Copyright (c) 2014年 ___PKU___. All rights reserved.
 //
 
-#import "WeJiahaoDetailViewController.h"
+#import "WeJiahaoApplyDetailViewController.h"
 
-@interface WeJiahaoDetailViewController () {
+@interface WeJiahaoApplyDetailViewController () {
     UIActivityIndicatorView * sys_pendingView;
     UITableView * sys_tableView;
+    
+    NSMutableString * dates;
+    NSMutableString * datesToDemo;
 }
 
 @end
 
-@implementation WeJiahaoDetailViewController
+@implementation WeJiahaoApplyDetailViewController
 
 #pragma mark - UITableView Delegate & DataSource
 
@@ -28,16 +31,17 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section == 3 && path.row == 0) {
-        [self api_doctor_updateJiahaoStatus_finished];
+        [self api_doctor_updateJiahaoStatus_accept];
     }
     if (path.section == 4 && path.row == 0) {
-        [self api_doctor_updateJiahaoStatus_cancel];
+        [self api_doctor_updateJiahaoStatus_reject];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 && indexPath.row == 0) return tv.rowHeight * 2;
+    if (indexPath.section == 1 && indexPath.row == 0) return tv.rowHeight * 1.5;
     return tv.rowHeight;
 }
 // 询问每个段落的头部高度
@@ -50,7 +54,7 @@
 }
 // 询问每个段落的头部标题
 - (NSString *)tableView:(UITableView *)tv titleForHeaderInSection:(NSInteger)section {
-    if (section == 1) return @"加号时间";
+    if (section == 1) return @"选择加号时间";
     if (section == 2) return @"加号预诊信息";
     return @"";
 }
@@ -76,7 +80,7 @@
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
-    return 4;
+    return 3;
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
@@ -131,9 +135,17 @@
         [cell.detailTextLabel setText:self.currentJiahao.idNum];
     }
     if (indexPath.section == 1 && indexPath.row == 0) {
-        [cell.textLabel setNumberOfLines:0];
         [cell.textLabel setFont:We_font_textfield_zh_cn];
-        [cell.textLabel setText:self.currentJiahao.dateToDemo];
+        [cell.textLabel setText:@"参考加号时间"];
+        [cell.detailTextLabel setNumberOfLines:0];
+        [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+        [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+        if ([self.currentJiahao.datesToDemo isEqualToString:@""]) {
+            [cell.detailTextLabel setText:@"任意时刻均可"];
+        }
+        else {
+            [cell.detailTextLabel setText:self.currentJiahao.datesToDemo];
+        }
     }
     if (indexPath.section == 2 && indexPath.row == 0) {
         [cell.textLabel setFont:We_font_textfield_zh_cn];
@@ -155,7 +167,13 @@
         [cell setBackgroundColor:We_background_red_general];
         [cell.textLabel setFont:We_font_textfield_zh_cn];
         [cell.textLabel setTextColor:We_foreground_white_general];
-        [cell.textLabel setText:@"完成加号"];
+        [cell.textLabel setText:@"接受加号"];
+    }
+    if (indexPath.section == 4 && indexPath.row == 0) {
+        [cell setBackgroundColor:We_background_cell_general];
+        [cell.textLabel setFont:We_font_textfield_zh_cn];
+        [cell.textLabel setTextColor:We_foreground_red_general];
+        [cell.textLabel setText:@"拒绝加号"];
     }
     return cell;
 }
@@ -175,7 +193,7 @@
     // Do any additional setup after loading the view.
     
     // 标题
-    self.navigationItem.title = @"加号详情";
+    self.navigationItem.title = @"加号申请详情";
     
     // 背景图片
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -198,6 +216,10 @@
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:sys_tableView];
+    
+    // 初始化
+    dates = [[NSMutableString alloc] init];
+    datesToDemo = [[NSMutableString alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -213,13 +235,14 @@
 }
 
 #pragma mark - apis
-- (void)api_doctor_updateJiahaoStatus_finished {
+- (void)api_doctor_updateJiahaoStatus_accept {
     [sys_pendingView startAnimating];
     
     [WeAppDelegate postToServerWithField:@"doctor" action:@"updateJiahaoStatus"
                               parameters:@{
                                            @"jiahaoId":self.currentJiahao.jiahaoId,
-                                           @"status":@"Y"
+                                           @"status":@"J",
+                                           @"date":dates
                                            }
                                  success:^(id response) {
                                      [self.navigationController popViewControllerAnimated:YES];
@@ -231,7 +254,7 @@
                                      [sys_pendingView stopAnimating];
                                  }];
 }
-- (void)api_doctor_updateJiahaoStatus_cancel {
+- (void)api_doctor_updateJiahaoStatus_reject {
     [sys_pendingView startAnimating];
     
     [WeAppDelegate postToServerWithField:@"doctor" action:@"updateJiahaoStatus"
@@ -249,7 +272,6 @@
                                      [sys_pendingView stopAnimating];
                                  }];
 }
-
 /*
 #pragma mark - Navigation
 

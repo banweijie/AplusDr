@@ -22,6 +22,7 @@
     if (info[@"doctor"] != [NSNull null]) self.doctor = [[WeDoctor alloc] initWithNSDictionary:info[@"doctor"]];
     if (info[@"patient"] != [NSNull null]) self.patient = [[WePatient alloc] initWithNSDictionary:info[@"patient"]];
     
+    
     self.jiahaoId = [NSString stringWithFormat:@"%@", info[@"id"]];
     self.dates = [NSString stringWithFormat:@"%@", info[@"dates"]];
     self.datesToDemo = @"";
@@ -38,13 +39,13 @@
         NSString * month = [self.date substringWithRange:NSMakeRange(5, 2)];
         NSString * day = [self.date substringWithRange:NSMakeRange(8, 2)];
         NSString * period = [self.date substringWithRange:NSMakeRange(10, 1)];
-        self.dateToDemo = [NSString stringWithFormat:@"%@年%@月%@日 %@\n", year, month, day, [self transitionPeriodOfDayFromChar:period]];
+        self.dateToDemo = [NSString stringWithFormat:@"%@年%@月%@日 %@", year, month, day, [self transitionPeriodOfDayFromChar:period]];
     }
-    else self.dateToDemo = @"任意时间均可";
     self.name = [NSString stringWithFormat:@"%@", info[@"name"]];
     self.age = [NSString stringWithFormat:@"%@", info[@"age"]];
     self.idNum = [NSString stringWithFormat:@"%@", info[@"idNum"]];
     self.gender = [NSString stringWithFormat:@"%@", info[@"gender"]];
+    if (info[@"status"] != [NSNull null]) self.status = [NSString stringWithFormat:@"%@", info[@"status"]];
 }
 
 - (NSString *)transitionPeriodOfDayFromChar:(NSString *)PeriodOfDay {

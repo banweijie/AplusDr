@@ -14,6 +14,9 @@
     UIActivityIndicatorView * sys_pendingView;
     
     NSMutableArray * jiahaoList;
+    NSMutableArray * jiahaos;
+    
+    int currentPage;
 }
 
 @end
@@ -30,10 +33,18 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
-    WeJiahaoDetailViewController * vc = [[WeJiahaoDetailViewController alloc] init];
-    vc.currentJiahao = jiahaoList[path.row];
-    
-    [self.navigationController pushViewController:vc animated:YES];
+    if (currentPage == 0) {
+        WeJiahaoApplyDetailViewController * vc = [[WeJiahaoApplyDetailViewController alloc] init];
+        vc.currentJiahao = jiahaos[path.section];
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (currentPage == 1) {
+        WeJiahaoDetailViewController * vc = [[WeJiahaoDetailViewController alloc] init];
+        vc.currentJiahao = jiahaos[path.section][path.row];
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
@@ -42,12 +53,30 @@
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
-    if (section == 0) return 1 + 64;
+    if (section == 0) return 30;
     return 30;
 }
 // 询问每个段落的头部标题
 - (NSString *)tableView:(UITableView *)tv titleForHeaderInSection:(NSInteger)section {
     return @"";
+}
+// 询问每个段落的头部
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (currentPage == 0) {
+        return nil;
+    }
+    else {
+        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
+        [view setBackgroundColor:We_background_red_general];
+        
+        UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 100, 30)];
+        l1.font = We_font_textfield_zh_cn;
+        l1.textColor = We_foreground_white_general;
+        l1.text = [[(WeJiahao *)jiahaos[section][0] date] substringToIndex:10];
+        [view addSubview:l1];
+        
+        return view;
+    }
 }
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
@@ -62,16 +91,20 @@
 }
 // 询问每个段落的尾部
 -(UIView *)tableView:(UITableView *)tv viewForFooterInSection:(NSInteger)section{
-    //if (section == 1) return sys_countDown_demo;
     return nil;
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
-    return 1;
+    return [jiahaos count];
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
-    return [jiahaoList count];
+    if (currentPage == 0) {
+        return 1;
+    }
+    else {
+        return [jiahaos[section] count];
+    }
 }
 // 询问每个具体条目的内容
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -83,7 +116,14 @@
     cell.opaque = NO;
     cell.backgroundColor = We_background_cell_general;
     
-    WeJiahao * currentJiahao = jiahaoList[indexPath.row];
+    WeJiahao * currentJiahao;
+    
+    if (currentPage == 0) {
+        currentJiahao = jiahaos[indexPath.section];
+    }
+    else {
+        currentJiahao = jiahaos[indexPath.section][indexPath.row];
+    }
     
     UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 14, 60, 60)];
     [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentJiahao.doctor.avatarPath)]];
@@ -91,56 +131,39 @@
     [avatarView.layer setMasksToBounds:YES];
     [cell.contentView addSubview:avatarView];
     
-    UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(80, 14, 200, 20)];
+    UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(80, 16, 200, 20)];
     [l1 setFont:We_font_textfield_large_zh_cn];
     [l1 setTextColor:We_foreground_black_general];
     [l1 setTextAlignment:NSTextAlignmentLeft];
     [l1 setText:currentJiahao.doctor.userName];
     [cell.contentView addSubview:l1];
     
-    /*
-     UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 38, 200, 40)];
-     [l2 setFont:We_font_textfield_zh_cn];
-     [l2 setTextColor:We_foreground_gray_general];
-     [l2 setTextAlignment:NSTextAlignmentLeft];
-     [l2 setText:currentOrder.date];
-     [cell.contentView addSubview:l2];
-     */
-    
-    UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(80, 40, 200, 40)];
-    [l3 setNumberOfLines:0];
-    [l3 setFont:We_font_textfield_large_zh_cn];
+    UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(80, 40, 220, 40)];
+    [l3 setFont:We_font_textfield_small_zh_cn];
     [l3 setTextColor:We_foreground_gray_general];
     [l3 setTextAlignment:NSTextAlignmentLeft];
-    [l3 setText:currentJiahao.dateToDemo];
+    if (currentPage == 0) {
+        [l3 setNumberOfLines:0];
+        if ([currentJiahao.datesToDemo isEqualToString:@""]) {
+            [l3 setText:@"期望加号时间：\n任意时间均可"];
+        }
+        else {
+            [l3 setText:[NSString stringWithFormat:@"期望加号时间：\n%@", currentJiahao.datesToDemo]];
+        }
+    }
+    else if (currentPage == 2) {
+        if ([currentJiahao.status isEqualToString:@"Y"]) {
+            [l3 setTextColor:We_foreground_black_general];
+            [l3 setText:[NSString stringWithFormat:@"%@ 已完成", currentJiahao.dateToDemo]];
+        }
+        else {
+            [l3 setText:[NSString stringWithFormat:@"%@ 已取消", currentJiahao.dateToDemo]];
+        }
+    }
+    else {
+        [l3 setText:[NSString stringWithFormat:@"预约加号时间：%@", currentJiahao.dateToDemo]];
+    }
     [cell.contentView addSubview:l3];
-    
-    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    
-    /*
-    UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 260, 40)];
-    [l3 setFont:We_font_textfield_large_zh_cn];
-    [l3 setTextColor:We_foreground_black_general];
-    [l3 setTextAlignment:NSTextAlignmentRight];
-    [l3 setText:[NSString stringWithFormat:@"￥%.0f", currentOrder.amount]];
-    [cell.contentView addSubview:l3];
-    
-    UILabel * l4 = [[UILabel alloc] initWithFrame:CGRectMake(20, 38, 260, 40)];
-    [l4 setFont:We_font_textfield_zh_cn];
-    if ([currentOrder.status isEqualToString:@"C"]) {
-        [l4 setTextColor:We_foreground_gray_general];
-        [l4 setText:@"交易取消"];
-    }
-    else if ([currentOrder.status isEqualToString:@"W"]) {
-        [l4 setTextColor:We_foreground_red_general];
-        [l4 setText:@"等待支付"];
-    }
-    else if ([currentOrder.status isEqualToString:@"P"]) {
-        [l4 setTextColor:We_foreground_black_general];
-        [l4 setText:@"交易完成"];
-    }
-    [l4 setTextAlignment:NSTextAlignmentRight];
-    [cell.contentView addSubview:l4];*/
     
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
@@ -162,6 +185,10 @@
     // Do any additional setup after loading the view.
     // 标题
     self.navigationItem.title = @"我的加号";
+    
+    // 变量初始化
+    currentPage = 1;
+    jiahaos = [[NSMutableArray alloc] init];
     
     // 背景图片
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -185,8 +212,22 @@
     [refreshButton setTintColor:We_foreground_red_general];
     [self.view addSubview:refreshButton];
     
-    // 表格
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
+    // tabs
+    UIView * segControlView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 320, 44)];
+    segControlView.backgroundColor = We_background_red_general;
+    [self.view addSubview:segControlView];
+    
+    UISegmentedControl * segControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"申请中", @"进行中", @"已结束", nil]];
+    [segControl setFrame:CGRectMake(20, 7, 280, 30)];
+    segControl.backgroundColor = [UIColor clearColor];
+    segControl.selectedSegmentIndex = 1;
+    segControl.tintColor = We_foreground_white_general;
+    segControl.layer.cornerRadius = 5;
+    [segControl addTarget:self action:@selector(selectedSegmentChanged:) forControlEvents:UIControlEventValueChanged];
+    [segControlView addSubview:segControl];
+    
+    // sys_tableView
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 + 44, 320, self.view.frame.size.height - 64 - 44) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
@@ -207,9 +248,55 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Callbacks
+
 - (void)refreshButton_onPress {
     [self api_doctor_listJiahao];
 }
+
+- (void)refreshData {
+    NSMutableArray * jiahaos_tmp = [[NSMutableArray alloc] init];
+    for (WeJiahao * jiahao in jiahaoList) {
+        // 申请中
+        if (currentPage == 0 && [jiahao.status isEqualToString:@"A"]) [jiahaos_tmp addObject:jiahao];
+        // 咨询中
+        if (currentPage == 1 && [jiahao.status isEqualToString:@"J"]) [jiahaos_tmp addObject:jiahao];
+        // 已结束
+        if (currentPage == 2 && ([jiahao.status isEqualToString:@"Y"] || [jiahao.status isEqualToString:@"N"])) [jiahaos_tmp addObject:jiahao];
+    }
+    
+    if (currentPage == 0) {
+        [jiahaos_tmp sortUsingComparator:^NSComparisonResult(id rA, id rB) {
+            return [[(WeJiahao *)rB jiahaoId] compare:[(WeJiahao *)rA jiahaoId]];
+        }];
+        jiahaos = jiahaos_tmp;
+    }
+    else {
+        [jiahaos_tmp sortUsingComparator:^NSComparisonResult(id rA, id rB) {
+            return [[(WeJiahao *)rB date] compare: [(WeJiahao *)rA date]];
+        }];
+        
+        jiahaos = [[NSMutableArray alloc] init];
+        int j = -1;
+        for (int i = 0; i < [jiahaos_tmp count]; i ++) {
+            if (i == 0 || ![[[(WeJiahao *)jiahaos_tmp[i] date] substringToIndex:10] isEqualToString:[[(WeJiahao *)jiahaos_tmp[i - 1] date] substringToIndex:10]]) {
+                j ++;
+                jiahaos[j] = [[NSMutableArray alloc] init];
+            }
+            [jiahaos[j] addObject:jiahaos_tmp[i]];
+        }
+    }
+    
+    [sys_tableView reloadData];
+}
+
+- (void)selectedSegmentChanged:(UISegmentedControl *)segControl {
+    currentPage = (int)segControl.selectedSegmentIndex;
+    [self refreshData];
+    [sys_tableView setContentOffset:CGPointMake(0, 0) animated:NO];
+}
+
+#pragma mark - APIs
 
 - (void)api_doctor_listJiahao {
     [sys_pendingView startAnimating];
@@ -220,8 +307,12 @@
                               parameters:@{
                                            }
                                  success:^(id response) {
-                                     jiahaoList = [self preworkOnJiahaoList:[NSMutableArray arrayWithArray:response]];
-                                     [sys_tableView reloadData];
+                                     NSLog(@"%@", response);
+                                     jiahaoList = [[NSMutableArray alloc] init];
+                                     for (int i = 0; i < [response count]; i ++) {
+                                         [jiahaoList addObject:[[WeJiahao alloc] initWithNSDictionary:response[i]]];
+                                     }
+                                     [self refreshData];
                                      [sys_tableView setHidden:NO];
                                      [sys_pendingView stopAnimating];
                                  }
@@ -232,18 +323,8 @@
                                  }];
 }
 
-- (NSMutableArray *)preworkOnJiahaoList:(id)response {
-    NSMutableArray * sourceData = [[NSMutableArray alloc] init];
-    for (int i = 0; i < [response count]; i ++) {
-        [sourceData addObject:[[WeJiahao alloc] initWithNSDictionary:response[i]]];
-    }
-    
-    [sourceData sortUsingComparator:^NSComparisonResult(id rA, id rB) {
-        return [[(WeJiahao *)rB jiahaoId] compare: [(WeJiahao *)rA jiahaoId]];
-    }];
-    
-    return sourceData;
-}
+#pragma mark - Functional
+
 /*
 #pragma mark - Navigation
 
