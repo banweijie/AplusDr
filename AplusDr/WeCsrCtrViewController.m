@@ -930,14 +930,14 @@
 - (void)newConsultButton_onPress:(id)sender {
     WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
     vc.pushType = @"consultingRoom";
-    vc.currentDoctor = favorDoctorList[we_doctorChating];
+    vc.currentDoctor = self.doctorChating;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 // 申请加号按钮被按下
 - (void)newAppointmentButton_onPress:(id)sender {
     WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
-    vc.currentDoctor = favorDoctorList[we_doctorChating];
+    vc.currentDoctor = self.doctorChating;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
