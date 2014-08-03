@@ -53,6 +53,11 @@
     
     // 双方头像
     UIImage * avatar1;
+    
+    // 音频相关
+    NSString * urlString;
+    NSTimer * audioPlayerTicker;
+    NSTimer * audioRecorderTicker;
 }
 
 @end
@@ -63,6 +68,8 @@
 
 //static double startRecordTime = 0;
 //static double endRecordTime = 0;
+
+#pragma mark - UIActionSheet Delegate
 
 // Action Sheet 按钮样式
 - (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
@@ -115,6 +122,8 @@
         }];
     }
 }
+
+#pragma mark - UIImagePicker Delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [picker dismissViewControllerAnimated:YES completion:^{
@@ -510,8 +519,6 @@
             
         }
     }
-    
-    
     return cell;
 }
 
@@ -561,18 +568,6 @@
     [chatTableView reloadData];
     if ([chatData count] > 0) {
         [chatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:[[chatData lastObject] count] - 1 inSection:[chatData count] - 1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
-}
-
-- (void)playAudio:(WeInfoedButton *)sender {
-    NSError * error;
-    self.audioPlayer = [[AVAudioPlayer alloc] initWithData:[(WeMessage *)sender.userData audioContent] error:&error];
-    self.audioPlayer.delegate = self;
-    self.audioPlayer.volume = 1.0f;
-    if (error != nil) {
-        NSLog(@"Wrong init player:%@", error);
-    }else{
-        [self.audioPlayer play];
     }
 }
 
@@ -686,29 +681,115 @@
                                  }];
 }
 
-// Audio
+#pragma mark - AVAudio Recorder & Player
+
 - (void)audioRecorderButtonTouchDown:(id)sender {
     [audioRecoderButton setTitle:@"松开手指 取消发送" forState:UIControlStateNormal];
-    [self.audioRecorder record];
+    NSError * err = nil;
+    
+	AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+	[audioSession setCategory :AVAudioSessionCategoryPlayAndRecord error:&err];
+    
+	if(err){
+        NSLog(@"audioSession: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+        return;
+	}
+    
+	[audioSession setActive:YES error:&err];
+    
+	err = nil;
+	if(err){
+        NSLog(@"audioSession: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+        return;
+	}
+	
+	//NSMutableDictionary * recordSetting = [NSMutableDictionary dictionary];
+	
+    NSDictionary * recordSetting = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                    [NSNumber numberWithFloat: 44100],AVSampleRateKey, //采样率
+                                    [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
+                                    [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,//采样位数 默认 16
+                                    [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,//通道的数目
+                                    nil];
+    /*
+     [recordSetting setValue :[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+     [recordSetting setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
+     [recordSetting setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
+     */
+    
+	NSURL * url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@record.wav", urlString]];
+	
+	err = nil;
+	
+	NSData * audioData = [NSData dataWithContentsOfFile:[url path] options: 0 error:&err];
+    
+	if(audioData)
+	{
+		NSFileManager *fm = [NSFileManager defaultManager];
+		[fm removeItemAtPath:[url path] error:&err];
+	}
+	
+	err = nil;
+    
+    if(self.audioRecorder){[self.audioRecorder stop];self.audioRecorder = nil;}
+    
+	self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:recordSetting error:&err];
+    
+	if(!_audioRecorder){
+        NSLog(@"recorder: %@ %@ %d %@", err, [err domain], [err code], [[err userInfo] description]);
+        NSError *errorr = [NSError errorWithDomain:NSOSStatusErrorDomain
+                                             code:[[err localizedDescription] intValue]
+                                         userInfo:nil];
+        NSLog(@"Error: %@", [errorr description]);
+        UIAlertView *alert =
+        [[UIAlertView alloc] initWithTitle: @"Warning"
+								   message: [err localizedDescription]
+								  delegate: nil
+						 cancelButtonTitle:@"OK"
+						 otherButtonTitles:nil];
+        [alert show];
+        return;
+	}
+	
+	//[_audioRecorder setDelegate:self];
+	[_audioRecorder prepareToRecord];
+	_audioRecorder.meteringEnabled = YES;
+	
+	[_audioRecorder recordForDuration:(NSTimeInterval) 30];
+    
+    audioRecorderTicker = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
+}
+
+- (void)detectionVoice
+{
+    [self.audioRecorder updateMeters];//刷新音量数据
+    //获取音量的平均值  [recorder averagePowerForChannel:0];
+    //音量的最大值  [recorder peakPowerForChannel:0];
+    
+    double lowPassResults = pow(10, (0.05 * [self.audioRecorder peakPowerForChannel:0]));
+    NSLog(@"%lf",lowPassResults);
+    //最大50  0
+    //图片 小-》大
 }
 
 - (void)audioRecorderButtonTouchUpInside:(id)sender {
     [audioRecoderButton setTitle:@"按住 说话" forState:UIControlStateNormal];
     [self.audioRecorder stop];
     
-    [VoiceConverter wavToAmr:[NSString stringWithFormat:@"%@record.wav", NSTemporaryDirectory()] amrSavePath:[NSString stringWithFormat:@"%@record.amr", NSTemporaryDirectory()]];
+    [VoiceConverter wavToAmr:[NSString stringWithFormat:@"%@record.wav", urlString] amrSavePath:[NSString stringWithFormat:@"%@record.amr", urlString]];
     
-    [VoiceConverter amrToWav:[NSString stringWithFormat:@"%@record.amr", NSTemporaryDirectory()] wavSavePath:[NSString stringWithFormat:@"%@record1.wav", NSTemporaryDirectory()]];
+    /*
+    [VoiceConverter amrToWav:[NSString stringWithFormat:@"%@record.amr", urlString] wavSavePath:[NSString stringWithFormat:@"%@record1.wav", NSTemporaryDirectory()]];*/
     
     NSError *error;
     
-    NSData * wavData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@record.wav", NSTemporaryDirectory()]options:NSDataReadingUncached error:&error];
+    NSData * wavData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@record.wav", urlString]options:NSDataReadingUncached error:&error];
     if (error != nil) {
         NSLog(@"Wrong loading file:%@", error);
         return;
     }
     
-    NSData * amrData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@record.amr", NSTemporaryDirectory()]options:NSDataReadingUncached error:&error];
+    NSData * amrData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@record.amr", urlString]options:NSDataReadingUncached error:&error];
     if (error != nil) {
         NSLog(@"Wrong loading file:%@", error);
         return;
@@ -722,6 +803,20 @@
     [self.audioRecorder stop];
     NSLog(@"Outside");
 }
+
+- (void)playAudio:(WeInfoedButton *)sender {
+    NSError * error;
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithData:[(WeMessage *)sender.userData audioContent] error:&error];
+    self.audioPlayer.delegate = self;
+    self.audioPlayer.volume = 15.0f;
+    if (error != nil) {
+        NSLog(@"Wrong init player:%@", error);
+    }else{
+        [self.audioPlayer play];
+    }
+}
+
+#pragma mark - View Related
 
 - (void)viewDidLoad
 {
@@ -750,27 +845,28 @@
     bg.contentMode = UIViewContentModeCenter;
     [self.view addSubview:bg];
     
-    // Title
-    
     // Invisible of tab bar
     [self setExtendedLayoutIncludesOpaqueBars:YES];
     
     // Audio Recorder
-    NSDictionary *recordSetting = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                   [NSNumber numberWithFloat: 8000.0],AVSampleRateKey, //采样率
+    NSDictionary * recordSetting = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                   [NSNumber numberWithFloat: 44100],AVSampleRateKey, //采样率
                                    [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
                                    [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,//采样位数 默认 16
                                    [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,//通道的数目
                                    nil];
     //录音文件保存地址的URL
-    NSString * urlString = NSTemporaryDirectory();
+    urlString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    urlString = NSTemporaryDirectory();
+    urlString = [NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()];
     NSLog(@"%@", urlString);
     NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/record.wav", urlString]];
     NSError *error = nil;
     self.audioRecorder = [[ AVAudioRecorder alloc] initWithURL:url settings:recordSetting error:&error];
     
+    if (!self.audioRecorder) NSLog(@"None audio recorder!");
     if (error != nil) {
-        NSLog(@"Init audioRecorder error: %@",error);
+        NSLog(@"\nInit audioRecorder error: %@", error);
     }else{
         //准备就绪，等待录音，注意该方法会返回Boolean，最好做个成功判断，因为其失败的时候无任何错误信息抛出
         if ([self.audioRecorder prepareToRecord]) {
@@ -924,7 +1020,11 @@
     
     //
     [self refreshView:NO];
+    
+    timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timer_onTick:) userInfo:nil repeats:YES];
 }
+
+#pragma mark - Callbacks
 
 // 发起咨询按钮被按下
 - (void)newConsultButton_onPress:(id)sender {
@@ -1071,12 +1171,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
-    timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timer_onTick:) userInfo:nil repeats:YES];
 }
 
 - (void)timer_onTick:(id)sender {
     [self refreshView:NO];
 }
+
+#pragma mark - Functional
 
 - (void)refreshView:(BOOL)forced {
     [self refreshMessage:forced];

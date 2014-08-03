@@ -754,7 +754,7 @@
 			path = RSA;
 			sourceTree = "<group>";
 		};
-		907D5B42192016580006EAE0 /* ConsultingRoom */ = {
+		907D5B42192016580006EAE0 /* 咨询室 */ = {
 			isa = PBXGroup;
 			children = (
 				907D5B3C1920164B0006EAE0 /* WeCsrIdxViewController.h */,
@@ -762,7 +762,7 @@
 				907D5B581920D9AD0006EAE0 /* WeCsrCtrViewController.h */,
 				907D5B591920D9AD0006EAE0 /* WeCsrCtrViewController.m */,
 			);
-			name = ConsultingRoom;
+			name = "咨询室";
 			sourceTree = "<group>";
 		};
 		907D5B5B1920D9C50006EAE0 /* UIBubbleTableView */ = {
@@ -842,7 +842,7 @@
 				90B31A5419544B7B00A19CD7 /* RaisePublic */,
 				9028C5B0197FA400003CA70F /* SearchDoctor */,
 				9026EF141904EF8300CE4A7A /* PersonalCenter */,
-				907D5B42192016580006EAE0 /* ConsultingRoom */,
+				907D5B42192016580006EAE0 /* 咨询室 */,
 			);
 			name = "View&Controller";
 			sourceTree = "<group>";

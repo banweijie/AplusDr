@@ -67,7 +67,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"!!!!");
     self.tabBar.selectedImageTintColor = We_foreground_red_general;
     self.tabBar.tintColor = We_foreground_red_general;
     self.tabBar.translucent = YES;

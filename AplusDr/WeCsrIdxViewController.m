@@ -293,7 +293,6 @@
         if (currentPage == 2 && ([doctor.consultStatus isEqualToString:@"N"] || [doctor.consultStatus isEqualToString:@"W"])) [favorDoctors addObject:doctor];
     }
     
-    
     [favorDoctors sortUsingComparator:^NSComparisonResult(id rA, id rB) {
         WeFavorDoctor * doctorA = rA, * doctorB = rB;
         NSMutableArray * viewedmessageListA = [globalHelper search:[WeMessage class]
@@ -310,6 +309,7 @@
         if ([viewedmessageListB count] == 0) return -1;
         return [(WeMessage *)viewedmessageListA[0] time] < [(WeMessage *)viewedmessageListB[0] time];
     }];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(abc) name:@"123" object:nil];
     
     [sys_tableView reloadData];
 }
