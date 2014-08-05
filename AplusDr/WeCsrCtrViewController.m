@@ -58,6 +58,19 @@
     NSString * urlString;
     NSTimer * audioPlayerTicker;
     NSTimer * audioRecorderTicker;
+    
+    UIToolbar * audioToolBar;
+    UILabel * audioToolBarTitle;
+    UIImageView * audioToolBarVolumeIndicator;
+    
+    // 录音重播相关
+    UIToolbar * audioReplayToolBar;
+    UIButton * audioReplayToolBarShadowLayer;
+    NSData * audioReplayToolBarAudioData;
+    WeImageButton * audioReplayToolBarBubbleView;
+    UILabel * audioReplayToolBarLengthIndicator;
+    
+    double startTime;
 }
 
 @end
@@ -65,9 +78,6 @@
 @implementation WeCsrCtrViewController
 
 @synthesize doctorChating;
-
-//static double startRecordTime = 0;
-//static double endRecordTime = 0;
 
 #pragma mark - UIActionSheet Delegate
 
@@ -398,8 +408,8 @@
                 [buttonView setFrame:CGRectMake(320 - 2 * gasp - avatarWidth - bubbleSize.width, gasp, bubbleSize.width, bubbleSize.height)];
                 [buttonView setTintColor:We_foreground_white_general];
                 [buttonView setImage:[[UIImage imageNamed:@"chatbubble-right"] stretchableImageWithLeftCapWidth:6 topCapHeight:30] forState:UIControlStateNormal];
-                [buttonView setUserData:currentMessage];
-                [buttonView addTarget:self action:@selector(playAudio:) forControlEvents:UIControlEventTouchUpInside];
+                [buttonView setUserData:tmpPlayer];
+                [buttonView addTarget:self action:@selector(buttonWithAudioPlayer_onPress:) forControlEvents:UIControlEventTouchUpInside];
                 [cell.contentView addSubview:buttonView];
                 
                 // 音频图标
@@ -757,58 +767,92 @@
 	
 	[_audioRecorder recordForDuration:(NSTimeInterval) 30];
     
-    audioRecorderTicker = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
+    audioRecorderTicker = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
+    
+    [audioToolBar setHidden:NO];
+    
+    startTime = [[NSDate date] timeIntervalSince1970];
 }
 
 - (void)detectionVoice
 {
-    [self.audioRecorder updateMeters];//刷新音量数据
-    //获取音量的平均值  [recorder averagePowerForChannel:0];
-    //音量的最大值  [recorder peakPowerForChannel:0];
+    [self.audioRecorder updateMeters];
     
     double lowPassResults = pow(10, (0.05 * [self.audioRecorder peakPowerForChannel:0]));
-    NSLog(@"%lf",lowPassResults);
-    //最大50  0
-    //图片 小-》大
+    lowPassResults = MAX(0.0, lowPassResults);
+    lowPassResults = MIN(0.97, lowPassResults);
+    [audioToolBarVolumeIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"record_animate_%02d", (int)((lowPassResults + 0.01) / 0.07) + 1]]];
+    
+    int passedTime = (int)([[NSDate date] timeIntervalSince1970] - startTime);
+    if (passedTime > 30) {
+        [audioToolBarTitle setText:[NSString stringWithFormat:@"录音已结束"]];
+    }
+    else {
+        [audioToolBarTitle setText:[NSString stringWithFormat:@"录音时间剩余:%d秒", 30 - (int)([[NSDate date] timeIntervalSince1970] - startTime)]];
+    }
 }
 
 - (void)audioRecorderButtonTouchUpInside:(id)sender {
     [audioRecoderButton setTitle:@"按住 说话" forState:UIControlStateNormal];
     [self.audioRecorder stop];
+    [audioToolBar setHidden:YES];
     
-    [VoiceConverter wavToAmr:[NSString stringWithFormat:@"%@record.wav", urlString] amrSavePath:[NSString stringWithFormat:@"%@record.amr", urlString]];
+    [audioRecorderTicker invalidate];
+    audioRecorderTicker = nil;
     
+    // 数据准备
+    NSError * error;
+    audioReplayToolBarAudioData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@record.wav", urlString] options:NSDataReadingUncached error:&error];
+    AVAudioPlayer * newPlayer = [[AVAudioPlayer alloc] initWithData:audioReplayToolBarAudioData error:&error];
+    [newPlayer play];
+    
+    NSLog(@"%d", [audioReplayToolBarAudioData length]);
+    if (error != nil) {
+        [[[UIAlertView alloc] initWithTitle:@"读取录音文件失败" message:[NSString stringWithFormat:@"%@", error] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+    }
+    
+    [audioReplayToolBarBubbleView setUserData:[[AVAudioPlayer alloc] initWithData:audioReplayToolBarAudioData error:&error]];
+    [audioReplayToolBarLengthIndicator setText:[NSString stringWithFormat:@"%d ''", (int)[newPlayer duration]]];
+    
+    // 小于1S的直接取消
+    if ([newPlayer duration] < 1.0f) {
+        [[[UIAlertView alloc] initWithTitle:@"录音时间太短" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+        return;
+    }
+    
+    // 弹出重听视图
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    
+    [audioReplayToolBarShadowLayer setAlpha:0.6];
+    [audioReplayToolBarShadowLayer setFrame:CGRectMake(0, -200, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    CGRect rect = audioReplayToolBar.frame;
+    rect.origin.y = self.view.frame.size.height - audioReplayToolBar.frame.size.height;
+    audioReplayToolBar.frame = rect;
+    
+    [UIView commitAnimations];
+    
+    // 转化并发送
     /*
-    [VoiceConverter amrToWav:[NSString stringWithFormat:@"%@record.amr", urlString] wavSavePath:[NSString stringWithFormat:@"%@record1.wav", NSTemporaryDirectory()]];*/
-    
-    NSError *error;
-    
-    NSData * wavData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@record.wav", urlString]options:NSDataReadingUncached error:&error];
-    if (error != nil) {
-        NSLog(@"Wrong loading file:%@", error);
-        return;
-    }
-    
-    NSData * amrData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@record.amr", urlString]options:NSDataReadingUncached error:&error];
-    if (error != nil) {
-        NSLog(@"Wrong loading file:%@", error);
-        return;
-    }
-    
-    [self sendAmrAudio:amrData wavAudio:wavData];
+    */
 }
 
 - (void)audioRecorderButtonTouchUpOutside:(id)sender {
     [audioRecoderButton setTitle:@"按住 说话" forState:UIControlStateNormal];
     [self.audioRecorder stop];
-    NSLog(@"Outside");
+    [audioToolBar setHidden:YES];
+    
+    
+    [audioRecorderTicker invalidate];
+    audioRecorderTicker = nil;
 }
 
 - (void)playAudio:(WeInfoedButton *)sender {
     NSError * error;
     self.audioPlayer = [[AVAudioPlayer alloc] initWithData:[(WeMessage *)sender.userData audioContent] error:&error];
     self.audioPlayer.delegate = self;
-    self.audioPlayer.volume = 15.0f;
+    self.audioPlayer.volume = 10.0f;
     if (error != nil) {
         NSLog(@"Wrong init player:%@", error);
     }else{
@@ -818,8 +862,7 @@
 
 #pragma mark - View Related
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
@@ -1018,13 +1061,179 @@
     [newAppointmentButton addTarget:self action:@selector(newAppointmentButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [newConsultOrPlusView addSubview:newAppointmentButton];
     
-    //
+    [self initView_AudioToolBar];
+    [self initView_AudioReplayToolBar];
+    
     [self refreshView:NO];
     
     timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timer_onTick:) userInfo:nil repeats:YES];
 }
 
+- (void)initView_AudioToolBar {
+    audioToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(60, (self.view.frame.size.height - 200) / 2, 200, 200)];
+    [audioToolBar setBarStyle:UIBarStyleDefault];
+    [audioToolBar setBarTintColor:We_background_general];
+    [audioToolBar setHidden:YES];
+    [audioToolBar.layer setCornerRadius:10];
+    [audioToolBar.layer setMasksToBounds:YES];
+    [self.view addSubview:audioToolBar];
+    
+    audioToolBarTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
+    [audioToolBarTitle setFont:We_font_textfield_large_zh_cn];
+    [audioToolBarTitle setTextColor:We_foreground_gray_general];
+    [audioToolBarTitle setText:@"录音时间剩余:30秒"];
+    [audioToolBarTitle setTextAlignment:NSTextAlignmentCenter];
+    [audioToolBar addSubview:audioToolBarTitle];
+    
+    audioToolBarVolumeIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(0, 80, 200, 100)];
+    [audioToolBarVolumeIndicator setImage:[UIImage imageNamed:@"record_animate_01"]];
+    [audioToolBarVolumeIndicator setContentMode:UIViewContentModeScaleAspectFit];
+    [audioToolBar addSubview:audioToolBarVolumeIndicator];
+}
+
+- (void)initView_AudioReplayToolBar {
+    audioReplayToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, 320, 200)];
+    [audioReplayToolBar setBarStyle:UIBarStyleDefault];
+    [audioReplayToolBar setBarTintColor:We_background_general];
+    
+    // 标题
+    UILabel * ssview0_titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 15, 160, 30)];
+    [ssview0_titleLabel setText:@"发送语音"];
+    [ssview0_titleLabel setTextColor:We_foreground_gray_general];
+    [ssview0_titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [ssview0_titleLabel setFont:We_font_textfield_large_zh_cn];
+    [audioReplayToolBar addSubview:ssview0_titleLabel];
+    
+    // 第0条线
+    UIView * ssview0_line0 = [[UIView alloc] initWithFrame:CGRectMake(20, 60, 280, 1)];
+    [ssview0_line0 setBackgroundColor:[UIColor grayColor]];
+    [ssview0_line0 setAlpha:0.5];
+    [audioReplayToolBar addSubview:ssview0_line0];
+    
+    // 计算泡泡大小
+    CGSize bubbleSize = CGSizeMake(MIN(maxTextWidth, 50 + 8 * 4), 40);
+    
+    // 泡泡
+    audioReplayToolBarBubbleView = [WeImageButton buttonWithType:UIButtonTypeCustom];
+    [audioReplayToolBarBubbleView setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
+    [audioReplayToolBarBubbleView setFrame:CGRectMake(112, 80, bubbleSize.width, bubbleSize.height)];
+    [audioReplayToolBarBubbleView setTintColor:We_foreground_white_general];
+    [audioReplayToolBarBubbleView setImage:[[UIImage imageNamed:@"chatbubble-left"] stretchableImageWithLeftCapWidth:10 topCapHeight:30] forState:UIControlStateNormal];
+    [audioReplayToolBarBubbleView addTarget:self action:@selector(buttonWithAudioPlayer_onPress:) forControlEvents:UIControlEventTouchUpInside];
+    [audioReplayToolBar addSubview:audioReplayToolBarBubbleView];
+    
+    // 音频图标
+    UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(112 + bubbleImageGaspShort, 80 + (40 - 20) / 2, 20, 20)];
+    [imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [imageView setImage:[UIImage imageNamed:@"chatroom-audio-left"]];
+    [audioReplayToolBar addSubview:imageView];
+    
+    // 时间
+    audioReplayToolBarLengthIndicator = [[UILabel alloc] initWithFrame:CGRectMake(112 + bubbleSize.width + 10, 80 + 10, 30, bubbleSize.height - 10)];
+    [audioReplayToolBarLengthIndicator setFont:We_font_textfield_zh_cn];
+    [audioReplayToolBarLengthIndicator setTextColor:We_foreground_gray_general];
+    [audioReplayToolBar addSubview:audioReplayToolBarLengthIndicator];
+    
+    // 确认按钮
+    UIButton * audioReplayToolBarCancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [audioReplayToolBarCancelButton setFrame:CGRectMake(25, 150, 130, 40)];
+    [audioReplayToolBarCancelButton setBackgroundColor:We_foreground_gray_general];
+    [audioReplayToolBarCancelButton setTintColor:We_foreground_white_general];
+    [audioReplayToolBarCancelButton setTitle:@"取消重录" forState:UIControlStateNormal];
+    [audioReplayToolBarCancelButton addTarget:self action:@selector(audioReplayToolBarCancelButton_onPress) forControlEvents:UIControlEventTouchUpInside];
+    [audioReplayToolBar addSubview:audioReplayToolBarCancelButton];
+    
+    UIButton * audioReplayToolBarSubmitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [audioReplayToolBarSubmitButton setFrame:CGRectMake(160, 150, 130, 40)];
+    [audioReplayToolBarSubmitButton setBackgroundColor:We_foreground_red_general];
+    [audioReplayToolBarSubmitButton setTintColor:We_foreground_white_general];
+    [audioReplayToolBarSubmitButton setTitle:@"确认发送" forState:UIControlStateNormal];
+    [audioReplayToolBarSubmitButton addTarget:self action:@selector(audioReplayToolBarSubmitButton_onPress) forControlEvents:UIControlEventTouchUpInside];
+    [audioReplayToolBar addSubview:audioReplayToolBarSubmitButton];
+    
+    // 添加检查结果产生的效应 - 遮罩层
+    audioReplayToolBarShadowLayer = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [audioReplayToolBarShadowLayer setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [audioReplayToolBarShadowLayer setBackgroundColor:[UIColor blackColor]];
+    [audioReplayToolBarShadowLayer setAlpha:0.0];
+    [audioReplayToolBarShadowLayer addTarget:self action:@selector(audioReplayToolBarShadowLayer_onPress) forControlEvents:UIControlEventTouchUpInside];
+    [self.tabBarController.view addSubview:audioReplayToolBarShadowLayer];
+    
+    [self.tabBarController.view addSubview:audioReplayToolBar];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [timer invalidate];
+    timer = nil;
+}
+
 #pragma mark - Callbacks
+
+// 重听视图 - 遮罩层按钮被按下
+- (void)audioReplayToolBarShadowLayer_onPress {
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    
+    [audioReplayToolBarShadowLayer setAlpha:0.0];
+    [audioReplayToolBarShadowLayer setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    CGRect rect = audioReplayToolBar.frame;
+    rect.origin.y = self.view.frame.size.height;
+    audioReplayToolBar.frame = rect;
+    
+    [UIView commitAnimations];
+}
+
+// 重听视图 - 取消重录按钮被按下
+- (void)audioReplayToolBarCancelButton_onPress {
+    [self audioReplayToolBarShadowLayer_onPress];
+}
+
+// 重听视图 - 确认发送按钮被按下
+- (void)audioReplayToolBarSubmitButton_onPress {
+    NSError * error;
+    [VoiceConverter wavToAmr:[NSString stringWithFormat:@"%@record.wav", urlString] amrSavePath:[NSString stringWithFormat:@"%@record.amr", urlString]];
+    
+    NSData * amrData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@record.amr", urlString]options:NSDataReadingUncached error:&error];
+    if (error != nil) {
+        NSLog(@"Wrong loading file:%@", error);
+        return;
+    }
+    NSData * wavData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@record.wav", urlString]options:NSDataReadingUncached error:&error];
+    if (error != nil) {
+        NSLog(@"Wrong loading file:%@", error);
+        return;
+    }
+    [self sendAmrAudio:amrData wavAudio:wavData];
+    [self audioReplayToolBarShadowLayer_onPress];
+}
+
+// 携带有播放器指针的按钮被按下
+- (void)buttonWithAudioPlayer_onPress:(WeInfoedButton *)sender {
+    NSError * error;
+    AVAudioPlayer * audioPlayer = sender.userData;
+    //AVAudioPlayer * audioPlayer = [[AVAudioPlayer alloc] initWithData:audioReplayToolBarAudioData error:&error];
+    NSLog(@"%d", [audioReplayToolBarAudioData length]);
+    if (error != nil) {
+        NSLog(@"Wrong init player:%@", error);
+    }
+    audioPlayer.delegate = self;
+    
+    if ([audioPlayer isPlaying]) {
+        [audioPlayer stop];
+    }
+    else {
+        [audioPlayer setVolume:10.0f];
+        [audioPlayer setCurrentTime:0];
+        [audioPlayer play];
+    }
+}
 
 // 发起咨询按钮被按下
 - (void)newConsultButton_onPress:(id)sender {
@@ -1221,17 +1430,6 @@
         [self moveUnionView:0 withDuration:0];
         [inputTextField resignFirstResponder];
     }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [timer invalidate];
-    timer = nil;
 }
 
 #pragma mark - Callbacks

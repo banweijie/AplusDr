@@ -455,7 +455,7 @@
 			path = "opencore-amrwb";
 			sourceTree = "<group>";
 		};
-		900E2967193079F3008BF61C /* CaseManage */ = {
+		900E2967193079F3008BF61C /* 病历管理 */ = {
 			isa = PBXGroup;
 			children = (
 				900E296819307AA7008BF61C /* WeCahIdxViewController.h */,
@@ -473,10 +473,10 @@
 				900E298D193220C5008BF61C /* WeCahExaAddIteViewController.h */,
 				900E298E193220C5008BF61C /* WeCahExaAddIteViewController.m */,
 			);
-			name = CaseManage;
+			name = "病历管理";
 			sourceTree = "<group>";
 		};
-		900EB752195940DE006BBA04 /* TransactionHistory */ = {
+		900EB752195940DE006BBA04 /* 交易记录 */ = {
 			isa = PBXGroup;
 			children = (
 				900EB756195941D9006BBA04 /* WePecTrhViewController.h */,
@@ -484,7 +484,7 @@
 				906F4DE819744ACE007807FE /* WePecTrdViewController.h */,
 				906F4DE919744ACE007807FE /* WePecTrdViewController.m */,
 			);
-			name = TransactionHistory;
+			name = "交易记录";
 			sourceTree = "<group>";
 		};
 		90266C3919276CB200478A89 /* Selection */ = {
@@ -655,9 +655,9 @@
 			children = (
 				90A19C1A198B8F3E0024FD41 /* 我的加号 */,
 				90A19C19198B060C0024FD41 /* 我的众筹 */,
-				900E2967193079F3008BF61C /* CaseManage */,
-				900EB752195940DE006BBA04 /* TransactionHistory */,
-				9026EF151904EFA300CE4A7A /* PersonalAccount */,
+				900E2967193079F3008BF61C /* 病历管理 */,
+				900EB752195940DE006BBA04 /* 交易记录 */,
+				9026EF151904EFA300CE4A7A /* 个人账户 */,
 				9026EEC71904EE5500CE4A7A /* WePecIdxViewController.h */,
 				9026EEC81904EE5500CE4A7A /* WePecIdxViewController.m */,
 				9028C5B119825C5F003CA70F /* WePecMyaViewController.h */,
@@ -666,7 +666,7 @@
 			name = PersonalCenter;
 			sourceTree = "<group>";
 		};
-		9026EF151904EFA300CE4A7A /* PersonalAccount */ = {
+		9026EF151904EFA300CE4A7A /* 个人账户 */ = {
 			isa = PBXGroup;
 			children = (
 				9026EEC91904EE5500CE4A7A /* WePecPeaViewController.h */,
@@ -674,7 +674,7 @@
 				90F0CE721922CF55006A4605 /* WeInpNamViewController.h */,
 				90F0CE731922CF55006A4605 /* WeInpNamViewController.m */,
 			);
-			name = PersonalAccount;
+			name = "个人账户";
 			sourceTree = "<group>";
 		};
 		9028C5B0197FA400003CA70F /* SearchDoctor */ = {
@@ -1299,7 +1299,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DAA5936E-F603-45A0-A56E-DEB31C22F0DF";
+				PROVISIONING_PROFILE = "4BA9743D-A9DB-4567-AF44-2AC4E9ECC915";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -1329,7 +1329,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DAA5936E-F603-45A0-A56E-DEB31C22F0DF";
+				PROVISIONING_PROFILE = "4BA9743D-A9DB-4567-AF44-2AC4E9ECC915";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
