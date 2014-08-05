@@ -48,7 +48,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     WeFunDetViewController * vc = [[WeFunDetViewController alloc] init];
-    vc.currentFundingId = [(WeFunding *)fundingList[path.section] fundingId];
+    vc.currentFunding = (WeFunding *) fundingList[path.section];
     
     UIBarButtonItem * backItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backItem;
@@ -462,22 +462,6 @@
         [self api_data_listFunding:@{@"f.status":@"G"}];
     }
     [selectView setHidden:YES];
-}
-
-// 筛选按钮被按下
-- (void)selectButton_onPress:(id)sender {
-    WeFunSelViewController * vc = [[WeFunSelViewController alloc] init];
-    vc.lastSel_type = sel_type;
-    vc.lastSel_topSectionId = sel_topSectionId;
-    vc.lastSel_topSectionName = sel_topSectionName;
-    vc.lastSel_secSectionId = sel_secSectionId;
-    vc.lastSel_secSectionName = sel_secSectionName;
-    vc.originVC = self;
-    
-    WeNavViewController * nav = [[WeNavViewController alloc] init];
-    [nav pushViewController:vc animated:NO];
-    
-    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)searchButton_onPress {

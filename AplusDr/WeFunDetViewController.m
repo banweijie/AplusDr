@@ -9,7 +9,6 @@
 #import "WeFunDetViewController.h"
 
 @interface WeFunDetViewController () {
-    WeFunding * currentFunding;
     UIActivityIndicatorView * sys_pendingView;
     UIImageView * posterView;
     UITableView * sys_tableView;
@@ -38,12 +37,12 @@
 {
     if (path.section == 0 && path.row == 2) {
         WeCsrDciViewController * vc = [[WeCsrDciViewController alloc] init];
-        vc.currentDoctor = currentFunding.initiator;
+        vc.currentDoctor = self.currentFunding.initiator;
         [self.navigationController pushViewController:vc animated:YES];
     }
     if (path.section == 2 && path.row == 1) {
         WeFunDesViewController * vc = [[WeFunDesViewController alloc] init];
-        vc.HTMLContent = currentFunding.description;
+        vc.HTMLContent = self.currentFunding.description;
         [self.navigationController pushViewController:vc animated:YES];
     }
     [tableView deselectRowAtIndexPath:path animated:YES];
@@ -55,7 +54,7 @@
     if (indexPath.section == 0 && indexPath.row == 2) return [tableView rowHeight] * 2;
     if (indexPath.section == 1 && indexPath.row == 0) return [tableView rowHeight] * 1.5;
     if (indexPath.section == 2 && indexPath.row == 0) {
-        return [WeAppDelegate calcSizeForString:currentFunding.introduction Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
+        return [WeAppDelegate calcSizeForString:self.currentFunding.introduction Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
     }
     return [tableView rowHeight];
 }
@@ -106,23 +105,23 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 235)];
-        [imageView setImageWithURL:[NSURL URLWithString:yijiarenImageUrl(currentFunding.poster2)]];
+        [imageView setImageWithURL:[NSURL URLWithString:yijiarenImageUrl(self.currentFunding.poster2)]];
         [imageView setContentMode:UIViewContentModeScaleAspectFill];
         [cell.contentView addSubview:imageView];
     }
     if (indexPath.section == 0 && indexPath.row == 1) {
         [cell.textLabel setNumberOfLines:2];
         [cell.textLabel setFont:We_font_textfield_large_zh_cn];
-        [cell.textLabel setText:currentFunding.subTitle];
+        [cell.textLabel setText:self.currentFunding.subTitle];
     }
     if (indexPath.section == 0 && indexPath.row == 2) {
         // 医生名称
         UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 16, 220, 32)];
-        if ([currentFunding.initiator.userName isEqualToString:@""]) {
+        if ([self.currentFunding.initiator.userName isEqualToString:@""]) {
             l1.text = @"尚未设置名称";
         }
         else {
-            l1.text = [NSString stringWithFormat:@"%@ %@", currentFunding.initiator.userName, we_codings[@"doctorCategory"][currentFunding.initiator.category][@"title"][currentFunding.initiator.title]];
+            l1.text = [NSString stringWithFormat:@"%@ %@", self.currentFunding.initiator.userName, we_codings[@"doctorCategory"][self.currentFunding.initiator.category][@"title"][self.currentFunding.initiator.title]];
         }
         l1.font = We_font_textfield_large_zh_cn;
         l1.textColor = We_foreground_black_general;
@@ -130,14 +129,14 @@
         
         // 医院科室
         UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(100, 44, 220, 32)];
-        l2.text = [NSString stringWithFormat:@"%@ %@", currentFunding.initiator.hospitalName, currentFunding.initiator.sectionName];
+        l2.text = [NSString stringWithFormat:@"%@ %@", self.currentFunding.initiator.hospitalName, self.currentFunding.initiator.sectionName];
         l2.textColor = We_foreground_gray_general;
         l2.font = We_font_textfield_zh_cn;
         [cell.contentView addSubview:l2];
         
         // 医生头像
         UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 12, 64, 64)];
-        [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentFunding.initiator.avatarPath)]];
+        [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(self.currentFunding.initiator.avatarPath)]];
         avatarView.layer.cornerRadius = 32;
         avatarView.clipsToBounds = YES;
         [cell.contentView addSubview:avatarView];
@@ -145,12 +144,12 @@
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     if (indexPath.section == 1 && indexPath.row == 0) {
-        if ([currentFunding.type isEqualToString:@"D"]) {
+        if ([self.currentFunding.type isEqualToString:@"D"]) {
             UILabel * label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, 80, 20)];
             [label0 setTextAlignment:NSTextAlignmentCenter];
             [label0 setFont:We_font_textfield_small_zh_cn];
             [label0 setAdjustsFontSizeToFitWidth:YES];
-            [label0 setText:[NSString stringWithFormat:@"%@/%@ 人", currentFunding.supportCount, currentFunding.goal]];
+            [label0 setText:[NSString stringWithFormat:@"%@/%@ 人", self.currentFunding.supportCount, self.currentFunding.goal]];
             [cell.contentView addSubview:label0];
             
             UILabel * label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, 80, 20)];
@@ -165,7 +164,7 @@
             [label0 setTextAlignment:NSTextAlignmentCenter];
             [label0 setFont:We_font_textfield_small_zh_cn];
             [label0 setAdjustsFontSizeToFitWidth:YES];
-            [label0 setText:[NSString stringWithFormat:@"￥%@/￥%@", currentFunding.sum, currentFunding.goal]];
+            [label0 setText:[NSString stringWithFormat:@"￥%@/￥%@", self.currentFunding.sum, self.currentFunding.goal]];
             [cell.contentView addSubview:label0];
             
             UILabel * label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, 80, 20)];
@@ -180,7 +179,7 @@
             [label0 setTextAlignment:NSTextAlignmentCenter];
             [label0 setFont:We_font_textfield_small_zh_cn];
             [label0 setAdjustsFontSizeToFitWidth:YES];
-            [label0 setText:[NSString stringWithFormat:@"%@人", currentFunding.supportCount]];
+            [label0 setText:[NSString stringWithFormat:@"%@人", self.currentFunding.supportCount]];
             [cell.contentView addSubview:label0];
             
             UILabel * label1 = [[UILabel alloc] initWithFrame:CGRectMake(80, 35, 80, 20)];
@@ -195,7 +194,7 @@
             [label0 setTextAlignment:NSTextAlignmentCenter];
             [label0 setFont:We_font_textfield_small_zh_cn];
             [label0 setAdjustsFontSizeToFitWidth:YES];
-            int restSec =  [currentFunding.endTime longLongValue] / 1000 - [[NSDate date] timeIntervalSince1970];
+            int restSec =  [self.currentFunding.endTime longLongValue] / 1000 - [[NSDate date] timeIntervalSince1970];
             [label0 setText:[NSString stringWithFormat:@"%d天", restSec / 86400 + 1]];
             [cell.contentView addSubview:label0];
             
@@ -211,7 +210,7 @@
             [label0 setTextAlignment:NSTextAlignmentCenter];
             [label0 setFont:We_font_textfield_small_zh_cn];
             [label0 setAdjustsFontSizeToFitWidth:YES];
-            [label0 setText:[NSString stringWithFormat:@"%@", currentFunding.likeCount]];
+            [label0 setText:[NSString stringWithFormat:@"%@", self.currentFunding.likeCount]];
             [cell.contentView addSubview:label0];
             
             UILabel * label1 = [[UILabel alloc] initWithFrame:CGRectMake(80 * 3, 35, 80, 20)];
@@ -226,7 +225,7 @@
         [cell.textLabel setText:@"支持人数"];
         [cell.textLabel setFont:We_font_textfield_zh_cn];
         [cell.textLabel setTextColor:We_foreground_black_general];
-        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@ 人", currentFunding.supportCount]];
+        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@ 人", self.currentFunding.supportCount]];
         [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
         [cell.detailTextLabel setTextColor:We_foreground_gray_general];
     }
@@ -234,7 +233,7 @@
         [cell.textLabel setText:@"结束时间"];
         [cell.textLabel setFont:We_font_textfield_zh_cn];
         [cell.textLabel setTextColor:We_foreground_black_general];
-        NSDate * endDate = [NSDate dateWithTimeIntervalSince1970:[currentFunding.endTime longLongValue] / 1000];
+        NSDate * endDate = [NSDate dateWithTimeIntervalSince1970:[self.currentFunding.endTime longLongValue] / 1000];
         NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
         NSDateComponents * the = [calendar components:unitFlags fromDate:endDate];
@@ -246,7 +245,7 @@
         [cell.textLabel setText:@"点赞人数"];
         [cell.textLabel setFont:We_font_textfield_zh_cn];
         [cell.textLabel setTextColor:We_foreground_black_general];
-        [cell.detailTextLabel setText:currentFunding.likeCount];
+        [cell.detailTextLabel setText:self.currentFunding.likeCount];
         [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
         [cell.detailTextLabel setTextColor:We_foreground_gray_general];
     }
@@ -256,11 +255,11 @@
         l1.font = We_font_textfield_zh_cn;
         l1.textColor = We_foreground_black_general;
         [cell.contentView addSubview:l1];
-        CGSize sizezz = [currentFunding.introduction sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize sizezz = [self.currentFunding.introduction sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
         label.numberOfLines = 0;
         label.lineBreakMode = NSLineBreakByWordWrapping;
-        label.text = currentFunding.introduction;
+        label.text = self.currentFunding.introduction;
         label.font = We_font_textfield_zh_cn;
         label.textColor = We_foreground_gray_general;
         [cell.contentView addSubview:label];
@@ -391,7 +390,7 @@
     
     // barView - button0 - label0
     button0label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 89, 30)];
-    [button0label0 setText:[NSString stringWithFormat:@"￥%@ ", currentFunding.goal]];
+    [button0label0 setText:[NSString stringWithFormat:@"￥%@ ", self.currentFunding.goal]];
     [button0label0 setTextAlignment:NSTextAlignmentCenter];
     [button0label0 setFont:We_font_textfield_zh_cn];
     [button0label0 setTextColor:We_foreground_white_general];
@@ -423,7 +422,7 @@
     
     // barView - button2 - label0
     button2label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 89, 30)];
-    int restSec =  [currentFunding.endTime longLongValue] / 1000 - [[NSDate date] timeIntervalSince1970];
+    int restSec =  [self.currentFunding.endTime longLongValue] / 1000 - [[NSDate date] timeIntervalSince1970];
     [button2label0 setText:[NSString stringWithFormat:@"%d天", restSec / 86400 + 1]];
     [button2label0 setTextAlignment:NSTextAlignmentCenter];
     [button2label0 setFont:We_font_textfield_zh_cn];
@@ -476,7 +475,7 @@
 
 - (void)supportButton_onPress:(id)sender {
     WeFunSupViewController * vc = [[WeFunSupViewController alloc] init];
-    vc.currentFunding = currentFunding;
+    vc.currentFunding = self.currentFunding;
     
     //WeNavViewController * nav = [[WeNavViewController alloc] init];
     //[nav pushViewController:vc animated:NO];
@@ -498,7 +497,7 @@
     }
     else {
         WeFunSupViewController * vc = [[WeFunSupViewController alloc] init];
-        vc.currentFunding = currentFunding;
+        vc.currentFunding = self.currentFunding;
         
         WeNavViewController * nav = [[WeNavViewController alloc] init];
         [nav pushViewController:vc animated:NO];
@@ -518,12 +517,12 @@
     
     [WeAppDelegate postToServerWithField:@"data" action:@"viewFunding"
                               parameters:@{
-                                           @"fundingId":_currentFundingId
+                                           @"fundingId":self.currentFunding.fundingId
                                            }
                                  success:^(id response) {
                                      NSLog(@"%@", response);
-                                     currentFunding = [[WeFunding alloc] initWithNSDictionary:response];
-                                     self.navigationItem.title = currentFunding.title;
+                                     [self.currentFunding setWithNSDictionary:response];
+                                     self.navigationItem.title = self.currentFunding.title;
                                      [sys_tableView reloadData];
                                      [sys_tableView setHidden:NO];
                                      [sys_pendingView stopAnimating];

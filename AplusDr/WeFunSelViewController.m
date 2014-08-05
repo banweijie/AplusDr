@@ -60,7 +60,6 @@
         [lastSel_topSectionName setString:sel_topSectionName];
         [lastSel_secSectionId setString:sel_secSectionId];
         [lastSel_secSectionName setString:sel_secSectionName];
-        [vc api_data_listFunding];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

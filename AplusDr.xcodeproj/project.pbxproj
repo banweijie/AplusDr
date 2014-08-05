@@ -104,10 +104,6 @@
 		90B31A661956906000A19CD7 /* WeFunDesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A651956906000A19CD7 /* WeFunDesViewController.m */; };
 		90B31A69195750C000A19CD7 /* WeFunSupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A68195750C000A19CD7 /* WeFunSupViewController.m */; };
 		90B31A6C195785DA00A19CD7 /* WeFunSup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A6B195785DA00A19CD7 /* WeFunSup2ViewController.m */; };
-		90B31A6F19579A6F00A19CD7 /* WeFunSelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A6E19579A6F00A19CD7 /* WeFunSelViewController.m */; };
-		90B31A731957A75400A19CD7 /* WeFunSelTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A721957A75400A19CD7 /* WeFunSelTypeViewController.m */; };
-		90B31A761957AE1A00A19CD7 /* WeFunSelTopSecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A751957AE1A00A19CD7 /* WeFunSelTopSecViewController.m */; };
-		90B31A791957B4CE00A19CD7 /* WeFunSelSecSecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A781957B4CE00A19CD7 /* WeFunSelSecSecViewController.m */; };
 		90B31A7C195802A300A19CD7 /* WeSentenceModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A7B195802A300A19CD7 /* WeSentenceModifyViewController.m */; };
 		90B31A7F19582C0000A19CD7 /* WeParagraphModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A7E19582C0000A19CD7 /* WeParagraphModifyViewController.m */; };
 		90B31A841958343300A19CD7 /* WeFunMySupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B31A831958343300A19CD7 /* WeFunMySupViewController.m */; };
@@ -328,14 +324,6 @@
 		90B31A68195750C000A19CD7 /* WeFunSupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSupViewController.m; sourceTree = "<group>"; };
 		90B31A6A195785DA00A19CD7 /* WeFunSup2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSup2ViewController.h; sourceTree = "<group>"; };
 		90B31A6B195785DA00A19CD7 /* WeFunSup2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSup2ViewController.m; sourceTree = "<group>"; };
-		90B31A6D19579A6F00A19CD7 /* WeFunSelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSelViewController.h; sourceTree = "<group>"; };
-		90B31A6E19579A6F00A19CD7 /* WeFunSelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSelViewController.m; sourceTree = "<group>"; };
-		90B31A711957A75400A19CD7 /* WeFunSelTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSelTypeViewController.h; sourceTree = "<group>"; };
-		90B31A721957A75400A19CD7 /* WeFunSelTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSelTypeViewController.m; sourceTree = "<group>"; };
-		90B31A741957AE1A00A19CD7 /* WeFunSelTopSecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSelTopSecViewController.h; sourceTree = "<group>"; };
-		90B31A751957AE1A00A19CD7 /* WeFunSelTopSecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSelTopSecViewController.m; sourceTree = "<group>"; };
-		90B31A771957B4CE00A19CD7 /* WeFunSelSecSecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunSelSecSecViewController.h; sourceTree = "<group>"; };
-		90B31A781957B4CE00A19CD7 /* WeFunSelSecSecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunSelSecSecViewController.m; sourceTree = "<group>"; };
 		90B31A7A195802A200A19CD7 /* WeSentenceModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSentenceModifyViewController.h; sourceTree = "<group>"; };
 		90B31A7B195802A300A19CD7 /* WeSentenceModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSentenceModifyViewController.m; sourceTree = "<group>"; };
 		90B31A7D19582C0000A19CD7 /* WeParagraphModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeParagraphModifyViewController.h; sourceTree = "<group>"; };
@@ -855,7 +843,6 @@
 		90B31A5419544B7B00A19CD7 /* 众筹项目 */ = {
 			isa = PBXGroup;
 			children = (
-				90B31A7019579F5B00A19CD7 /* Selection */,
 				90B31A5519544BAF00A19CD7 /* WeFunIdxViewController.h */,
 				90B31A5619544BAF00A19CD7 /* WeFunIdxViewController.m */,
 				90B31A6119554BCA00A19CD7 /* WeFunDetViewController.h */,
@@ -900,21 +887,6 @@
 				900E2994193223B8008BF61C /* WeExaminationItemConfig.m */,
 			);
 			name = CaseManage;
-			sourceTree = "<group>";
-		};
-		90B31A7019579F5B00A19CD7 /* Selection */ = {
-			isa = PBXGroup;
-			children = (
-				90B31A6D19579A6F00A19CD7 /* WeFunSelViewController.h */,
-				90B31A6E19579A6F00A19CD7 /* WeFunSelViewController.m */,
-				90B31A711957A75400A19CD7 /* WeFunSelTypeViewController.h */,
-				90B31A721957A75400A19CD7 /* WeFunSelTypeViewController.m */,
-				90B31A741957AE1A00A19CD7 /* WeFunSelTopSecViewController.h */,
-				90B31A751957AE1A00A19CD7 /* WeFunSelTopSecViewController.m */,
-				90B31A771957B4CE00A19CD7 /* WeFunSelSecSecViewController.h */,
-				90B31A781957B4CE00A19CD7 /* WeFunSelSecSecViewController.m */,
-			);
-			name = Selection;
 			sourceTree = "<group>";
 		};
 		90F0CE6219228C97006A4605 /* Model */ = {
@@ -1083,7 +1055,6 @@
 				906F4DED1974502C007807FE /* WeConsult.m in Sources */,
 				90A19C21198B8F870024FD41 /* WeJiaMangementIndexViewController.m in Sources */,
 				9028C5B9198262A8003CA70F /* WeJiahao.m in Sources */,
-				90B31A791957B4CE00A19CD7 /* WeFunSelSecSecViewController.m in Sources */,
 				90B31A4F194BF61B00A19CD7 /* WePatient.m in Sources */,
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
 				900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */,
@@ -1092,7 +1063,6 @@
 				90FB31821987EEC4008A001D /* WeActionSheet.m in Sources */,
 				906F4DD61973D0AD007807FE /* NSObject+SBJSON.m in Sources */,
 				9026EEF91904EE5500CE4A7A /* WeRegIrpViewController.m in Sources */,
-				90B31A6F19579A6F00A19CD7 /* WeFunSelViewController.m in Sources */,
 				906F4DF119756443007807FE /* WeCsrJiaChooseTimeViewController.m in Sources */,
 				90B31A69195750C000A19CD7 /* WeFunSupViewController.m in Sources */,
 				90B31A601955348100A19CD7 /* WeFundingLevel.m in Sources */,
@@ -1123,7 +1093,6 @@
 				907D5B681920D9DA0006EAE0 /* UIBubbleHeaderTableViewCell.m in Sources */,
 				90F0CE771922D711006A4605 /* WeDoctor.m in Sources */,
 				907D5B37192014230006EAE0 /* WeViewController.m in Sources */,
-				90B31A731957A75400A19CD7 /* WeFunSelTypeViewController.m in Sources */,
 				907D5B691920D9DA0006EAE0 /* UIBubbleTableView.m in Sources */,
 				90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */,
 				906F4DD91973D0AD007807FE /* SBJsonBase.m in Sources */,
@@ -1170,7 +1139,6 @@
 				900E28CB19290239008BF61C /* WeMessage.m in Sources */,
 				900EB758195941D9006BBA04 /* WePecTrhViewController.m in Sources */,
 				906F4DD71973D0AD007807FE /* NSString+SBJSON.m in Sources */,
-				90B31A761957AE1A00A19CD7 /* WeFunSelTopSecViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -315,7 +315,7 @@
     
     //[self.navigationController popToRootViewControllerAnimated:NO];
     WeFunDetViewController * vc = [[WeFunDetViewController alloc] init];
-    vc.currentFundingId = currentFunding.fundingId;
+    vc.currentFunding = currentFunding;
     
     [nav pushViewController:vc animated:YES];
 }
