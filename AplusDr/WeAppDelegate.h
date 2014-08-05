@@ -17,7 +17,7 @@
 #import "WeDoctor.h"
 #import "WeFavorDoctor.h"
 #import "WePatient.h"
-#import "WeFavorDoctor.h"
+#import "WeFavorPatient.h"
 #import "WeMessage.h"
 #import "WeCaseRecord.h"
 #import "WeRecordDrug.h"

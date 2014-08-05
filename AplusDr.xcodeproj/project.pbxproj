@@ -59,6 +59,7 @@
 		9026EF0F1904EE5500CE4A7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9026EEEF1904EE5500CE4A7A /* Main.storyboard */; };
 		9028C5B319825C5F003CA70F /* WePecMyaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9028C5B219825C5F003CA70F /* WePecMyaViewController.m */; };
 		9028C5B9198262A8003CA70F /* WeJiahao.m in Sources */ = {isa = PBXBuildFile; fileRef = 9028C5B8198262A8003CA70F /* WeJiahao.m */; };
+		902AF5201991439F00357B54 /* WeConsultDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 902AF51F1991439F00357B54 /* WeConsultDetailViewController.m */; };
 		906F4DD01973D0AD007807FE /* AlipayRsaLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DB31973D0AD007807FE /* AlipayRsaLib.a */; };
 		906F4DD11973D0AD007807FE /* Alixpay.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 906F4DB51973D0AD007807FE /* Alixpay.bundle */; };
 		906F4DD21973D0AD007807FE /* AlixPaylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DB61973D0AD007807FE /* AlixPaylib.a */; };
@@ -236,6 +237,8 @@
 		9028C5B219825C5F003CA70F /* WePecMyaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePecMyaViewController.m; sourceTree = "<group>"; };
 		9028C5B7198262A8003CA70F /* WeJiahao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeJiahao.h; sourceTree = "<group>"; };
 		9028C5B8198262A8003CA70F /* WeJiahao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeJiahao.m; sourceTree = "<group>"; };
+		902AF51E1991439F00357B54 /* WeConsultDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeConsultDetailViewController.h; sourceTree = "<group>"; };
+		902AF51F1991439F00357B54 /* WeConsultDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeConsultDetailViewController.m; sourceTree = "<group>"; };
 		906F4DB31973D0AD007807FE /* AlipayRsaLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AlipayRsaLib.a; sourceTree = "<group>"; };
 		906F4DB41973D0AD007807FE /* AlixLibService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlixLibService.h; sourceTree = "<group>"; };
 		906F4DB51973D0AD007807FE /* Alixpay.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Alixpay.bundle; sourceTree = "<group>"; };
@@ -761,6 +764,8 @@
 				907D5B3D1920164B0006EAE0 /* WeCsrIdxViewController.m */,
 				907D5B581920D9AD0006EAE0 /* WeCsrCtrViewController.h */,
 				907D5B591920D9AD0006EAE0 /* WeCsrCtrViewController.m */,
+				902AF51E1991439F00357B54 /* WeConsultDetailViewController.h */,
+				902AF51F1991439F00357B54 /* WeConsultDetailViewController.m */,
 			);
 			name = "咨询室";
 			sourceTree = "<group>";
@@ -1112,6 +1117,7 @@
 				907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */,
 				900EB763195A2DC2006BBA04 /* WeImageButton.m in Sources */,
 				900EB75119588CC9006BBA04 /* WeFunMySup2ViewController.m in Sources */,
+				902AF5201991439F00357B54 /* WeConsultDetailViewController.m in Sources */,
 				900E2966192FE8DC008BF61C /* WeCsrCosSelGenViewController.m in Sources */,
 				900E28C81928F8E6008BF61C /* WeToolButton.m in Sources */,
 				907D5B681920D9DA0006EAE0 /* UIBubbleHeaderTableViewCell.m in Sources */,

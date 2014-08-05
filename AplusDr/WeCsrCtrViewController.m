@@ -70,6 +70,8 @@
     WeImageButton * audioReplayToolBarBubbleView;
     UILabel * audioReplayToolBarLengthIndicator;
     
+    UIToolbar * consultApplyView;
+    
     double startTime;
 }
 
@@ -408,8 +410,8 @@
                 [buttonView setFrame:CGRectMake(320 - 2 * gasp - avatarWidth - bubbleSize.width, gasp, bubbleSize.width, bubbleSize.height)];
                 [buttonView setTintColor:We_foreground_white_general];
                 [buttonView setImage:[[UIImage imageNamed:@"chatbubble-right"] stretchableImageWithLeftCapWidth:6 topCapHeight:30] forState:UIControlStateNormal];
-                [buttonView setUserData:tmpPlayer];
-                [buttonView addTarget:self action:@selector(buttonWithAudioPlayer_onPress:) forControlEvents:UIControlEventTouchUpInside];
+                [buttonView setUserData:currentMessage];
+                [buttonView addTarget:self action:@selector(playAudio:) forControlEvents:UIControlEventTouchUpInside];
                 [cell.contentView addSubview:buttonView];
                 
                 // 音频图标
@@ -892,6 +894,25 @@
     [self setExtendedLayoutIncludesOpaqueBars:YES];
     
     // Audio Recorder
+    NSError * err;
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+	[audioSession setCategory :AVAudioSessionCategoryPlayAndRecord error:&err];
+    
+	if(err){
+        NSLog(@"audioSession: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+        return;
+	}
+    
+	[audioSession setActive:YES error:&err];
+    
+	err = nil;
+	if(err){
+        NSLog(@"audioSession: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+        return;
+	}
+
+    
+    
     NSDictionary * recordSetting = [[NSDictionary alloc] initWithObjectsAndKeys:
                                    [NSNumber numberWithFloat: 44100],AVSampleRateKey, //采样率
                                    [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
@@ -1064,6 +1085,8 @@
     [self initView_AudioToolBar];
     [self initView_AudioReplayToolBar];
     
+    [self initView_consultApplyView];
+    
     [self refreshView:NO];
     
     timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timer_onTick:) userInfo:nil repeats:YES];
@@ -1162,6 +1185,18 @@
     [self.tabBarController.view addSubview:audioReplayToolBar];
 }
 
+- (void)initView_consultApplyView {
+    consultApplyView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 64, 320, 50)];
+    [self.view addSubview:consultApplyView];
+    
+    UIButton * consultApplyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [consultApplyButton setFrame:CGRectMake(0, 0, 320, 50)];
+    [consultApplyButton setTitle:@"您已经提交了咨询申请，点击查看详情" forState:UIControlStateNormal];
+    [consultApplyButton addTarget:self action:@selector(consultApllyButton_onPress) forControlEvents:UIControlEventTouchUpInside];
+    [consultApplyButton setTintColor:We_background_red_general];
+    [consultApplyView addSubview:consultApplyButton];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -1169,8 +1204,19 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [timer invalidate];
-    timer = nil;
+    [super viewWillDisappear:animated];
+    
+    [timer setFireDate:[NSDate distantFuture]];
+
+    self.tabBarController.tabBar.hidden = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [timer setFireDate:[NSDate date]];
+    
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 #pragma mark - Callbacks
@@ -1214,12 +1260,19 @@
     [self audioReplayToolBarShadowLayer_onPress];
 }
 
+// 查看咨询申请详情按钮被按下
+- (void)consultApllyButton_onPress {
+    WeConsultDetailViewController * vc = [[WeConsultDetailViewController alloc] init];
+    vc.consultId = self.doctorChating.currentConsultId;
+    vc.currentDoctor = self.doctorChating;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 // 携带有播放器指针的按钮被按下
 - (void)buttonWithAudioPlayer_onPress:(WeInfoedButton *)sender {
     NSError * error;
     AVAudioPlayer * audioPlayer = sender.userData;
-    //AVAudioPlayer * audioPlayer = [[AVAudioPlayer alloc] initWithData:audioReplayToolBarAudioData error:&error];
-    NSLog(@"%d", [audioReplayToolBarAudioData length]);
+    NSLog(@"%f", [audioPlayer duration]);
     if (error != nil) {
         NSLog(@"Wrong init player:%@", error);
     }
@@ -1231,6 +1284,7 @@
     else {
         [audioPlayer setVolume:10.0f];
         [audioPlayer setCurrentTime:0];
+        NSLog(@"playing");
         [audioPlayer play];
     }
 }
@@ -1377,12 +1431,8 @@
     return YES;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = YES;
-}
-
 - (void)timer_onTick:(id)sender {
+    NSLog(@"!!!!");
     [self refreshView:NO];
 }
 
@@ -1419,6 +1469,13 @@
 }
 
 - (void)refreshKeyboard {
+    if ([self.doctorChating.consultStatus isEqualToString:@"A"]) {
+        [consultApplyView setHidden:NO];
+    }
+    else {
+        [consultApplyView setHidden:YES];
+    }
+    
     [newConsultOrPlusView setHidden:YES];
     if (doctorChating.sendable || [doctorChating.consultStatus isEqualToString:@"C"]) {
         [newConsultOrPlusView setHidden:YES];
