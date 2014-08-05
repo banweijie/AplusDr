@@ -638,7 +638,7 @@
 			name = CustomsView;
 			sourceTree = "<group>";
 		};
-		9026EF131904EF2800CE4A7A /* Register&Login */ = {
+		9026EF131904EF2800CE4A7A /* 注册登录 */ = {
 			isa = PBXGroup;
 			children = (
 				9026EEBD1904EE5500CE4A7A /* WeRegWlcViewController.h */,
@@ -650,10 +650,10 @@
 				9026EEC31904EE5500CE4A7A /* WeRegIrpViewController.h */,
 				9026EEC41904EE5500CE4A7A /* WeRegIrpViewController.m */,
 			);
-			name = "Register&Login";
+			name = "注册登录";
 			sourceTree = "<group>";
 		};
-		9026EF141904EF8300CE4A7A /* PersonalCenter */ = {
+		9026EF141904EF8300CE4A7A /* 个人中心 */ = {
 			isa = PBXGroup;
 			children = (
 				90A19C1A198B8F3E0024FD41 /* 我的加号 */,
@@ -666,7 +666,7 @@
 				9028C5B119825C5F003CA70F /* WePecMyaViewController.h */,
 				9028C5B219825C5F003CA70F /* WePecMyaViewController.m */,
 			);
-			name = PersonalCenter;
+			name = "个人中心";
 			sourceTree = "<group>";
 		};
 		9026EF151904EFA300CE4A7A /* 个人账户 */ = {
@@ -680,7 +680,7 @@
 			name = "个人账户";
 			sourceTree = "<group>";
 		};
-		9028C5B0197FA400003CA70F /* SearchDoctor */ = {
+		9028C5B0197FA400003CA70F /* 搜索医生 */ = {
 			isa = PBXGroup;
 			children = (
 				90266C3919276CB200478A89 /* Selection */,
@@ -697,7 +697,7 @@
 				906F4DEF19756443007807FE /* WeCsrJiaChooseTimeViewController.h */,
 				906F4DF019756443007807FE /* WeCsrJiaChooseTimeViewController.m */,
 			);
-			name = SearchDoctor;
+			name = "搜索医生";
 			sourceTree = "<group>";
 		};
 		906F4D9D1973CF80007807FE /* Alipay */ = {
@@ -843,16 +843,16 @@
 		90B31A4A194BF1DD00A19CD7 /* View&Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9026EF131904EF2800CE4A7A /* Register&Login */,
-				90B31A5419544B7B00A19CD7 /* RaisePublic */,
-				9028C5B0197FA400003CA70F /* SearchDoctor */,
-				9026EF141904EF8300CE4A7A /* PersonalCenter */,
+				9026EF131904EF2800CE4A7A /* 注册登录 */,
+				90B31A5419544B7B00A19CD7 /* 众筹项目 */,
+				9028C5B0197FA400003CA70F /* 搜索医生 */,
+				9026EF141904EF8300CE4A7A /* 个人中心 */,
 				907D5B42192016580006EAE0 /* 咨询室 */,
 			);
 			name = "View&Controller";
 			sourceTree = "<group>";
 		};
-		90B31A5419544B7B00A19CD7 /* RaisePublic */ = {
+		90B31A5419544B7B00A19CD7 /* 众筹项目 */ = {
 			isa = PBXGroup;
 			children = (
 				90B31A7019579F5B00A19CD7 /* Selection */,
@@ -867,7 +867,7 @@
 				90B31A6A195785DA00A19CD7 /* WeFunSup2ViewController.h */,
 				90B31A6B195785DA00A19CD7 /* WeFunSup2ViewController.m */,
 			);
-			name = RaisePublic;
+			name = "众筹项目";
 			sourceTree = "<group>";
 		};
 		90B31A591954FDA400A19CD7 /* Funding */ = {
