@@ -159,6 +159,8 @@
 }
 
 - (void)selection:(id)sender {
+    [self clearSelectionCondition];
+    
     WeNavViewController * nav = [[WeNavViewController alloc] init];
     
     UIViewController * vc = [[WeCsrSelViewController alloc] init];

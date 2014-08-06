@@ -218,7 +218,9 @@
                   caseRecordChanging = newCaseRecord;
                   
                   [self dismissViewControllerAnimated:YES completion:nil];
-                  [self.lastViewController performSegueWithIdentifier:@"CahIdx_pushto_CahCah" sender:self];
+                  
+                  WeCahCahViewController * vc = [[WeCahCahViewController alloc] init];
+                  [self.lastViewController.navigationController pushViewController:vc animated:YES];
                   
                   we_justAddNewCaseRecord = YES;
                   return;
