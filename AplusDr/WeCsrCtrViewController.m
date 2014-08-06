@@ -718,7 +718,7 @@
 	//NSMutableDictionary * recordSetting = [NSMutableDictionary dictionary];
 	
     NSDictionary * recordSetting = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                    [NSNumber numberWithFloat: 44100],AVSampleRateKey, //采样率
+                                    [NSNumber numberWithFloat: 8000],AVSampleRateKey, //采样率
                                     [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
                                     [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,//采样位数 默认 16
                                     [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,//通道的数目
