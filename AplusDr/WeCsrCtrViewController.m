@@ -1029,8 +1029,9 @@
     [uploadHiButton setFrame:CGRectMake(80, 0, 80, 100)];
     [uploadHiButton setTitle:@"上传病例" forState:UIControlStateNormal];
     [uploadHiButton setImage:[UIImage imageNamed:@"chatroom-sendcasehistory"] forState:UIControlStateNormal];
+    [uploadHiButton addTarget:self action:@selector(sendCaseButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     uploadHiButton.titleLabel.font = We_font_textfield_zh_cn;
-    uploadHiButton.tintColor = We_foreground_gray_general;
+    uploadHiButton.tintColor = We_foreground_red_general;
     [moreInputView addSubview:uploadHiButton];
     
     WeToolButton * uploadVedioButton = [WeToolButton buttonWithType:UIButtonTypeRoundedRect];
@@ -1302,6 +1303,18 @@
     WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
     vc.currentDoctor = self.doctorChating;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+// 发送病例按钮被按下
+- (void)sendCaseButton_onPress:(id)sender {
+    WeNavViewController * nav = [[WeNavViewController alloc] init];
+    
+    WeSendCaseViewController * vc = [[WeSendCaseViewController alloc] init];
+    vc.currentDoctor = self.doctorChating;
+    
+    [nav pushViewController:vc animated:NO];
+    
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 // 输入框右侧更多选项

@@ -92,6 +92,7 @@
     [manager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"yijiaren"];
     [manager POST:yijiarenUrl(field, action) parameters:parameters
           success:^(NSURLSessionDataTask *task, id responseObject) {
+              //NSLog(@"%@", responseObject);
               NSString * errorMessage = @"未知的错误";
               NSString * result = [NSString stringWithFormat:@"%@", responseObject[@"result"]];
               if ([result isEqualToString:@"1"]) {

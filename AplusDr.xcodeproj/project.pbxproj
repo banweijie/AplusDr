@@ -60,6 +60,7 @@
 		9028C5B319825C5F003CA70F /* WePecMyaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9028C5B219825C5F003CA70F /* WePecMyaViewController.m */; };
 		9028C5B9198262A8003CA70F /* WeJiahao.m in Sources */ = {isa = PBXBuildFile; fileRef = 9028C5B8198262A8003CA70F /* WeJiahao.m */; };
 		902AF5201991439F00357B54 /* WeConsultDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 902AF51F1991439F00357B54 /* WeConsultDetailViewController.m */; };
+		902AF5331994CDEC00357B54 /* WeSendCaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 902AF5321994CDEC00357B54 /* WeSendCaseViewController.m */; };
 		906F4DD01973D0AD007807FE /* AlipayRsaLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DB31973D0AD007807FE /* AlipayRsaLib.a */; };
 		906F4DD11973D0AD007807FE /* Alixpay.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 906F4DB51973D0AD007807FE /* Alixpay.bundle */; };
 		906F4DD21973D0AD007807FE /* AlixPaylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 906F4DB61973D0AD007807FE /* AlixPaylib.a */; };
@@ -235,6 +236,8 @@
 		9028C5B8198262A8003CA70F /* WeJiahao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeJiahao.m; sourceTree = "<group>"; };
 		902AF51E1991439F00357B54 /* WeConsultDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeConsultDetailViewController.h; sourceTree = "<group>"; };
 		902AF51F1991439F00357B54 /* WeConsultDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeConsultDetailViewController.m; sourceTree = "<group>"; };
+		902AF5311994CDEC00357B54 /* WeSendCaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSendCaseViewController.h; sourceTree = "<group>"; };
+		902AF5321994CDEC00357B54 /* WeSendCaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSendCaseViewController.m; sourceTree = "<group>"; };
 		906F4DB31973D0AD007807FE /* AlipayRsaLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AlipayRsaLib.a; sourceTree = "<group>"; };
 		906F4DB41973D0AD007807FE /* AlixLibService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlixLibService.h; sourceTree = "<group>"; };
 		906F4DB51973D0AD007807FE /* Alixpay.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Alixpay.bundle; sourceTree = "<group>"; };
@@ -754,6 +757,8 @@
 				907D5B591920D9AD0006EAE0 /* WeCsrCtrViewController.m */,
 				902AF51E1991439F00357B54 /* WeConsultDetailViewController.h */,
 				902AF51F1991439F00357B54 /* WeConsultDetailViewController.m */,
+				902AF5311994CDEC00357B54 /* WeSendCaseViewController.h */,
+				902AF5321994CDEC00357B54 /* WeSendCaseViewController.m */,
 			);
 			name = "咨询室";
 			sourceTree = "<group>";
@@ -1130,6 +1135,7 @@
 				906F4DD41973D0AD007807FE /* AlixPayOrder.m in Sources */,
 				90B31A50194BF61B00A19CD7 /* WeFavorPatient.m in Sources */,
 				90B31A871958548900A19CD7 /* WeFundingSupport.m in Sources */,
+				902AF5331994CDEC00357B54 /* WeSendCaseViewController.m in Sources */,
 				90B31A6C195785DA00A19CD7 /* WeFunSup2ViewController.m in Sources */,
 				90F0CE8F19271794006A4605 /* WeCsrSelCatViewController.m in Sources */,
 				9026EEF71904EE5500CE4A7A /* WeRegIpnViewController.m in Sources */,
@@ -1273,7 +1279,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8184B315-34F7-4AB6-8869-3C939B0072A4";
+				PROVISIONING_PROFILE = "1E4F0041-DCED-41CC-83CB-E4ACA90A2884";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -1303,7 +1309,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8184B315-34F7-4AB6-8869-3C939B0072A4";
+				PROVISIONING_PROFILE = "1E4F0041-DCED-41CC-83CB-E4ACA90A2884";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
