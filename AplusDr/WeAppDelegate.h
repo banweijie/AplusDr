@@ -201,7 +201,8 @@ weTargetView we_targetView;
 #define weTabBarIdPersonalCenter 4
 #define weTabBarIdCaseHistory 3
 
-#define yijiarenServer @"http://115.28.222.1/yijiaren"
+//#define yijiarenServer @"http://115.28.222.1/yijiaren"
+#define yijiarenServer @"http://www.ejren.com"
 #define yijiarenUrl(field, action) [NSString stringWithFormat:@"%@/%@/%@.action", yijiarenServer, field, action]
 #define yijiarenImageServer we_imagePaths[@"imgServer"]
 #define yijiarenAvatarUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"avatarPath"], fileName]
