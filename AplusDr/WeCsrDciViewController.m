@@ -25,6 +25,13 @@
     NSString * notice;
     NSString * groupIntro;
     
+    UIPanGestureRecognizer *guestPan;
+    
+    
+    CGPoint last;
+    float tableYoffset;
+    
+    
     // 海报效果
     UIView * posterView;
     
@@ -133,7 +140,7 @@
         if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 30;
     }
     if (currentPage == 1) {
-        if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 30;
+        if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 110;
     }
     if (currentPage == 2) {
         if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 20;
@@ -625,12 +632,14 @@
     panel2.titleLabel.font = We_font_textfield_zh_cn;
     [controlPanel addSubview:panel2];
     
-    [button0 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
-    [button1 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
-    [button2 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
-    [panel0 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
-    [panel1 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
-    [panel2 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+//    [button0 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+//    [button1 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+//    [button2 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+//    [panel0 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+//    [panel1 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+//    [panel2 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+    guestPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(movedInView:)];
+    [controlPanel addGestureRecognizer:guestPan];
     
     selectSign = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [selectSign setFrame:CGRectMake(15, 92 - 5, 90, 5)];
@@ -870,16 +879,42 @@
                                      [sys_pendingView stopAnimating];
                                  }];
 }
--(void)PullUpOrDown
-{
-    if (controlPanel.frame.origin.y>=310) {
-        [sys_tableView setContentOffset:CGPointMake(0, 320-64) animated:YES];
-    }else
-    {
-        [sys_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
-    }
-}
+//-(void)PullUpOrDown
+//{
+//    if (controlPanel.frame.origin.y>=310) {
+//        [sys_tableView setContentOffset:CGPointMake(0, 320-64) animated:YES];
+//    }else
+//    {
+//        [sys_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
+//    }
+//}
 
+-(void)movedInView:(UIPanGestureRecognizer *)sender
+{
+    
+    if (UIGestureRecognizerStateBegan == sender.state) {
+        // 记录手指初始位置
+        last = [sender locationInView:self.view];
+        tableYoffset=sys_tableView.contentOffset.y;
+    }
+    if (UIGestureRecognizerStateChanged == sender.state) {
+        // 取出手指移动到的位置
+        CGPoint location = [sender locationInView:self.view];
+        if ((tableYoffset+last.y-location.y>=0) &&(tableYoffset+last.y-location.y<=255)) {
+            [sys_tableView setContentOffset:CGPointMake(0, tableYoffset+last.y-location.y)];
+        }
+    }
+    if (UIGestureRecognizerStateEnded == sender.state) {
+        if (sys_tableView.contentOffset.y < 100) {
+            [sys_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
+        }
+        
+        if (sys_tableView.contentOffset.y > 100 && sys_tableView.contentOffset.y < 320 - 64) {
+            [sys_tableView setContentOffset:CGPointMake(0, 255) animated:YES];
+        }
+    }
+
+}
 /*
 #pragma mark - Navigation
 
