@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1E50538D81C24E6FA4893A80 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889390EBA434F5EA5AF2361 /* libPods.a */; };
+		273E15F819C7F9E40052A98D /* WeDciView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273E15F719C7F9E40052A98D /* WeDciView.xib */; };
+		276AC59919C8183F00310F66 /* WeDciView.m in Sources */ = {isa = PBXBuildFile; fileRef = 276AC59819C8183F00310F66 /* WeDciView.m */; };
 		900E28C81928F8E6008BF61C /* WeToolButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28C71928F8E6008BF61C /* WeToolButton.m */; };
 		900E28CB19290239008BF61C /* WeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28CA19290239008BF61C /* WeMessage.m */; };
 		900E29571929B44C008BF61C /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 900E29491929B44C008BF61C /* amrFileCodec.mm */; };
@@ -136,6 +138,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		273E15F719C7F9E40052A98D /* WeDciView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeDciView.xib; sourceTree = "<group>"; };
+		276AC59719C8183F00310F66 /* WeDciView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeDciView.h; sourceTree = "<group>"; };
+		276AC59819C8183F00310F66 /* WeDciView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeDciView.m; sourceTree = "<group>"; };
 		7889390EBA434F5EA5AF2361 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		900E28C61928F8E6008BF61C /* WeToolButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeToolButton.h; sourceTree = "<group>"; };
 		900E28C71928F8E6008BF61C /* WeToolButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeToolButton.m; sourceTree = "<group>"; };
@@ -687,6 +692,9 @@
 				90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */,
 				906F4DEF19756443007807FE /* WeCsrJiaChooseTimeViewController.h */,
 				906F4DF019756443007807FE /* WeCsrJiaChooseTimeViewController.m */,
+				273E15F719C7F9E40052A98D /* WeDciView.xib */,
+				276AC59719C8183F00310F66 /* WeDciView.h */,
+				276AC59819C8183F00310F66 /* WeDciView.m */,
 			);
 			name = "搜索医生";
 			sourceTree = "<group>";
@@ -998,6 +1006,7 @@
 				9026EE241904E8A700CE4A7A /* InfoPlist.strings in Resources */,
 				906F4DD11973D0AD007807FE /* Alixpay.bundle in Resources */,
 				900EB75D195A2139006BBA04 /* Resource.xcassets in Resources */,
+				273E15F819C7F9E40052A98D /* WeDciView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1098,6 +1107,7 @@
 				907D5B681920D9DA0006EAE0 /* UIBubbleHeaderTableViewCell.m in Sources */,
 				90F0CE771922D711006A4605 /* WeDoctor.m in Sources */,
 				907D5B37192014230006EAE0 /* WeViewController.m in Sources */,
+				276AC59919C8183F00310F66 /* WeDciView.m in Sources */,
 				907D5B691920D9DA0006EAE0 /* UIBubbleTableView.m in Sources */,
 				90F0CE7A1922D854006A4605 /* WeFavorDoctor.m in Sources */,
 				906F4DD91973D0AD007807FE /* SBJsonBase.m in Sources */,

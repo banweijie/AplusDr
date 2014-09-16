@@ -22,7 +22,6 @@
     UIButton * button1;
     UIButton * button2;
     UIButton * selectSign;
-    
     NSString * notice;
     NSString * groupIntro;
     
@@ -131,10 +130,10 @@
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
     if (currentPage == 0) {
-        if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 300;
+        if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 30;
     }
     if (currentPage == 1) {
-        if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 300;
+        if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 30;
     }
     if (currentPage == 2) {
         if (section == [self numberOfSectionsInTableView:tv] - 1) return self.tabBarController.tabBar.frame.size.height + 20;
@@ -626,12 +625,20 @@
     panel2.titleLabel.font = We_font_textfield_zh_cn;
     [controlPanel addSubview:panel2];
     
+    [button0 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+    [button1 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+    [button2 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+    [panel0 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+    [panel1 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+    [panel2 addTarget:self action:@selector(PullUpOrDown) forControlEvents:UIControlEventTouchDragOutside];
+    
     selectSign = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [selectSign setFrame:CGRectMake(15, 92 - 5, 90, 5)];
     selectSign.backgroundColor = We_foreground_red_general;
     [controlPanel addSubview:selectSign];
     
     [self.view addSubview:controlPanel];
+    
     
     // 头像
     posterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
@@ -862,6 +869,15 @@
                                      [[[UIAlertView alloc] initWithTitle:@"取消保健医失败" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                      [sys_pendingView stopAnimating];
                                  }];
+}
+-(void)PullUpOrDown
+{
+    if (controlPanel.frame.origin.y>=310) {
+        [sys_tableView setContentOffset:CGPointMake(0, 320-64) animated:YES];
+    }else
+    {
+        [sys_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
 }
 
 /*
