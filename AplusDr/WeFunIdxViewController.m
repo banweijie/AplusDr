@@ -379,26 +379,11 @@
     [sys_tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    coverButton.hidden = NO;
-    return YES;
-}
-
-- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
-    coverButton.hidden = YES;
-    return YES;
-}
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)sbar {
     [sel_keyword setString:searchBar.text];
-    [searchBar resignFirstResponder];
-    [searchView setHidden:YES];
+    [self searchButton_onPress];
     [self api_data_listFunding:@{@"f.words":searchBar.text}];
     if ([searchBar.text isEqualToString:@""]) {
         [titleButton setTitle:@"全部 v" forState:UIControlStateNormal];
@@ -409,19 +394,24 @@
 }
 
 - (void)coverButtonOnPress:(id)sender {
+    [self searchButton_onPress];
     [sel_keyword setString:searchBar.text];
-    [searchBar resignFirstResponder];
-    [searchView setHidden:YES];
     [self api_data_listFunding:@{@"f.words":searchBar.text}];if ([searchBar.text isEqualToString:@""]) {
         [titleButton setTitle:@"全部 v" forState:UIControlStateNormal];
     }
     else {
         [titleButton setTitle:[NSString stringWithFormat:@"搜索：%@ v", searchBar.text] forState:UIControlStateNormal];
     }
+    
 }
 
 //
 - (void)titleButton_onPress:(id)sender {
+    
+    if(!searchView.isHidden)
+    {
+        [self searchButton_onPress];
+    }
     [selectView setHidden:!selectView.isHidden];
 }
 
@@ -466,8 +456,14 @@
 
 - (void)searchButton_onPress {
     [selectView setHidden:YES];
-    [searchView setHidden:!searchView.isHidden];
     if (!searchView.isHidden) {
+        searchView.hidden=YES;
+        coverButton.hidden = YES;
+        [searchBar resignFirstResponder];
+    }else
+    {
+        searchView.hidden=NO;
+        coverButton.hidden = NO;
         [searchBar becomeFirstResponder];
     }
 }
@@ -477,11 +473,11 @@
     [self api_data_listFunding:@{}];
 }
 
-// 我的参与按钮被按下
-- (void)myFundingButton_onPress:(id)sender {
-    WeFunMySupViewController * vc = [[WeFunMySupViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
+//// 我的参与按钮被按下
+//- (void)myFundingButton_onPress:(id)sender {
+//    WeFunMySupViewController * vc = [[WeFunMySupViewController alloc] init];
+//    [self.navigationController pushViewController:vc animated:YES];
+//}
 
 // 获取众筹列表接口
 - (void)api_data_listFunding:(NSDictionary *)parameters {

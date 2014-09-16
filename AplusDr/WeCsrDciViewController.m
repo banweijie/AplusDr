@@ -567,7 +567,7 @@
     [button0 setFrame:CGRectMake(0, 2, 89, 48)];
     [button0 setImage:[UIImage imageNamed:@"docinfo-applychatting"] forState:UIControlStateNormal];
     [button0 setTitle:@"发起咨询" forState:UIControlStateNormal];
-    [button0 addTarget:self action:@selector(consulting:) forControlEvents:UIControlEventTouchUpInside];
+    [button0 addTarget:self action:@selector(consulting:) forControlEvents:UIControlEventTouchDragEnter];
     button0.tintColor = We_foreground_white_general;
     button0.backgroundColor = [UIColor colorWithRed:90 / 255.0 green:41 / 255.0 blue:45 / 255.0 alpha:1.0];
     button0.titleLabel.font = We_font_textfield_small_zh_cn;
@@ -644,10 +644,10 @@
     [posterView addSubview:avatarView];
     
     // 渐变黑色
-    UIToolbar * toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 320 - 80, 320, 80)];
-    [toolBar setBarStyle:UIBarStyleBlackTranslucent];
-    [toolBar setBarTintColor:[UIColor clearColor]];
-    [toolBar setAlpha:0.9];
+//    UIToolbar * toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 320 - 80, 320, 80)];
+//    [toolBar setBarStyle:UIBarStyleBlackTranslucent];
+//    [toolBar setBarTintColor:[UIColor clearColor]];
+//    [toolBar setAlpha:0.9];
     //[toolBar setBackgroundColor:UIColorFromRGB(0, 0, 100, 0.0)];
     //[toolBar setBackgroundImage:[UIImage imageNamed:@"crowdfunding-gradientcover"] forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     //[posterView addSubview:toolBar];

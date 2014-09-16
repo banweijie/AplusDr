@@ -160,6 +160,9 @@
 
 - (void)selection:(id)sender {
     [self clearSelectionCondition];
+    if (!searchView.isHidden) {
+        [self searchButton_onPress];
+    }
     
     WeNavViewController * nav = [[WeNavViewController alloc] init];
     
@@ -167,6 +170,8 @@
     [nav pushViewController:vc animated:NO];
     
     [self presentViewController:nav animated:YES completion:nil];
+    
+    
 }
 
 - (void)clearSelectionCondition {
@@ -266,29 +271,21 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - searchBar Callbacks
 - (void)searchButton_onPress {
     [searchView setHidden:!searchView.isHidden];
     if (!searchView.isHidden) {
         [searchBar becomeFirstResponder];
+        coverButton.hidden=NO;
+    }
+    else
+    {
+        [searchBar resignFirstResponder];
+        coverButton.hidden=YES;
     }
 }
 
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    coverButton.hidden = NO;
-    return YES;
-}
-
-- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
-    coverButton.hidden = YES;
-    return YES;
-}
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)sbar {
     [self clearSelectionCondition];
@@ -301,8 +298,7 @@
 - (void)coverButtonOnPress:(id)sender {
     [self clearSelectionCondition];
     selection_keyword = searchBar.text;
-    [searchBar resignFirstResponder];
-    [searchView setHidden:YES];
+    [self searchButton_onPress];
     [self initialDoctorList:nil];
 }
 
@@ -366,7 +362,7 @@
 
 - (void)initialDoctorList:(id)sender {
     NSMutableDictionary * parameters = [[NSMutableDictionary alloc] init];
-    NSLog(@"%@", selection_provinceId);
+//    MyLog(@"%@", selection_provinceId);
     if (![selection_provinceId isEqualToString:@"<null>"]) parameters[@"conditions.provinceId"] = selection_provinceId;
     if (![selection_cityId isEqualToString:@"<null>"]) parameters[@"conditions.cityId"] = selection_cityId;
     if (![selection_hospitalId isEqualToString:@"<null>"]) parameters[@"conditions.hospitalId"] = selection_hospitalId;
@@ -376,7 +372,7 @@
     if (![selection_title isEqualToString:@"<null>"]) parameters[@"conditions.title"] = selection_title;
     if (![selection_recommend isEqualToString:@"<null>"]) parameters[@"conditions.recommend"] = selection_recommend;
     if (![selection_keyword isEqualToString:@"<null>"]) parameters[@"conditions.words"] = selection_keyword;
-    NSLog(@"initial %@", parameters);
+//    MyLog(@"initial %@", parameters);
     
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -385,9 +381,9 @@
              NSString * errorMessage;
              NSString *result = [HTTPResponse objectForKey:@"result"];
              result = [NSString stringWithFormat:@"%@", result];
-             //NSLog(@"Total amount : %@", HTTPResponse[@"info"]);
+             NSLog(@"Total amount : %@", HTTPResponse);
              if ([result isEqualToString:@"1"]) {
-                 //NSLog(@"%@", HTTPResponse[@"response"]);
+                 NSLog(@"%@", HTTPResponse[@"response"]);
                  doctorList = [[NSMutableArray alloc] init];
                  for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
                      WeDoctor * doctor = [[WeDoctor alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];
@@ -414,10 +410,10 @@
              if ([result isEqualToString:@"4"]) {
                  errorMessage = [HTTPResponse objectForKey:@"info"];
              }
-             NSLog(@"Response error: %@", errorMessage);
+             MyLog(@"Response error: %@", errorMessage);
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Error: %@", error);
+             MyLog(@"Error: %@", error);
          }
      ];
 }
