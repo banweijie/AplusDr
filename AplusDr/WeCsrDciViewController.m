@@ -573,7 +573,7 @@
     [button0 setFrame:CGRectMake(0, 2, 89, 48)];
     [button0 setImage:[UIImage imageNamed:@"docinfo-applychatting"] forState:UIControlStateNormal];
     [button0 setTitle:@"发起咨询" forState:UIControlStateNormal];
-    [button0 addTarget:self action:@selector(consulting:) forControlEvents:UIControlEventTouchDragEnter];
+    [button0 addTarget:self action:@selector(consulting:) forControlEvents:UIControlEventTouchUpInside];
     button0.tintColor = We_foreground_white_general;
     button0.backgroundColor = [UIColor colorWithRed:90 / 255.0 green:41 / 255.0 blue:45 / 255.0 alpha:1.0];
     button0.titleLabel.font = We_font_textfield_small_zh_cn;

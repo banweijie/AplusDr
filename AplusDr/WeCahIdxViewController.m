@@ -500,8 +500,10 @@
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
                   //NSLog(@"response : %@", HTTPResponse[@"response"]);
+                  [caseRecords removeAllObjects];
                   for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
                       WeCaseRecord * newCaseRecord = [[WeCaseRecord alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];
+                      
                       [caseRecords addObject:newCaseRecord];
                   }
                   [self preworkOnCaseRecords:self];
@@ -561,6 +563,7 @@
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
                   //NSLog(@"response : %@", HTTPResponse[@"response"]);
+                  [examinations removeAllObjects];
                   for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
                       WeExamination * newExamination = [[WeExamination alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];
                       [examinations addObject:newExamination];
