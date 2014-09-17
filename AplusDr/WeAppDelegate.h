@@ -24,6 +24,7 @@
 #import "WeExamination.h"
 #import "WeOrder.h"
 #import "WeConsult.h"
+#import "WeJiahao.h"
 #import "WeTabBarViewController.h"
 #import "WeFunding.h"
 #import "WeFundingSupport.h"

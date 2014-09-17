@@ -16,8 +16,13 @@
     
     // 模型
     WeOrder * currentOrder;
-    WeFundingSupport * currentSupport;
-    WeConsult * currentConsult;
+    
+    WeFundingSupport * currentSupport;//众筹
+    
+    WeConsult * currentConsult;//咨询
+    
+    WeJiahao * currentJiahao;//加号
+    
 }
 
 @end
@@ -49,7 +54,7 @@
             NSString * orderInfo = [newOrder description];
             NSString * signedStr = [CreateRSADataSigner(PartnerPrivKey) signString:orderInfo];
             
-            NSLog(@"%@",signedStr);
+            MyLog(@"%@",signedStr);
             
             NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
                                      orderInfo, signedStr, @"RSA"];
@@ -107,10 +112,17 @@
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
     if (section == 0) return 1;
-    if (section == 1) return 4;
+    if (section == 1)
+    {
+        if ([currentOrder.type isEqualToString:@"C"]) {
+            return 5;
+        }
+        return 1;
+    }
     if (section == 2) {
         if ([currentOrder.status isEqualToString:@"W"]) return 2;
-        return 1;
+//        if ([currentOrder.status isEqualToString:@"P"]) return 1;
+        return 0;
     }
     return 1;
 }
@@ -124,6 +136,114 @@
     cell.opaque = NO;
     cell.backgroundColor = We_background_cell_general;
     [cell.textLabel setFont:We_font_textfield_zh_cn];
+    
+    
+    if (indexPath.section==0 && indexPath.row==0) {
+        UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(20, 10, 100, 20)];
+        lab.font=We_font_textfield_large_zh_cn;
+        lab.text=@"订单号:";
+        [cell.contentView addSubview:lab];
+        
+        UILabel *num=[[UILabel alloc]initWithFrame:CGRectMake(100, 10, 260, 20)];
+        num.font=We_font_textfield_zh_cn;
+        num.text=currentOrder.orderId;
+//            num.textAlignment=NSTextAlignmentRight;
+        [cell.contentView addSubview:num];
+        
+        UILabel *lab1=[[UILabel alloc]initWithFrame:CGRectMake(20, 35, 100, 20)];
+        lab1.font=We_font_textfield_large_zh_cn;
+        lab1.text=@"金  额:";
+        [cell.contentView addSubview:lab1];
+        
+        UILabel *num1=[[UILabel alloc]initWithFrame:CGRectMake(100, 35, 260, 20)];
+        num1.font=We_font_textfield_zh_cn;
+        num1.text=[NSString stringWithFormat:@"¥ %.1f",currentOrder.amount];
+        //            num.textAlignment=NSTextAlignmentRight;
+        [cell.contentView addSubview:num1];
+        
+        
+        UILabel *lab2=[[UILabel alloc]initWithFrame:CGRectMake(20, 60, 100, 20)];
+        lab2.font=We_font_textfield_large_zh_cn;
+        lab2.text=@"状  态:";
+        [cell.contentView addSubview:lab2];
+        
+        UILabel *num2=[[UILabel alloc]initWithFrame:CGRectMake(100, 60, 260, 20)];
+        num2.font=We_font_textfield_zh_cn;
+        
+        if ([currentOrder.status isEqualToString:@"W"]) {
+            num2.text=@"等待支付";
+        }
+        else if ([currentOrder.status isEqualToString:@"P"])
+        {
+            num2.text=@"支付成功";
+        }
+        else
+        {
+            num2.text=@"交易取消";
+        }
+        [cell.contentView addSubview:num2];
+    }
+    
+    if (indexPath.section==1) {
+        
+        if ([currentOrder.type isEqualToString:@"C"])
+        {
+            if (indexPath.row==0) {
+                cell.textLabel.text=@"咨询申请信息";
+            }
+            
+            if (indexPath.row==1) {
+                if ([currentConsult.gender isEqualToString:@"M"]) {
+                    cell.textLabel.text=@"性别：男";
+                }
+                else
+                {
+                    cell.textLabel.text=@"性别：女";
+                }
+            }
+            if (indexPath.row==2) {
+                cell.textLabel.text=[NSString stringWithFormat:@"年龄：%@ ",currentConsult.age];
+            }
+            if (indexPath.row==3) {
+                if (currentConsult.emergent) {
+                    cell.textLabel.text=@"是否加急：是";
+                }
+                else
+                {
+                    cell.textLabel.text=@"是否加急：否";
+                }
+            }
+            if (indexPath.row==4) {
+                if ([currentConsult.description isEqualToString:@""]) {
+                    cell.textLabel.text=@"详细描述：无";
+                }
+                else
+                {
+                    cell.textLabel.text=[NSString stringWithFormat:@"详细描述：%@",currentConsult.description];
+                }
+            }
+        }
+        else if ([currentOrder.type isEqualToString:@"F"])
+        {
+            if (indexPath.row==0) {
+                cell.textLabel.text=@"众筹支持";
+            }
+        }
+        else if ([currentOrder.type isEqualToString:@"J"])
+        {
+            if (indexPath.row==0) {
+                cell.textLabel.text=@"加号预诊申请信息";
+            }
+        }
+        else if ([currentOrder.type isEqualToString:@"T"])
+        {
+            if (indexPath.row==0) {
+                cell.textLabel.text=@"众筹支付咨询申请信息";
+            }
+        }
+        
+    }
+    
     
     if (indexPath.section == 2 && indexPath.row == 0) {
         if ([currentOrder.status isEqualToString:@"W"]) {
@@ -252,11 +372,6 @@
     [sys_tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - apis
 - (void)api_patient_viewOrder {
@@ -272,12 +387,15 @@
                                      currentOrder = [[WeOrder alloc] initWithNSDictionary:response];
                                      if ([currentOrder.type isEqualToString:@"C"]) {
                                          currentConsult = [[WeConsult alloc] initWithNSDictionary:response[@"foreignObject"]];
+                                         
                                      }
                                      else if ([currentOrder.type isEqualToString:@"F"]) {
                                          currentSupport = [[WeFundingSupport alloc] initWithNSDictionary:response[@"foreignObject"]];
+                                         MyLog(@"%@",currentSupport);
                                      }
                                      else if ([currentOrder.type isEqualToString:@"J"]) {
-                                         //currentConsult = [[WeConsult alloc] initWithNSDictionary:response[@"foreignObject"]];
+                                         currentJiahao = [[WeJiahao alloc] initWithNSDictionary:response[@"foreignObject"]];
+                                         MyLog(@"%@",currentJiahao);
                                      }
                                      [sys_tableView reloadData];
                                      [sys_tableView setHidden:NO];
