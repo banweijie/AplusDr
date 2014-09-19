@@ -233,6 +233,7 @@
     [user_forgetpass setTitle:@"忘记密码" forState:UIControlStateNormal];
     [user_forgetpass setBackgroundColor:[UIColor clearColor]];
     [user_forgetpass setTintColor:UIColorFromRGB(51, 51, 51, 1)];
+    [user_forgetpass addTarget:self action:@selector(send_forgetpass:) forControlEvents:UIControlEventTouchUpInside];
     [user_forgetPassView addSubview:user_forgetpass];
     
     // 取消按钮
@@ -429,6 +430,12 @@
 }
 
 - (void)send_forgetpass:(id)sender {
-    NSLog(@"forget password:");
+    
+    
+    MyLog(@"忘记密码");
+    
+    WeFgtPaswdViewController *paswdvc=[[WeFgtPaswdViewController alloc]init];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"登录" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationController pushViewController:paswdvc animated:YES];
 }
 @end

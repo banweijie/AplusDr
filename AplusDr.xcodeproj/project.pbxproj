@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1E50538D81C24E6FA4893A80 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889390EBA434F5EA5AF2361 /* libPods.a */; };
+		27A2A7D719CBD46A00BFAB3A /* WeFgtPaswdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7D619CBD46A00BFAB3A /* WeFgtPaswdViewController.m */; };
+		27A2A7DA19CBDB8200BFAB3A /* WeFgtInpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7D919CBDB8200BFAB3A /* WeFgtInpViewController.m */; };
+		27A2A7DD19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7DC19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m */; };
 		900E28C81928F8E6008BF61C /* WeToolButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28C71928F8E6008BF61C /* WeToolButton.m */; };
 		900E28CB19290239008BF61C /* WeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28CA19290239008BF61C /* WeMessage.m */; };
 		900E29571929B44C008BF61C /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 900E29491929B44C008BF61C /* amrFileCodec.mm */; };
@@ -136,6 +139,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27A2A7D519CBD46A00BFAB3A /* WeFgtPaswdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFgtPaswdViewController.h; sourceTree = "<group>"; };
+		27A2A7D619CBD46A00BFAB3A /* WeFgtPaswdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFgtPaswdViewController.m; sourceTree = "<group>"; };
+		27A2A7D819CBDB8200BFAB3A /* WeFgtInpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFgtInpViewController.h; sourceTree = "<group>"; };
+		27A2A7D919CBDB8200BFAB3A /* WeFgtInpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFgtInpViewController.m; sourceTree = "<group>"; };
+		27A2A7DB19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFgtSetPaswdViewController.h; sourceTree = "<group>"; };
+		27A2A7DC19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFgtSetPaswdViewController.m; sourceTree = "<group>"; };
 		7889390EBA434F5EA5AF2361 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		900E28C61928F8E6008BF61C /* WeToolButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeToolButton.h; sourceTree = "<group>"; };
 		900E28C71928F8E6008BF61C /* WeToolButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeToolButton.m; sourceTree = "<group>"; };
@@ -640,6 +649,12 @@
 				9026EEC21904EE5500CE4A7A /* WeRegIvcViewController.m */,
 				9026EEC31904EE5500CE4A7A /* WeRegIrpViewController.h */,
 				9026EEC41904EE5500CE4A7A /* WeRegIrpViewController.m */,
+				27A2A7D519CBD46A00BFAB3A /* WeFgtPaswdViewController.h */,
+				27A2A7D619CBD46A00BFAB3A /* WeFgtPaswdViewController.m */,
+				27A2A7D819CBDB8200BFAB3A /* WeFgtInpViewController.h */,
+				27A2A7D919CBDB8200BFAB3A /* WeFgtInpViewController.m */,
+				27A2A7DB19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.h */,
+				27A2A7DC19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m */,
 			);
 			name = "注册登录";
 			sourceTree = "<group>";
@@ -1072,6 +1087,7 @@
 				90B31A69195750C000A19CD7 /* WeFunSupViewController.m in Sources */,
 				90B31A601955348100A19CD7 /* WeFundingLevel.m in Sources */,
 				900E296D193080EA008BF61C /* WeCaseRecord.m in Sources */,
+				27A2A7D719CBD46A00BFAB3A /* WeFgtPaswdViewController.m in Sources */,
 				9026EEF01904EE5500CE4A7A /* VPImageCropperViewController.m in Sources */,
 				90A19C23198B8F870024FD41 /* WeJiahaoApplyDetailViewController.m in Sources */,
 				90F0CE861926FE68006A4605 /* WeCsrSelHosViewController.m in Sources */,
@@ -1111,7 +1127,9 @@
 				906F4DF419758637007807FE /* WeGenderPickerViewController.m in Sources */,
 				906F4DDA1973D0AD007807FE /* SBJsonParser.m in Sources */,
 				9026EEFC1904EE5500CE4A7A /* WePecPeaViewController.m in Sources */,
+				27A2A7DD19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m in Sources */,
 				90B31A6319554BCA00A19CD7 /* WeFunDetViewController.m in Sources */,
+				27A2A7DA19CBDB8200BFAB3A /* WeFgtInpViewController.m in Sources */,
 				90A198F119614C7400C43534 /* WeInfoedTextField.m in Sources */,
 				900E295E1929C380008BF61C /* WeInfoedButton.m in Sources */,
 				907D5B5A1920D9AD0006EAE0 /* WeCsrCtrViewController.m in Sources */,
@@ -1281,7 +1299,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "636b88b4-e148-41e0-bbdb-ed13c85daac8";
+				PROVISIONING_PROFILE = "edda45ca-3430-4829-86fc-90a606b11d15";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -1310,7 +1328,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "636b88b4-e148-41e0-bbdb-ed13c85daac8";
+				PROVISIONING_PROFILE = "edda45ca-3430-4829-86fc-90a606b11d15";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;

@@ -124,7 +124,7 @@
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
     //if (section == 1) return 30;
     if (section == 0) return 60;
-    if (section == [self numberOfSectionsInTableView:tv] - 1) return 30;
+    if (section == [self numberOfSectionsInTableView:tv] - 1) return 50;
     return 10;
 }
 -(UIView *)tableView:(UITableView *)tv viewForFooterInSection:(NSInteger)section{
