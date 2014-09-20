@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1E50538D81C24E6FA4893A80 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889390EBA434F5EA5AF2361 /* libPods.a */; };
+		2744909919CD4DC0006C1BAD /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2744909119CD4DC0006C1BAD /* MJRefresh.bundle */; };
+		2744909A19CD4DC0006C1BAD /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744909419CD4DC0006C1BAD /* MJRefreshBaseView.m */; };
+		2744909B19CD4DC0006C1BAD /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744909619CD4DC0006C1BAD /* MJRefreshFooterView.m */; };
+		2744909C19CD4DC0006C1BAD /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744909819CD4DC0006C1BAD /* MJRefreshHeaderView.m */; };
 		27A2A7D719CBD46A00BFAB3A /* WeFgtPaswdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7D619CBD46A00BFAB3A /* WeFgtPaswdViewController.m */; };
 		27A2A7DA19CBDB8200BFAB3A /* WeFgtInpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7D919CBDB8200BFAB3A /* WeFgtInpViewController.m */; };
 		27A2A7DD19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7DC19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m */; };
@@ -140,6 +144,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2744909119CD4DC0006C1BAD /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
+		2744909219CD4DC0006C1BAD /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
+		2744909319CD4DC0006C1BAD /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
+		2744909419CD4DC0006C1BAD /* MJRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBaseView.m; sourceTree = "<group>"; };
+		2744909519CD4DC0006C1BAD /* MJRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooterView.h; sourceTree = "<group>"; };
+		2744909619CD4DC0006C1BAD /* MJRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooterView.m; sourceTree = "<group>"; };
+		2744909719CD4DC0006C1BAD /* MJRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeaderView.h; sourceTree = "<group>"; };
+		2744909819CD4DC0006C1BAD /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
 		27A2A7D519CBD46A00BFAB3A /* WeFgtPaswdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFgtPaswdViewController.h; sourceTree = "<group>"; };
 		27A2A7D619CBD46A00BFAB3A /* WeFgtPaswdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFgtPaswdViewController.m; sourceTree = "<group>"; };
 		27A2A7D819CBDB8200BFAB3A /* WeFgtInpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFgtInpViewController.h; sourceTree = "<group>"; };
@@ -410,6 +422,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2744909019CD4DC0006C1BAD /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				2744909119CD4DC0006C1BAD /* MJRefresh.bundle */,
+				2744909219CD4DC0006C1BAD /* MJRefresh.h */,
+				2744909319CD4DC0006C1BAD /* MJRefreshBaseView.h */,
+				2744909419CD4DC0006C1BAD /* MJRefreshBaseView.m */,
+				2744909519CD4DC0006C1BAD /* MJRefreshFooterView.h */,
+				2744909619CD4DC0006C1BAD /* MJRefreshFooterView.m */,
+				2744909719CD4DC0006C1BAD /* MJRefreshHeaderView.h */,
+				2744909819CD4DC0006C1BAD /* MJRefreshHeaderView.m */,
+			);
+			path = MJRefresh;
+			sourceTree = "<group>";
+		};
 		27A2A7DE19CBFE6D00BFAB3A /* 我的余额 */ = {
 			isa = PBXGroup;
 			children = (
@@ -853,6 +880,7 @@
 		90B31A48194BF1AC00A19CD7 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				2744909019CD4DC0006C1BAD /* MJRefresh */,
 				906F4D9D1973CF80007807FE /* Alipay */,
 				900E29461929B44C008BF61C /* VoiceConvert */,
 				907D5B5B1920D9C50006EAE0 /* UIBubbleTableView */,
@@ -1025,6 +1053,7 @@
 				9026EF0F1904EE5500CE4A7A /* Main.storyboard in Resources */,
 				9026EE241904E8A700CE4A7A /* InfoPlist.strings in Resources */,
 				906F4DD11973D0AD007807FE /* Alixpay.bundle in Resources */,
+				2744909919CD4DC0006C1BAD /* MJRefresh.bundle in Resources */,
 				900EB75D195A2139006BBA04 /* Resource.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1086,6 +1115,7 @@
 				907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */,
 				900E29731930C847008BF61C /* WeCahAddCahViewController.m in Sources */,
 				90F0CE801926D0CA006A4605 /* WeCsrSelAreaViewController.m in Sources */,
+				2744909A19CD4DC0006C1BAD /* MJRefreshBaseView.m in Sources */,
 				906F4DED1974502C007807FE /* WeConsult.m in Sources */,
 				90A19C21198B8F870024FD41 /* WeJiaMangementIndexViewController.m in Sources */,
 				9028C5B9198262A8003CA70F /* WeJiahao.m in Sources */,
@@ -1118,6 +1148,8 @@
 				9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */,
 				9026EEF81904EE5500CE4A7A /* WeRegIvcViewController.m in Sources */,
 				906F4DEA19744ACE007807FE /* WePecTrdViewController.m in Sources */,
+				2744909B19CD4DC0006C1BAD /* MJRefreshFooterView.m in Sources */,
+				2744909C19CD4DC0006C1BAD /* MJRefreshHeaderView.m in Sources */,
 				90A19C22198B8F870024FD41 /* WeJiahaoDetailViewController.m in Sources */,
 				907D5B401920164B0006EAE0 /* WeCsrIdxViewController.m in Sources */,
 				900EB763195A2DC2006BBA04 /* WeImageButton.m in Sources */,

@@ -10,16 +10,24 @@
 
 #import "WePecRechViewController.h"
 
+#import "MJRefresh.h"
+
 #define LABEX 5
 #define LABEY 5
 
-@interface WePecMyaViewController () {
+@interface WePecMyaViewController () <MJRefreshBaseViewDelegate>{
     UIActivityIndicatorView * sys_pendingView;
     UITableView * sys_tableView;
 
     NSString * amount;
     
     NSMutableArray *acountListArr;
+    
+    
+    MJRefreshFooterView *_footer;//底部上拉刷新
+    
+    int from;//请求数据from开始
+    int num;//请求num条数据
 }
 
 @end
@@ -51,8 +59,8 @@
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
-    if (section == 0) return 20 + 64;
-    if (section == 2 ) return 40;
+    if (section == 0) return 20 ;
+    if (section == 2) return 40;
     return 20;
 }
 // 询问每个段落的头部标题
@@ -64,7 +72,7 @@
 }
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
-    return 10;
+    return 1;
 }
 // 询问每个段落的尾部标题
 - (NSString *)tableView:(UITableView *)tv titleForFooterInSection:(NSInteger)section {
@@ -119,26 +127,27 @@
     if (indexPath.section == 2 ) {
         
 //        cell.textLabel.text = acountListArr[indexPath.row][@"description"];
-        UILabel *desc=[[UILabel alloc]initWithFrame:CGRectMake(20, 10, 200, 40)];
-        desc.font=We_font_textfield_large_zh_cn;
+        UILabel *desc=[[UILabel alloc]initWithFrame:CGRectMake(20, 10, 200, 20)];
+        desc.font=We_font_textfield_zh_cn;
         [desc setTextColor:We_foreground_black_general];
         [desc setTextAlignment:NSTextAlignmentLeft];
         desc.text=acountListArr[indexPath.row][@"description"];
         [cell.contentView addSubview:desc];
         
 
-        UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 38, 200, 40)];
-        [l2 setFont:We_font_textfield_zh_cn];
+        UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 35, 200, 20)];
+        [l2 setFont:We_font_textfield_tiny_zh_cn];
         [l2 setTextColor:We_foreground_gray_general];
         [l2 setTextAlignment:NSTextAlignmentLeft];
-//        [l2 setText:[WeAppDelegate transitionToDateFromSecond:currentOrder.createTime]];
+        long long tim=[acountListArr[indexPath.row][@"time"] longLongValue];
+        [l2 setText:[WeAppDelegate transitionToDateFromSecond:(tim/1000)]];
         [cell.contentView addSubview:l2];
         
-        UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 260, 40)];
-        [l3 setFont:We_font_textfield_large_zh_cn];
+        UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(20, 15, 260, 30)];
+        [l3 setFont:[UIFont boldSystemFontOfSize:16]];
         [l3 setTextColor:We_foreground_black_general];
         [l3 setTextAlignment:NSTextAlignmentRight];
-        [l3 setText:[NSString stringWithFormat:@"￥"]];
+        [l3 setText:[NSString stringWithFormat:@"%@",acountListArr[indexPath.row][@"amount"]]];
         [cell.contentView addSubview:l3];
         
         cell.backgroundColor = We_background_cell_general;
@@ -152,6 +161,7 @@
 {
     [super viewDidLoad];
     
+    num=10;
     
     acountListArr =[NSMutableArray array];
     
@@ -164,13 +174,18 @@
     [self.view addSubview:bg];
     
     // sys_tableView
-    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
+    sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.frame.size.height-64-49) style:UITableViewStyleGrouped];
     sys_tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     sys_tableView.delegate = self;
     sys_tableView.dataSource = self;
     sys_tableView.backgroundColor = [UIColor clearColor];
     sys_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:sys_tableView];
+    
+    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
+    footer.scrollView = sys_tableView;
+    footer.delegate = self;
+    _footer = footer;
     
     // 转圈圈
     sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -190,15 +205,14 @@
                                            }
                                  success:^(NSDictionary * response) {
                                      
-                                     MyLog(@"%@",response);
+                                     
                                      
                                      amount = [WeAppDelegate toString:response[@"amount"]];
                                    
-                                     NSArray *arr=response[@"details"];
+                                     NSArray *arr= response[@"details"];
                                      if (acountListArr.count==0) {
                                          [acountListArr addObjectsFromArray:arr];
                                      }
-                                     
                                      [sys_tableView reloadData];
                                      [sys_pendingView stopAnimating];
                                  }
@@ -219,6 +233,55 @@
     [super viewWillAppear:animated];
     [self api_user_viewAccount];
 }
+#pragma mark - 刷新代理方法
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
+{
+    
+    MyLog(@"----------------------刷新－－－－－－－－－");
+    if (!_footer.hidden) {
+        from+=10;
+    }else
+    {
+        from=0;
+    }
+    if (refreshView==_footer) {
+        [WeAppDelegate postToServerWithField:@"user" action:@"listAccountDetails"
+                                  parameters:@{
+                                               @"from":@(from),
+                                               @"num":@(num)
+                                               }
+                                     success:^(NSDictionary * response) {
+                                         
+                                        NSArray *arr= response[@"response"];
+                                         
+                                        [acountListArr addObjectsFromArray:arr];
+                                    
+                                         [sys_tableView reloadData];
+                                         
+                                         [sys_pendingView stopAnimating];
+                                         
+                                         _footer.hidden=(arr.count <10);
+                                     }
+         
+                                     failure:^(NSString * errorMessage) {
+                                         UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                       initWithTitle:@"刷新列表失败"
+                                                                       message:errorMessage
+                                                                       delegate:nil
+                                                                       cancelButtonTitle:@"OK"
+                                                                       otherButtonTitles:nil];
+                                         [notPermitted show];
+                                         [sys_pendingView stopAnimating];
+                                     }];
+
+    }
+    
+    [sys_tableView reloadData];
+         
+    [refreshView endRefreshing];
+
+}
+
 
 
 @end

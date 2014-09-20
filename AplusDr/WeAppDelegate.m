@@ -106,6 +106,12 @@
                        success(responseObject[@"response"][@"details"][0]);
                       
                   }
+                  else if ([action isEqualToString:@"listAccountDetails"])
+                  {
+                      success(responseObject);
+                      
+                  }
+                  
                   else {
                       success(responseObject[@"response"]);
                   }
