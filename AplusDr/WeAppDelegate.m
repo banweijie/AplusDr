@@ -96,8 +96,15 @@
               NSString * errorMessage = @"未知的错误";
               NSString * result = [NSString stringWithFormat:@"%@", responseObject[@"result"]];
               if ([result isEqualToString:@"1"]) {
+                
+                 
                   if ([action isEqualToString:@"getUnviewedMsg"] && [responseObject[@"response"] count] == 0) {
                       success(responseObject[@"info"]);
+                  }
+                  else if ([action isEqualToString:@"rechargeWithCard"])
+                  {
+                       success(responseObject[@"response"][@"details"][0]);
+                      
                   }
                   else {
                       success(responseObject[@"response"]);

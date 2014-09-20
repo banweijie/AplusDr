@@ -11,6 +11,7 @@
 		27A2A7D719CBD46A00BFAB3A /* WeFgtPaswdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7D619CBD46A00BFAB3A /* WeFgtPaswdViewController.m */; };
 		27A2A7DA19CBDB8200BFAB3A /* WeFgtInpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7D919CBDB8200BFAB3A /* WeFgtInpViewController.m */; };
 		27A2A7DD19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7DC19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m */; };
+		27A2A7E119CBFFAF00BFAB3A /* WePecRechViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7E019CBFFAF00BFAB3A /* WePecRechViewController.m */; };
 		900E28C81928F8E6008BF61C /* WeToolButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28C71928F8E6008BF61C /* WeToolButton.m */; };
 		900E28CB19290239008BF61C /* WeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28CA19290239008BF61C /* WeMessage.m */; };
 		900E29571929B44C008BF61C /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 900E29491929B44C008BF61C /* amrFileCodec.mm */; };
@@ -145,6 +146,8 @@
 		27A2A7D919CBDB8200BFAB3A /* WeFgtInpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFgtInpViewController.m; sourceTree = "<group>"; };
 		27A2A7DB19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFgtSetPaswdViewController.h; sourceTree = "<group>"; };
 		27A2A7DC19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFgtSetPaswdViewController.m; sourceTree = "<group>"; };
+		27A2A7DF19CBFFAF00BFAB3A /* WePecRechViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WePecRechViewController.h; sourceTree = "<group>"; };
+		27A2A7E019CBFFAF00BFAB3A /* WePecRechViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePecRechViewController.m; sourceTree = "<group>"; };
 		7889390EBA434F5EA5AF2361 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		900E28C61928F8E6008BF61C /* WeToolButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeToolButton.h; sourceTree = "<group>"; };
 		900E28C71928F8E6008BF61C /* WeToolButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeToolButton.m; sourceTree = "<group>"; };
@@ -407,6 +410,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27A2A7DE19CBFE6D00BFAB3A /* 我的余额 */ = {
+			isa = PBXGroup;
+			children = (
+				9028C5B119825C5F003CA70F /* WePecMyaViewController.h */,
+				9028C5B219825C5F003CA70F /* WePecMyaViewController.m */,
+				27A2A7DF19CBFFAF00BFAB3A /* WePecRechViewController.h */,
+				27A2A7E019CBFFAF00BFAB3A /* WePecRechViewController.m */,
+			);
+			name = "我的余额";
+			sourceTree = "<group>";
+		};
 		900E29461929B44C008BF61C /* VoiceConvert */ = {
 			isa = PBXGroup;
 			children = (
@@ -662,6 +676,7 @@
 		9026EF141904EF8300CE4A7A /* 个人中心 */ = {
 			isa = PBXGroup;
 			children = (
+				27A2A7DE19CBFE6D00BFAB3A /* 我的余额 */,
 				90A19C1A198B8F3E0024FD41 /* 我的加号 */,
 				90A19C19198B060C0024FD41 /* 我的众筹 */,
 				900E2967193079F3008BF61C /* 病历管理 */,
@@ -669,8 +684,6 @@
 				9026EF151904EFA300CE4A7A /* 个人账户 */,
 				9026EEC71904EE5500CE4A7A /* WePecIdxViewController.h */,
 				9026EEC81904EE5500CE4A7A /* WePecIdxViewController.m */,
-				9028C5B119825C5F003CA70F /* WePecMyaViewController.h */,
-				9028C5B219825C5F003CA70F /* WePecMyaViewController.m */,
 			);
 			name = "个人中心";
 			sourceTree = "<group>";
@@ -1069,6 +1082,7 @@
 				907D5B6E1920DB430006EAE0 /* WeSPViewController.m in Sources */,
 				90B31A841958343300A19CD7 /* WeFunMySupViewController.m in Sources */,
 				900E296A19307AA7008BF61C /* WeCahIdxViewController.m in Sources */,
+				27A2A7E119CBFFAF00BFAB3A /* WePecRechViewController.m in Sources */,
 				907D5B6B1920D9DA0006EAE0 /* UIBubbleTypingTableViewCell.m in Sources */,
 				900E29731930C847008BF61C /* WeCahAddCahViewController.m in Sources */,
 				90F0CE801926D0CA006A4605 /* WeCsrSelAreaViewController.m in Sources */,

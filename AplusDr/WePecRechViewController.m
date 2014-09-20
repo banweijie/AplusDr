@@ -1,32 +1,27 @@
 //
-//  WePecMyaViewController.m
+//  WePecRechViewController.m
 //  AplusDr
 //
-//  Created by WeDoctor on 14-7-25.
+//  Created by 袁锐 on 14-9-19.
 //  Copyright (c) 2014年 ___PKU___. All rights reserved.
 //
 
-#import "WePecMyaViewController.h"
-
 #import "WePecRechViewController.h"
 
-#define LABEX 5
-#define LABEY 5
-
-@interface WePecMyaViewController () {
+@interface WePecRechViewController ()
+{
     UIActivityIndicatorView * sys_pendingView;
     UITableView * sys_tableView;
-
-    NSString * amount;
     
-    NSMutableArray *acountListArr;
+    UITextField * user_rech_card;
 }
-
 @end
 
-@implementation WePecMyaViewController
+@implementation WePecRechViewController
 
-#pragma mark - TableView
+
+
+#pragma mark - TableView delegate
 // 欲选中某个Cell触发的事件
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
 {
@@ -36,30 +31,22 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section==1 && path.row==0) {
-        WePecRechViewController *rech=[[WePecRechViewController alloc]init];
-        
-        [self.navigationController pushViewController:rech animated:YES];
+        [self api_user_viewAccount];
     }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section==2) {
-        return 60;
-    }
     return tv.rowHeight;
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
     if (section == 0) return 20 + 64;
-    if (section == 2 ) return 40;
+    if (section == 2 ) return 10;
     return 20;
 }
 // 询问每个段落的头部标题
 - (NSString *)tableView:(UITableView *)tv titleForHeaderInSection:(NSInteger)section {
-    if (section==2) {
-        return @"历史账单";
-    }
     return @"";
 }
 // 询问每个段落的尾部高度
@@ -72,12 +59,12 @@
 }
 // 询问每个段落的尾部
 -(UIView *)tableView:(UITableView *)tv viewForFooterInSection:(NSInteger)section{
-    
+    //if (section == 1) return sys_countDown_demo;
     return nil;
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
-    return 3;
+    return 2;
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
@@ -88,10 +75,7 @@
         case 1:
             return 1;
             break;
-        case 2:
-            return acountListArr.count;
-            break;
-    }
+        }
     return 1;
 }
 // 询问每个具体条目的内容
@@ -106,62 +90,40 @@
     cell.detailTextLabel.font = We_font_textfield_zh_cn;
     
     if (indexPath.section == 0 && indexPath.row == 0) {
-        cell.textLabel.text = @"余额";
-        cell.detailTextLabel.text = amount;
+        cell.textLabel.text = @"充值卡号码";
+        [cell addSubview:user_rech_card];
         cell.textLabel.textColor = We_foreground_black_general;
         cell.detailTextLabel.textColor = We_foreground_gray_general;
     }
     if (indexPath.section == 1 && indexPath.row == 0) {
-        cell.textLabel.text = @"充值";
+        cell.textLabel.text = @"确认";
         cell.textLabel.textColor = We_foreground_white_general;
         cell.backgroundColor = We_background_red_tableviewcell;
     }
-    if (indexPath.section == 2 ) {
-        
-//        cell.textLabel.text = acountListArr[indexPath.row][@"description"];
-        UILabel *desc=[[UILabel alloc]initWithFrame:CGRectMake(20, 10, 200, 40)];
-        desc.font=We_font_textfield_large_zh_cn;
-        [desc setTextColor:We_foreground_black_general];
-        [desc setTextAlignment:NSTextAlignmentLeft];
-        desc.text=acountListArr[indexPath.row][@"description"];
-        [cell.contentView addSubview:desc];
-        
-
-        UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 38, 200, 40)];
-        [l2 setFont:We_font_textfield_zh_cn];
-        [l2 setTextColor:We_foreground_gray_general];
-        [l2 setTextAlignment:NSTextAlignmentLeft];
-//        [l2 setText:[WeAppDelegate transitionToDateFromSecond:currentOrder.createTime]];
-        [cell.contentView addSubview:l2];
-        
-        UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 260, 40)];
-        [l3 setFont:We_font_textfield_large_zh_cn];
-        [l3 setTextColor:We_foreground_black_general];
-        [l3 setTextAlignment:NSTextAlignmentRight];
-        [l3 setText:[NSString stringWithFormat:@"￥"]];
-        [cell.contentView addSubview:l3];
-        
-        cell.backgroundColor = We_background_cell_general;
-        
-    }
-    
     return cell;
 }
+
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     
-    
-    acountListArr =[NSMutableArray array];
-    
-    self.navigationItem.title = @"我的余额";
+    self.navigationItem.title = @"充值";
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
     bg.image = [UIImage imageNamed:@"Background-2"];
     bg.contentMode = UIViewContentModeCenter;
     [self.view addSubview:bg];
+    
+    
+    //user_rech_card
+    user_rech_card = [[UITextField alloc] initWithFrame:We_frame_textFieldInCell_general];
+    user_rech_card.placeholder = @"请输入您的充值卡卡号";
+    user_rech_card.font = We_font_textfield_zh_cn;
+    [user_rech_card setTextAlignment:NSTextAlignmentRight];
     
     // sys_tableView
     sys_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height) style:UITableViewStyleGrouped];
@@ -175,36 +137,39 @@
     // 转圈圈
     sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     sys_pendingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
-    [sys_pendingView setFrame:CGRectMake(0, 64, 320, self.view.frame.size.height-44-49-20)];
+    [sys_pendingView setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
     [sys_pendingView setAlpha:1.0];
     [self.view addSubview:sys_pendingView];
     
-    
 }
+
 
 #pragma mark - apis
 - (void)api_user_viewAccount {
     [sys_pendingView startAnimating];
-    [WeAppDelegate postToServerWithField:@"user" action:@"viewAccount"
+    [WeAppDelegate postToServerWithField:@"user" action:@"rechargeWithCard"
                               parameters:@{
+                                           @"code":user_rech_card.text
                                            }
                                  success:^(NSDictionary * response) {
                                      
-                                     MyLog(@"%@",response);
+                                     id money= response[@"amount"];
                                      
-                                     amount = [WeAppDelegate toString:response[@"amount"]];
-                                   
-                                     NSArray *arr=response[@"details"];
-                                     if (acountListArr.count==0) {
-                                         [acountListArr addObjectsFromArray:arr];
-                                     }
+                                     [self.navigationController popViewControllerAnimated:YES];
                                      
-                                     [sys_tableView reloadData];
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"充值成功"
+                                                                   message:[NSString stringWithFormat:@"本次充值 %@ 元",money]
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                     
                                      [sys_pendingView stopAnimating];
                                  }
                                  failure:^(NSString * errorMessage) {
                                      UIAlertView * notPermitted = [[UIAlertView alloc]
-                                                                   initWithTitle:@"查询余额失败"
+                                                                   initWithTitle:@"充值失败"
                                                                    message:errorMessage
                                                                    delegate:nil
                                                                    cancelButtonTitle:@"OK"
@@ -214,11 +179,6 @@
                                  }];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self api_user_viewAccount];
-}
 
 
 @end
