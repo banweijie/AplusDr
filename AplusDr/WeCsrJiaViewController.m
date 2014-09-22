@@ -573,32 +573,16 @@
                                            @"jiahao.phone":@"18810521309"
                                            }
                                  success:^(id response) {
-                                     NSString * orderId = [NSString stringWithFormat:@"%@", response[@"order"][@"id"]];
-                                     NSLog(@"\norderId = %@", orderId);
+//                                     NSString * orderId = [NSString stringWithFormat:@"%@", response[@"order"][@"id"]];
                                      
                                      [WeAppDelegate updateFavorDoctorList];
                                      
-                                     AlixPayOrder * newOrder = [[AlixPayOrder alloc] init];
-                                     newOrder.partner = PartnerID;
-                                     newOrder.seller = SellerID;
-                                     newOrder.tradeNO = orderId;
-                                     newOrder.productName = @"加号预诊费";
-                                     newOrder.productDescription = @"加号预诊费的描述";
-                                     newOrder.amount = self.currentDoctor.plusPrice;
-                                     newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
+                                     WeSelectPayViewController *payview=[[WeSelectPayViewController alloc]init];
+                                     payview.order=response[@"order"];
+                                     payview.message=@"您已成功发起加号预诊申请";
                                      
-                                     NSString * appScheme = @"AplusDr";
-                                     NSString * orderInfo = [newOrder description];
-                                     NSString * signedStr = [CreateRSADataSigner(PartnerPrivKey) signString:orderInfo];
-                                     
-                                     NSLog(@"%@",signedStr);
-                                     
-                                     NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                                                              orderInfo, signedStr, @"RSA"];
-                                     
-                                     paymentCallback = self;
-                                     [AlixLibService payOrder:orderString AndScheme:appScheme seletor:@selector(paymentResult:) target:self];
-
+                                     [self.navigationController pushViewController:payview animated:YES];
+//
                                      [sys_pendingView stopAnimating];
                                  }
                                  failure:^(NSString * errorMessage) {
@@ -606,66 +590,5 @@
                                      [sys_pendingView stopAnimating];
                                  }];
 }
-
-#pragma mark - callBacks
--(void)paymentHasBeenPayed {
-    NSLog(@"!!!!!!!!");
-    //[self dismissViewControllerAnimated:YES completion:nil];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
--(void)paymentResult:(NSString *)resultd
-{
-    //结果处理
-#if ! __has_feature(objc_arc)
-    AlixPayResult* result = [[[AlixPayResult alloc] initWithString:resultd] autorelease];
-#else
-    AlixPayResult* result = [[AlixPayResult alloc] initWithString:resultd];
-#endif
-	if (result)
-    {
-		
-		if (result.statusCode == 9000)
-        {
-			/*
-			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
-			 */
-            
-            //交易成功
-            NSString* key = AlipayPubKey;//签约帐户后获取到的支付宝公钥
-			id<DataVerifier> verifier;
-            verifier = CreateRSADataVerifier(key);
-            
-			if ([verifier verifyString:result.resultString withSign:result.signString])
-            {
-                NSLog(@"success!");
-                [self paymentHasBeenPayed];
-                //验证签名成功，交易结果无篡改
-			}
-        }
-        else
-        {
-            NSLog(@"fail!");
-            //交易失败
-        }
-    }
-    else
-    {
-        NSLog(@"fail!");
-        //失败
-    }
-    
-}
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

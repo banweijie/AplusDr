@@ -265,32 +265,17 @@
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
-                  NSLog(@"%@", HTTPResponse);
-                  NSString * orderId = [NSString stringWithFormat:@"%@", HTTPResponse[@"response"][@"order"][@"id"]];
-                  NSLog(@"\norderId = %@", orderId);
+//                  NSLog(@"%@", HTTPResponse);
+//                  NSString * orderId = [NSString stringWithFormat:@"%@", HTTPResponse[@"response"][@"order"][@"id"]];
+                
                   
                   [WeAppDelegate updateFavorDoctorList];
                   
-                  AlixPayOrder * newOrder = [[AlixPayOrder alloc] init];
-                  newOrder.partner = PartnerID;
-                  newOrder.seller = SellerID;
-                  newOrder.tradeNO = orderId;
-                  newOrder.productName = @"在线咨询";
-                  newOrder.productDescription = @"在线咨询的描述";
-                  newOrder.amount = [NSString stringWithFormat:@"%@", HTTPResponse[@"response"][@"order"][@"amount"]];;
-                  newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
+                  WeSelectPayViewController *payview=[[WeSelectPayViewController alloc]init];
+                  payview.order=HTTPResponse[@"response"][@"order"];
+                  payview.message=@"您已成功发起在线咨询申请";
+                  [self.navigationController pushViewController:payview animated:YES];
                   
-                  NSString * appScheme = @"AplusDr";
-                  NSString * orderInfo = [newOrder description];
-                  NSString * signedStr = [CreateRSADataSigner(PartnerPrivKey) signString:orderInfo];
-                  
-                  NSLog(@"%@",signedStr);
-                  
-                  NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                                           orderInfo, signedStr, @"RSA"];
-                  
-                  paymentCallback = self;
-                  [AlixLibService payOrder:orderString AndScheme:appScheme seletor:@selector(paymentResult:) target:self];
                   return;
               }
               if ([result isEqualToString:@"2"]) {

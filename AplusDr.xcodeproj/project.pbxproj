@@ -12,6 +12,7 @@
 		2744909A19CD4DC0006C1BAD /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744909419CD4DC0006C1BAD /* MJRefreshBaseView.m */; };
 		2744909B19CD4DC0006C1BAD /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744909619CD4DC0006C1BAD /* MJRefreshFooterView.m */; };
 		2744909C19CD4DC0006C1BAD /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744909819CD4DC0006C1BAD /* MJRefreshHeaderView.m */; };
+		2770605919CE76D9003C2DF3 /* WeSelectPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2770605819CE76D9003C2DF3 /* WeSelectPayViewController.m */; };
 		27A2A7D719CBD46A00BFAB3A /* WeFgtPaswdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7D619CBD46A00BFAB3A /* WeFgtPaswdViewController.m */; };
 		27A2A7DA19CBDB8200BFAB3A /* WeFgtInpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7D919CBDB8200BFAB3A /* WeFgtInpViewController.m */; };
 		27A2A7DD19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2A7DC19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m */; };
@@ -152,6 +153,8 @@
 		2744909619CD4DC0006C1BAD /* MJRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooterView.m; sourceTree = "<group>"; };
 		2744909719CD4DC0006C1BAD /* MJRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeaderView.h; sourceTree = "<group>"; };
 		2744909819CD4DC0006C1BAD /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
+		2770605719CE76D9003C2DF3 /* WeSelectPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSelectPayViewController.h; sourceTree = "<group>"; };
+		2770605819CE76D9003C2DF3 /* WeSelectPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSelectPayViewController.m; sourceTree = "<group>"; };
 		27A2A7D519CBD46A00BFAB3A /* WeFgtPaswdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFgtPaswdViewController.h; sourceTree = "<group>"; };
 		27A2A7D619CBD46A00BFAB3A /* WeFgtPaswdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFgtPaswdViewController.m; sourceTree = "<group>"; };
 		27A2A7D819CBDB8200BFAB3A /* WeFgtInpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFgtInpViewController.h; sourceTree = "<group>"; };
@@ -675,6 +678,8 @@
 				906F4DF319758637007807FE /* WeGenderPickerViewController.m */,
 				90FB31801987EEC4008A001D /* WeActionSheet.h */,
 				90FB31811987EEC4008A001D /* WeActionSheet.m */,
+				2770605719CE76D9003C2DF3 /* WeSelectPayViewController.h */,
+				2770605819CE76D9003C2DF3 /* WeSelectPayViewController.m */,
 			);
 			name = CustomsView;
 			sourceTree = "<group>";
@@ -1197,6 +1202,7 @@
 				900E29821931BE88008BF61C /* WeExamination.m in Sources */,
 				90B31A5719544BAF00A19CD7 /* WeFunIdxViewController.m in Sources */,
 				906F4DD41973D0AD007807FE /* AlixPayOrder.m in Sources */,
+				2770605919CE76D9003C2DF3 /* WeSelectPayViewController.m in Sources */,
 				90B31A50194BF61B00A19CD7 /* WeFavorPatient.m in Sources */,
 				90B31A871958548900A19CD7 /* WeFundingSupport.m in Sources */,
 				902AF5331994CDEC00357B54 /* WeSendCaseViewController.m in Sources */,

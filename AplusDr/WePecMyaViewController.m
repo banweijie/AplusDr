@@ -72,7 +72,7 @@
 }
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
-    return 1;
+    return 0.1;
 }
 // 询问每个段落的尾部标题
 - (NSString *)tableView:(UITableView *)tv titleForFooterInSection:(NSInteger)section {
@@ -147,7 +147,15 @@
         [l3 setFont:[UIFont boldSystemFontOfSize:16]];
         [l3 setTextColor:We_foreground_black_general];
         [l3 setTextAlignment:NSTextAlignmentRight];
-        [l3 setText:[NSString stringWithFormat:@"%@",acountListArr[indexPath.row][@"amount"]]];
+        float mon=[acountListArr[indexPath.row][@"amount"] floatValue];
+        if (mon>=0) {
+            [l3 setText:[NSString stringWithFormat:@"+%2.f",mon]];
+        }
+        else
+        {
+            [l3 setText:[NSString stringWithFormat:@"%.2f",mon]];
+        }
+        
         [cell.contentView addSubview:l3];
         
         cell.backgroundColor = We_background_cell_general;
@@ -236,8 +244,6 @@
 #pragma mark - 刷新代理方法
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
 {
-    
-    MyLog(@"----------------------刷新－－－－－－－－－");
     if (!_footer.hidden) {
         from+=10;
     }else

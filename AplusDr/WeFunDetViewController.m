@@ -463,13 +463,13 @@
     [refreshButton setTintColor:We_foreground_red_general];
     [self.view addSubview:refreshButton];
     
-    // 访问获取众筹详情列表
-    [self api_data_viewFunding];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    // 访问获取众筹详情列表
+    [self api_data_viewFunding];
     [sys_tableView reloadData];
 }
 
@@ -520,7 +520,7 @@
                                            @"fundingId":self.currentFunding.fundingId
                                            }
                                  success:^(id response) {
-                                     NSLog(@"%@", response);
+                                   
                                      [self.currentFunding setWithNSDictionary:response];
                                      self.navigationItem.title = self.currentFunding.title;
                                      [sys_tableView reloadData];

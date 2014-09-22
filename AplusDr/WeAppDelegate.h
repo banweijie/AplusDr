@@ -30,6 +30,8 @@
 #import "WeFundingSupport.h"
 #import "WePaymentCallback.h"
 
+#import "WeSelectPayViewController.h"
+
 // Alipay
 #import "AlixLibService.h"
 #import "PartnerConfig.h"
@@ -202,8 +204,12 @@ weTargetView we_targetView;
 #define weTabBarIdPersonalCenter 4
 #define weTabBarIdCaseHistory 3
 
-#define yijiarenServer @"http://115.28.222.1/yijiaren"
-//#define yijiarenServer @"http://www.ejren.com"
+#define yijiarenServer @"http://115.28.222.1/yijiaren"    //测试服务器
+#define yijiarenS @"http://115.28.222.1/yijiaren/data/alipayNotify.action"
+
+//#define yijiarenServer @"http://www.ejren.com"      //发布服务器
+//#define yijiarenS @"http://www.ejren.com/data/alipayNotify.action"
+
 #define yijiarenUrl(field, action) [NSString stringWithFormat:@"%@/%@/%@.action", yijiarenServer, field, action]
 #define yijiarenImageServer we_imagePaths[@"imgServer"]
 #define yijiarenAvatarUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"avatarPath"], fileName]

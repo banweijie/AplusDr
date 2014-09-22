@@ -22,6 +22,7 @@
     WeConsult * currentConsult;//咨询
     
     WeJiahao * currentJiahao;//加号
+    NSDictionary *orderDic;
     
 }
 
@@ -40,28 +41,33 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (path.section == 2 && path.row == 0) {
-        if ([currentOrder.status isEqualToString:@"W"]) {
-            AlixPayOrder * newOrder = [[AlixPayOrder alloc] init];
-            newOrder.partner = PartnerID;
-            newOrder.seller = SellerID;
-            newOrder.tradeNO = currentOrder.orderId;
-            newOrder.productName = @"在线咨询";
-            newOrder.productDescription = @"在线咨询的描述";
-            newOrder.amount = [NSString stringWithFormat:@"%.0f", currentOrder.amount];
-            newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
-            
-            NSString * appScheme = @"AplusDr";
-            NSString * orderInfo = [newOrder description];
-            NSString * signedStr = [CreateRSADataSigner(PartnerPrivKey) signString:orderInfo];
-            
-            MyLog(@"%@",signedStr);
-            
-            NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                                     orderInfo, signedStr, @"RSA"];
-            
-            paymentCallback = self;
-            [AlixLibService payOrder:orderString AndScheme:appScheme seletor:@selector(paymentResult:) target:self];
+        WeSelectPayViewController *payview=[[WeSelectPayViewController alloc]init];
+        payview.order=orderDic;
+        if ([currentOrder.type isEqualToString:@"C"])
+        {
+            payview.message=@"您已成功发起咨询申请";
         }
+        else if ([currentOrder.type isEqualToString:@"F"])
+        {
+            
+             payview.message=@"感谢您的支持";
+            
+        }
+        else if ([currentOrder.type isEqualToString:@"J"])
+        {
+             payview.message=@"您已成功发起加号预诊申请";
+        }
+        else if ([currentOrder.type isEqualToString:@"T"])
+        {
+             payview.message=@"您已成功发起在线咨询申请";
+        }
+
+        
+        
+        
+        [self.navigationController pushViewController:payview animated:YES];
+
+
     }
     if (path.section == 2 && path.row == 1) {
         if ([currentOrder.status isEqualToString:@"W"]) {
@@ -276,6 +282,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    orderDic=[NSDictionary dictionary];
     // 标题
     self.navigationItem.title = @"交易详情";
     
@@ -384,6 +391,7 @@
                                            @"orderId":self.currentOrderId
                                            }
                                  success:^(id response) {
+                                     orderDic=response;
                                      currentOrder = [[WeOrder alloc] initWithNSDictionary:response];
                                      if ([currentOrder.type isEqualToString:@"C"]) {
                                          currentConsult = [[WeConsult alloc] initWithNSDictionary:response[@"foreignObject"]];

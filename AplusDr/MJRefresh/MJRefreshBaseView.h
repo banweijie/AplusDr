@@ -11,7 +11,7 @@
 //#define NeedAudio
 
 // view的高度
-#define kViewHeight 65.0
+#define kViewHeight 20.0
 
 //
 #import <UIKit/UIKit.h>
