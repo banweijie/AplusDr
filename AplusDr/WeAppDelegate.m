@@ -368,10 +368,10 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     NSString * errorMessage = @"连接服务器失败，暂时使用本地缓存数据";
     if (DataResponse != NULL) {
         NSDictionary *HTTPResponse = [NSJSONSerialization JSONObjectWithData:DataResponse options:NSJSONReadingMutableLeaves error:nil];
-        //NSLog(@"%@", HTTPResponse);
+//        NSLog(@"%@", HTTPResponse);
         we_codings = HTTPResponse[@"response"][@"codings"];
         we_imagePaths = HTTPResponse[@"response"][@"imagePaths"];
-        NSLog(@"\nInitial Data:%@", HTTPResponse);
+//        NSLog(@"\nInitial Data:%@", HTTPResponse);
         we_examinationTypeKeys = [we_codings[@"examinationType"] allKeys];
         we_examinationTypes = HTTPResponse[@"response"][@"examinationTypes"];
         we_secondaryTypeKeyToValue = [[NSMutableDictionary alloc] init];

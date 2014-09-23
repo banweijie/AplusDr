@@ -8,6 +8,8 @@
 
 #import "WeFunDetViewController.h"
 
+#import "WeFunMovieViewController.h"
+
 @interface WeFunDetViewController () {
     UIActivityIndicatorView * sys_pendingView;
     UIImageView * posterView;
@@ -107,6 +109,25 @@
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 235)];
         [imageView setImageWithURL:[NSURL URLWithString:yijiarenImageUrl(self.currentFunding.poster2)]];
         [imageView setContentMode:UIViewContentModeScaleAspectFill];
+        
+        UIImageView * imageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(120, 75, 80, 80)];
+        [imageView1 setImage:[UIImage imageNamed:@"crowdfunding-detail-play"]];
+        [imageView1 setContentMode:UIViewContentModeScaleAspectFill];
+        [imageView addSubview:imageView1];
+        
+        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(playMovie:)];
+        [imageView addGestureRecognizer:tap];
+        imageView.userInteractionEnabled=YES;
+        if (![self.currentFunding.video isEqualToString:@""]) {
+            imageView.userInteractionEnabled=YES;
+            imageView1.hidden=NO;
+        }
+        else
+        {
+            imageView.userInteractionEnabled=NO;
+            imageView1.hidden=YES;
+        }
+        MyLog(@"----------%@",self.currentFunding.video);
         [cell.contentView addSubview:imageView];
     }
     if (indexPath.section == 0 && indexPath.row == 1) {
@@ -336,9 +357,9 @@
     self.navigationItem.backBarButtonItem = backItem;
     
     // 分享按钮
-    /*
+    
     UIBarButtonItem * shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"crowdfunding-detail-share"] style:UIBarButtonItemStylePlain target:self action:@selector(shareButton_onPress:)];
-    //self.navigationItem.rightBarButtonItem = shareButton;*/
+    self.navigationItem.rightBarButtonItem = shareButton;
     
     /*
     // 所有内容
@@ -533,12 +554,19 @@
                                  }];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
+-(void)shareButton_onPress:(UIBarButtonItem *)sender
+{
+    MyLog(@"点击分享");
+}
+-(void)playMovie:(UITapGestureRecognizer *)tap
+{
+    
+    
+    WeFunMovieViewController *vv=[[WeFunMovieViewController alloc]initWithContentURL:[NSURL URLWithString:yijiarenVideoUrl(self.currentFunding.video)]];
+    [self presentMoviePlayerViewControllerAnimated:vv];
+    
+}
 /*
 #pragma mark - Navigation
 

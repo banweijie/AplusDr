@@ -137,6 +137,12 @@
     }
     return cell;
 }
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [user_recordDrugName_input resignFirstResponder];
+    [user_dosage_input resignFirstResponder];
+    [user_note_input resignFirstResponder];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

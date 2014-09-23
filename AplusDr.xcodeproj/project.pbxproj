@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1E50538D81C24E6FA4893A80 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889390EBA434F5EA5AF2361 /* libPods.a */; };
+		272FDB5B19D122CC00FF7956 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 272FDB5A19D122CC00FF7956 /* MediaPlayer.framework */; };
+		272FDB5E19D13FEA00FF7956 /* WeFunMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FDB5D19D13FEA00FF7956 /* WeFunMovieViewController.m */; };
+		272FDB6419D14F7800FF7956 /* WePickerSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FDB6319D14F7800FF7956 /* WePickerSelectView.m */; };
 		2744909919CD4DC0006C1BAD /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2744909119CD4DC0006C1BAD /* MJRefresh.bundle */; };
 		2744909A19CD4DC0006C1BAD /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744909419CD4DC0006C1BAD /* MJRefreshBaseView.m */; };
 		2744909B19CD4DC0006C1BAD /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744909619CD4DC0006C1BAD /* MJRefreshFooterView.m */; };
@@ -145,6 +148,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		272FDB5A19D122CC00FF7956 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		272FDB5C19D13FEA00FF7956 /* WeFunMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunMovieViewController.h; sourceTree = "<group>"; };
+		272FDB5D19D13FEA00FF7956 /* WeFunMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunMovieViewController.m; sourceTree = "<group>"; };
+		272FDB6219D14F7800FF7956 /* WePickerSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WePickerSelectView.h; sourceTree = "<group>"; };
+		272FDB6319D14F7800FF7956 /* WePickerSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePickerSelectView.m; sourceTree = "<group>"; };
 		2744909119CD4DC0006C1BAD /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		2744909219CD4DC0006C1BAD /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		2744909319CD4DC0006C1BAD /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
@@ -398,6 +406,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				272FDB5B19D122CC00FF7956 /* MediaPlayer.framework in Frameworks */,
 				906F4DD21973D0AD007807FE /* AlixPaylib.a in Frameworks */,
 				90B31A3C1947AA6C00A19CD7 /* libsqlite3.dylib in Frameworks */,
 				9026EE1C1904E8A700CE4A7A /* CoreGraphics.framework in Frameworks */,
@@ -580,6 +589,7 @@
 		9026EE181904E8A700CE4A7A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				272FDB5A19D122CC00FF7956 /* MediaPlayer.framework */,
 				906F4DE51974029B007807FE /* libPods-AFNetworking.a */,
 				906F4DE319740296007807FE /* libPods-LKDBHelper.a */,
 				90B31A3B1947AA6C00A19CD7 /* libsqlite3.dylib */,
@@ -680,6 +690,8 @@
 				90FB31811987EEC4008A001D /* WeActionSheet.m */,
 				2770605719CE76D9003C2DF3 /* WeSelectPayViewController.h */,
 				2770605819CE76D9003C2DF3 /* WeSelectPayViewController.m */,
+				272FDB6219D14F7800FF7956 /* WePickerSelectView.h */,
+				272FDB6319D14F7800FF7956 /* WePickerSelectView.m */,
 			);
 			name = CustomsView;
 			sourceTree = "<group>";
@@ -919,6 +931,8 @@
 				90B31A68195750C000A19CD7 /* WeFunSupViewController.m */,
 				90B31A6A195785DA00A19CD7 /* WeFunSup2ViewController.h */,
 				90B31A6B195785DA00A19CD7 /* WeFunSup2ViewController.m */,
+				272FDB5C19D13FEA00FF7956 /* WeFunMovieViewController.h */,
+				272FDB5D19D13FEA00FF7956 /* WeFunMovieViewController.m */,
 			);
 			name = "众筹项目";
 			sourceTree = "<group>";
@@ -1175,6 +1189,7 @@
 				90F0CE741922CF55006A4605 /* WeInpNamViewController.m in Sources */,
 				9026EEF11904EE5500CE4A7A /* WeTableViewCell.m in Sources */,
 				900E29581929B44C008BF61C /* wav.mm in Sources */,
+				272FDB6419D14F7800FF7956 /* WePickerSelectView.m in Sources */,
 				906F4DF419758637007807FE /* WeGenderPickerViewController.m in Sources */,
 				906F4DDA1973D0AD007807FE /* SBJsonParser.m in Sources */,
 				9026EEFC1904EE5500CE4A7A /* WePecPeaViewController.m in Sources */,
@@ -1211,6 +1226,7 @@
 				9026EEF71904EE5500CE4A7A /* WeRegIpnViewController.m in Sources */,
 				90B31A661956906000A19CD7 /* WeFunDesViewController.m in Sources */,
 				907D5B6A1920D9DA0006EAE0 /* UIBubbleTableViewCell.m in Sources */,
+				272FDB5E19D13FEA00FF7956 /* WeFunMovieViewController.m in Sources */,
 				900E298F193220C5008BF61C /* WeCahExaAddIteViewController.m in Sources */,
 				900E28CB19290239008BF61C /* WeMessage.m in Sources */,
 				900EB758195941D9006BBA04 /* WePecTrhViewController.m in Sources */,

@@ -7,14 +7,17 @@
 //
 
 #import "WeCahCahViewController.h"
-
-@interface WeCahCahViewController () {
+#import "WePickerSelectView.h"
+@interface WeCahCahViewController ()<PickerSelectDelete> {
     UITableView * sys_tableView;
     UITextField * user_date_input;
     UITextField * user_hospitalName_input;
     UITextField * user_diseaseName_input;
     UITextView * user_treatment_input;
     UIActivityIndicatorView * sys_pendingView;
+    
+    WePickerSelectView *datePickerView;
+    UIButton *ssview0_shadowButton;
 }
 
 @end
@@ -40,7 +43,7 @@
 {
     if (tv == sys_tableView) {
         if (path.section == 0 && path.row == 0) {
-            [user_date_input becomeFirstResponder];
+            [self moveUp];
         }
         if (path.section == 0 && path.row == 1) {
             [user_hospitalName_input becomeFirstResponder];
@@ -209,15 +212,6 @@
     return cell;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -245,6 +239,7 @@
     if ([user_treatment_input.text isEqualToString:@"<null>"]) {
         user_treatment_input.text = @"诊治过程";
     }
+    user_date_input.userInteractionEnabled=NO;
     
     // 转圈圈
     sys_pendingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -256,6 +251,64 @@
     // 保存按键
     UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(user_save_onPress:)];
     self.navigationItem.rightBarButtonItem = user_save;
+    
+    //遮罩层
+    ssview0_shadowButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [ssview0_shadowButton setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [ssview0_shadowButton setBackgroundColor:[UIColor blackColor]];
+    [ssview0_shadowButton setAlpha:0.0];
+    [ssview0_shadowButton addTarget:self action:@selector(ssview0_shadowOrCancelButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
+    [self.tabBarController.view addSubview:ssview0_shadowButton];
+    
+    datePickerView=[[WePickerSelectView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height, 320, 300)];
+    datePickerView.delegrate=self;
+    [self.tabBarController.view addSubview:datePickerView];
+    
+}
+#pragma mark----pickerselectdelegrate
+
+-(void)SelectDateInPicker:(NSString *)time
+{
+    user_date_input.text=time;
+    [self moveDown];
+}
+-(void)SelectCancelButton:(UIButton *)but
+{
+    [self moveDown];
+}
+
+-(void)ssview0_shadowOrCancelButton_onPress:(UIButton *)sender
+{
+    [self moveDown];
+}
+-(void)moveDown
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    CGRect ff=datePickerView.frame;
+    ff.origin.y+=300;
+    datePickerView.frame=ff;
+    ssview0_shadowButton.alpha=0;
+    datePickerView.alpha=0;
+    [UIView commitAnimations];
+}
+-(void)moveUp
+{
+    [self scrollViewDidScroll:nil];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    CGRect ff=datePickerView.frame;
+    ff.origin.y-=300;
+    datePickerView.frame=ff;
+    ssview0_shadowButton.alpha=0.6;
+    datePickerView.alpha=1;
+    [UIView commitAnimations];
+}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [user_hospitalName_input resignFirstResponder];
+    [user_diseaseName_input resignFirstResponder];
+    [user_treatment_input resignFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

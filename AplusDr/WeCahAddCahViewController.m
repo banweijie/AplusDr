@@ -7,13 +7,18 @@
 //
 
 #import "WeCahAddCahViewController.h"
+#import "WePickerSelectView.h"
 
-@interface WeCahAddCahViewController () {
+@interface WeCahAddCahViewController ()<PickerSelectDelete>
+{
     UITableView * sys_tableView;
     UITextField * user_date_input;
     UITextField * user_hospitalName_input;
     UITextField * user_diseaseName_input;
     UIActivityIndicatorView * sys_pendingView;
+    
+    WePickerSelectView *datePickerView;
+    UIButton *ssview0_shadowButton;
 }
 @end
 
@@ -40,7 +45,9 @@
 {
     if (tv == sys_tableView) {
         if (path.section == 0 && path.row == 0) {
-            [user_date_input becomeFirstResponder];
+//            [user_date_input becomeFirstResponder];
+            [self moveUp];
+            
         }
         if (path.section == 0 && path.row == 1) {
             [user_hospitalName_input becomeFirstResponder];
@@ -141,19 +148,13 @@
     return cell;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
     
     self.navigationItem.title = @"添加就诊记录";
     
@@ -179,20 +180,79 @@
     [self.view addSubview:sys_pendingView];
     
     // 输入框初始化
-    We_init_textFieldInCell_pholder(user_date_input, @"如：2014-02-16", We_font_textfield_en_us);
+    We_init_textFieldInCell_pholder(user_date_input, @"如：2014-02-16", We_font_textfield_en_us);   
     We_init_textFieldInCell_pholder(user_hospitalName_input, @"如：北医三院", We_font_textfield_zh_cn);
     We_init_textFieldInCell_pholder(user_diseaseName_input, @"如：哮喘", We_font_textfield_zh_cn);
+    
+    
+    user_date_input.userInteractionEnabled=NO;
     
     // 取消按键
     UIBarButtonItem * user_cancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(user_cancel_onPress:)];
     self.navigationItem.leftBarButtonItem = user_cancel;
+    
+    //遮罩层
+    ssview0_shadowButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [ssview0_shadowButton setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [ssview0_shadowButton setBackgroundColor:[UIColor blackColor]];
+    [ssview0_shadowButton setAlpha:0.0];
+    [ssview0_shadowButton addTarget:self action:@selector(ssview0_shadowOrCancelButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.view addSubview:ssview0_shadowButton];
+    
+    datePickerView=[[WePickerSelectView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height, 320, 300)];
+    datePickerView.delegrate=self;
+    [self.navigationController.view addSubview:datePickerView];
+
+}
+#pragma mark----pickerselectdelegrate
+
+-(void)SelectDateInPicker:(NSString *)time
+{
+    user_date_input.text=time;
+    [self moveDown];
+}
+-(void)SelectCancelButton:(UIButton *)but
+{
+    [self moveDown];
 }
 
+-(void)ssview0_shadowOrCancelButton_onPress:(UIButton *)sender
+{
+    [self moveDown];
+}
+-(void)moveDown
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    CGRect ff=datePickerView.frame;
+    ff.origin.y+=300;
+    datePickerView.frame=ff;
+    ssview0_shadowButton.alpha=0;
+    datePickerView.alpha=0;
+    [UIView commitAnimations];
+}
+-(void)moveUp
+{
+    [self scrollViewDidScroll:nil];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    CGRect ff=datePickerView.frame;
+    ff.origin.y-=300;
+    datePickerView.frame=ff;
+    ssview0_shadowButton.alpha=0.6;
+    datePickerView.alpha=1;
+    [UIView commitAnimations];
+    
+}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
-
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [user_diseaseName_input resignFirstResponder];
+    [user_hospitalName_input resignFirstResponder];
+}
 - (void)user_cancel_onPress:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

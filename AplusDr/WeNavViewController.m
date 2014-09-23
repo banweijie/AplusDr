@@ -45,7 +45,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(BOOL)shouldAutorotate
+{
+    return NO;
+}
 /*
 #pragma mark - Navigation
 

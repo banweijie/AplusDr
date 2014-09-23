@@ -204,8 +204,8 @@ weTargetView we_targetView;
 #define weTabBarIdPersonalCenter 4
 #define weTabBarIdCaseHistory 3
 
-#define yijiarenServer @"http://115.28.222.1/yijiaren"    //测试服务器
-#define yijiarenS @"http://115.28.222.1/yijiaren/data/alipayNotify.action"
+#define yijiarenServer @"http://test.ejren.com"    //测试服务器
+#define yijiarenS @"http://test.ejren.com/data/alipayNotify.action"
 
 //#define yijiarenServer @"http://www.ejren.com"      //发布服务器
 //#define yijiarenS @"http://www.ejren.com/data/alipayNotify.action"
@@ -215,6 +215,7 @@ weTargetView we_targetView;
 #define yijiarenAvatarUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"avatarPath"], fileName]
 #define yijiarenCertUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"certPath"], fileName]
 #define yijiarenImageUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"imagePath"], fileName]
+#define yijiarenVideoUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"videoPath"], fileName]
 
 #define UIColorFromRGB0x(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 

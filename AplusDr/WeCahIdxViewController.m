@@ -384,7 +384,7 @@
     [ssview0_submitButton addTarget:self action:@selector(ssview0_submitButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [ssview0 addSubview:ssview0_submitButton];
     
-    // 添加检查结果产生的效应 - 遮罩层
+    // 添加检查结果产生的效应 - //遮罩层
     ssview0_shadowButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [ssview0_shadowButton setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [ssview0_shadowButton setBackgroundColor:[UIColor blackColor]];

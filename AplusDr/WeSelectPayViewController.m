@@ -162,7 +162,11 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [money resignFirstResponder];
+    if (indexPath.section==0 && indexPath.row==2) {
+        [money becomeFirstResponder];
+    }
+    else
+        [money resignFirstResponder];
     
     if (indexPath.section==0 && indexPath.row==5) {
         
