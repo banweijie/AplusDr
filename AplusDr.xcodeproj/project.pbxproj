@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E50538D81C24E6FA4893A80 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889390EBA434F5EA5AF2361 /* libPods.a */; };
+		2711735619D2A50900117222 /* WeCahSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2711735519D2A50900117222 /* WeCahSelectViewController.m */; };
 		272FDB5B19D122CC00FF7956 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 272FDB5A19D122CC00FF7956 /* MediaPlayer.framework */; };
 		272FDB5E19D13FEA00FF7956 /* WeFunMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FDB5D19D13FEA00FF7956 /* WeFunMovieViewController.m */; };
 		272FDB6419D14F7800FF7956 /* WePickerSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FDB6319D14F7800FF7956 /* WePickerSelectView.m */; };
@@ -148,6 +149,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2711735419D2A50900117222 /* WeCahSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCahSelectViewController.h; sourceTree = "<group>"; };
+		2711735519D2A50900117222 /* WeCahSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCahSelectViewController.m; sourceTree = "<group>"; };
 		272FDB5A19D122CC00FF7956 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		272FDB5C19D13FEA00FF7956 /* WeFunMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunMovieViewController.h; sourceTree = "<group>"; };
 		272FDB5D19D13FEA00FF7956 /* WeFunMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunMovieViewController.m; sourceTree = "<group>"; };
@@ -528,6 +531,8 @@
 				900E298B19320B92008BF61C /* WeCahExaViewController.m */,
 				900E298D193220C5008BF61C /* WeCahExaAddIteViewController.h */,
 				900E298E193220C5008BF61C /* WeCahExaAddIteViewController.m */,
+				2711735419D2A50900117222 /* WeCahSelectViewController.h */,
+				2711735519D2A50900117222 /* WeCahSelectViewController.m */,
 			);
 			name = "病历管理";
 			sourceTree = "<group>";
@@ -1202,6 +1207,7 @@
 				90F0CE831926F820006A4605 /* WeCsrSelArea2ViewController.m in Sources */,
 				907D5B671920D9DA0006EAE0 /* NSBubbleData.m in Sources */,
 				907D5B4919201CF20006EAE0 /* WeCsrAddViewController.m in Sources */,
+				2711735619D2A50900117222 /* WeCahSelectViewController.m in Sources */,
 				90F0CE6519228CEF006A4605 /* WeUser.m in Sources */,
 				90B31A5D1954FDD600A19CD7 /* WeFunding.m in Sources */,
 				9026EEF21904EE5500CE4A7A /* WeAppDelegate.m in Sources */,

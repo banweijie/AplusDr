@@ -476,7 +476,7 @@
 // 确认添加检查结果
 - (void)ssview0_submitButton_onPress:(id)sender {
     WeNavViewController * nav = [[WeNavViewController alloc] init];
-    
+    addflag=NO;
     WeCahAddExaViewController * vc = [[WeCahAddExaViewController alloc] init];
     vc.lastViewController = self;
     vc.primaryTypeKey = we_examinationTypeKeys[[ssview0_picker selectedRowInComponent:0]];
@@ -498,8 +498,11 @@
               
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
+              
               if ([result isEqualToString:@"1"]) {
-                  //NSLog(@"response : %@", HTTPResponse[@"response"]);
+//                  NSLog(@"response : %@", HTTPResponse[@"response"]);
+                  
+                  
                   [caseRecords removeAllObjects];
                   for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
                       WeCaseRecord * newCaseRecord = [[WeCaseRecord alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];

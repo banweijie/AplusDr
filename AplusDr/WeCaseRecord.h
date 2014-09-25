@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WeRecordDrug.h"
+#import "WeExamination.h"
 
 @interface WeCaseRecord : NSObject
 

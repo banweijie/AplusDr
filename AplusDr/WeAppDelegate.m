@@ -22,7 +22,6 @@
     UITabBarController<UITabBarControllerDelegate> * _tabBarController = (UITabBarController<UITabBarControllerDelegate> *)_window.rootViewController;
     _tabBarController.delegate = _tabBarController;
     
-    NSLog(@"%@", [WeTabBarViewController class]);
     
     we_hospitalList = [[NSMutableDictionary alloc] init];
     we_sectionList = [[NSMutableDictionary alloc] init];
@@ -276,7 +275,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 + (NSData *)postToServer:(NSString *)urlString withParas:(NSString *)parasString
 {
-    NSLog(@"%@ %@", urlString, parasString);
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     [request setHTTPMethod:@"POST"];
@@ -423,7 +421,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                                  [globalHelper insertToDB:message];
                                                  [WeAppDelegate DownloadImageWithURL:yijiarenImageUrl(message.content)
                                                                    successCompletion:^(id image) {
-                                                                       NSLog(@"!!!");
+                                                                      // NSLog(@"!!!");
                                                                        message.imageContent = (UIImage *)image;
                                                                        [globalHelper updateToDB:message where:nil];
                                                                    }];
@@ -523,13 +521,13 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 #pragma mark - Alipay
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    NSLog(@"AppDelegate!!!!");
+    MyLog(@"AppDelegate!!!!");
 	[self parse:url application:application];
     return YES;
 }
 //独立客户端回调函数
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-	NSLog(@"AppDelegate!!!!");
+	MyLog(@"AppDelegate!!!!");
 	[self parse:url application:application];
 	return YES;
 }

@@ -8,6 +8,9 @@
 
 #import "WeCahCahViewController.h"
 #import "WePickerSelectView.h"
+#import "WeCahSelectViewController.h"
+#import "WeCahExaViewController.h"
+
 @interface WeCahCahViewController ()<PickerSelectDelete> {
     UITableView * sys_tableView;
     UITextField * user_date_input;
@@ -50,6 +53,25 @@
         }
         if (path.section == 0 && path.row == 2) {
             [user_diseaseName_input becomeFirstResponder];
+        }
+        if(path.section==2 &&[caseRecordChanging.examinations count] > 0)
+        {
+            examinationChanging=caseRecordChanging.examinations[path.row];
+            WeCahExaViewController *view=[[WeCahExaViewController alloc]init];
+            [self.navigationController pushViewController:view animated:YES];
+
+        }
+        if (path.section==3 && path.row==0) {
+            WeNavViewController * nav = [[WeNavViewController alloc] init];
+            
+            WeCahSelectViewController *sel=[[WeCahSelectViewController alloc]init];
+            sel.cahId=caseRecordChanging.caseRecordId;
+            sel.last=self;
+            
+            [nav pushViewController:sel animated:NO];
+            [self presentViewController:nav animated:YES completion:nil];
+            
+            
         }
         if (path.section == 4 && path.row < [caseRecordChanging.recordDrugs count]) {
             recordDrugChanging = caseRecordChanging.recordDrugs[path.row];
@@ -172,6 +194,18 @@
             cell.textLabel.text = @"目前尚未有检查结果";
             cell.textLabel.font = We_font_textfield_zh_cn;
             cell.textLabel.textColor = We_foreground_black_general;
+        }
+        if (indexPath.section == 2  && [caseRecordChanging.examinations count] > 0)
+        {
+            WeExamination * examination = caseRecordChanging.examinations[indexPath.row];
+            cell.backgroundColor = We_foreground_white_general;
+            cell.textLabel.text =we_secondaryTypeKeyToValue[examination.type.objId];
+            cell.textLabel.font = We_font_textfield_zh_cn;
+            cell.textLabel.textColor = We_foreground_black_general;
+            cell.detailTextLabel.text = examination.hospital;
+            cell.detailTextLabel.font = We_font_textfield_zh_cn;
+            cell.detailTextLabel.textColor = We_foreground_gray_general;
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         }
         if (indexPath.section == 3 && indexPath.row == 0) {
             cell.backgroundColor = We_foreground_white_general;

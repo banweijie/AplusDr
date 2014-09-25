@@ -47,7 +47,12 @@
             [user_hospitalName_input becomeFirstResponder];
         }
         if (path.section == 1) {
-            [self addNewExamination:self];
+            if (addflag) {
+                [self addNewExamination1:self];
+            }else
+            {
+                [self addNewExamination:self];
+            }
             [sys_pendingView startAnimating];
         }
     }
@@ -257,7 +262,7 @@
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
-                  NSLog(@"response : %@", HTTPResponse[@"response"]);
+//                  NSLog(@"response : %@", HTTPResponse[@"response"]);
                   WeExamination * newExamination = [[WeExamination alloc] initWithNSDictionary:HTTPResponse[@"response"]];
                   newExamination.type.objId = self.secondaryTypeId;
                   newExamination.type.objName = we_secondaryTypeKeyToValue[self.secondaryTypeId];
@@ -313,21 +318,80 @@
      ];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)addNewExamination1:(id)sender {
+    MyLog(@"------------------------%@",caseRecordChanging.caseRecordId);
+    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:yijiarenUrl(@"patient", @"addExamination") parameters:@{
+                                                                          @"examination.type.id":self.secondaryTypeId,
+                                                                          @"examination.date":user_date_input.text,
+                                                                          @"examination.hospital":user_hospitalName_input.text,
+                                                                          
+                                                                @"recordId":caseRecordChanging.caseRecordId
+                                                                          
+                                                                          }
+          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
+              NSString * errorMessage;
+              
+              NSString *result = [HTTPResponse objectForKey:@"result"];
+              result = [NSString stringWithFormat:@"%@", result];
+              if ([result isEqualToString:@"1"]) {
+//                  NSLog(@"response : %@", HTTPResponse[@"response"]);
+                  WeExamination * newExamination = [[WeExamination alloc] initWithNSDictionary:HTTPResponse[@"response"]];
+                  newExamination.type.objId = self.secondaryTypeId;
+                  newExamination.type.objName = we_secondaryTypeKeyToValue[self.secondaryTypeId];
+                  newExamination.typeParent = self.primaryTypeKey;
+                  
+                  [examinations addObject:newExamination];
+                  
+                  examinationChanging = newExamination;
+                  [caseRecordChanging.examinations addObject:newExamination];
+                  
+                  showflag=YES;
+                  
+                  [self dismissViewControllerAnimated:NO completion:nil];
+                  
+                  [self.llViewController dismissViewControllerAnimated:NO completion:nil];
+                  WeCahExaViewController * vc = [[WeCahExaViewController alloc] init];
+                  [self.lastViewController.navigationController pushViewController:vc animated:YES];
+                  
+                  return;
+              }
+              if ([result isEqualToString:@"2"]) {
+                  NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
+                  NSEnumerator *enumerator = [fields keyEnumerator];
+                  id key;
+                  while ((key = [enumerator nextObject])) {
+                      NSString * tmp1 = [fields objectForKey:key];
+                      if (tmp1 != NULL) errorMessage = tmp1;
+                  }
+              }
+              if ([result isEqualToString:@"3"]) {
+                  errorMessage = [HTTPResponse objectForKey:@"info"];
+              }
+              if ([result isEqualToString:@"4"]) {
+                  errorMessage = [HTTPResponse objectForKey:@"info"];
+              }
+              [sys_pendingView stopAnimating];
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"发送信息失败"
+                                           message:errorMessage
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+              [sys_pendingView stopAnimating];
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"发送信息失败"
+                                           message:@"未能连接服务器，请重试"
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+     ];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

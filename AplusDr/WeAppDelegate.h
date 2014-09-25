@@ -96,6 +96,10 @@ WeRecordDrug * recordDrugChanging;
 WeExamination * examinationChanging;
 WeExaminationItem * itemChanging;
 
+
+BOOL addflag;
+BOOL showflag;
+
 // user defaults
 NSUserDefaults * userDefaults;
 

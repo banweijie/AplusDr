@@ -13,6 +13,7 @@
 @interface WeCahAddExaViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property(nonatomic, strong) UIViewController * lastViewController;
+@property(nonatomic, strong) UIViewController * llViewController;
 @property(nonatomic, strong) NSString * primaryTypeKey;
 @property(nonatomic, strong) NSString * secondaryTypeId;
 

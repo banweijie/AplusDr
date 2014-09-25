@@ -210,13 +210,17 @@
             [self presentViewController:nav animated:YES completion:nil];
         }
         if (path.section == 3 && [examinationChanging.typeParent isEqualToString:@"P"]) {
-            [self removeExamination:self];
+//            [self removeExamination:self];
+            [self bindExaminationrecId];
         }
         if (path.section == 3 && [examinationChanging.typeParent isEqualToString:@"I"]) {
-            [self removeExamination:self];
+//            [self removeExamination:self];
+            [self bindExaminationrecId];
         }
         if (path.section == 4) {
-            [self removeExamination:self];
+            
+            [self bindExaminationrecId];
+//            [self removeExamination:self];
         }
     }
     [tv deselectRowAtIndexPath:path animated:YES];
@@ -225,6 +229,9 @@
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1 && ![examinationChanging.typeParent isEqualToString:@"P"]) {
         return 20 + ([examinationChanging.images count] / 3 + 1) * 100;
+    }
+    if (indexPath.section == 2 && [examinationChanging.typeParent isEqualToString:@"I"]) {
+        return 180;
     }
     return tv.rowHeight;
 }
@@ -503,6 +510,9 @@
     [user_hospital_input resignFirstResponder];
 }
 - (void)viewWillAppear:(BOOL)animated {
+    if (addflag) {
+        
+    }
     [sys_tableView reloadData];
     [super viewWillAppear:animated];
 }
@@ -644,7 +654,7 @@
                                                                         }
           success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
               NSString * errorMessage;
-              NSLog(@"HTTPResponse : %@", HTTPResponse);
+//              NSLog(@"HTTPResponse : %@", HTTPResponse);
               
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
@@ -699,6 +709,7 @@
     [sys_pendingView startAnimating];
     [self.view endEditing:YES];
     
+    
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:yijiarenUrl(@"patient", @"removeExamination") parameters:@{
@@ -706,12 +717,24 @@
                                                                         }
           success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
               NSString * errorMessage;
-              NSLog(@"HTTPResponse : %@", HTTPResponse);
               
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
-                  [examinations removeObject:examinationChanging];
+                  
+//                  [examinations removeObject:examinationChanging];
+//                  for (WeExamination *exa in examinations) {
+//                      
+//                      if ([examinationChanging.examId isEqualToString:exa.examId]) {
+//                          [examinations removeObject:exa];
+//                      }
+//                  }
+                  for (int i=0; i<examinations.count; i++) {
+                      WeExamination *exa=examinations[i];
+                      if ([examinationChanging.examId isEqualToString:exa.examId]) {
+                           [examinations removeObject:exa];
+                      }
+                  }
                   
                   [self.navigationController popViewControllerAnimated:YES];
                   
@@ -760,21 +783,51 @@
     return YES;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)bindExaminationrecId {
+    
+    [self.view endEditing:YES];
+    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:yijiarenUrl(@"patient", @"bindExamination") parameters:@{
+                                                                           @"examinationId":examinationChanging.examId,
+                                                                           @"recordId":caseRecordChanging.caseRecordId,
+                                                                           @"bind":@"false"
+                                                                           }
+          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
+              NSString * errorMessage;
+        
+              NSString *result = [HTTPResponse objectForKey:@"result"];
+              result = [NSString stringWithFormat:@"%@", result];
+              
+              if ([result isEqualToString:@"1"]) {
+                  [caseRecordChanging.examinations removeObject:examinationChanging];
+                  
+                  
+                  [self removeExamination:self];
+                  
+                  return;
+              }
+              
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"删除检查信息失败"
+                                           message:errorMessage
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+              
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"删除检查信息失败"
+                                           message:@"未能连接服务器，请重试"
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+     ];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
