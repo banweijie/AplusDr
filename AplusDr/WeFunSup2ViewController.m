@@ -336,7 +336,7 @@
     if (currentLevel.needDescription) [infoList addObject:@"description"];
     
     // 初始化各输入框
-    NSLog(@"%@", currentUser.userName);
+//    NSLog(@"%@", currentUser.userName);
     info_name = [NSMutableString stringWithString:currentUser.trueName];
     info_phone = [NSMutableString stringWithString:currentUser.userPhone];
     info_email = [NSMutableString stringWithString:@""];

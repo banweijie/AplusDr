@@ -167,7 +167,7 @@
     // Do any additional setup after loading the view.
     
     // 标题
-    self.navigationItem.title = @"交易记录";
+    self.navigationItem.title = @"我的订单";
     
     // 背景图片
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -186,7 +186,7 @@
     // 刷新按钮
     refreshButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     refreshButton.frame = self.view.frame;
-    [refreshButton setTitle:@"获取交易记录列表失败，点击刷新" forState:UIControlStateNormal];
+    [refreshButton setTitle:@"获取订单记录列表失败，点击刷新" forState:UIControlStateNormal];
     [refreshButton addTarget:self action:@selector(refreshButton_onPress) forControlEvents:UIControlEventTouchUpInside];
     [refreshButton setTintColor:We_foreground_red_general];
     [self.view addSubview:refreshButton];

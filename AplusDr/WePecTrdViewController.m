@@ -61,9 +61,6 @@
         {
              payview.message=@"您已成功发起在线咨询申请";
         }
-
-        
-        
         
         [self.navigationController pushViewController:payview animated:YES];
 
@@ -303,7 +300,7 @@
     // 刷新按钮
     refreshButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     refreshButton.frame = self.view.frame;
-    [refreshButton setTitle:@"获取交易记录详情失败，点击刷新" forState:UIControlStateNormal];
+    [refreshButton setTitle:@"获取订单记录详情失败，点击刷新" forState:UIControlStateNormal];
     [refreshButton addTarget:self action:@selector(refreshButton_onPress) forControlEvents:UIControlEventTouchUpInside];
     [refreshButton setTintColor:We_foreground_red_general];
     [self.view addSubview:refreshButton];
@@ -399,11 +396,11 @@
                                      }
                                      else if ([currentOrder.type isEqualToString:@"F"]) {
                                          currentSupport = [[WeFundingSupport alloc] initWithNSDictionary:response[@"foreignObject"]];
-                                         MyLog(@"%@",currentSupport);
+//                                         MyLog(@"%@",currentSupport);
                                      }
                                      else if ([currentOrder.type isEqualToString:@"J"]) {
                                          currentJiahao = [[WeJiahao alloc] initWithNSDictionary:response[@"foreignObject"]];
-                                         MyLog(@"%@",currentJiahao);
+//                                         MyLog(@"%@",currentJiahao);
                                      }
                                      [sys_tableView reloadData];
                                      [sys_tableView setHidden:NO];

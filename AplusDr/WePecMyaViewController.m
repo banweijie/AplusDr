@@ -173,7 +173,7 @@
     
     acountListArr =[NSMutableArray array];
     
-    self.navigationItem.title = @"我的余额";
+    self.navigationItem.title = @"财务信息";
     
     // Background
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];

@@ -334,7 +334,7 @@
                                            @"supportId":currentSupportId
                                            }
                                  success:^(id response) {
-                                     NSLog(@"%@", response);
+//                                     NSLog(@"%@", response);
                                      currentSupport = [[WeFundingSupport alloc] initWithNSDictionary:response];
                                      currentLevel = [[WeFundingLevel alloc] initWithNSDictionary:response[@"fundingLevel"]];
                                      currentFunding = [[WeFunding alloc] initWithNSDictionary:response[@"fundingLevel"][@"funding"]];

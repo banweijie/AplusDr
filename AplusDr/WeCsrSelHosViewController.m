@@ -109,7 +109,7 @@
 
 - (void)queryHospitalList:(id)sender {
     NSDictionary * parameters;
-    NSLog(@"%@ %@", condition_provinceId, condition_cityId);
+//    NSLog(@"%@ %@", condition_provinceId, condition_cityId);
     if (![condition_provinceId isEqualToString:@"<null>"]) {
         parameters = @{@"areaId":condition_provinceId};
         if (![condition_cityId isEqualToString:@"<null>"]) parameters = @{@"areaId":condition_cityId};

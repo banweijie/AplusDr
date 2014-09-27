@@ -116,9 +116,9 @@
              NSString * errorMessage;
              NSString *result = [HTTPResponse objectForKey:@"result"];
              result = [NSString stringWithFormat:@"%@", result];
-             NSLog(@"%@", HTTPResponse);
+//             NSLog(@"%@", HTTPResponse);
              if ([result isEqualToString:@"1"]) {
-                 NSLog(@"%@", HTTPResponse[@"response"]);
+//                 NSLog(@"%@", HTTPResponse[@"response"]);
                  provinceList = HTTPResponse[@"response"];
                  [sys_pendingView stopAnimating];
                  [sys_tableView reloadData];

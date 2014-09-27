@@ -271,7 +271,7 @@
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
-                  NSLog(@"response : %@", HTTPResponse[@"response"]);
+//                  NSLog(@"response : %@", HTTPResponse[@"response"]);
                   WeCaseRecord * newCaseRecord = [[WeCaseRecord alloc] initWithNSDictionary:HTTPResponse[@"response"]];
                   [caseRecords addObject:newCaseRecord];
                   

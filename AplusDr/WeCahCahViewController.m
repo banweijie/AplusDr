@@ -369,7 +369,7 @@
                                                                      }
           success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
               NSString * errorMessage;
-              NSLog(@"HTTPResponse : %@", HTTPResponse);
+//              NSLog(@"HTTPResponse : %@", HTTPResponse);
               
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
@@ -432,7 +432,7 @@
                                                                         }
           success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
               NSString * errorMessage;
-              NSLog(@"HTTPResponse : %@", HTTPResponse);
+//              NSLog(@"HTTPResponse : %@", HTTPResponse);
               
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];

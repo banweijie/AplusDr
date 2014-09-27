@@ -107,7 +107,7 @@
                   NSString *result = [HTTPResponse objectForKey:@"result"];
                   result = [NSString stringWithFormat:@"%@", result];
                   if ([result isEqualToString:@"1"]) {
-                      NSLog(@"response : %@", HTTPResponse[@"response"]);
+//                      NSLog(@"response : %@", HTTPResponse[@"response"]);
                       WeTextCoding * newImage = [[WeTextCoding alloc] initWithNSDictionary:HTTPResponse[@"response"]];
                       [examinationChanging.images addObject:newImage];
                       [self refreshImageView:self];

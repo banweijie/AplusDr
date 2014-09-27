@@ -9,6 +9,8 @@
 #import "WeSelectPayViewController.h"
 #import "WeAppDelegate.h"
 
+#import "WeSharePayViewController.h"
+
 @interface WeSelectPayViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,WePaymentCallback>
 
 {
@@ -170,7 +172,7 @@
     
     if (indexPath.section==0 && indexPath.row==5) {
         
-        if ([money.text floatValue]==0) {
+        if ([labe1.text floatValue]!=0) {
             [self payMoney];
         }
         else
@@ -290,7 +292,7 @@
                                  }
                                  failure:^(NSString * errorMessage) {
                                      UIAlertView * notPermitted = [[UIAlertView alloc]
-                                                                   initWithTitle:@"查询余额失败"
+                                                                   initWithTitle:@"支付失败"
                                                                    message:errorMessage
                                                                    delegate:nil
                                                                    cancelButtonTitle:@"OK"
@@ -313,7 +315,7 @@
      newOrder.productName = @"众筹支持";
      newOrder.productDescription = @"众筹支持的描述";
      newOrder.amount = labe1.text;
-     newOrder.notifyURL = @"http://115.28.222.1/yijiaren/data/alipayNotify.action";
+     newOrder.notifyURL = yijiarenS;
 
      NSString * appScheme = @"AplusDr";
      NSString * orderInfo = [newOrder description];
@@ -329,8 +331,20 @@
 
 #pragma mark - callBacks
 -(void)paymentHasBeenPayed {
-    [self.navigationController popToViewController:self.navigationController.childViewControllers[1] animated:YES];
-    [[[UIAlertView alloc] initWithTitle:@"支付成功" message:_message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+   
+//    MyLog(@"众筹项目ID号码：＝＝＝＝%@",_order);
+//    MyLog(@"obj------------%@",_order[@"foreignObject"]);
+    
+    if ([_order[@"type"] isEqualToString:@"F"]) {
+        WeSharePayViewController * sha=[[WeSharePayViewController alloc]init];
+        sha.orderId=_order[@"id"];
+        [self.navigationController pushViewController:sha animated:YES];
+    }
+    else
+    {
+        [self.navigationController popToViewController:self.navigationController.childViewControllers[1] animated:YES];
+        [[[UIAlertView alloc] initWithTitle:@"支付成功" message:_message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+    }
 }
 
 -(void)paymentResult:(NSString *)resultd

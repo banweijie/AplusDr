@@ -381,7 +381,7 @@
 
 #pragma mark - callBacks
 -(void)paymentHasBeenPayed {
-    NSLog(@"!!!!!!!!");
+//    NSLog(@"!!!!!!!!");
     [self.navigationController popViewControllerAnimated:YES];
 }
 

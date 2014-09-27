@@ -203,6 +203,10 @@ typedef enum _WeTargetView
 
 weTargetView we_targetView;
 
+#define ILUserDefaults [NSUserDefaults standardUserDefaults]
+#define USERNAME @"USERNAME"
+#define USERPASSWD @"USERPASSWD"
+
 #define weTabBarIdMainPage 0
 #define weTabBarIdConsultingRoom 1
 #define weTabBarIdPersonalCenter 4
@@ -220,6 +224,7 @@ weTargetView we_targetView;
 #define yijiarenCertUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"certPath"], fileName]
 #define yijiarenImageUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"imagePath"], fileName]
 #define yijiarenVideoUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"videoPath"], fileName]
+#define yijiarenShareURL(field) [NSString stringWithFormat:@"%@/crowdfunding.jsp?fundingId=%@", yijiarenServer, field]
 
 #define UIColorFromRGB0x(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 

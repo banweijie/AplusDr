@@ -6,6 +6,12 @@
 //  Copyright (c) 2014年 ___PKU___. All rights reserved.
 //
 
+/*//归档当前的图片的序列号或名称
+ [ILSettingTool setObject:@(but.tag) forKey:@"BGIMAGE"];
+ 
+ //解归档获取当前的图片的序列号
+ //        lastindex=(int)[ILSettingTool objectForKey:@"BGIMAGE"];*/
+
 #import "WeRegWlcViewController.h"
 #import "WeAppDelegate.h"
 
@@ -208,7 +214,7 @@
     // 用于输入手机号码的文本框
     user_phone_input = [[WeInfoedTextField alloc] initWithFrame:We_frame_textFieldInCell_general];
     [user_phone_input setTextAlignment:NSTextAlignmentRight];
-    [user_phone_input setText:@"13581881672"];
+//    [user_phone_input setText:@"13581881672"];
     [user_phone_input setFont:We_font_textfield_zh_cn];
     [user_phone_input setPlaceholder:@"请输入您的手机号码"];
     [user_phone_input setTextColor:We_foreground_black_general];
@@ -218,7 +224,7 @@
     // 用于输入登录密码的文本框
     user_password_input = [[WeInfoedTextField alloc] initWithFrame:We_frame_textFieldInCell_general];
     [user_password_input setTextAlignment:NSTextAlignmentRight];
-    [user_password_input setText:@"123456"];
+//    [user_password_input setText:@"123456"];
     [user_password_input setFont:We_font_textfield_zh_cn];
     [user_password_input setPlaceholder:@"请输入您的登录密码"];
     [user_password_input setTextColor:We_foreground_black_general];
@@ -297,7 +303,11 @@
                                            @"password":[password md5]
                                            }
                                  success:^(NSDictionary * response) {
+                                     [ILUserDefaults setObject:phone forKey:USERNAME];
+                                     [ILUserDefaults setObject:password forKey:USERPASSWD];
+                                     
                                      [self api_patient_listFavorDoctors];
+                                     
                                  }
                                  failure:^(NSString * errorMessage) {
                                      UIAlertView * notPermitted = [[UIAlertView alloc]
@@ -363,9 +373,9 @@
                               parameters:@{
                                            }
                                  success:^(NSArray * response) {
-                                     NSLog(@"%@", [response class]);
+//                                     NSLog(@"%@", [response class]);
                                      if (![response isKindOfClass:[NSArray class]]) {
-                                         NSLog(@"!!!!");
+//                                         NSLog(@"!!!!");
                                          lastMessageId = (long long) response;
                                      }
                                      else {

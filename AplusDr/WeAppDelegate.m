@@ -7,6 +7,9 @@
 //
 
 #import "WeAppDelegate.h"
+#import <ShareSDK/ShareSDK.h>
+#import "WXApi.h"
+
 
 @implementation WeAppDelegate {
     NSTimer * timer0;
@@ -32,6 +35,13 @@
     
     userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setValue:@"1" forKey:@"lastMessageId"];
+
+    NSString *username=[ILUserDefaults objectForKey:USERNAME];
+    NSString *passwd=[ILUserDefaults objectForKey:USERPASSWD];
+//    MyLog(@"user---%@  pwd---%@",username,passwd);
+    if (username!=nil) {
+        [self api_user_login:username password:passwd];
+    }
         
     //timer0 = [NSTimer scheduledTimerWithTimeInterval:refreshInterval target:self selector:@selector(refreshDoctorList:) userInfo:nil repeats:YES];
     
@@ -41,7 +51,148 @@
     
     [globalHelper createTableWithModelClass:[WeMessage class]];
     
+    [ShareSDK registerApp:@"325060b8e624"];
+    
+    //TODO: 1. 先初始化微信Connection
+    NSString *appId = @"wxb79e2a36a6b8b08f";
+    [ShareSDK connectWeChatSessionWithAppId: appId wechatCls:[WXApi class]];
+    [ShareSDK connectWeChatTimelineWithAppId:appId wechatCls:[WXApi class]];
+    
+    //TODO: 2. 在info.plist文件里面配置微信的url scheme，以便系统能将微信的回调信息传给程序
+    
     return YES;
+}
+
+
+
+// 访问登录接口
+- (void)api_user_login:(NSString *)phone password:(NSString *)password {
+   
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+    [manager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"yijiaren"];
+    [manager POST:yijiarenUrl(@"user", @"login") parameters:@{
+                                                              @"phone":phone,
+                                                              @"password":[password md5]
+                                                              }
+          success:^(NSURLSessionDataTask *task, id responseObject) {
+              MyLog(@"登陆成功 %@",responseObject);
+              [self api_patient_listFavorDoctors];
+              
+          }
+          failure:^(NSURLSessionDataTask *task, NSError *error) {
+             
+          }];
+
+}
+// 访问获取保健医列表接口
+- (void)api_patient_listFavorDoctors {
+    [WeAppDelegate postToServerWithField:@"patient" action:@"listFavorDoctors"
+                              parameters:@{
+                                           }
+                                 success:^(NSArray * response) {
+                                     favorDoctorList = [[NSMutableDictionary alloc] init];
+                                     for (int i = 0; i < [response count]; i++) {
+                                         WeFavorDoctor * newFavorDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:response[i]];
+                                         favorDoctorList[newFavorDoctor.userId] = newFavorDoctor;
+                                     }
+                                     [self api_user_refreshUser];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"获取保健医列表失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                 }];
+}
+
+// 访问获取用户信息接口
+- (void)api_user_refreshUser {
+    [WeAppDelegate postToServerWithField:@"user" action:@"refreshUser"
+                              parameters:@{
+                                           }
+                                 success:^(NSDictionary * response) {
+                                     WePatient * newUser = [[WePatient alloc] initWithNSDictionary:response];
+                                     [self api_message_getUnviewedMsg:newUser];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"获取用户信息失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                 }];
+}
+
+// 访问获取未读信息接口
+- (void)api_message_getUnviewedMsg:(WePatient *)newUser {
+    [WeAppDelegate postToServerWithField:@"message" action:@"getUnviewedMsg"
+                              parameters:@{
+                                           }
+                                 success:^(NSArray * response) {
+//                                     NSLog(@"%@", [response class]);
+                                     if (![response isKindOfClass:[NSArray class]]) {
+//                                         NSLog(@"!!!!");
+                                         lastMessageId = (long long) response;
+                                     }
+                                     else {
+                                         for (int i = 0; i < [response count]; i++) {
+                                             WeMessage * message = [[WeMessage alloc] initWithNSDictionary:response[i]];
+                                             if ([message.messageId longLongValue] > lastMessageId) {
+                                                 lastMessageId = [message.messageId longLongValue];
+//                                                 NSLog(@"%lld", lastMessageId);
+                                             }
+                                             NSMutableArray * result = [globalHelper search:[WeMessage class]
+                                                                                      where:[NSString stringWithFormat:@"messageId = %@", message.messageId]
+                                                                                    orderBy:nil offset:0 count:0];
+                                             if ([result count] == 0) {
+                                                 // 文字消息
+                                                 if ([message.messageType isEqualToString:@"T"]) {
+                                                     [globalHelper insertToDB:message];
+                                                 }
+                                                 // 图片消息
+                                                 else if ([message.messageType isEqualToString:@"I"]) {
+                                                     [globalHelper insertToDB:message];
+                                                     [WeAppDelegate DownloadImageWithURL:yijiarenImageUrl(message.content)
+                                                                       successCompletion:^(id image) {
+                                                                           NSLog(@"!!!");
+                                                                           message.imageContent = (UIImage *)image;
+                                                                           [globalHelper updateToDB:message where:nil];
+                                                                       }];
+                                                 }
+                                                 // 语音消息
+                                                 else if ([message.messageType isEqualToString:@"A"]) {
+                                                     [globalHelper insertToDB:message];
+                                                     [WeAppDelegate DownloadFileWithURL:yijiarenImageUrl(message.content)
+                                                                      successCompletion:^(NSURL * filePath) {
+                                                                          [VoiceConverter amrToWav:filePath.path wavSavePath:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
+                                                                          message.audioContent = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@.wav", NSTemporaryDirectory(), message.messageId]];
+                                                                          [globalHelper updateToDB:message where:nil];
+                                                                      }];
+                                                 }
+                                                 else if ([message.messageType isEqualToString:@"X"]) {
+//                                                     NSLog(@"XXXXXXXXXXXXX");
+                                                     [globalHelper insertToDB:message];
+                                                 }
+                                             }
+                                         }
+                                     }
+                                     currentUser = newUser;
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"获取未读信息失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                 }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -85,7 +236,7 @@
 # pragma mark - Networking
 
 + (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong id))success failure:(void (^__strong)(__strong NSString *))failure {
-    NSLog(@"\npost to api: <%@, %@>\nparameters: %@", field, action, parameters);
+//    NSLog(@"\npost to api: <%@, %@>\nparameters: %@", field, action, parameters);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
     [manager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"yijiaren"];
@@ -139,7 +290,7 @@
 }
 
 + (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters fileData:(NSData *)fileData fileName:(NSString *)fileName success:(void (^)(id))success failure:(void (^)(NSString *))failure {
-    NSLog(@"\npost to api: <%@, %@>\nparameters: %@\nfileName: %@", field, action, parameters, fileName);
+//    NSLog(@"\npost to api: <%@, %@>\nparameters: %@\nfileName: %@", field, action, parameters, fileName);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
     [manager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"yijiaren"];
@@ -262,7 +413,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 + (NSData *)sendPhoneNumberToServer:(NSString *)urlString paras:(NSString *)parasString
 {
-    NSLog(@"%@ %@", urlString, parasString);
+//    NSLog(@"%@ %@", urlString, parasString);
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     [request setHTTPMethod:@"POST"];
@@ -286,7 +437,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 }
 
 + (NSData *)postToServer:(NSString *)urlString withDictionaryParas:(NSDictionary *)paras {
-    NSLog(@"%@ %@", urlString, paras);
+//    NSLog(@"%@ %@", urlString, paras);
     NSURL * url = [NSURL URLWithString:urlString];
     NSMutableURLRequest * request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     [request setHTTPMethod:@"POST"];
@@ -442,7 +593,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                                      if ([message.content characterAtIndex:i] == '=') {
                                                          NSString * left = [message.content substringToIndex:i];
                                                          NSString * right = [message.content substringFromIndex:i + 1];
-                                                         NSLog(@"%@ %@", left, right);
+//                                                         NSLog(@"%@ %@", left, right);
                                                          if ([left isEqualToString:@"consultStatus"]) {
                                                              WeFavorDoctor * currentDoctor = favorDoctorList[message.senderId];
                                                              currentDoctor.consultStatus = right;
@@ -456,9 +607,9 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                              }
                                              // 咨询消息
                                              else if ([message.messageType isEqualToString:@"c"]) {
-                                                 NSLog(@"%@", message.content);
+//                                                 NSLog(@"%@", message.content);
                                                  WeFavorDoctor * currentDoctor = favorDoctorList[message.senderId];
-                                                 NSLog(@"%@", currentDoctor.userName);
+//                                                 NSLog(@"%@", currentDoctor.userName);
                                                  currentDoctor.currentConsultId = message.content;
                                              }
                                              // 系统消息
@@ -482,7 +633,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                      for (int i = 0; i < [response count]; i++) {
                                          WeFavorDoctor * newFavorDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:response[i]];
                                          if (favorDoctorList[newFavorDoctor.userId] == nil) {
-                                             NSLog(@"!!!!!!New Doctor!!!!!");
+//                                             NSLog(@"!!!!!!New Doctor!!!!!");
                                              favorDoctorList[newFavorDoctor.userId] = newFavorDoctor;
                                          }
                                      }
@@ -521,16 +672,34 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 #pragma mark - Alipay
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    MyLog(@"AppDelegate!!!!");
+//    MyLog(@"url==========%@    application-----%@",url,application);
 	[self parse:url application:application];
     return YES;
 }
 //独立客户端回调函数
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-	MyLog(@"AppDelegate!!!!");
+
+//    MyLog(@"url==========%@    application-----%@",url,application);
 	[self parse:url application:application];
 	return YES;
 }
+
+//- (BOOL)application:(UIApplication *)application  handleOpenURL:(NSURL *)url
+//{
+//    //TODO: 3. 实现handleOpenUrl相关的两个方法，用来处理微信的回调信息
+//    return [ShareSDK handleOpenURL:url wxDelegate:self];
+//}
+//
+//- (BOOL)application:(UIApplication *)application
+//            openURL:(NSURL *)url
+//  sourceApplication:(NSString *)sourceApplication
+//         annotation:(id)annotation
+//{
+//    return [ShareSDK handleOpenURL:url
+//                 sourceApplication:sourceApplication
+//                        annotation:annotation
+//                        wxDelegate:self];
+//}
 
 - (void)parse:(NSURL *)url application:(UIApplication *)application {
     

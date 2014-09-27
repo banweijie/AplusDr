@@ -604,7 +604,7 @@
                                            @"m.type":message.messageType
                                            }
                                  success:^(id response) {
-                                     NSLog(@"\n%@", response);
+//                                     NSLog(@"\n%@", response);
                                      [message setWithNSDictionary:response];
                                      [message setSending:NO];
                                      [globalHelper updateToDB:message where:nil];
@@ -641,14 +641,14 @@
                                 fileData:UIImageJPEGRepresentation(image, 1.0)
                                 fileName:@"a.jpg"
                                  success:^(id response) {
-                                     NSLog(@"\n%@", response);
+//                                     NSLog(@"\n%@", response);
                                      [message setWithNSDictionary:response];
                                      [message setSending:NO];
                                      [globalHelper updateToDB:message where:nil];
                                      [self refreshView:YES];
                                  }
                                  failure:^(NSString * errorMessage) {
-                                     NSLog(@"\n%@", errorMessage);
+//                                     NSLog(@"\n%@", errorMessage);
                                      [message setSending:NO];
                                      [message setFailed:YES];
                                      [globalHelper updateToDB:message where:nil];
@@ -678,7 +678,7 @@
                                 fileData:amrData
                                 fileName:@"a.amr"
                                  success:^(id response) {
-                                     NSLog(@"\n%@", response);
+//                                     NSLog(@"\n%@", response);
                                      [message setWithNSDictionary:response];
                                      [message setSending:NO];
                                      [globalHelper updateToDB:message where:nil];
@@ -923,7 +923,7 @@
     urlString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     urlString = NSTemporaryDirectory();
     urlString = [NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()];
-    NSLog(@"%@", urlString);
+//    NSLog(@"%@", urlString);
     NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/record.wav", urlString]];
     NSError *error = nil;
     self.audioRecorder = [[ AVAudioRecorder alloc] initWithURL:url settings:recordSetting error:&error];
@@ -934,7 +934,7 @@
     }else{
         //准备就绪，等待录音，注意该方法会返回Boolean，最好做个成功判断，因为其失败的时候无任何错误信息抛出
         if ([self.audioRecorder prepareToRecord]) {
-            NSLog(@"Prepare successful");
+//            NSLog(@"Prepare successful");
         }
         else {
             NSLog(@"prepareError");
@@ -1445,7 +1445,7 @@
 }
 
 - (void)timer_onTick:(id)sender {
-    NSLog(@"!!!!");
+//    NSLog(@"!!!!");
     [self refreshView:NO];
 }
 

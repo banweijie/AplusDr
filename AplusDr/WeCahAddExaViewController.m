@@ -319,7 +319,7 @@
 }
 
 - (void)addNewExamination1:(id)sender {
-    MyLog(@"------------------------%@",caseRecordChanging.caseRecordId);
+//    MyLog(@"------------------------%@",caseRecordChanging.caseRecordId);
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:yijiarenUrl(@"patient", @"addExamination") parameters:@{

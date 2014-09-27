@@ -37,7 +37,7 @@
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.alpha = We_alpha_cell_general;;
     cell.opaque = YES;
-    NSLog(@"%d %d", indexPath.section, indexPath.row);
+//    NSLog(@"%d %d", indexPath.section, indexPath.row);
     if (indexPath.section == [doctorList count] - 1) {
         if (!isWaiting) {
             isWaiting = YES;
@@ -304,7 +304,7 @@
 
 - (void)queryMoreDoctors:(id)sender {
     NSMutableDictionary * parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"from":[NSString stringWithFormat:@"%d", [doctorList count]]}];
-    NSLog(@"%@", selection_provinceId);
+//    NSLog(@"%@", selection_provinceId);
     if (![selection_provinceId isEqualToString:@"<null>"]) parameters[@"provinceId"] = selection_provinceId;
     if (![selection_cityId isEqualToString:@"<null>"]) parameters[@"cityId"] = selection_cityId;
     if (![selection_hospitalId isEqualToString:@"<null>"]) parameters[@"hospitalId"] = selection_hospitalId;
@@ -315,7 +315,7 @@
     if (![selection_recommend isEqualToString:@"<null>"]) parameters[@"recommend"] = selection_recommend;
     if (![selection_keyword isEqualToString:@"<null>"]) parameters[@"conditions.words"] = selection_keyword;
     
-    NSLog(@"queryMore %@", parameters);
+//    NSLog(@"queryMore %@", parameters);
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager GET:yijiarenUrl(@"patient", @"searchDoctors") parameters:parameters
@@ -381,9 +381,9 @@
              NSString * errorMessage;
              NSString *result = [HTTPResponse objectForKey:@"result"];
              result = [NSString stringWithFormat:@"%@", result];
-             NSLog(@"Total amount : %@", HTTPResponse);
+//             NSLog(@"Total amount : %@", HTTPResponse);
              if ([result isEqualToString:@"1"]) {
-                 NSLog(@"%@", HTTPResponse[@"response"]);
+//                 NSLog(@"%@", HTTPResponse[@"response"]);
                  doctorList = [[NSMutableArray alloc] init];
                  for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
                      WeDoctor * doctor = [[WeDoctor alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];

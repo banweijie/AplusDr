@@ -173,7 +173,7 @@
                                            @"phone":user_phone_input.text
                                            }
                                  success:^(id response) {
-                                     MyLog(@"%@",response);
+//                                     MyLog(@"%@",response);
                                      WeFgtInpViewController * vc = [[WeFgtInpViewController alloc] init];
                                      vc.user_phone_value = user_phone_input.text;
                                      self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"上一步" style:UIBarButtonItemStylePlain target:nil action:nil];

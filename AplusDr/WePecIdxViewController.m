@@ -181,7 +181,7 @@
     }
     if (indexPath.section == 3 && indexPath.row == 0) {
         cell.contentView.backgroundColor = We_background_cell_general;
-        cell.textLabel.text = @"我的余额";
+        cell.textLabel.text = @"财务信息";
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
         cell.imageView.image = [UIImage imageNamed:@"me-balance"];
@@ -189,7 +189,7 @@
     }
     if (indexPath.section == 3 && indexPath.row == 1) {
         cell.contentView.backgroundColor = We_background_cell_general;
-        cell.textLabel.text = @"交易记录";
+        cell.textLabel.text = @"我的订单";
         cell.textLabel.font = We_font_textfield_zh_cn;
         cell.textLabel.textColor = We_foreground_black_general;
         cell.imageView.image = [UIImage imageNamed:@"me-moneyhistory"];

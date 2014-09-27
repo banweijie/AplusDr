@@ -33,7 +33,7 @@
     
     self.examinations=[[NSMutableArray alloc]init];
     if (![[NSString stringWithFormat:@"%@", info[@"examinations"]] isEqualToString:@"<null>"]) {
-        NSLog(@"%@", info);
+//        NSLog(@"%@", info);
         for (int i = 0; i < [info[@"examinations"] count]; i++) {
             WeExamination * newRecordDrug = [[WeExamination alloc] initWithNSDictionary:info[@"examinations"][i]];
             [self.examinations addObject:newRecordDrug];
@@ -43,7 +43,7 @@
     
     self.recordDrugs = [[NSMutableArray alloc] init];
     if (![[NSString stringWithFormat:@"%@", info[@"recordDrugs"]] isEqualToString:@"<null>"]) {
-        NSLog(@"%@", info);
+//        NSLog(@"%@", info);
         for (int i = 0; i < [info[@"recordDrugs"] count]; i++) {
             WeRecordDrug * newRecordDrug = [[WeRecordDrug alloc] initWithNSDictionary:info[@"recordDrugs"][i]];
             [self.recordDrugs addObject:newRecordDrug];
