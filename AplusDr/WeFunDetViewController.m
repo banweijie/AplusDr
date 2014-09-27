@@ -581,7 +581,7 @@
     id<ISSContent> publishContent = nil;
     
     NSString *contentString = self.currentFunding.introduction;
-    NSString *titleString   = [NSString stringWithFormat:@"%@-%@", self.currentFunding.title ,self.currentFunding.subTitle];
+    NSString *titleString   = [NSString stringWithFormat:@"%@:%@", self.currentFunding.title ,self.currentFunding.subTitle];
     NSString *urlString     = yijiarenShareURL(self.currentFunding.fundingId);
     NSString *description   = @"Sample";
     
@@ -593,7 +593,7 @@
                                    url:urlString
                            description:description
                              mediaType:SSPublishContentMediaTypeNews];
-    
+    [ShareSDK setInterfaceOrientationMask:SSInterfaceOrientationMaskPortrait];
     
     id<ISSShareOptions> shareOptions =
     [ShareSDK defaultShareOptionsWithTitle:@""
@@ -675,6 +675,11 @@
     [self presentMoviePlayerViewControllerAnimated:vv];
     
 }
+-(BOOL)shouldAutorotate
+{
+    return YES;
+}
+
 /*
 #pragma mark - Navigation
 

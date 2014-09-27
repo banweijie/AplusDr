@@ -54,6 +54,7 @@
 		27CCE31819D5160300D692B2 /* ShareSDKFlatShareViewUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27CCE30019D5160300D692B2 /* ShareSDKFlatShareViewUI.framework */; };
 		27CCE31919D5160300D692B2 /* ShareSDKShareActionSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27CCE30119D5160300D692B2 /* ShareSDKShareActionSheet.framework */; };
 		27CCE31E19D5512C00D692B2 /* WeSharePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CCE31D19D5512C00D692B2 /* WeSharePayViewController.m */; };
+		5410ACA519D6A30800EFA135 /* successpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5410ACA419D6A30800EFA135 /* successpay.png */; };
 		900E28C81928F8E6008BF61C /* WeToolButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28C71928F8E6008BF61C /* WeToolButton.m */; };
 		900E28CB19290239008BF61C /* WeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28CA19290239008BF61C /* WeMessage.m */; };
 		900E29571929B44C008BF61C /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 900E29491929B44C008BF61C /* amrFileCodec.mm */; };
@@ -247,6 +248,7 @@
 		27CCE30119D5160300D692B2 /* ShareSDKShareActionSheet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKShareActionSheet.framework; sourceTree = "<group>"; };
 		27CCE31C19D5512C00D692B2 /* WeSharePayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSharePayViewController.h; sourceTree = "<group>"; };
 		27CCE31D19D5512C00D692B2 /* WeSharePayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSharePayViewController.m; sourceTree = "<group>"; };
+		5410ACA419D6A30800EFA135 /* successpay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successpay.png; sourceTree = "<group>"; };
 		7889390EBA434F5EA5AF2361 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		900E28C61928F8E6008BF61C /* WeToolButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeToolButton.h; sourceTree = "<group>"; };
 		900E28C71928F8E6008BF61C /* WeToolButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeToolButton.m; sourceTree = "<group>"; };
@@ -840,6 +842,7 @@
 		9026EE201904E8A700CE4A7A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5410ACA419D6A30800EFA135 /* successpay.png */,
 				273EC46519D5048A003DFB07 /* UIView+Common.h */,
 				273EC46619D5048A003DFB07 /* UIView+Common.m */,
 				9026EE211904E8A700CE4A7A /* AplusDr-Info.plist */,
@@ -1295,6 +1298,7 @@
 				27CCE30A19D5160300D692B2 /* ShareSDKLocalizable.strings in Resources */,
 				9026EF0F1904EE5500CE4A7A /* Main.storyboard in Resources */,
 				9026EE241904E8A700CE4A7A /* InfoPlist.strings in Resources */,
+				5410ACA519D6A30800EFA135 /* successpay.png in Resources */,
 				906F4DD11973D0AD007807FE /* Alixpay.bundle in Resources */,
 				2744909919CD4DC0006C1BAD /* MJRefresh.bundle in Resources */,
 				27CCE31019D5160300D692B2 /* RennSDK.bundle in Resources */,
@@ -1619,7 +1623,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "edda45ca-3430-4829-86fc-90a606b11d15";
+				PROVISIONING_PROFILE = "c59d908f-27b7-449e-a8da-116b01220c47";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -1658,7 +1662,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "edda45ca-3430-4829-86fc-90a606b11d15";
+				PROVISIONING_PROFILE = "c59d908f-27b7-449e-a8da-116b01220c47";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
