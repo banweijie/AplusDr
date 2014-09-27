@@ -569,7 +569,8 @@
 				27CCE2FD19D5160300D692B2 /* ShareSDK.framework */,
 				27CCE2FE19D5160300D692B2 /* UI */,
 			);
-			path = ShareSDK;
+			name = ShareSDK;
+			path = ../ShareSDK;
 			sourceTree = "<group>";
 		};
 		27CCE2DB19D5160200D692B2 /* Connection */ = {
@@ -778,7 +779,6 @@
 		9026EE0D1904E8A700CE4A7A = {
 			isa = PBXGroup;
 			children = (
-				27CCE2DA19D5160200D692B2 /* ShareSDK */,
 				9026EE1F1904E8A700CE4A7A /* AplusDr */,
 				9026EE411904E8A700CE4A7A /* AplusDrTests */,
 				9026EE181904E8A700CE4A7A /* Frameworks */,
@@ -822,6 +822,7 @@
 		9026EE1F1904E8A700CE4A7A /* AplusDr */ = {
 			isa = PBXGroup;
 			children = (
+				27CCE2DA19D5160200D692B2 /* ShareSDK */,
 				9026EEB51904EE5500CE4A7A /* WeAppDelegate.h */,
 				9026EEB61904EE5500CE4A7A /* WeAppDelegate.m */,
 				906F4DEE1974E51A007807FE /* WePaymentCallback.h */,
