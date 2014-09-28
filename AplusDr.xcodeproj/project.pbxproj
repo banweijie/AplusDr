@@ -55,6 +55,7 @@
 		27CCE31919D5160300D692B2 /* ShareSDKShareActionSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27CCE30119D5160300D692B2 /* ShareSDKShareActionSheet.framework */; };
 		27CCE31E19D5512C00D692B2 /* WeSharePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CCE31D19D5512C00D692B2 /* WeSharePayViewController.m */; };
 		5410ACA519D6A30800EFA135 /* successpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5410ACA419D6A30800EFA135 /* successpay.png */; };
+		5412EBE119D7EAA300CA6C7C /* WeUserAgreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */; };
 		900E28C81928F8E6008BF61C /* WeToolButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28C71928F8E6008BF61C /* WeToolButton.m */; };
 		900E28CB19290239008BF61C /* WeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E28CA19290239008BF61C /* WeMessage.m */; };
 		900E29571929B44C008BF61C /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 900E29491929B44C008BF61C /* amrFileCodec.mm */; };
@@ -249,6 +250,8 @@
 		27CCE31C19D5512C00D692B2 /* WeSharePayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSharePayViewController.h; sourceTree = "<group>"; };
 		27CCE31D19D5512C00D692B2 /* WeSharePayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSharePayViewController.m; sourceTree = "<group>"; };
 		5410ACA419D6A30800EFA135 /* successpay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successpay.png; sourceTree = "<group>"; };
+		5412EBDF19D7EAA300CA6C7C /* WeUserAgreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeUserAgreeViewController.h; sourceTree = "<group>"; };
+		5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeUserAgreeViewController.m; sourceTree = "<group>"; };
 		7889390EBA434F5EA5AF2361 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		900E28C61928F8E6008BF61C /* WeToolButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeToolButton.h; sourceTree = "<group>"; };
 		900E28C71928F8E6008BF61C /* WeToolButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeToolButton.m; sourceTree = "<group>"; };
@@ -938,6 +941,8 @@
 				27A2A7D919CBDB8200BFAB3A /* WeFgtInpViewController.m */,
 				27A2A7DB19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.h */,
 				27A2A7DC19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m */,
+				5412EBDF19D7EAA300CA6C7C /* WeUserAgreeViewController.h */,
+				5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */,
 			);
 			name = "注册登录";
 			sourceTree = "<group>";
@@ -1467,6 +1472,7 @@
 				900E298F193220C5008BF61C /* WeCahExaAddIteViewController.m in Sources */,
 				900E28CB19290239008BF61C /* WeMessage.m in Sources */,
 				900EB758195941D9006BBA04 /* WePecTrhViewController.m in Sources */,
+				5412EBE119D7EAA300CA6C7C /* WeUserAgreeViewController.m in Sources */,
 				906F4DD71973D0AD007807FE /* NSString+SBJSON.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

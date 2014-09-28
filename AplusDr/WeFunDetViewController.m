@@ -541,6 +541,8 @@
     [contentView setHidden:YES];
     [sys_pendingView startAnimating];
     
+
+    
     [WeAppDelegate postToServerWithField:@"data" action:@"viewFunding"
                               parameters:@{
                                            @"fundingId":self.currentFunding.fundingId
@@ -585,7 +587,7 @@
     NSString *urlString     = yijiarenShareURL(self.currentFunding.fundingId);
     NSString *description   = @"Sample";
     
-    //TODO: 4. 正确选择分享内容的 mediaType 以及填写参数，就能分享到微信
+    // 4. 正确选择分享内容的 mediaType 以及填写参数，就能分享到微信
     publishContent = [ShareSDK content:contentString
                         defaultContent:@""
                                  image:[ShareSDK imageWithUrl:yijiarenImageUrl(self.currentFunding.poster2)]

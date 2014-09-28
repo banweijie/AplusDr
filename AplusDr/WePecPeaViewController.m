@@ -9,9 +9,11 @@
 #import "WePecPeaViewController.h"
 #import "WeAppDelegate.h"
 
-@interface WePecPeaViewController () {
+@interface WePecPeaViewController ()<UIAlertViewDelegate> {
     UITableView * sys_tableView;
     UIImageView * user_avatar_imageView;
+    
+    UIAlertView * alter;
 }
 
 @end
@@ -126,10 +128,11 @@
             
         }
         if (path.row == 1) {
-            if ([self changePassword]) {
-                we_vericode_type = @"ModifyPassword";
-                [self performSegueWithIdentifier:@"PecPea_pushto_RegIvc" sender:self];
-            }
+            
+            UIAlertView *ate=[[UIAlertView alloc]initWithTitle:@"提示" message:@"确定要修改密码么？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alter=ate;
+            [alter show];
+            
         }
     }
     if (path.section == 2) {
@@ -265,6 +268,17 @@
     }
     return cell;
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView==alter && buttonIndex==1) {
+        if ([self changePassword]) {
+            we_vericode_type = @"ModifyPassword";
+            [self performSegueWithIdentifier:@"PecPea_pushto_RegIvc" sender:self];
+        }
+    }
+}
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

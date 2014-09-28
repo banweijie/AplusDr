@@ -76,7 +76,7 @@
 }
 -(void)leftButton_onPress
 {
-    [self.navigationController pushViewController:self.navigationController.childViewControllers[2] animated:YES];
+    [self.navigationController popToViewController:self.navigationController.childViewControllers[2] animated:YES];
 }
 -(void)setOrderId:(NSString *)orderId
 {

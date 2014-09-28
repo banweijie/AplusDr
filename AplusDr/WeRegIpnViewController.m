@@ -8,6 +8,7 @@
 
 #import "WeRegIpnViewController.h"
 #import "WeAppDelegate.h"
+#import "WeUserAgreeViewController.h"
 
 @interface WeRegIpnViewController ()
 @property (weak, nonatomic) IBOutlet UINavigationItem *navi;
@@ -143,7 +144,7 @@
     sys_userAgreement_demo_button.frame = CGRectMake(172, 0, 60, 30);
     [sys_userAgreement_demo_button setTitle:@"用户协议" forState:UIControlStateNormal];
     [sys_userAgreement_demo_button.titleLabel setFont:We_font_button_zh_cn];
-    //[sys_userAgreement_demo_button addTarget:self action:@selector(checkForUserAgreement:) forControlEvents:UIControlEventTouchUpInside];
+    [sys_userAgreement_demo_button addTarget:self action:@selector(checkForUserAgreement:) forControlEvents:UIControlEventTouchUpInside];
     [sys_userAgreement_demo addSubview:sys_userAgreement_demo_button];
     
     // Background
@@ -168,12 +169,13 @@
     [sys_pendingView setAlpha:1.0];
     [self.view addSubview:sys_pendingView];
 }
-- (void)didReceiveMemoryWarning
+-(void)checkForUserAgreement:(UIButton *)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    WeUserAgreeViewController *user=[[WeUserAgreeViewController alloc]init];
+    user.aggreeUrl=@"http://www.ejren.com/docs/user_agreement.txt";
+    WeNavViewController *nav=[[WeNavViewController alloc]initWithRootViewController:user];
+    [self presentViewController:nav animated:YES completion:nil];
 }
-
 # pragma mark - apis
 
 - (void)api_user_sendVerificationCode {

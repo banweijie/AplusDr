@@ -237,6 +237,8 @@
 
 + (void)postToServerWithField:(NSString *)field action:(NSString *)action parameters:(NSDictionary *)parameters success:(void (^__strong)(__strong id))success failure:(void (^__strong)(__strong NSString *))failure {
 //    NSLog(@"\npost to api: <%@, %@>\nparameters: %@", field, action, parameters);
+    
+    
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     [manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
     [manager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"yijiaren"];

@@ -7,6 +7,7 @@
 //
 
 #import "WeCsrJiaViewController.h"
+#import "WeParagraphModifyViewController.h"
 
 @interface WeCsrJiaViewController () {
     UIView * sys_explaination_view;
@@ -39,6 +40,7 @@
     NSMutableString * user_age;
     NSMutableString * user_name;
     NSMutableString * user_idNum;
+    NSMutableString * user_description;
 }
 #define cacheWidth 5
 @end
@@ -97,6 +99,13 @@
         
         [self.navigationController pushViewController:vc animated:YES];
     }
+    if (path.section==3 &&path.row==4) {
+        WeParagraphModifyViewController * vc = [[WeParagraphModifyViewController alloc] init];
+        vc.stringToBeTitle = @"更多描述";
+        vc.stringToModify = user_description;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     if (path.section == 4 && path.row == 0) {
         [self api_patient_addJiahao];
     }
@@ -105,6 +114,15 @@
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 2) return tv.rowHeight * 1.5; //sys_calenderView.frame.size.height;
+    if (indexPath.section==3 &&indexPath.row==4) {
+        if ([user_description isEqualToString:@""]) {
+            return [WeAppDelegate calcSizeForString:@"无" Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
+        }
+        else {
+            return [WeAppDelegate calcSizeForString:user_description Font:We_font_textfield_zh_cn expectWidth:280].height + 60;
+        }
+
+    }
     return tv.rowHeight;
 }
 // 询问每个段落的头部高度
@@ -140,7 +158,7 @@
     if (section == 0) return 1;
     if (section == 1) return [self.currentDoctor.workPeriod length] / 4;
     if (section == 2) return 1;
-    if (section == 3) return 4;
+    if (section == 3) return 5;
     if (section == 4) return 1;
     return 0;
 }
@@ -219,6 +237,37 @@
         [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
         [cell.detailTextLabel setTextColor:We_foreground_gray_general];
         [cell.detailTextLabel setText:user_idNum];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    if (indexPath.section==3 &&indexPath.row==4) {
+        
+        UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 280, 40)];
+        l1.text = @"更多描述";
+        l1.font = We_font_textfield_zh_cn;
+        l1.textColor = We_foreground_black_general;
+        [cell.contentView addSubview:l1];
+        
+        if ([user_description isEqualToString:@""]) {
+            CGSize sizezz = [WeAppDelegate calcSizeForString:@"无" Font:We_font_textfield_zh_cn expectWidth:280];
+            UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.text = @"无";
+            label.font = We_font_textfield_zh_cn;
+            label.textColor = We_foreground_gray_general;
+            [cell.contentView addSubview:label];
+        }
+        else {
+            CGSize sizezz = [WeAppDelegate calcSizeForString:user_description Font:We_font_textfield_zh_cn expectWidth:280];
+            UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(16, 40, sizezz.width, sizezz.height)];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.text = user_description;
+            label.font = We_font_textfield_zh_cn;
+            label.textColor = We_foreground_gray_general;
+            [cell.contentView addSubview:label];
+        }
+        
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     if (indexPath.section == 4 && indexPath.row == 0) {
@@ -338,6 +387,8 @@
     user_age = [[NSMutableString alloc] initWithString:@""];
     user_name = [[NSMutableString alloc] initWithString:currentUser.trueName];
     user_idNum = [[NSMutableString alloc] initWithString:currentUser.idNum];
+    user_description = [[NSMutableString alloc] init];
+
     
     /*
     // Calender
@@ -552,11 +603,7 @@
  
 }*/
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 #pragma mark - apis
 
@@ -570,7 +617,8 @@
                                            @"jiahao.name":user_name,
                                            @"jiahao.idNum":user_idNum,
                                            @"jiahao.dates":dates,
-                                           @"jiahao.phone":@"18810521309"
+                                           @"jiahao.phone":currentUser.userPhone,
+                                           @"jiahao.description":user_description
                                            }
                                  success:^(id response) {
 //                                     NSString * orderId = [NSString stringWithFormat:@"%@", response[@"order"][@"id"]];
