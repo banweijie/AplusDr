@@ -128,8 +128,12 @@
             
         }
         if (path.row == 1) {
+            NSMutableString *phone=[NSMutableString stringWithString:currentUser.userPhone];
+            NSRange a={3,4};
+            [phone replaceCharactersInRange:a withString:@"****"];
+            NSString *content=[NSString stringWithFormat:@"此操作将向您的手机（%@）发送短信验证码",phone];
             
-            UIAlertView *ate=[[UIAlertView alloc]initWithTitle:@"提示" message:@"确定要修改密码么？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            UIAlertView *ate=[[UIAlertView alloc]initWithTitle:@"确定要修改密码吗？" message:content delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             alter=ate;
             [alter show];
             
