@@ -115,7 +115,12 @@
 
 - (void) checkRepeatPassword {
     if ([user_loginPassword_input.text isEqualToString:user_repeatPassword_input.text]) {
-        [self api_user_doRegister];
+        if ([we_vericode_type isEqualToString:@"NewPassword"]) {
+            [self api_user_doRegister];
+        }
+        else if ([we_vericode_type isEqualToString:@"ModifyPassword"]) {
+            [self api_user_doRegister1];
+        }
     }
     else {
         [[[UIAlertView alloc] initWithTitle:@"输入的密码有误" message:@"两次输入的密码不一致" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles:nil] show];
@@ -140,6 +145,29 @@
                                  failure:^(NSString * errorMessage) {
                                      UIAlertView * notPermitted = [[UIAlertView alloc]
                                                                    initWithTitle:@"注册失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                     [sys_pendingView stopAnimating];
+                                 }];
+}
+- (void)api_user_doRegister1 {
+    [sys_pendingView startAnimating];
+    [WeAppDelegate postToServerWithField:@"user" action:@"updateInfo"
+                              parameters:@{
+                                           @"password":[user_loginPassword_input.text md5]
+                                           }
+                                 success:^(id response) {
+                                     WeRegWlcViewController * vc = [[WeRegWlcViewController alloc]init];
+                                     [self.navigationController popToRootViewControllerAnimated:YES];
+                                     [vc api_user_login:currentUser.userPhone password:user_loginPassword_input.text];
+                                     [sys_pendingView stopAnimating];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"修改失败"
                                                                    message:errorMessage
                                                                    delegate:nil
                                                                    cancelButtonTitle:@"OK"
