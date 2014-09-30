@@ -251,7 +251,7 @@
     segControlView.backgroundColor = We_background_red_general;
     [self.view addSubview:segControlView];
     
-    UISegmentedControl * segControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"申请中", @"咨询中", @"已结束", nil]];
+    UISegmentedControl * segControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"保健医", @"申请中", @"咨询中", nil]];
     [segControl setFrame:CGRectMake(20, 7, 280, 30)];
     segControl.backgroundColor = [UIColor clearColor];
     segControl.selectedSegmentIndex = 1;
@@ -276,8 +276,28 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [self refreshData];
+    [WeAppDelegate postToServerWithField:@"patient" action:@"listFavorDoctors"
+                              parameters:@{
+                                           }
+                                 success:^(NSArray * response) {
+                                     favorDoctorList = [[NSMutableDictionary alloc] init];
+                                     for (int i = 0; i < [response count]; i++) {
+                                         WeFavorDoctor * newFavorDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:response[i]];
+                                         favorDoctorList[newFavorDoctor.userId] = newFavorDoctor;
+                                     }
+                                     
+                                     [self refreshData];
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"更新保健医列表失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                 }];
+   
 }
 
 #pragma mark - callBacks
@@ -285,12 +305,12 @@
 - (void)refreshData {
     favorDoctors = [[NSMutableArray alloc] init];
     for (WeFavorDoctor * doctor in [favorDoctorList objectEnumerator]) {
-        // 申请中
-        if (currentPage == 0 && [doctor.consultStatus isEqualToString:@"A"]) [favorDoctors addObject:doctor];
         // 咨询中
-        if (currentPage == 1 && [doctor.consultStatus isEqualToString:@"C"]) [favorDoctors addObject:doctor];
-        // 已结束
-        if (currentPage == 2 && ([doctor.consultStatus isEqualToString:@"N"] || [doctor.consultStatus isEqualToString:@"W"])) [favorDoctors addObject:doctor];
+        if (currentPage == 2 && [doctor.consultStatus isEqualToString:@"C"]) [favorDoctors addObject:doctor];
+        // 申请中
+        if (currentPage == 1 && [doctor.consultStatus isEqualToString:@"A"]) [favorDoctors addObject:doctor];
+        // 保健医
+        if (currentPage == 0 && ([doctor.consultStatus isEqualToString:@"N"] || [doctor.consultStatus isEqualToString:@"W"])) [favorDoctors addObject:doctor];
     }
     
     [favorDoctors sortUsingComparator:^NSComparisonResult(id rA, id rB) {
