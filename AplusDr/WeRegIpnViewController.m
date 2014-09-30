@@ -144,7 +144,7 @@
     sys_userAgreement_demo_button.frame = CGRectMake(172, 0, 60, 30);
     [sys_userAgreement_demo_button setTitle:@"用户协议" forState:UIControlStateNormal];
     [sys_userAgreement_demo_button.titleLabel setFont:We_font_button_zh_cn];
-    [sys_userAgreement_demo_button addTarget:self action:@selector(checkForUserAgreement:) forControlEvents:UIControlEventTouchUpInside];
+    [sys_userAgreement_demo_button addTarget:self action:@selector(checkForUserAgreement:) forControlEvents:UIControlEventTouchDown];
     [sys_userAgreement_demo addSubview:sys_userAgreement_demo_button];
     
     // Background

@@ -290,8 +290,7 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)sbar {
     [self clearSelectionCondition];
     selection_keyword = searchBar.text;
-    [searchBar resignFirstResponder];
-    [searchView setHidden:YES];
+    [self searchButton_onPress];
     [self initialDoctorList:nil];
 }
 
