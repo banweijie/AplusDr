@@ -724,15 +724,36 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[WeAppDelegate imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
     
-    // refresh Page
-    if (favorDoctorList[self.currentDoctor.userId] == nil) {
-        [button1 setTitle:@"添加为保健医" forState:UIControlStateNormal];
-        [button1 setImage:[UIImage imageNamed:@"docinfo-addfavorite"] forState:UIControlStateNormal];
-    }
-    else {
-        [button1 setTitle:@"已添加为保健医" forState:UIControlStateNormal];
-        [button1 setImage:[UIImage imageNamed:@"docinfo-favorited"] forState:UIControlStateNormal];
-    }
+    [WeAppDelegate postToServerWithField:@"patient" action:@"listFavorDoctors"
+                              parameters:@{
+                                           }
+                                 success:^(NSArray * response) {
+                                     favorDoctorList = [[NSMutableDictionary alloc] init];
+                                     for (int i = 0; i < [response count]; i++) {
+                                         WeFavorDoctor * newFavorDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:response[i]];
+                                         favorDoctorList[newFavorDoctor.userId] = newFavorDoctor;
+                                     }
+                                     
+                                     // refresh Page
+                                     if (favorDoctorList[self.currentDoctor.userId] == nil) {
+                                         [button1 setTitle:@"添加为保健医" forState:UIControlStateNormal];
+                                         [button1 setImage:[UIImage imageNamed:@"docinfo-addfavorite"] forState:UIControlStateNormal];
+                                     }
+                                     else {
+                                         [button1 setTitle:@"已添加为保健医" forState:UIControlStateNormal];
+                                         [button1 setImage:[UIImage imageNamed:@"docinfo-favorited"] forState:UIControlStateNormal];
+                                     }
+                                 }
+                                 failure:^(NSString * errorMessage) {
+                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+                                                                   initWithTitle:@"更新保健医列表失败"
+                                                                   message:errorMessage
+                                                                   delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                                     [notPermitted show];
+                                 }];
+    
 }
 
 -  (void)viewWillDisappear:(BOOL)animated {

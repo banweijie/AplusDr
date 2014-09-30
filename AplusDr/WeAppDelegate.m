@@ -632,12 +632,10 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                               parameters:@{
                                            }
                                  success:^(NSArray * response) {
+                                     favorDoctorList = [[NSMutableDictionary alloc] init];
                                      for (int i = 0; i < [response count]; i++) {
                                          WeFavorDoctor * newFavorDoctor = [[WeFavorDoctor alloc] initWithNSDictionary:response[i]];
-                                         if (favorDoctorList[newFavorDoctor.userId] == nil) {
-//                                             NSLog(@"!!!!!!New Doctor!!!!!");
-                                             favorDoctorList[newFavorDoctor.userId] = newFavorDoctor;
-                                         }
+                                         favorDoctorList[newFavorDoctor.userId] = newFavorDoctor;
                                      }
                                  }
                                  failure:^(NSString * errorMessage) {
