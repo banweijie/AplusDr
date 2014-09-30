@@ -192,7 +192,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
     }
     [[cell imageView] setContentMode:UIViewContentModeCenter];
-    
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     if (tv == tableView_view0) {
         WeCaseRecord * caseRecord = tableViewData0[indexPath.section][indexPath.row];
         cell.backgroundColor = We_foreground_white_general;
@@ -248,14 +248,7 @@
     return cell;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+
 
 - (void)viewDidLoad
 {
@@ -522,6 +515,7 @@
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
                   //NSLog(@"response : %@", HTTPResponse[@"response"]);
+                  caseRecords=[NSMutableArray array];
                   for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
                       WeCaseRecord * newCaseRecord = [[WeCaseRecord alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];
                       [caseRecords addObject:newCaseRecord];
@@ -583,6 +577,7 @@
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
                   //NSLog(@"response : %@", HTTPResponse[@"response"]);
+                  examinations=[NSMutableArray array];
                   for (int i = 0; i < [HTTPResponse[@"response"] count]; i++) {
                       WeExamination * newExamination = [[WeExamination alloc] initWithNSDictionary:HTTPResponse[@"response"][i]];
                       [examinations addObject:newExamination];
