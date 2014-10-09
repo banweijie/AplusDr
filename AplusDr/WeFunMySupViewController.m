@@ -38,7 +38,7 @@
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView rowHeight] * 2;
+    return 80;//[tableView rowHeight] * 2;
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

@@ -60,8 +60,10 @@
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) return tv.rowHeight * 1.5;
-    else return tv.rowHeight;
+    if (indexPath.row == 0)
+        return 68;
+    else
+        return tv.rowHeight;
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
