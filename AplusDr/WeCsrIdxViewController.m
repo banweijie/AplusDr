@@ -310,7 +310,7 @@
         // 申请中
         if (currentPage == 1 && [doctor.consultStatus isEqualToString:@"A"]) [favorDoctors addObject:doctor];
         // 保健医
-        if (currentPage == 0 && ([doctor.consultStatus isEqualToString:@"N"] || [doctor.consultStatus isEqualToString:@"W"])) [favorDoctors addObject:doctor];
+        if (currentPage == 0 && ([doctor.consultStatus isEqualToString:@"N"] || [doctor.consultStatus isEqualToString:@"W"]||[doctor.consultStatus isEqualToString:@"C"]||[doctor.consultStatus isEqualToString:@"A"])) [favorDoctors addObject:doctor];
     }
     
     [favorDoctors sortUsingComparator:^NSComparisonResult(id rA, id rB) {
