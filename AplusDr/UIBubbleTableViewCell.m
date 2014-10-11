@@ -93,7 +93,7 @@
         self.avatarImage.frame = CGRectMake(avatarX, avatarY, 40, 40);
         [self addSubview:self.avatarImage];
         
-        CGFloat delta = self.frame.size.height - (self.data.insets.top + self.data.insets.bottom + self.data.view.frame.size.height);
+//        CGFloat delta = self.frame.size.height - (self.data.insets.top + self.data.insets.bottom + self.data.view.frame.size.height);
         y = 0;
         
         if (type == BubbleTypeSomeoneElse) x += 54;

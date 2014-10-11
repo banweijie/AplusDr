@@ -67,7 +67,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.tabBar.selectedImageTintColor = We_foreground_red_general;
+//    self.tabBar.selectedImageTintColor = We_foreground_red_general;
     self.tabBar.tintColor = We_foreground_red_general;
     self.tabBar.translucent = YES;
     

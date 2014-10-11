@@ -46,7 +46,8 @@
 @end
 
 @implementation WeCsrJiaViewController
-
+- (void)paymentHasBeenPayed
+{}
 /*
  [AREA]
  UITableView dataSource & delegate interfaces
@@ -343,7 +344,7 @@
     
     self.navigationItem.title = @"申请加号";
     
-    UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
+//    UIBarButtonItem * user_save = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(press:)];
     //self.navigationItem.leftBarButtonItem = user_save;
     
     // sys_explaination

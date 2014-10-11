@@ -260,8 +260,8 @@
         [cell.textLabel setFont:We_font_textfield_zh_cn];
         [cell.textLabel setTextColor:We_foreground_black_general];
         NSDate * endDate = [NSDate dateWithTimeIntervalSince1970:[self.currentFunding.endTime longLongValue] / 1000];
-        NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+        NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
         NSDateComponents * the = [calendar components:unitFlags fromDate:endDate];
         [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld年%ld月%ld日", (long)the.year, (long)the.month, (long)the.day]];
         [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
@@ -655,7 +655,7 @@
          }
          else if (state == SSPublishContentStateFail)
          {
-             notice = [NSString stringWithFormat:@"分享到%@失败,错误码:%ld,错误描述:%@", name, [error errorCode], [error errorDescription]];
+             notice = [NSString stringWithFormat:@"分享到%@失败,错误码:%ld,错误描述:%@", name, (long)[error errorCode], [error errorDescription]];
              NSLog(@"%@",notice);
              
              UIAlertView *view =

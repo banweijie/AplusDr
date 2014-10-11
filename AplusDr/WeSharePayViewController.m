@@ -235,7 +235,7 @@
          }
          else if (state == SSPublishContentStateFail)
          {
-             notice = [NSString stringWithFormat:@"分享到%@失败,错误码:%ld,错误描述:%@", name, [error errorCode], [error errorDescription]];
+             notice = [NSString stringWithFormat:@"分享到%@失败,错误码:%ld,错误描述:%@", name, (long)[error errorCode], [error errorDescription]];
              NSLog(@"%@",notice);
              
              UIAlertView *view =

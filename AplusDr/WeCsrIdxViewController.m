@@ -329,7 +329,7 @@
         if ([viewedmessageListB count] == 0) return -1;
         return [(WeMessage *)viewedmessageListA[0] time] < [(WeMessage *)viewedmessageListB[0] time];
     }];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(abc) name:@"123" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(abc) name:@"123" object:nil];
     
     [sys_tableView reloadData];
 }

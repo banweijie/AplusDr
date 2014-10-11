@@ -153,8 +153,8 @@
     selectCount = 0;
     for (int i = 1; i < 30; i++) {
         NSDate * date = [NSDate dateWithTimeIntervalSince1970:([[NSDate date] timeIntervalSince1970] + 86400 * i)];
-        NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+        NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
         NSDateComponents * the = [calendar components:unitFlags fromDate:date];
         
         int k;

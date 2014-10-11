@@ -384,8 +384,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 + (NSString *)transitionToDateFromSecond:(long long)s {
     NSDate * t = [NSDate dateWithTimeIntervalSince1970:s];
     NSDate * date = [NSDate date];
-    NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     NSDateComponents * the = [calendar components:unitFlags fromDate:t];
     NSDateComponents * now = [calendar components:unitFlags fromDate:date];
     
@@ -406,8 +406,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 + (NSString *)transitionToYearAndMonthFromSecond:(long long)s {
     NSDate * t = [NSDate dateWithTimeIntervalSince1970:s];
-    NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     NSDateComponents * the = [calendar components:unitFlags fromDate:t];
     
     return [NSString stringWithFormat:@"%d年%02d月", [the year], [the month]];
