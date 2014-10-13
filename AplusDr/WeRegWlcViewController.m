@@ -398,7 +398,7 @@
                                                      [globalHelper insertToDB:message];
                                                      [WeAppDelegate DownloadImageWithURL:yijiarenImageUrl(message.content)
                                                                        successCompletion:^(id image) {
-                                                                           NSLog(@"!!!");
+//                                                                           NSLog(@"!!!");
                                                                            message.imageContent = (UIImage *)image;
                                                                            [globalHelper updateToDB:message where:nil];
                                                                        }];
@@ -414,7 +414,7 @@
                                                                       }];
                                                  }
                                                  else if ([message.messageType isEqualToString:@"X"]) {
-                                                     NSLog(@"XXXXXXXXXXXXX");
+//                                                     NSLog(@"XXXXXXXXXXXXX");
                                                      [globalHelper insertToDB:message];
                                                  }
                                              }

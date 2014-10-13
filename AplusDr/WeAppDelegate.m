@@ -76,7 +76,7 @@
                                                               @"password":[password md5]
                                                               }
           success:^(NSURLSessionDataTask *task, id responseObject) {
-              MyLog(@"登陆成功 %@",responseObject);
+//              MyLog(@"登陆成功 %@",responseObject);
               [self api_patient_listFavorDoctors];
               
           }

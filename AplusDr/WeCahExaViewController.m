@@ -330,7 +330,7 @@
                 cell.textLabel.textColor = We_foreground_black_general;
             }
             if ([examinationChanging.items count] > 0) {
-                NSLog(@"!!!");
+//                NSLog(@"!!!");
                 WeExaminationItem * item = examinationChanging.items[indexPath.row];
                 cell.backgroundColor = We_foreground_white_general;
                 cell.textLabel.text = item.config.name;
@@ -356,7 +356,7 @@
                 cell.textLabel.textColor = We_foreground_black_general;
             }
             if ([examinationChanging.items count] > 0) {
-                NSLog(@"!!!");
+//                NSLog(@"!!!");
                 WeExaminationItem * item = examinationChanging.items[indexPath.row];
                 cell.backgroundColor = We_foreground_white_general;
                 cell.textLabel.text = item.config.name;
