@@ -1,14 +1,17 @@
 //
-//  WeSendCaseViewController.m
+//  WeCahIdSelfViewController.m
 //  AplusDr
 //
-//  Created by WeDoctor on 14-8-8.
+//  Created by ejren on 14-10-13.
 //  Copyright (c) 2014年 ___PKU___. All rights reserved.
 //
 
-#import "WeSendCaseViewController.h"
+#import "WeCahIdSelfViewController.h"
+#import "WeCahIdSelfAViewController.h"
+#import "WeCahIdSelfBViewController.h"
 
-@interface WeSendCaseViewController () {
+@interface WeCahIdSelfViewController ()
+{
     UIView * view0;
     UIView * view1;
     UITableView * tableView_view0;
@@ -16,11 +19,6 @@
     UIActivityIndicatorView * sys_pendingView;
     NSMutableArray * tableViewData0;
     NSMutableArray * tableViewData1;
-    NSMutableArray * tableViewSel0;
-    NSMutableArray * tableViewSel1;
-    
-    NSMutableSet * selectedCaseRecords;
-    NSMutableSet * selectedExamination;
     
     //
     UIView * ssview0;
@@ -34,15 +32,10 @@
     
     int restWork;
 }
-
 @end
 
-@implementation WeSendCaseViewController
+@implementation WeCahIdSelfViewController
 
-/*
- [AREA]
- UIPickerView dataSource & delegate interfaces
- */
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     if (pickerView == ssview0_picker) {
         return 2;
@@ -100,29 +93,22 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path
 {
     if (tv == tableView_view0) {
-        [self selectCaseRecordsButton_onPress:tableViewSel0[path.section][path.row]];
-    }
-    if (tv == tableView_view1) {
-        [self selectExaminationButton_onPress:tableViewSel1[path.section][path.row]];
-    }
-    /*
-    if (tv == tableView_view0) {
         caseRecordChanging = tableViewData0[path.section][path.row];
         
-        WeCahCahViewController * vc = [[WeCahCahViewController alloc] init];
+        WeCahIdSelfAViewController * vc = [[WeCahIdSelfAViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
     if (tv == tableView_view1) {
         examinationChanging = tableViewData1[path.section][path.row];
         
-        WeCahExaViewController * vc = [[WeCahExaViewController alloc] init];
+        WeCahIdSelfBViewController * vc = [[WeCahIdSelfBViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
-    }*/
+    }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 68;//tv.rowHeight * 2;
+    return 90;//tv.rowHeight * 2;
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
@@ -151,7 +137,7 @@
 // 询问每个段落的尾部高度
 - (CGFloat)tableView:(UITableView *)tv heightForFooterInSection:(NSInteger)section {
     if (section == [self numberOfSectionsInTableView:tv] - 1) {
-        return 1 + self.tabBarController.tabBar.frame.size.height;
+        return 1 ;//  + self.tabBarController.tabBar.frame.size.height;
     }
     return 1;
 }
@@ -192,7 +178,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
     }
     [[cell imageView] setContentMode:UIViewContentModeCenter];
-    cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    
     if (tv == tableView_view0) {
         WeCaseRecord * caseRecord = tableViewData0[indexPath.section][indexPath.row];
         cell.backgroundColor = We_foreground_white_general;
@@ -209,15 +195,13 @@
         l2.text = caseRecord.hospitalName;
         [cell.contentView addSubview:l2];
         
-        UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(180, 0, 80, 88)];
+        UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 80, 88)];
         l3.font = We_font_textfield_zh_cn;
         l3.textColor = We_foreground_gray_general;
         l3.text = caseRecord.date;
         [cell.contentView addSubview:l3];
         
-        [cell.contentView addSubview:tableViewSel0[indexPath.section][indexPath.row]];
-        
-        //[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     else if (tv == tableView_view1) {
         WeExamination * examination = tableViewData1[indexPath.section][indexPath.row];
@@ -235,20 +219,25 @@
         l2.text = examination.hospital;
         [cell.contentView addSubview:l2];
         
-        UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(180, 0, 80, 88)];
+        UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 80, 88)];
         l3.font = We_font_textfield_zh_cn;
         l3.textColor = We_foreground_gray_general;
         l3.text = examination.date;
         [cell.contentView addSubview:l3];
         
-        [cell.contentView addSubview:tableViewSel1[indexPath.section][indexPath.row]];
-        
-        //[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     return cell;
 }
 
-
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -273,12 +262,6 @@
     // 就诊历史页面
     view0 = [[UIView alloc] initWithFrame:CGRectMake(0, 64 + 44, 320, self.view.frame.size.height - 64 - 44)];
     
-    // 就诊历史页面 - 添加按钮
-    view0AddButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [view0AddButton setFrame:CGRectMake(10, 95, 300, 50)];
-    [view0AddButton setBackgroundImage:[UIImage imageNamed:@"button-addcasehistory"] forState:UIControlStateNormal];
-    [view0AddButton addTarget:self action:@selector(view0AddButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
-    
     // 就诊历史页面 - 目录
     tableView_view0 = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, view0.frame.size.width, view0.frame.size.height) style:UITableViewStyleGrouped];
     tableView_view0.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
@@ -286,7 +269,7 @@
     tableView_view0.dataSource = self;
     tableView_view0.backgroundColor = [UIColor clearColor];
     tableView_view0.bounces = NO;
-    tableView_view0.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 155)];
+    //tableView_view0.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 155)];
     
     // 就诊历史页面 - 背景
     UIImageView * view0Header = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 155)];
@@ -315,7 +298,7 @@
     tableView_view1.backgroundColor = [UIColor clearColor];
     [view1 addSubview:tableView_view1];
     tableView_view1.bounces = NO;
-    tableView_view1.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 155)];
+    //tableView_view1.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 155)];
     
     // 就诊历史页面 - 背景
     UIImageView * view1Header = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 155)];
@@ -341,81 +324,14 @@
     [sys_pendingView setAlpha:1.0];
     [self.view addSubview:sys_pendingView];
     
-    // 添加检查结果产生的效应
-    ssview0 = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, 320, 300)];
-    
-    UIToolbar * toolBar0 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 300)];
-    [toolBar0 setTintColor:[UIColor whiteColor]];
-    toolBar0.alpha = 0.98;
-    [ssview0 addSubview:toolBar0];
-    
-    // 添加检查结果产生的效应 - 取消按钮
-    UIButton * ssview0_cancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [ssview0_cancelButton setFrame:CGRectMake(0, 15, 80, 30)];
-    [ssview0_cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-    [ssview0_cancelButton setTintColor:We_foreground_black_general];
-    [ssview0_cancelButton addTarget:self action:@selector(ssview0_shadowOrCancelButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
-    [ssview0 addSubview:ssview0_cancelButton];
-    
-    // 添加检查结果产生的效应 - 标题
-    UILabel * ssview0_titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 15, 160, 30)];
-    [ssview0_titleLabel setText:@"选择检查类型"];
-    [ssview0_titleLabel setTextColor:We_foreground_gray_general];
-    [ssview0_titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [ssview0_titleLabel setFont:We_font_textfield_zh_cn];
-    [ssview0 addSubview:ssview0_titleLabel];
-    
-    // 添加检查结果产生的效应 - 第0条线
-    UIView * ssview0_line0 = [[UIView alloc] initWithFrame:CGRectMake(20, 60, 280, 1)];
-    [ssview0_line0 setBackgroundColor:[UIColor grayColor]];
-    [ssview0_line0 setAlpha:0.5];
-    [ssview0 addSubview:ssview0_line0];
-    
-    // 添加检查结果产生的效应 - 选择器
-    ssview0_picker = [[UIPickerView alloc] initWithFrame:CGRectMake(40, 60, 240, 60)];
-    ssview0_picker.dataSource = self;
-    ssview0_picker.delegate = self;
-    //secondaryTypeKeys = [we_examinationTypes[we_examinationTypeKeys[0]] allKeys];
-    [ssview0 addSubview:ssview0_picker];
-    
-    // 添加检查结果产生的效应 - 第1条线
-    UIView * ssview0_line1 = [[UIView alloc] initWithFrame:CGRectMake(20, 240, 280, 1)];
-    [ssview0_line1 setBackgroundColor:[UIColor grayColor]];
-    [ssview0_line1 setAlpha:0.5];
-    [ssview0 addSubview:ssview0_line1];
-    
-    // 添加检查结果产生的效应 - 确认按钮
-    UIButton * ssview0_submitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [ssview0_submitButton setFrame:CGRectMake(25, 250, 270, 40)];
-    [ssview0_submitButton setBackgroundColor:We_background_red_tableviewcell];
-    [ssview0_submitButton setTintColor:We_foreground_white_general];
-    [ssview0_submitButton setTitle:@"添加检查结果" forState:UIControlStateNormal];
-    [ssview0_submitButton addTarget:self action:@selector(ssview0_submitButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
-    [ssview0 addSubview:ssview0_submitButton];
-    
-    // 添加检查结果产生的效应 - 遮罩层
-    ssview0_shadowButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [ssview0_shadowButton setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [ssview0_shadowButton setBackgroundColor:[UIColor blackColor]];
-    [ssview0_shadowButton setAlpha:0.0];
-    [ssview0_shadowButton addTarget:self action:@selector(ssview0_shadowOrCancelButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
-    [self.tabBarController.view addSubview:ssview0_shadowButton];
-    
-    [self.tabBarController.view addSubview:ssview0];
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton_onPress)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发送" style:UIBarButtonItemStylePlain target:self action:@selector(sendButton_onPress)];
-    
-    
     // 获取就诊历史和检查结果
     [sys_pendingView startAnimating];
-    restWork = 2;
+    restWork = 0;
     
-    selectedCaseRecords = [[NSMutableSet alloc] init];
-    selectedExamination = [[NSMutableSet alloc] init];
-    
-    [self getCaseRecords:self];
-    [self getExaminations:self];
+    [self api_message_viewRecordMessage];
+    /*
+     [self getCaseRecords:self];
+     [self getExaminations:self];*/
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -447,17 +363,6 @@
     }
 }
 
-// 添加就诊历史
-- (void)view0AddButton_onPress:(id)sender {
-    WeNavViewController * nav = [[WeNavViewController alloc] init];
-    
-    WeCahAddCahViewController * vc = [[WeCahAddCahViewController alloc] init];
-    vc.lastViewController = self;
-    [nav pushViewController:vc animated:NO];
-    
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
 // 取消添加就诊历史
 - (void)ssview0_shadowOrCancelButton_onPress:(id)sender {
     [UIView beginAnimations:nil context:NULL];
@@ -486,22 +391,6 @@
     ssview0.frame = rect;
     
     [UIView commitAnimations];
-}
-
-// 确认添加检查结果
-- (void)ssview0_submitButton_onPress:(id)sender {
-    WeNavViewController * nav = [[WeNavViewController alloc] init];
-    
-    WeCahAddExaViewController * vc = [[WeCahAddExaViewController alloc] init];
-    vc.lastViewController = self;
-    vc.primaryTypeKey = we_examinationTypeKeys[[ssview0_picker selectedRowInComponent:0]];
-    vc.secondaryTypeId = [NSString stringWithFormat:@"%@", we_examinationTypes[we_examinationTypeKeys[[ssview0_picker selectedRowInComponent:0]]][[ssview0_picker selectedRowInComponent:1]][@"id"]];
-    //NSLog(@"%@", vc.secondaryTypeId);
-    [nav pushViewController:vc animated:NO];
-    
-    [self presentViewController:nav animated:YES completion:nil];
-    
-    [self ssview0_shadowOrCancelButton_onPress:self];
 }
 
 - (void)getCaseRecords:(id)sender {
@@ -637,23 +526,13 @@
         return [[(WeCaseRecord *)rB date] compare:[(WeCaseRecord *)rA date]];
     }];
     tableViewData0 = [[NSMutableArray alloc] init];
-    tableViewSel0 = [[NSMutableArray alloc] init];
     int j = -1;
     for (int i = 0; i < [caseRecords count]; i ++) {
         if (i == 0 || ![[self getYearAndMonth:[(WeCaseRecord *)caseRecords[i] date]] isEqualToString:[self getYearAndMonth:[(WeCaseRecord *)caseRecords[i - 1] date]]]) {
             j ++;
             tableViewData0[j] = [[NSMutableArray alloc] init];
-            tableViewSel0[j] = [[NSMutableArray alloc] init];
         }
         [tableViewData0[j] addObject:caseRecords[i]];
-        WeInfoedButton * tmpButton = [WeInfoedButton buttonWithType:UIButtonTypeRoundedRect];
-        [tmpButton setFrame:CGRectMake(280, 34, 20, 20)];
-        [tmpButton setUserData:caseRecords[i]];
-        //[tmpButton addTarget:self action:@selector(selectCaseRecordsButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
-        [tmpButton.layer setCornerRadius:4];
-        [tmpButton.layer setBorderColor:We_foreground_red_general.CGColor];
-        [tmpButton.layer setBorderWidth:1.0f];
-        [tableViewSel0[j] addObject:tmpButton];
     }
 }
 
@@ -662,92 +541,52 @@
         return [[(WeExamination *)rB date] compare:[(WeExamination *)rA date]];
     }];
     tableViewData1 = [[NSMutableArray alloc] init];
-    tableViewSel1 = [[NSMutableArray alloc] init];
     int j = -1;
     for (int i = 0; i < [examinations count]; i ++) {
         if (i == 0 || ![[self getYearAndMonth:[(WeExamination *)examinations[i] date]] isEqualToString:[self getYearAndMonth:[(WeExamination *)examinations[i - 1] date]]]) {
             j ++;
             tableViewData1[j] = [[NSMutableArray alloc] init];
-            tableViewSel1[j] = [[NSMutableArray alloc] init];
         }
         [tableViewData1[j] addObject:examinations[i]];
-        WeInfoedButton * tmpButton = [WeInfoedButton buttonWithType:UIButtonTypeRoundedRect];
-        [tmpButton setFrame:CGRectMake(280, 34, 20, 20)];
-        [tmpButton setUserData:examinations[i]];
-        [tmpButton addTarget:self action:@selector(selectExaminationButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
-        [tmpButton.layer setCornerRadius:4];
-        [tmpButton.layer setBorderColor:We_foreground_red_general.CGColor];
-        [tmpButton.layer setBorderWidth:1.0f];
-        [tableViewSel1[j] addObject:tmpButton];
     }
 }
 
-#pragma mark - Callbacks
-
-- (void)cancelButton_onPress {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)sendButton_onPress {
-    [self api_message_postRecordMsg];
-}
-
-- (void)selectCaseRecordsButton_onPress:(WeInfoedButton *)sender {
-    WeCaseRecord * caseRecord = sender.userData;
-    if ([selectedCaseRecords containsObject:caseRecord]) {
-        [selectedCaseRecords removeObject:caseRecord];
-        [sender setBackgroundColor:[UIColor clearColor]];
-    }
-    else {
-        [selectedCaseRecords addObject:caseRecord];
-        [sender setBackgroundColor:We_background_red_general];
-    }
-}
-
-- (void)selectExaminationButton_onPress:(WeInfoedButton *)sender {
-    WeExamination * examination = sender.userData;
-    if ([selectedExamination containsObject:examination]) {
-        [selectedExamination removeObject:examination];
-        [sender setBackgroundColor:[UIColor clearColor]];
-    }
-    else {
-        [selectedExamination addObject:examination];
-        [sender setBackgroundColor:We_background_red_general];
-    }
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - APIs
 
-- (void)api_message_postRecordMsg {
+- (void)api_message_viewRecordMessage {
     [sys_pendingView startAnimating];
-    
-    NSMutableString * caseRecordsIds = [[NSMutableString alloc] init];
-    for (WeCaseRecord * caseRecord in selectedCaseRecords) {
-        [caseRecordsIds setString:[NSString stringWithFormat:@"%@,%@", caseRecordsIds, caseRecord.caseRecordId]];
-    }
-    
-    NSMutableString * examinationIds = [[NSMutableString alloc] init];
-    for (WeExamination * examination in selectedExamination) {
-        [examinationIds setString:[NSString stringWithFormat:@"%@,%@", examinationIds, examination.examId]];
-    }
-    
-    [WeAppDelegate postToServerWithField:@"message" action:@"postRecordMsg"
+    [WeAppDelegate postToServerWithField:@"message" action:@"viewRecordMessage"
                               parameters:@{
-                                           @"rm.doctorId":self.currentDoctor.userId,
-                                           @"rm.recordIds":caseRecordsIds,
-                                           @"rm.examinationIds":examinationIds
+                                           @"rmId":self.rmId
                                            }
                                  success:^(id response) {
+                                     caseRecords=[NSMutableArray array];
+                                     for (int i = 0; i < [response[@"records"] count]; i++) {
+                                         WeCaseRecord * newCaseRecord = [[WeCaseRecord alloc] initWithNSDictionary:response[@"records"][i]];
+                                         [caseRecords addObject:newCaseRecord];
+                                     }
+                                     [self preworkOnCaseRecords:self];
+                                     [tableView_view0 reloadData];
+                                     examinations=[NSMutableArray array];
+                                     for (int i = 0; i < [response[@"examinations"] count]; i++) {
+                                         
+                                         WeExamination * newExamination = [[WeExamination alloc] initWithNSDictionary:response[@"examinations"][i]];
+                                         [examinations addObject:newExamination];
+                                     }
+                                     [self preworkOnExaminations:self];
+                                     [tableView_view1 reloadData];
                                      
-                                     NSLog(@"%@",response);
-                                     WeMessage *mes=[[WeMessage alloc]initWithNSDictionary:response];
-                                     [globalHelper insertToDB:mes];
-                                     [self dismissViewControllerAnimated:YES completion:nil];
                                      
                                      [sys_pendingView stopAnimating];
                                  }
                                  failure:^(NSString * errorMessage) {
-                                     [[[UIAlertView alloc] initWithTitle:@"发送失败" message:errorMessage delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+                                     [[[UIAlertView alloc] initWithTitle:@"获取病例信息失败" message:errorMessage delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
                                      [sys_pendingView stopAnimating];
                                  }];
 }

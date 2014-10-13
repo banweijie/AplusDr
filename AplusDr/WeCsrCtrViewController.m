@@ -7,6 +7,7 @@
 //
 
 #import "WeCsrCtrViewController.h"
+#import "WeCahIdSelfViewController.h"
 #define gasp 10
 #define avatarWidth 40
 #define maxTextWidth 180
@@ -164,6 +165,8 @@
     if ([currentMessage.messageType isEqualToString:@"X"]) {
         return 40;
     }
+    else if ([currentMessage.messageType isEqualToString:@"R"])
+        return 50;
     
     // 判断是谁发出的信息
     if ([currentMessage.senderId isEqualToString:currentUser.userId]) {
@@ -212,7 +215,7 @@
             return 40 + 2 * gasp;
         }
     }
-    return [tableView rowHeight] * 2;
+    return [tableView rowHeight];
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -294,6 +297,38 @@
         [titleButton.titleLabel setFont:We_font_textfield_small_zh_cn];
         [titleButton.layer setCornerRadius:4];
         [cell.contentView addSubview:titleButton];
+    }
+    else if ([currentMessage.messageType isEqualToString:@"R"]) {
+        NSString * title = @"发送了一个病例";
+        
+        // 头像
+        UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(320 - gasp - avatarWidth, gasp, avatarWidth, avatarWidth)];
+        [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentUser.avatarPath)]];
+        [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
+        [avatarView.layer setMasksToBounds:YES];
+        [cell.contentView addSubview:avatarView];
+        
+        // 计算文字大小
+        CGSize textSize = [WeAppDelegate calcSizeForString:title Font:We_font_textfield_zh_cn expectWidth:maxTextWidth];
+        
+        // 泡泡
+        UIImageView * bubbleView = [[UIImageView alloc] initWithFrame:CGRectMake(320 - 2 * gasp - avatarWidth - (textSize.width + bubbleGaspShort + bubbleGaspLong), gasp, textSize.width + bubbleGaspShort + bubbleGaspLong, textSize.height + bubbleGaspVertical * 2)];
+        [bubbleView setImage:[[UIImage imageNamed:@"chatbubble-right"] stretchableImageWithLeftCapWidth:6 topCapHeight:30]];
+        [cell.contentView addSubview:bubbleView];
+        
+        WeInfoedButton * button = [WeInfoedButton buttonWithType:UIButtonTypeCustom];
+        [button setBackgroundColor:[UIColor clearColor]];
+        [button setFrame:CGRectMake(320 - 2 * gasp - avatarWidth - (textSize.width + bubbleGaspShort + bubbleGaspLong), gasp, textSize.width + bubbleGaspShort + bubbleGaspLong, textSize.height + bubbleGaspVertical * 2)];
+        [button setUserData:currentMessage.content];
+        [button addTarget:self action:@selector(caseRecordDetailButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
+        [button.layer setCornerRadius:4];
+        [button.layer setMasksToBounds:YES];
+        [button setTitleColor:We_foreground_black_general forState:UIControlStateNormal];
+        [button setTitle:title forState:UIControlStateNormal];
+        [button setFont:We_font_textfield_small_zh_cn];
+        [button setImage:[UIImage imageNamed:@"me-crowdfunding"] forState:UIControlStateNormal];
+        [cell.contentView addSubview:button];
+        
     }
     // 我发出的消息
     else if ([currentMessage.senderId isEqualToString:currentUser.userId]) {
@@ -1508,5 +1543,13 @@
     vc.currentDoctor = doctorChating;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+- (void)caseRecordDetailButton_onPress:(WeInfoedButton *)sender {
+    WeCahIdSelfViewController * vc = [[WeCahIdSelfViewController alloc] init];
+    vc.rmId = [sender userData];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 @end
