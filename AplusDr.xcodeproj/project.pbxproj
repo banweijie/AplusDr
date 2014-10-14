@@ -56,6 +56,8 @@
 		27CCE31E19D5512C00D692B2 /* WeSharePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CCE31D19D5512C00D692B2 /* WeSharePayViewController.m */; };
 		5410ACA519D6A30800EFA135 /* successpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5410ACA419D6A30800EFA135 /* successpay.png */; };
 		5412EBE119D7EAA300CA6C7C /* WeUserAgreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */; };
+		54F1962719ECF87200C81F46 /* WeSupConnectImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F1962619ECF87200C81F46 /* WeSupConnectImageView.m */; };
+		54F1962A19ECF8AB00C81F46 /* WeDetailImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F1962919ECF8AB00C81F46 /* WeDetailImageViewController.m */; };
 		54F8C25719EBC542005B4C4E /* WeCahIdSelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F8C25619EBC542005B4C4E /* WeCahIdSelfViewController.m */; };
 		54F8C25A19EBC7C5005B4C4E /* WeCahIdSelfAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F8C25919EBC7C5005B4C4E /* WeCahIdSelfAViewController.m */; };
 		54F8C25D19EBC987005B4C4E /* WeCahIdSelfBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F8C25C19EBC987005B4C4E /* WeCahIdSelfBViewController.m */; };
@@ -255,6 +257,10 @@
 		5410ACA419D6A30800EFA135 /* successpay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successpay.png; sourceTree = "<group>"; };
 		5412EBDF19D7EAA300CA6C7C /* WeUserAgreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeUserAgreeViewController.h; sourceTree = "<group>"; };
 		5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeUserAgreeViewController.m; sourceTree = "<group>"; };
+		54F1962519ECF87200C81F46 /* WeSupConnectImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSupConnectImageView.h; sourceTree = "<group>"; };
+		54F1962619ECF87200C81F46 /* WeSupConnectImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSupConnectImageView.m; sourceTree = "<group>"; };
+		54F1962819ECF8AB00C81F46 /* WeDetailImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeDetailImageViewController.h; sourceTree = "<group>"; };
+		54F1962919ECF8AB00C81F46 /* WeDetailImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeDetailImageViewController.m; sourceTree = "<group>"; };
 		54F8C25519EBC542005B4C4E /* WeCahIdSelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCahIdSelfViewController.h; sourceTree = "<group>"; };
 		54F8C25619EBC542005B4C4E /* WeCahIdSelfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeCahIdSelfViewController.m; sourceTree = "<group>"; };
 		54F8C25819EBC7C5005B4C4E /* WeCahIdSelfAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeCahIdSelfAViewController.h; sourceTree = "<group>"; };
@@ -929,6 +935,8 @@
 				272FDB6319D14F7800FF7956 /* WePickerSelectView.m */,
 				27CCE31C19D5512C00D692B2 /* WeSharePayViewController.h */,
 				27CCE31D19D5512C00D692B2 /* WeSharePayViewController.m */,
+				54F1962519ECF87200C81F46 /* WeSupConnectImageView.h */,
+				54F1962619ECF87200C81F46 /* WeSupConnectImageView.m */,
 			);
 			name = CustomsView;
 			sourceTree = "<group>";
@@ -1077,6 +1085,8 @@
 				54F8C25919EBC7C5005B4C4E /* WeCahIdSelfAViewController.m */,
 				54F8C25B19EBC987005B4C4E /* WeCahIdSelfBViewController.h */,
 				54F8C25C19EBC987005B4C4E /* WeCahIdSelfBViewController.m */,
+				54F1962819ECF8AB00C81F46 /* WeDetailImageViewController.h */,
+				54F1962919ECF8AB00C81F46 /* WeDetailImageViewController.m */,
 			);
 			name = "咨询室";
 			sourceTree = "<group>";
@@ -1418,6 +1428,7 @@
 				900E2995193223B8008BF61C /* WeExaminationItemConfig.m in Sources */,
 				9026EEF61904EE5500CE4A7A /* WeRegWlcViewController.m in Sources */,
 				90B31A7F19582C0000A19CD7 /* WeParagraphModifyViewController.m in Sources */,
+				54F1962A19ECF8AB00C81F46 /* WeDetailImageViewController.m in Sources */,
 				9028C5B319825C5F003CA70F /* WePecMyaViewController.m in Sources */,
 				906F4DD81973D0AD007807FE /* SBJSON.m in Sources */,
 				9026EEFB1904EE5500CE4A7A /* WePecIdxViewController.m in Sources */,
@@ -1451,6 +1462,7 @@
 				906F4DDA1973D0AD007807FE /* SBJsonParser.m in Sources */,
 				9026EEFC1904EE5500CE4A7A /* WePecPeaViewController.m in Sources */,
 				27A2A7DD19CBDD5100BFAB3A /* WeFgtSetPaswdViewController.m in Sources */,
+				54F1962719ECF87200C81F46 /* WeSupConnectImageView.m in Sources */,
 				90B31A6319554BCA00A19CD7 /* WeFunDetViewController.m in Sources */,
 				27A2A7DA19CBDB8200BFAB3A /* WeFgtInpViewController.m in Sources */,
 				90A198F119614C7400C43534 /* WeInfoedTextField.m in Sources */,

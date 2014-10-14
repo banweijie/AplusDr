@@ -158,7 +158,7 @@
                                                  // 图片消息
                                                  else if ([message.messageType isEqualToString:@"I"]) {
                                                      [globalHelper insertToDB:message];
-                                                     [WeAppDelegate DownloadImageWithURL:yijiarenImageUrl(message.content)
+                                                     [WeAppDelegate DownloadImageWithURL:yijiarenImageThumbUrl(message.content)
                                                                        successCompletion:^(id image) {
                                                                            NSLog(@"!!!");
                                                                            message.imageContent = (UIImage *)image;
@@ -572,7 +572,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                              // 图片消息
                                              else if ([message.messageType isEqualToString:@"I"]) {
                                                  [globalHelper insertToDB:message];
-                                                 [WeAppDelegate DownloadImageWithURL:yijiarenImageUrl(message.content)
+                                                 [WeAppDelegate DownloadImageWithURL:yijiarenImageThumbUrl(message.content)
                                                                    successCompletion:^(id image) {
                                                                       // NSLog(@"!!!");
                                                                        message.imageContent = (UIImage *)image;

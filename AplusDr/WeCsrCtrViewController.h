@@ -22,6 +22,8 @@
 #import "WeCsrDciViewController.h"
 #import "WeConsultDetailViewController.h"
 #import "WeSendCaseViewController.h"
+#import "WeSupConnectImageView.h"
+#import "WeDetailImageViewController.h"
 
 @interface WeCsrCtrViewController : UIViewController  <UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
 

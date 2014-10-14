@@ -22,6 +22,7 @@
 @property(nonatomic) BOOL loading;
 @property(nonatomic) BOOL sending;
 @property(nonatomic) BOOL failed;
+@property(strong, nonatomic) UIImage * detImageContent;
 
 @property(strong, nonatomic) UIImage * imageContent;
 @property(strong, nonatomic) NSData * audioContent;
