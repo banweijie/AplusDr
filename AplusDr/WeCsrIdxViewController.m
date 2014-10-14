@@ -308,6 +308,7 @@
 
 - (void)refreshData {
     favorDoctors = [[NSMutableArray alloc] init];
+    int b=0;
     for (WeFavorDoctor * doctor in [favorDoctorList objectEnumerator]) {
         // 咨询中
         if (currentPage == 2 && [doctor.consultStatus isEqualToString:@"C"]) [favorDoctors addObject:doctor];
@@ -315,7 +316,19 @@
         if (currentPage == 1 && [doctor.consultStatus isEqualToString:@"A"]) [favorDoctors addObject:doctor];
         // 保健医
         if (currentPage == 0 && ([doctor.consultStatus isEqualToString:@"N"] || [doctor.consultStatus isEqualToString:@"W"]||[doctor.consultStatus isEqualToString:@"C"]||[doctor.consultStatus isEqualToString:@"A"])) [favorDoctors addObject:doctor];
+        
+        NSMutableArray * unviewedMessageList = [globalHelper search:[WeMessage class]
+                                                              where:[NSString stringWithFormat:@"((senderId = %@ or receiverId = %@) and viewed = 0)", doctor.userId, doctor.userId]
+                                                            orderBy:@"time desc"
+                                                             offset:0
+                                                              count:101];
+        
+        int a=[unviewedMessageList count];
+        b+=a;
+
     }
+    numOfIcon=b;
+
     
     [favorDoctors sortUsingComparator:^NSComparisonResult(id rA, id rB) {
         WeFavorDoctor * doctorA = rA, * doctorB = rB;

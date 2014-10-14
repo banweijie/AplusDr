@@ -96,6 +96,9 @@ WeRecordDrug * recordDrugChanging;
 WeExamination * examinationChanging;
 WeExaminationItem * itemChanging;
 
+int numOfIcon;//图标徽章
+
+
 
 BOOL addflag;
 BOOL showflag;
