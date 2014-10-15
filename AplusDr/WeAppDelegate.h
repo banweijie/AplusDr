@@ -96,8 +96,8 @@ WeRecordDrug * recordDrugChanging;
 WeExamination * examinationChanging;
 WeExaminationItem * itemChanging;
 
-int numOfIcon;//图标徽章
-
+int numOfIcon;//图标徽章数量
+UIImageView *messageFlag;//咨询室的消息提示
 
 
 BOOL addflag;

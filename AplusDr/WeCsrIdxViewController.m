@@ -328,6 +328,13 @@
 
     }
     numOfIcon=b;
+    if (numOfIcon>0) {
+        messageFlag.alpha=0.8;
+    }
+    else
+    {
+        messageFlag.alpha=0;
+    }
 
     
     [favorDoctors sortUsingComparator:^NSComparisonResult(id rA, id rB) {
