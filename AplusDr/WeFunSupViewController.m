@@ -79,12 +79,7 @@
     WeFundingLevel * currentLevel = levels[indexPath.section];
 
     UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 220 - 16, 60)];
-    if ([currentLevel.type isEqualToString:@"E"]) {
-        l1.text = currentLevel.way;
-    }
-    else {
-        l1.text = [NSString stringWithFormat:@"支持 ￥%@", currentLevel.money];
-    }
+   
     l1.font = We_font_textfield_large_zh_cn;
     l1.textColor = We_foreground_red_general;
     [cell.contentView addSubview:l1];
@@ -115,6 +110,28 @@
     label.textColor = We_foreground_gray_general;
     [cell.contentView addSubview:label];
     
+    supportButton.userInteractionEnabled=YES;
+    if ([currentLevel.type isEqualToString:@"C"]) {
+        l1.text = currentLevel.way;
+    }
+    else if ([currentLevel.type isEqualToString:@"D"])
+    {
+        l1.text=@"成为合伙人";
+        label.frame=CGRectMake(16, 60,300 , 15);
+        label.text=@"成为合伙人，留下联系方式，我们会联系您";
+    }
+    else if ([currentLevel.type isEqualToString:@"E"])
+    {
+        l1.text= [NSString stringWithFormat:@"咨询档 ￥%@", currentLevel.money];
+        label.frame=CGRectMake(16, 60,300 , 15);
+        label.text=@"可以通过支持众筹获取在线咨询机会";
+        supportButton.userInteractionEnabled=NO;
+        [supportButton setTitle:[NSString stringWithFormat:@"已支持(%@)", currentLevel.supportCount] forState:UIControlStateNormal];
+    }
+    else {
+        l1.text = [NSString stringWithFormat:@"支持 ￥%@", currentLevel.money];
+    }
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -170,7 +187,7 @@
     levels = [[NSMutableArray alloc] init];
     for (int i = 0; i < [self.currentFunding.levels count]; i++) {
         WeFundingLevel * currentLevel = self.currentFunding.levels[i];
-        if ([currentLevel.type isEqualToString:@"B"] || [currentLevel.type isEqualToString:@"E"]) {
+        if ([currentLevel.open isEqualToString:@"1"]) {
             [levels addObject:currentLevel];
         }
     }
