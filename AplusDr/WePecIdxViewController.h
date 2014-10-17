@@ -12,6 +12,7 @@
 #import "WeCahIdxViewController.h"
 #import "WeJiaMangementIndexViewController.h"
 #import "WePecMyaViewController.h"
+#import "WeAboutUsViewController.h"
 
 @interface WePecIdxViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

@@ -62,6 +62,10 @@
         WePecTrhViewController * vc = [[WePecTrhViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
+    if (path.section == 4 && path.row == 0) {
+        WeAboutUsViewController * vc = [[WeAboutUsViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -94,7 +98,7 @@
 }
 // 询问共有多少个段落
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv {
-    return 4;
+    return 5;
 }
 // 询问每个段落有多少条目
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {

@@ -56,6 +56,8 @@
 		27CCE31E19D5512C00D692B2 /* WeSharePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CCE31D19D5512C00D692B2 /* WeSharePayViewController.m */; };
 		5410ACA519D6A30800EFA135 /* successpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5410ACA419D6A30800EFA135 /* successpay.png */; };
 		5412EBE119D7EAA300CA6C7C /* WeUserAgreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */; };
+		544BAE1A19F0C08400392B93 /* WeAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 544BAE1919F0C08400392B93 /* WeAboutUsViewController.m */; };
+		54A13FDC19F0F11C0001C0E7 /* WeAboutDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A13FDB19F0F11C0001C0E7 /* WeAboutDownViewController.m */; };
 		54F1962719ECF87200C81F46 /* WeSupConnectImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F1962619ECF87200C81F46 /* WeSupConnectImageView.m */; };
 		54F1962A19ECF8AB00C81F46 /* WeDetailImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F1962919ECF8AB00C81F46 /* WeDetailImageViewController.m */; };
 		54F8C25719EBC542005B4C4E /* WeCahIdSelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F8C25619EBC542005B4C4E /* WeCahIdSelfViewController.m */; };
@@ -257,6 +259,10 @@
 		5410ACA419D6A30800EFA135 /* successpay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successpay.png; sourceTree = "<group>"; };
 		5412EBDF19D7EAA300CA6C7C /* WeUserAgreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeUserAgreeViewController.h; sourceTree = "<group>"; };
 		5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeUserAgreeViewController.m; sourceTree = "<group>"; };
+		544BAE1819F0C08400392B93 /* WeAboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeAboutUsViewController.h; sourceTree = "<group>"; };
+		544BAE1919F0C08400392B93 /* WeAboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeAboutUsViewController.m; sourceTree = "<group>"; };
+		54A13FDA19F0F11C0001C0E7 /* WeAboutDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeAboutDownViewController.h; sourceTree = "<group>"; };
+		54A13FDB19F0F11C0001C0E7 /* WeAboutDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeAboutDownViewController.m; sourceTree = "<group>"; };
 		54F1962519ECF87200C81F46 /* WeSupConnectImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSupConnectImageView.h; sourceTree = "<group>"; };
 		54F1962619ECF87200C81F46 /* WeSupConnectImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSupConnectImageView.m; sourceTree = "<group>"; };
 		54F1962819ECF8AB00C81F46 /* WeDetailImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeDetailImageViewController.h; sourceTree = "<group>"; };
@@ -688,6 +694,17 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		544BAE1719F0C05100392B93 /* 关于我们 */ = {
+			isa = PBXGroup;
+			children = (
+				544BAE1819F0C08400392B93 /* WeAboutUsViewController.h */,
+				544BAE1919F0C08400392B93 /* WeAboutUsViewController.m */,
+				54A13FDA19F0F11C0001C0E7 /* WeAboutDownViewController.h */,
+				54A13FDB19F0F11C0001C0E7 /* WeAboutDownViewController.m */,
+			);
+			name = "关于我们";
+			sourceTree = "<group>";
+		};
 		900E29461929B44C008BF61C /* VoiceConvert */ = {
 			isa = PBXGroup;
 			children = (
@@ -967,6 +984,7 @@
 		9026EF141904EF8300CE4A7A /* 个人中心 */ = {
 			isa = PBXGroup;
 			children = (
+				544BAE1719F0C05100392B93 /* 关于我们 */,
 				27A2A7DE19CBFE6D00BFAB3A /* 我的余额 */,
 				90A19C1A198B8F3E0024FD41 /* 我的加号 */,
 				90A19C19198B060C0024FD41 /* 我的众筹 */,
@@ -1401,6 +1419,7 @@
 				2744909A19CD4DC0006C1BAD /* MJRefreshBaseView.m in Sources */,
 				906F4DED1974502C007807FE /* WeConsult.m in Sources */,
 				90A19C21198B8F870024FD41 /* WeJiaMangementIndexViewController.m in Sources */,
+				54A13FDC19F0F11C0001C0E7 /* WeAboutDownViewController.m in Sources */,
 				9028C5B9198262A8003CA70F /* WeJiahao.m in Sources */,
 				90B31A4F194BF61B00A19CD7 /* WePatient.m in Sources */,
 				27CCE31E19D5512C00D692B2 /* WeSharePayViewController.m in Sources */,
@@ -1423,6 +1442,7 @@
 				900E29791931900D008BF61C /* WeRecordDrug.m in Sources */,
 				900E29981935F7C2008BF61C /* WeImageViewerViewController.m in Sources */,
 				90F0CE7D1926C86F006A4605 /* WeCsrSelViewController.m in Sources */,
+				544BAE1A19F0C08400392B93 /* WeAboutUsViewController.m in Sources */,
 				900E297C1931BDF3008BF61C /* WeTextCoding.m in Sources */,
 				900E298C19320B92008BF61C /* WeCahExaViewController.m in Sources */,
 				900E2995193223B8008BF61C /* WeExaminationItemConfig.m in Sources */,

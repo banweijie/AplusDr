@@ -533,6 +533,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 //        NSLog(@"\nInitial Data:%@", HTTPResponse);
         we_examinationTypeKeys = [we_codings[@"examinationType"] allKeys];
         we_examinationTypes = HTTPResponse[@"response"][@"examinationTypes"];
+        we_appVersion=HTTPResponse[@"response"][@"appVersion"];
         we_secondaryTypeKeyToValue = [[NSMutableDictionary alloc] init];
         we_secondaryTypeKeyToData = [[NSMutableDictionary alloc] init];
         for (int i = 0; i < [we_examinationTypeKeys count]; i++) {
@@ -541,7 +542,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                 we_secondaryTypeKeyToData[[WeAppDelegate toString:secondaryTypeId(i, j)]] = secondaryTypeData(i, j);
             }
         }
-        //NSLog(@"%@", we_secondaryTypeKeyToData);
         return;
     }
     UIAlertView *notPermitted = [[UIAlertView alloc]
@@ -551,6 +551,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                  cancelButtonTitle:@"OK"
                                  otherButtonTitles:nil];
     [notPermitted show];
+    
+
 }
 
 - (void)refreshMessage:(id)sender {
