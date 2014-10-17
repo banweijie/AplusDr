@@ -156,6 +156,7 @@
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)path
 {
+    [inputTextField resignFirstResponder];
     [tableView deselectRowAtIndexPath:path animated:YES];
 }
 // 询问每个cell的高度
