@@ -909,9 +909,13 @@
 
 - (void)playAudio:(WeInfoedButton *)sender {
     NSError * error;
+    UInt32 doChangeDefaultRoute = 1;
+    AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,sizeof(doChangeDefaultRoute), &doChangeDefaultRoute);
+
     self.audioPlayer = [[AVAudioPlayer alloc] initWithData:[(WeMessage *)sender.userData audioContent] error:&error];
     self.audioPlayer.delegate = self;
-    self.audioPlayer.volume = 10.0f;
+    self.audioPlayer.volume = 1.0f;
+    [self.audioPlayer prepareToPlay];
     if (error != nil) {
         NSLog(@"Wrong init player:%@", error);
     }else{

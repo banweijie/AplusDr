@@ -7,6 +7,7 @@
 //
 
 #import "WeFunSup2ViewController.h"
+#import "WeSharePayViewController.h"
 
 @interface WeFunSup2ViewController () {
     UIActivityIndicatorView * sys_pendingView;
@@ -154,12 +155,6 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 220 - 16, 60)];
-        if ([currentLevel.type isEqualToString:@"E"]) {
-            l1.text = currentLevel.way;
-        }
-        else {
-            l1.text = [NSString stringWithFormat:@"支持 ￥%@", currentLevel.money];
-        }
         l1.font = We_font_textfield_large_zh_cn;
         l1.textColor = We_foreground_red_general;
         [cell.contentView addSubview:l1];
@@ -185,6 +180,20 @@
         label.font = We_font_textfield_zh_cn;
         label.textColor = We_foreground_gray_general;
         [cell.contentView addSubview:label];
+        
+        if ([currentLevel.type isEqualToString:@"C"]) {
+            l1.text = currentLevel.way;
+        }
+        else if ([currentLevel.type isEqualToString:@"D"])
+        {
+            l1.text=@"成为合伙人";
+            label.frame=CGRectMake(16, 60,300 , 15);
+            label.text=@"成为合伙人，留下联系方式，我们会联系您";
+        }
+        else {
+            l1.text = [NSString stringWithFormat:@"支持 ￥%@", currentLevel.money];
+        }
+
     }
     if (indexPath.section == 1) {
         if ([infoList count] == 0) {
@@ -375,6 +384,18 @@
                                          
                                          self.currentLevel.supportCount = [NSString stringWithFormat:@"%d", [self.currentLevel.supportCount intValue] + 1];
                                          self.currentFunding.supportCount = [NSString stringWithFormat:@"%d", [self.currentFunding.supportCount intValue] + 1];
+//                                         [self.navigationController popViewControllerAnimated:YES];
+//                                         UIAlertView * notPermitted = [[UIAlertView alloc]
+//                                                                       initWithTitle:@"支持成功"
+//                                                                       message:@"您已成功支持"
+//                                                                       delegate:nil
+//                                                                       cancelButtonTitle:@"OK"
+//                                                                       otherButtonTitles:nil];
+//                                         [notPermitted show];
+                                         
+                                         WeSharePayViewController *share=[[WeSharePayViewController alloc]init];
+                                         share.fundingId=_currentFunding.fundingId;
+                                         [self.navigationController pushViewController:share animated:YES];
                                          
                                      }
                                      else {

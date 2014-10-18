@@ -105,13 +105,13 @@
                                      [self api_user_refreshUser];
                                  }
                                  failure:^(NSString * errorMessage) {
-                                     UIAlertView * notPermitted = [[UIAlertView alloc]
-                                                                   initWithTitle:@"获取保健医列表失败"
-                                                                   message:errorMessage
-                                                                   delegate:nil
-                                                                   cancelButtonTitle:@"OK"
-                                                                   otherButtonTitles:nil];
-                                     [notPermitted show];
+//                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+//                                                                   initWithTitle:@"获取保健医列表失败"
+//                                                                   message:errorMessage
+//                                                                   delegate:nil
+//                                                                   cancelButtonTitle:@"OK"
+//                                                                   otherButtonTitles:nil];
+//                                     [notPermitted show];
                                  }];
 }
 

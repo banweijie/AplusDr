@@ -85,6 +85,14 @@
         [self api_patient_finishOrder];
     }
 }
+-(void)setFundingId:(NSString *)fundingId
+{
+    if (_fundingId!=fundingId) {
+        _fundingId=fundingId;
+        [self api_patient_finishOrder1:_fundingId];
+    }
+
+}
 - (void)api_patient_finishOrder {
 //    /http://test.ejren.com/patient/viewOrder.action?orderId=141180200649800098
     [WeAppDelegate postToServerWithField:@"patient" action:@"viewOrder"
@@ -155,8 +163,12 @@
     
     NSString *contentString = funding.introduction;
     NSString *titleString   =[NSString stringWithFormat:@"我在医家仁用%@元支持了该众筹项目,你也赶紧来吧！",amount];
-    NSString *titleString1   =[NSString stringWithFormat:@"我在医家仁用%@元支持了“%@”,你也赶紧来吧！",amount,funding.title];
+    NSString *titleString1  =[NSString stringWithFormat:@"我在医家仁用%@元支持了“%@”,你也赶紧来吧！",amount,funding.title];
 
+    if (amount==nil) {
+        titleString   =[NSString stringWithFormat:@"我在医家仁支持了该众筹项目,你也赶紧来吧！"];
+        titleString1  =[NSString stringWithFormat:@"我在医家仁支持了“%@”,你也赶紧来吧！",funding.title];
+    }
     //[NSString stringWithFormat:@"%@-%@", funding.title ,funding.subTitle];
     NSString *urlString     = yijiarenShareURL(funding.fundingId);
     NSString *description   = @"Sample";
