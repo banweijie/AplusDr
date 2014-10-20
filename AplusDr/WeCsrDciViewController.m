@@ -545,9 +545,9 @@
     
     // 初始化变量
     notice = self.currentDoctor.notice;
-    if ([notice isEqualToString:@"<null>"]) notice = @"该医生未设置公告";
+    if ([notice isEqualToString:@"<null>"]||[notice isEqualToString:@""]) notice = @"该医生未设置公告";
     groupIntro = self.currentDoctor.groupIntro;
-    if ([groupIntro isEqualToString:@"<null>"]) groupIntro = @"该医生未设置团队介绍";
+    if ([groupIntro isEqualToString:@"<null>"]||[groupIntro isEqualToString:@""]) groupIntro = @"该医生未设置团队介绍";
     
     currentPage = 1;
     

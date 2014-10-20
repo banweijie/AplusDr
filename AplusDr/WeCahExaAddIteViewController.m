@@ -166,7 +166,7 @@
     // Do any additional setup after loading the view.
     
     self.navigationItem.title = @"检查条目详情";
-    
+    [self registerForKeyboardNotifications];
     // 背景图片
     UIImageView * bg = [[UIImageView alloc] initWithFrame:self.view.frame];
     bg.image = [UIImage imageNamed:@"Background-2"];
@@ -182,7 +182,7 @@
     [self.view addSubview:sys_tableView];
     
     // 选择框初始化
-    sys_pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(20, 0, 280, 216)];
+    sys_pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(20, 0, 280, 160)];
     sys_pickerView.delegate = self;
     
     if (itemChanging == nil) {
@@ -423,22 +423,32 @@
           }
      ];
 }
-
-- (void)didReceiveMemoryWarning
+-(void)viewWillDisappear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewWillDisappear:animated];
+    [self keyboardWasHidden:nil];
+}
+- (void) registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
+- (void) keyboardWasShown:(NSNotification *) notif
+{
+//    NSDictionary *info = [notif userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+//    CGSize keyboardSize = [value CGRectValue].size;
+//    
+//    NSLog(@"keyBoard:%f", keyboardSize.height);  //216
+//    [UIView animateWithDuration:0.3 animations:^{
+//        sys_tableView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-keyboardSize.height);
+//    }];
+    [sys_tableView setContentOffset:CGPointMake(0, 60) animated:YES];
+}
+- (void) keyboardWasHidden:(NSNotification *) notif
+{
+    [sys_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
+}
 @end
