@@ -155,7 +155,7 @@ NSString * we_wkp_dayOfWeek;
 NSString * we_wkp_periodOfDay;
 NSString * we_wkp_typeOfPeriod;
 NSString * we_pea_gender;
-NSString * we_doctorChating;
+WeFavorDoctor * we_doctorChating;
 
 NSMutableDictionary * we_avatars;
 NSMutableDictionary * we_doctors;

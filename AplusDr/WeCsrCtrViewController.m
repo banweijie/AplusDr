@@ -502,7 +502,7 @@
         if ([currentMessage.messageType isEqualToString:@"I"]) {
             // 头像
             UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(gasp, gasp, avatarWidth, avatarWidth)];
-            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(doctorChating.avatarPath)]];
+            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(we_doctorChating.avatarPath)]];
             [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
             [avatarView.layer setMasksToBounds:YES];
             [cell.contentView addSubview:avatarView];
@@ -539,7 +539,7 @@
         if ([currentMessage.messageType isEqualToString:@"A"]) {
             // 头像
             UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(gasp, gasp, avatarWidth, avatarWidth)];
-            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(doctorChating.avatarPath)]];
+            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(we_doctorChating.avatarPath)]];
             [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
             [avatarView.layer setMasksToBounds:YES];
             [cell.contentView addSubview:avatarView];
@@ -605,7 +605,7 @@
 - (void)refreshMessage:(BOOL)forced {
     // 从数据库中提取信息
     NSMutableArray * messageList = [globalHelper search:[WeMessage class]
-                                                  where:[NSString stringWithFormat:@"(senderId = %@ and receiverId = %@) or (senderId = %@ and receiverId = %@)", currentUser.userId, doctorChating.userId, doctorChating.userId, currentUser.userId]
+                                                  where:[NSString stringWithFormat:@"(senderId = %@ and receiverId = %@) or (senderId = %@ and receiverId = %@)", currentUser.userId, we_doctorChating.userId, we_doctorChating.userId, currentUser.userId]
                                                 orderBy:nil
                                                  offset:0
                                                   count:1000];
@@ -645,7 +645,7 @@
     WeMessage * message = [[WeMessage alloc] init];
     message.messageType = @"T";
     message.senderId = currentUser.userId;
-    message.receiverId = doctorChating.userId;
+    message.receiverId = we_doctorChating.userId;
     message.content = inputTextField.text;
     message.time = [[NSDate date] timeIntervalSince1970];
     message.failed = NO;
@@ -681,7 +681,7 @@
     WeMessage * message = [[WeMessage alloc] init];
     message.messageType = @"I";
     message.senderId = currentUser.userId;
-    message.receiverId = doctorChating.userId;
+    message.receiverId = we_doctorChating.userId;
     message.imageContent = image;
     message.time = [[NSDate date] timeIntervalSince1970];
     message.failed = NO;
@@ -718,7 +718,7 @@
     WeMessage * message = [[WeMessage alloc] init];
     message.messageType = @"A";
     message.senderId = currentUser.userId;
-    message.receiverId = doctorChating.userId;
+    message.receiverId = we_doctorChating.userId;
     message.audioContent = wavData;
     message.time = [[NSDate date] timeIntervalSince1970];
     message.failed = NO;
@@ -932,13 +932,13 @@
     // 双方头像获取
     avatar1 = [[UIImage alloc] init];
     
-    [WeAppDelegate DownloadImageWithURL:yijiarenAvatarUrl(self.doctorChating.avatarPath) successCompletion:^(UIImage * image) {
+    [WeAppDelegate DownloadImageWithURL:yijiarenAvatarUrl(we_doctorChating.avatarPath) successCompletion:^(UIImage * image) {
         avatar1 = image;
         [chatTableView reloadData];
     }];
     
     
-    we_doctorChating = [NSString stringWithFormat:@"%@", we_doctorChating];
+//    we_we_doctorChating = [NSString stringWithFormat:@"%@", we_we_doctorChating];
     currentKeyboardState = 0;
     currentInputMode = 0;
     // Setup Timer
@@ -1325,8 +1325,8 @@
 // 查看咨询申请详情按钮被按下
 - (void)consultApllyButton_onPress {
     WeConsultDetailViewController * vc = [[WeConsultDetailViewController alloc] init];
-    vc.consultId = self.doctorChating.currentConsultId;
-    vc.currentDoctor = self.doctorChating;
+    vc.consultId = we_doctorChating.currentConsultId;
+    vc.currentDoctor = we_doctorChating;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -1355,14 +1355,14 @@
 - (void)newConsultButton_onPress:(id)sender {
     WeCsrCosViewController * vc = [[WeCsrCosViewController alloc] init];
     vc.pushType = @"consultingRoom";
-    vc.currentDoctor = self.doctorChating;
+    vc.currentDoctor = we_doctorChating;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 // 申请加号按钮被按下
 - (void)newAppointmentButton_onPress:(id)sender {
     WeCsrJiaViewController * vc = [[WeCsrJiaViewController alloc] init];
-    vc.currentDoctor = self.doctorChating;
+    vc.currentDoctor = we_doctorChating;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -1371,7 +1371,7 @@
     WeNavViewController * nav = [[WeNavViewController alloc] init];
     
     WeSendCaseViewController * vc = [[WeSendCaseViewController alloc] init];
-    vc.currentDoctor = self.doctorChating;
+    vc.currentDoctor = we_doctorChating;
     
     [nav pushViewController:vc animated:NO];
     
@@ -1516,22 +1516,22 @@
     [self refreshMessage:forced];
     [self refreshKeyboard];
     
-    self.navigationItem.title = [NSString stringWithFormat:@"%@(%@)", doctorChating.userName, doctorChating.consultStatus];
-    if ([doctorChating.consultStatus isEqualToString:@"A"]) {
-        self.navigationItem.title = [NSString stringWithFormat:@"%@(申请咨询中)", doctorChating.userName];
+    self.navigationItem.title = [NSString stringWithFormat:@"%@(%@)", we_doctorChating.userName, we_doctorChating.consultStatus];
+    if ([we_doctorChating.consultStatus isEqualToString:@"A"]) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%@(申请咨询中)", we_doctorChating.userName];
     }
-    if ([doctorChating.consultStatus isEqualToString:@"N"]) {
-        self.navigationItem.title = [NSString stringWithFormat:@"%@", doctorChating.userName];
+    if ([we_doctorChating.consultStatus isEqualToString:@"N"]) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%@", we_doctorChating.userName];
     }
-    if ([doctorChating.consultStatus isEqualToString:@"C"]) {
-        self.navigationItem.title = [NSString stringWithFormat:@"%@(咨询中)", doctorChating.userName];
+    if ([we_doctorChating.consultStatus isEqualToString:@"C"]) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%@(咨询中)", we_doctorChating.userName];
     }
-    if ([doctorChating.consultStatus isEqualToString:@"W"]) {
-        self.navigationItem.title = [NSString stringWithFormat:@"%@(等待支付)", doctorChating.userName];
+    if ([we_doctorChating.consultStatus isEqualToString:@"W"]) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%@(等待支付)", we_doctorChating.userName];
     }
     
     NSMutableArray * unviewedMessageList = [globalHelper search:[WeMessage class]
-                                                          where:[NSString stringWithFormat:@"((senderId = %@ or receiverId = %@)and viewed = 0)", self.doctorChating.userId, self.doctorChating.userId]
+                                                          where:[NSString stringWithFormat:@"((senderId = %@ or receiverId = %@)and viewed = 0)", we_doctorChating.userId, we_doctorChating.userId]
                                                         orderBy:@"time desc"
                                                          offset:0
                                                           count:101];
@@ -1543,7 +1543,7 @@
 }
 
 - (void)refreshKeyboard {
-    if ([self.doctorChating.consultStatus isEqualToString:@"A"]) {
+    if ([we_doctorChating.consultStatus isEqualToString:@"A"]) {
         [consultApplyView setHidden:NO];
     }
     else {
@@ -1551,7 +1551,7 @@
     }
     
     [newConsultOrPlusView setHidden:YES];
-    if (doctorChating.sendable || [doctorChating.consultStatus isEqualToString:@"C"]) {
+    if (we_doctorChating.sendable || [we_doctorChating.consultStatus isEqualToString:@"C"]) {
         [newConsultOrPlusView setHidden:YES];
     }
     else {
@@ -1566,7 +1566,7 @@
 #pragma mark - Callbacks
 - (void)othersAvatarOnPress {
     WeCsrDciViewController * vc = [[WeCsrDciViewController alloc] init];
-    vc.currentDoctor = doctorChating;
+    vc.currentDoctor = we_doctorChating;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -616,14 +616,17 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                                      if ([message.content characterAtIndex:i] == '=') {
                                                          NSString * left = [message.content substringToIndex:i];
                                                          NSString * right = [message.content substringFromIndex:i + 1];
-//                                                         NSLog(@"%@ %@", left, right);
                                                          if ([left isEqualToString:@"consultStatus"]) {
                                                              WeFavorDoctor * currentDoctor = favorDoctorList[message.senderId];
                                                              currentDoctor.consultStatus = right;
+                                                             we_doctorChating.consultStatus=currentDoctor.consultStatus;
+                                                             we_doctorChating.currentConsultId=currentDoctor.currentConsultId;
                                                          }
                                                          if ([left isEqualToString:@"sendable"]) {
                                                              WeFavorDoctor * currentDoctor = favorDoctorList[message.senderId];
                                                              currentDoctor.sendable = [right isEqualToString:@"1"];
+                                                             we_doctorChating.sendable=currentDoctor.sendable;
+                                                             we_doctorChating.currentConsultId=currentDoctor.currentConsultId;
                                                          }
                                                      }
                                                  }

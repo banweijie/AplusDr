@@ -18,6 +18,8 @@
     NSMutableArray * favorDoctors;
     
     int currentPage;
+    
+    NSIndexPath * selectpath;
 }
 
 @end
@@ -33,12 +35,17 @@
 
 // 选中某个Cell触发的事件
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)path {
+    if (selectpath.section==path.section) {
+        return;
+    }
+    else{
     we_doctorChating = favorDoctors[path.section];
-    
+//    NSLog(@"favorDoctors %@ we_doctorChating %@",favorDoctors,we_doctorChating);
     WeCsrCtrViewController * vc = [[WeCsrCtrViewController alloc] init];
     vc.doctorChating = favorDoctors[path.section];
     [self.navigationController pushViewController:vc animated:YES];
-    
+    selectpath=path;
+    }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
 
@@ -234,6 +241,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
+    selectpath=[NSIndexPath indexPathForItem:-1 inSection:-1];
 }
 
 - (void)viewDidLoad {
