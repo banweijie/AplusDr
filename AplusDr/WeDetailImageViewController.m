@@ -130,6 +130,7 @@
 }
 -(void)saveImageToAlbum
 {
+    [sys_pendingView startAnimating];
     UIImageWriteToSavedPhotosAlbum(_imgView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);//保存图片到本地相册
 }
 
@@ -142,5 +143,7 @@
         UIAlertView *photoSave = [[UIAlertView alloc] initWithTitle:@"保存成功" message:nil delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
         [photoSave show];
     }
+    [sys_pendingView stopAnimating];
+
 }
 @end
