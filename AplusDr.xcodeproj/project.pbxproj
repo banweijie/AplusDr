@@ -56,6 +56,7 @@
 		27CCE31E19D5512C00D692B2 /* WeSharePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CCE31D19D5512C00D692B2 /* WeSharePayViewController.m */; };
 		5410ACA519D6A30800EFA135 /* successpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5410ACA419D6A30800EFA135 /* successpay.png */; };
 		5412EBE119D7EAA300CA6C7C /* WeUserAgreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */; };
+		5435F1F719F50AD5001866E2 /* WeFunTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5435F1F619F50AD5001866E2 /* WeFunTitle.m */; };
 		544BAE1A19F0C08400392B93 /* WeAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 544BAE1919F0C08400392B93 /* WeAboutUsViewController.m */; };
 		54A13FDC19F0F11C0001C0E7 /* WeAboutDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A13FDB19F0F11C0001C0E7 /* WeAboutDownViewController.m */; };
 		54F1962719ECF87200C81F46 /* WeSupConnectImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F1962619ECF87200C81F46 /* WeSupConnectImageView.m */; };
@@ -259,6 +260,8 @@
 		5410ACA419D6A30800EFA135 /* successpay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successpay.png; sourceTree = "<group>"; };
 		5412EBDF19D7EAA300CA6C7C /* WeUserAgreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeUserAgreeViewController.h; sourceTree = "<group>"; };
 		5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeUserAgreeViewController.m; sourceTree = "<group>"; };
+		5435F1F519F50AD5001866E2 /* WeFunTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunTitle.h; sourceTree = "<group>"; };
+		5435F1F619F50AD5001866E2 /* WeFunTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunTitle.m; sourceTree = "<group>"; };
 		544BAE1819F0C08400392B93 /* WeAboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeAboutUsViewController.h; sourceTree = "<group>"; };
 		544BAE1919F0C08400392B93 /* WeAboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeAboutUsViewController.m; sourceTree = "<group>"; };
 		54A13FDA19F0F11C0001C0E7 /* WeAboutDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeAboutDownViewController.h; sourceTree = "<group>"; };
@@ -954,6 +957,8 @@
 				27CCE31D19D5512C00D692B2 /* WeSharePayViewController.m */,
 				54F1962519ECF87200C81F46 /* WeSupConnectImageView.h */,
 				54F1962619ECF87200C81F46 /* WeSupConnectImageView.m */,
+				5435F1F519F50AD5001866E2 /* WeFunTitle.h */,
+				5435F1F619F50AD5001866E2 /* WeFunTitle.m */,
 			);
 			name = CustomsView;
 			sourceTree = "<group>";
@@ -1443,6 +1448,7 @@
 				900E29981935F7C2008BF61C /* WeImageViewerViewController.m in Sources */,
 				90F0CE7D1926C86F006A4605 /* WeCsrSelViewController.m in Sources */,
 				544BAE1A19F0C08400392B93 /* WeAboutUsViewController.m in Sources */,
+				5435F1F719F50AD5001866E2 /* WeFunTitle.m in Sources */,
 				900E297C1931BDF3008BF61C /* WeTextCoding.m in Sources */,
 				900E298C19320B92008BF61C /* WeCahExaViewController.m in Sources */,
 				900E2995193223B8008BF61C /* WeExaminationItemConfig.m in Sources */,
