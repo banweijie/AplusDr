@@ -225,6 +225,8 @@ weTargetView we_targetView;
 #define yijiarenUrl(field, action) [NSString stringWithFormat:@"%@/%@/%@.action", yijiarenServer, field, action]
 #define yijiarenImageServer we_imagePaths[@"imgServer"]
 #define yijiarenAvatarUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"avatarPath"], fileName]
+#define yijiarenAvatarOriginUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"avatarOriginPath"], fileName]
+
 #define yijiarenCertUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"certPath"], fileName]
 #define yijiarenImageUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"imagePath"], fileName]
 #define yijiarenImageThumbUrl(fileName) [NSString stringWithFormat:@"%@%@%@", yijiarenImageServer, we_imagePaths[@"imageThumbPath"], fileName]

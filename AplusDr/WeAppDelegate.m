@@ -536,6 +536,12 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         we_appVersion=HTTPResponse[@"response"][@"appVersion"];
         we_secondaryTypeKeyToValue = [[NSMutableDictionary alloc] init];
         we_secondaryTypeKeyToData = [[NSMutableDictionary alloc] init];
+        NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+        NSString *appVersion = [infoDic objectForKey:@"CFBundleVersion"];
+        if (![we_appVersion isEqualToString:appVersion]) {
+            UIAlertView *alter=[[UIAlertView alloc]initWithTitle:@"发现新版本" message:@"有新版本，是否现在更新？" delegate:self cancelButtonTitle:@"以后" otherButtonTitles:@"现在更新", nil];
+            [alter show];
+        }
         for (int i = 0; i < [we_examinationTypeKeys count]; i++) {
             for (int j = 0; j < [we_examinationTypes[we_examinationTypeKeys[i]] count]; j++) {
                 we_secondaryTypeKeyToValue[[WeAppDelegate toString:secondaryTypeId(i, j)]] = secondaryTypeName(i, j);
@@ -551,8 +557,13 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                  cancelButtonTitle:@"OK"
                                  otherButtonTitles:nil];
     [notPermitted show];
-    
-
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        NSString *str = @"itms-apps://itunes.apple.com/cn/app/yi-jia-ren/id908641829";
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    }
 }
 
 - (void)refreshMessage:(id)sender {

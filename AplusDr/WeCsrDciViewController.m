@@ -655,7 +655,7 @@
     
     // 头像背景图片
     UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
-    [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(self.currentDoctor.avatarPath)]];
+    [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarOriginUrl(self.currentDoctor.avatarPath)]];
     [avatarView setContentMode:UIViewContentModeScaleAspectFill];
     [posterView addSubview:avatarView];
     
