@@ -79,7 +79,8 @@
     [manager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"yijiaren"];
     [manager POST:yijiarenUrl(@"user", @"login") parameters:@{
                                                               @"phone":phone,
-                                                              @"password":[password md5]
+                                                              @"password":[password md5],
+                                                              @"type":@"P"
                                                               }
           success:^(NSURLSessionDataTask *task, id responseObject) {
 //              MyLog(@"登陆成功 %@",responseObject);

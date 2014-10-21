@@ -300,7 +300,8 @@
     [WeAppDelegate postToServerWithField:@"user" action:@"login"
                               parameters:@{
                                            @"phone":phone,
-                                           @"password":[password md5]
+                                           @"password":[password md5],
+                                           @"type":@"P"
                                            }
                                  success:^(NSDictionary * response) {
                                      [ILUserDefaults setObject:phone forKey:USERNAME];

@@ -308,7 +308,7 @@
     
     // 筛选
     selectView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 64, 320, 200)];
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 5; i++) {
         WeInfoedButton * optionButton = [WeInfoedButton buttonWithType:UIButtonTypeRoundedRect];
         [optionButton setFrame:CGRectMake(0, 40 * i, 320, 40)];
         [optionButton setTintColor:We_foreground_black_general];
