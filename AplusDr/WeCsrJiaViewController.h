@@ -12,8 +12,9 @@
 #import "WeCsrJiaChooseTimeViewController.h"
 #import "WeSentenceModifyViewController.h"
 #import "WeGenderPickerViewController.h"
+#import "WeSelectRecordersViewController.h"
 
-@interface WeCsrJiaViewController : UIViewController <WePaymentCallback, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface WeCsrJiaViewController : UIViewController <WePaymentCallback, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,WeSelectRecordersViewDelegrate>
 
 @property(strong, nonatomic) WeDoctor * currentDoctor;
 

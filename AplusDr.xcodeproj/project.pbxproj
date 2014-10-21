@@ -57,6 +57,7 @@
 		5410ACA519D6A30800EFA135 /* successpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5410ACA419D6A30800EFA135 /* successpay.png */; };
 		5412EBE119D7EAA300CA6C7C /* WeUserAgreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */; };
 		5435F1F719F50AD5001866E2 /* WeFunTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5435F1F619F50AD5001866E2 /* WeFunTitle.m */; };
+		54480FB119F62EC800309628 /* WeSelectRecordersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54480FB019F62EC800309628 /* WeSelectRecordersViewController.m */; };
 		544BAE1A19F0C08400392B93 /* WeAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 544BAE1919F0C08400392B93 /* WeAboutUsViewController.m */; };
 		54A13FDC19F0F11C0001C0E7 /* WeAboutDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A13FDB19F0F11C0001C0E7 /* WeAboutDownViewController.m */; };
 		54F1962719ECF87200C81F46 /* WeSupConnectImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F1962619ECF87200C81F46 /* WeSupConnectImageView.m */; };
@@ -262,6 +263,8 @@
 		5412EBE019D7EAA300CA6C7C /* WeUserAgreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeUserAgreeViewController.m; sourceTree = "<group>"; };
 		5435F1F519F50AD5001866E2 /* WeFunTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeFunTitle.h; sourceTree = "<group>"; };
 		5435F1F619F50AD5001866E2 /* WeFunTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeFunTitle.m; sourceTree = "<group>"; };
+		54480FAF19F62EC800309628 /* WeSelectRecordersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeSelectRecordersViewController.h; sourceTree = "<group>"; };
+		54480FB019F62EC800309628 /* WeSelectRecordersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeSelectRecordersViewController.m; sourceTree = "<group>"; };
 		544BAE1819F0C08400392B93 /* WeAboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeAboutUsViewController.h; sourceTree = "<group>"; };
 		544BAE1919F0C08400392B93 /* WeAboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeAboutUsViewController.m; sourceTree = "<group>"; };
 		54A13FDA19F0F11C0001C0E7 /* WeAboutDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeAboutDownViewController.h; sourceTree = "<group>"; };
@@ -1027,6 +1030,8 @@
 				900E2965192FE8DC008BF61C /* WeCsrCosSelGenViewController.m */,
 				90266C3A19276CEC00478A89 /* WeCsrJiaViewController.h */,
 				90266C3B19276CEC00478A89 /* WeCsrJiaViewController.m */,
+				54480FAF19F62EC800309628 /* WeSelectRecordersViewController.h */,
+				54480FB019F62EC800309628 /* WeSelectRecordersViewController.m */,
 				907D5B42192016580006EAE0 /* 咨询室 */,
 				906F4DEF19756443007807FE /* WeCsrJiaChooseTimeViewController.h */,
 				906F4DF019756443007807FE /* WeCsrJiaChooseTimeViewController.m */,
@@ -1429,6 +1434,7 @@
 				90B31A4F194BF61B00A19CD7 /* WePatient.m in Sources */,
 				27CCE31E19D5512C00D692B2 /* WeSharePayViewController.m in Sources */,
 				907D5B4C19202BC10006EAE0 /* WeCsrDciViewController.m in Sources */,
+				54480FB119F62EC800309628 /* WeSelectRecordersViewController.m in Sources */,
 				900E295B1929B44C008BF61C /* VoiceConverter.mm in Sources */,
 				900EB75B195945EB006BBA04 /* WeOrder.m in Sources */,
 				906F4DDB1973D0AD007807FE /* SBJsonWriter.m in Sources */,
