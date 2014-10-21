@@ -578,6 +578,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                            }
                                  success:^(NSArray * response) {
                                      for (int i = 0; i < [response count]; i++) {
+                                         messageFlag.alpha=0.8;
                                          WeMessage * message = [[WeMessage alloc] initWithNSDictionary:response[i]];
                                          if ([message.messageId longLongValue] > lastMessageId) {
                                              lastMessageId = [message.messageId longLongValue];
