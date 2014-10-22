@@ -55,7 +55,7 @@
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 90;//tv.rowHeight * 2;
+    return 100;//tv.rowHeight * 2;
 }
 // 询问每个段落的头部高度
 - (CGFloat)tableView:(UITableView *)tv heightForHeaderInSection:(NSInteger)section {
@@ -144,7 +144,7 @@
     [l1 setText:currentJiahao.doctor.userName];
     [cell.contentView addSubview:l1];
     
-    UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(80, 40, 220, 40)];
+    UILabel * l3 = [[UILabel alloc] initWithFrame:CGRectMake(80, 40, 220, 50)];
     [l3 setFont:We_font_textfield_small_zh_cn];
     [l3 setTextColor:We_foreground_gray_general];
     [l3 setTextAlignment:NSTextAlignmentLeft];

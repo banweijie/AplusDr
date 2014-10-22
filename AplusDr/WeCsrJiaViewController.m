@@ -122,7 +122,7 @@
 }
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 2) return 51;//tv.rowHeight * 1.5; //sys_calenderView.frame.size.height;
+    if (indexPath.section == 2) return 60;//tv.rowHeight * 1.5; //sys_calenderView.frame.size.height;
     if (indexPath.section==3 &&indexPath.row==5) {
         if ([user_description isEqualToString:@""]) {
             return [WeAppDelegate calcSizeForString:@"无" Font:We_font_textfield_zh_cn expectWidth:280].height + 60;

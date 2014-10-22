@@ -41,13 +41,13 @@
         selectCount --;
     }
     else {
-        if (selectCount < 2) {
+        if (selectCount < 3) {
             selectList[path.row] = @"YES";
             selectCount ++;
         }
         else {
             UIAlertView * notPermitted = [[UIAlertView alloc]
-                                          initWithTitle:@"最多选择两个备选加号时间"
+                                          initWithTitle:@"最多选择三个备选加号时间"
                                           message:nil
                                           delegate:nil
                                           cancelButtonTitle:@"OK"
