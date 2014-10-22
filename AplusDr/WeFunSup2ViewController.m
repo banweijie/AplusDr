@@ -20,6 +20,7 @@
     NSMutableString * info_address;
     NSMutableString * info_email;
     NSMutableString * info_description;
+    NSMutableString * info_zipcode;
 }
 
 @end
@@ -67,6 +68,13 @@
             vc.stringToBeTitle = @"寄件地址";
             [self.navigationController pushViewController:vc animated:YES];
         }
+        if ([infoList[indexPath.row] isEqualToString:@"zipcode"]) {
+            WeSentenceModifyViewController * vc = [[WeParagraphModifyViewController alloc] init];
+            vc.stringToModify = info_zipcode;
+            vc.stringToPlaceHolder = @"尚未填写邮编";
+            vc.stringToBeTitle = @"邮政编码";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
         if ([infoList[indexPath.row] isEqualToString:@"description"]) {
             WeParagraphModifyViewController * vc = [[WeParagraphModifyViewController alloc] init];
             vc.stringToModify = info_description;
@@ -95,6 +103,7 @@
             CGSize sizezz = [tmpString sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
             return sizezz.height + 60;
         }
+        
         if ([infoList[indexPath.row] isEqualToString:@"description"]) {
             NSString * tmpString = info_description;
             if ([info_description isEqualToString:@""]) tmpString = @"尚未填写自我介绍";
@@ -244,6 +253,21 @@
                 [cell.detailTextLabel setTextColor:We_foreground_gray_general];
                 [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             }
+            if ([infoList[indexPath.row] isEqualToString:@"zipcode"]) {
+                [cell.textLabel setText:@"邮政编码"];
+                if (![info_zipcode isEqualToString:@""]) {
+                    [cell.detailTextLabel setText:info_zipcode];
+                }
+                else {
+                    [cell.detailTextLabel setText:@"尚未填写邮编"];
+                }
+                [cell.textLabel setFont:We_font_textfield_zh_cn];
+                [cell.textLabel setTextColor:We_foreground_black_general];
+                [cell.detailTextLabel setFont:We_font_textfield_zh_cn];
+                [cell.detailTextLabel setTextColor:We_foreground_gray_general];
+                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            }
+
             if ([infoList[indexPath.row] isEqualToString:@"address"]) {
                 UILabel * l1 = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 220 - 16, 40)];
                 [l1 setText:@"寄送地址"];
@@ -342,6 +366,7 @@
     if (currentLevel.needPhone) [infoList addObject:@"phone"];
     if (currentLevel.needEmail) [infoList addObject:@"email"];
     if (currentLevel.needAddress) [infoList addObject:@"address"];
+    if (currentLevel.needAddress) [infoList addObject:@"zipcode"];
     if (currentLevel.needDescription) [infoList addObject:@"description"];
     
     // 初始化各输入框
@@ -351,6 +376,7 @@
     info_email = [NSMutableString stringWithString:@""];
     info_address = [NSMutableString stringWithString:@""];
     info_description = [NSMutableString stringWithString:@""];
+    info_zipcode=[NSMutableString stringWithString:@""];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -375,7 +401,7 @@
                                            @"fs.address":info_address,
                                            @"fs.phone":info_phone,
                                            @"fs.description":info_description,
-                                           @"fs.zip":@"100871"
+                                           @"fs.zip":info_zipcode
                                            }
                                  success:^(id response) {
 //                                     NSLog(@"%@", response);
