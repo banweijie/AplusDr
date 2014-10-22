@@ -271,11 +271,12 @@
                 break;
             case 1:
                 cell.contentView.backgroundColor = We_background_cell_general;
-                if ([self.currentDoctor.workPeriod isEqualToString:@"<null>"]) {
+                if ([self.currentDoctor.workPeriod isEqualToString:@"<null>"]||[self.currentDoctor.workPeriod isEqualToString:@""]) {
                     cell.textLabel.text = @"该医生没有设置出诊时间";
                 }
                 else {
-                    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [WeAppDelegate transitionDayOfWeekFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 1, 1)]], [WeAppDelegate transitionPeriodOfDayFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 2, 1)]]];
+                    int inde=[indexPath row] *4;
+                    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [WeAppDelegate transitionDayOfWeekFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(inde + 1, 1)]], [WeAppDelegate transitionPeriodOfDayFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(inde+ 2, 1)]]];
                     cell.detailTextLabel.text = [WeAppDelegate transitionTypeOfPeriodFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 3, 1)]];
                 }
                 cell.textLabel.font = We_font_textfield_zh_cn;
@@ -745,13 +746,13 @@
                                      }
                                  }
                                  failure:^(NSString * errorMessage) {
-                                     UIAlertView * notPermitted = [[UIAlertView alloc]
-                                                                   initWithTitle:@"更新保健医列表失败"
-                                                                   message:errorMessage
-                                                                   delegate:nil
-                                                                   cancelButtonTitle:@"OK"
-                                                                   otherButtonTitles:nil];
-                                     [notPermitted show];
+//                                     UIAlertView * notPermitted = [[UIAlertView alloc]
+//                                                                   initWithTitle:@"更新保健医列表失败"
+//                                                                   message:errorMessage
+//                                                                   delegate:nil
+//                                                                   cancelButtonTitle:@"OK"
+//                                                                   otherButtonTitles:nil];
+//                                     [notPermitted show];
                                  }];
     
 }
