@@ -32,7 +32,12 @@
 // 询问每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     WeFundingLevel * currentLevel = levels[indexPath.section];
-    CGSize sizezz = [currentLevel.repay sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:5];
+    
+    NSDictionary *attribute = @{NSFontAttributeName: We_font_textfield_zh_cn,
+                                NSParagraphStyleAttributeName:paragraphStyle1};
+    CGSize sizezz = [currentLevel.repay boundingRectWithSize:CGSizeMake(280, 9999) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
     return sizezz.height + 80;
 }
 // 询问每个段落的头部高度
@@ -101,13 +106,24 @@
     [supportButton addTarget:self action:@selector(supportButton_onPress:) forControlEvents:UIControlEventTouchUpInside];
     [cell.contentView addSubview:supportButton];
     
-    CGSize sizezz = [currentLevel.repay sizeWithFont:We_font_textfield_zh_cn constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:NSLineBreakByWordWrapping];
-    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(16, 60, sizezz.width, sizezz.height)];
+    UILabel * label = [[UILabel alloc] init];
     label.numberOfLines = 0;
     label.lineBreakMode = NSLineBreakByWordWrapping;
     label.text = currentLevel.repay;
     label.font = We_font_textfield_zh_cn;
     label.textColor = We_foreground_gray_general;
+    NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString: currentLevel.repay];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:5];
+    [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [currentLevel.repay length])];
+    [label setAttributedText:attributedString1];
+    
+    NSDictionary *attribute = @{NSFontAttributeName: We_font_textfield_zh_cn,
+                                NSParagraphStyleAttributeName:paragraphStyle1};
+    CGSize sizezz = [currentLevel.repay boundingRectWithSize:CGSizeMake(280, 9999) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+
+    label.frame=CGRectMake(16, 60, sizezz.width, sizezz.height);
+    
     [cell.contentView addSubview:label];
     
     supportButton.userInteractionEnabled=YES;
