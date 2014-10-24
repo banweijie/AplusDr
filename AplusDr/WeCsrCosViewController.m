@@ -379,55 +379,6 @@
     [sys_tableView reloadData];
 }
 
-#pragma mark - callBacks
--(void)paymentHasBeenPayed {
-//    NSLog(@"!!!!!!!!");
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
--(void)paymentResult:(NSString *)resultd
-{
-    //结果处理
-#if ! __has_feature(objc_arc)
-    AlixPayResult* result = [[[AlixPayResult alloc] initWithString:resultd] autorelease];
-#else
-    AlixPayResult* result = [[AlixPayResult alloc] initWithString:resultd];
-#endif
-	if (result)
-    {
-		
-		if (result.statusCode == 9000)
-        {
-			/*
-			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
-			 */
-            
-            //交易成功
-            NSString* key = AlipayPubKey;//签约帐户后获取到的支付宝公钥
-			id<DataVerifier> verifier;
-            verifier = CreateRSADataVerifier(key);
-            
-			if ([verifier verifyString:result.resultString withSign:result.signString])
-            {
-                NSLog(@"success!");
-                [self paymentHasBeenPayed];
-                //验证签名成功，交易结果无篡改
-			}
-        }
-        else
-        {
-            NSLog(@"fail!");
-            //交易失败
-        }
-    }
-    else
-    {
-        NSLog(@"fail!");
-        //失败
-    }
-    
-}
 
 /*
 #pragma mark - Navigation
