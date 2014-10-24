@@ -289,7 +289,7 @@
     }
     if (currentPage == 2) {
         cell.backgroundColor = [UIColor clearColor];
-
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
         if (indexPath.section == 0 && self.currentDoctor.currentFunding == nil) {
             
         }
@@ -336,13 +336,13 @@
             }
             
             // 头像
-            UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(245, 160, 50, 50)];
-            [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
-            [avatarView.layer setMasksToBounds:YES];
-            [avatarView.layer setBorderWidth:0.5];
-            [avatarView.layer setBorderColor:We_foreground_black_general.CGColor];
-            [cell.contentView addSubview:avatarView];
-            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentFunding.initiator.avatarPath)]];
+//            UIImageView * avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(245, 160, 50, 50)];
+//            [avatarView.layer setCornerRadius:avatarView.frame.size.height / 2];
+//            [avatarView.layer setMasksToBounds:YES];
+//            [avatarView.layer setBorderWidth:0.5];
+//            [avatarView.layer setBorderColor:We_foreground_black_general.CGColor];
+//            [cell.contentView addSubview:avatarView];
+//            [avatarView setImageWithURL:[NSURL URLWithString:yijiarenAvatarUrl(currentFunding.initiator.avatarPath)]];
             
             // 主标题栏
             UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake(30, 220 + 5 + 20, 260, [WeAppDelegate calcSizeForString:currentFunding.title Font:We_font_textfield_large_zh_cn expectWidth:260].height)];
@@ -351,12 +351,6 @@
             [title setTextColor:We_foreground_black_general];
             [cell.contentView addSubview:title];
             
-            // 医生信息
-            UILabel * docInfo = [[UILabel alloc] initWithFrame:CGRectMake(30, 220 + 5 + 20 * 2 + [WeAppDelegate calcSizeForString:currentFunding.title Font:We_font_textfield_large_zh_cn expectWidth:260].height, 200, 20)];
-            [docInfo setText:[NSString stringWithFormat:@"%@   %@", currentFunding.initiator.userName, currentFunding.initiator.hospitalName]];
-            [docInfo setFont:We_font_textfield_zh_cn];
-            [docInfo setTextColor:We_foreground_gray_general];
-            [cell.contentView addSubview:docInfo];
             
             // 同业支持
             UILabel * likeInfo = [[UILabel alloc] initWithFrame:CGRectMake(190, 220 + 5 + 20 * 2 + [WeAppDelegate calcSizeForString:currentFunding.title Font:We_font_textfield_large_zh_cn expectWidth:260].height, 100, 20)];
