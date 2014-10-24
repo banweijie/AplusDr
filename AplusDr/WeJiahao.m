@@ -10,7 +10,7 @@
 
 @implementation WeJiahao
 
-
+@synthesize descriptions;
 - (WeJiahao *)initWithNSDictionary:(NSDictionary *)info {
     [self setWithNSDictionary:info];
     return self;
@@ -46,6 +46,8 @@
     self.idNum = [NSString stringWithFormat:@"%@", info[@"idNum"]];
     self.gender = [NSString stringWithFormat:@"%@", info[@"gender"]];
     if (info[@"status"] != [NSNull null]) self.status = [NSString stringWithFormat:@"%@", info[@"status"]];
+    self.descriptions=[NSString stringWithFormat:@"%@", info[@"description"]];
+
 }
 
 - (NSString *)transitionPeriodOfDayFromChar:(NSString *)PeriodOfDay {
