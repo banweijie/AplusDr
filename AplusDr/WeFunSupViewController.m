@@ -133,8 +133,6 @@
     else if ([currentLevel.type isEqualToString:@"D"])
     {
         l1.text=@"成为合伙人";
-        label.frame=CGRectMake(16, 60,300 , 15);
-        label.text=@"成为合伙人，留下联系方式，我们会联系您";
     }
     else if ([currentLevel.type isEqualToString:@"E"])
     {
