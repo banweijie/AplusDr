@@ -1679,7 +1679,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AplusDr/AplusDr-Prefix.pch";
 				INFOPLIST_FILE = "AplusDr/AplusDr-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AplusDr/arm/lib",
@@ -1693,7 +1693,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a08c26ef-c310-4384-b1d2-b76573d601b2";
+				PROVISIONING_PROFILE = "8210fc8a-1dc7-49f8-8d2e-176bac5a111f";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -1707,7 +1707,7 @@
 				ARCHS = armv7;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Ruiyihuizhong Information Consultation Co., Ltd. (8S6MY9YM27)";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ShareSDK/Connection",
@@ -1720,7 +1720,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AplusDr/AplusDr-Prefix.pch";
 				INFOPLIST_FILE = "AplusDr/AplusDr-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AplusDr/arm/lib",
@@ -1734,7 +1734,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a08c26ef-c310-4384-b1d2-b76573d601b2";
+				PROVISIONING_PROFILE = "8210fc8a-1dc7-49f8-8d2e-176bac5a111f";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -1758,6 +1758,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "AplusDrTests/AplusDrTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -1778,6 +1779,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AplusDr/AplusDr-Prefix.pch";
 				INFOPLIST_FILE = "AplusDrTests/AplusDrTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";

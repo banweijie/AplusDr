@@ -283,6 +283,7 @@
                 cell.textLabel.textColor = We_foreground_black_general;
                 cell.detailTextLabel.font = We_font_textfield_zh_cn;
                 cell.detailTextLabel.textColor = We_foreground_gray_general;
+                cell.selectionStyle=UITableViewCellSelectionStyleNone;
             default:
                 break;
         }

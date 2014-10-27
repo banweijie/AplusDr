@@ -200,6 +200,7 @@
         cell.detailTextLabel.text = [WeAppDelegate transitionTypeOfPeriodFromChar:[self.currentDoctor.workPeriod substringWithRange:NSMakeRange(4 * indexPath.row + 3, 1)]];
         cell.detailTextLabel.font = We_font_textfield_zh_cn;
         cell.detailTextLabel.textColor = We_foreground_gray_general;
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     if (indexPath.section == 2) {
         [cell.textLabel setNumberOfLines:0];
