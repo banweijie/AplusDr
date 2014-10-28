@@ -143,6 +143,10 @@
         we_logined = NO;
         currentUser = nil;
         favorDoctorList = nil;
+        
+        [ILUserDefaults setObject:nil forKey:USERNAME];
+        [ILUserDefaults setObject:nil forKey:USERPASSWD];
+        
         [self.tabBarController setSelectedIndex:weTabBarIdMainPage];
         [self.tabBarController.viewControllers[0] popToRootViewControllerAnimated:YES];
         //TODO
