@@ -117,7 +117,7 @@
     if (section == 0) return 1;
     if (section == 1)
     {
-        if ([currentOrder.type isEqualToString:@"C"]) {
+        if ([currentOrder.type isEqualToString:@"C"]||[currentOrder.type isEqualToString:@"T"]) {
             return 5;
         }
         return 1;
@@ -243,6 +243,37 @@
             if (indexPath.row==0) {
                 cell.textLabel.text=@"众筹支付咨询申请信息";
             }
+            if (indexPath.row==1) {
+                if ([currentConsult.gender isEqualToString:@"M"]) {
+                    cell.textLabel.text=@"性别：男";
+                }
+                else
+                {
+                    cell.textLabel.text=@"性别：女";
+                }
+            }
+            if (indexPath.row==2) {
+                cell.textLabel.text=[NSString stringWithFormat:@"年龄：%@ ",currentConsult.age];
+            }
+            if (indexPath.row==3) {
+                if (currentConsult.emergent) {
+                    cell.textLabel.text=@"是否加急：是";
+                }
+                else
+                {
+                    cell.textLabel.text=@"是否加急：否";
+                }
+            }
+            if (indexPath.row==4) {
+                if ([currentConsult.description isEqualToString:@""]) {
+                    cell.textLabel.text=@"详细描述：无";
+                }
+                else
+                {
+                    cell.textLabel.text=[NSString stringWithFormat:@"详细描述：%@",currentConsult.description];
+                }
+            }
+
         }
         
     }
@@ -390,7 +421,7 @@
                                  success:^(id response) {
                                      orderDic=response;
                                      currentOrder = [[WeOrder alloc] initWithNSDictionary:response];
-                                     if ([currentOrder.type isEqualToString:@"C"]) {
+                                     if ([currentOrder.type isEqualToString:@"C"]||[currentOrder.type isEqualToString:@"T"]) {
                                          currentConsult = [[WeConsult alloc] initWithNSDictionary:response[@"foreignObject"]];
                                          
                                      }

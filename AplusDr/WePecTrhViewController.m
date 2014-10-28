@@ -114,6 +114,10 @@
     else if ([currentOrder.type isEqualToString:@"J"]) {
         [l1 setText:@"加号预诊"];
     }
+    else if ([currentOrder.type isEqualToString:@"T"])
+    {
+       [l1 setText:@"众筹支付在线咨询"];
+    }
     [cell.contentView addSubview:l1];
     
     UILabel * l2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 38, 200, 40)];
@@ -200,7 +204,7 @@
     [self.view addSubview:sys_tableView];
     
     // 访问获取众筹详情列表
-    [self api_patient_listOrders];
+//    [self api_patient_listOrders];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

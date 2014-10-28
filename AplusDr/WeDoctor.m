@@ -29,6 +29,7 @@
 @synthesize currentFundingSum;
 @synthesize currentFundingSupportCount;
 @synthesize currentFundingType;
+@synthesize Funding;
 
 - (WeDoctor *)initWithNSDictionary:(NSDictionary *)info {
     [self setWithNSDictionary:info];
@@ -55,7 +56,25 @@
     [self setPlusPrice:[NSString stringWithFormat:@"%@", info[@"plusPrice"]]];
     [self setWorkPeriod:[NSString stringWithFormat:@"%@", info[@"workPeriod"]]];
     self.languages = [NSString stringWithFormat:@"%@", info[@"languages"]];
-    
+    [self setFunding:info[@"currentFunding"]];
+    if(info[@"currentFunding"]!=[NSNull null])
+    {
+        if (info[@"currentFunding"][@"consultLevelId"] != [NSNull null]) {
+            [self setFundingId:info[@"currentFunding"][@"consultLevelId"]];
+            [self setFundingPrice:info[@"currentFunding"][@"consultLevel"][@"money"]];
+        }
+        else
+        {
+            [self setFundingId:@""];
+            [self setFundingPrice:@""];
+        }
+    }
+    else
+    {
+        [self setFundingId:@""];
+        [self setFundingPrice:@""];
+    }
+  
     /*
     if (![info[@"currentFunding"] isEqual:[NSNull null]]) {
         self.currentFundingId = [NSString stringWithFormat:@"%@", info[@"currentFunding"][@"id"]];

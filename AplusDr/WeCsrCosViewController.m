@@ -9,7 +9,7 @@
 #import "WeCsrCosViewController.h"
 #import "WeAppDelegate.h"
 
-@interface WeCsrCosViewController () {
+@interface WeCsrCosViewController ()<UIAlertViewDelegate> {
     UIView * sys_explaination_view;
     UILabel * sys_explaination_label;
     UITableView * sys_tableView;
@@ -19,6 +19,10 @@
     NSMutableString * user_gender;
     NSMutableString * user_age;
     NSMutableString * user_description;
+    
+    UIAlertView * isUseFunSupport;
+    
+    BOOL isFunFlag;
 }
 
 @end
@@ -63,7 +67,15 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     if (path.section == 2 && path.row == 0) {
-        [self addConsult:self];
+        if ([self.currentDoctor.fundingId isEqualToString:@""]) {
+            isFunFlag=NO;
+            [self addConsult:self];
+        }
+        else
+        {
+            isUseFunSupport=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"该医生有" delegate:self cancelButtonTitle:@"不使用" otherButtonTitles:@"使用", nil];
+            [isUseFunSupport show];
+        }
     }
     [tv deselectRowAtIndexPath:path animated:YES];
 }
@@ -265,17 +277,18 @@
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
-//                  NSLog(@"%@", HTTPResponse);
-//                  NSString * orderId = [NSString stringWithFormat:@"%@", HTTPResponse[@"response"][@"order"][@"id"]];
-                
-                  
                   [WeAppDelegate updateFavorDoctorList];
-                  
-                  WeSelectPayViewController *payview=[[WeSelectPayViewController alloc]init];
-                  payview.order=HTTPResponse[@"response"][@"order"];
-                  payview.message=@"您已成功发起在线咨询申请";
-                  [self.navigationController pushViewController:payview animated:YES];
-                  
+                  if (isFunFlag) {
+                      [self changeOrderWithDic:HTTPResponse[@"response"][@"order"]];
+                  }
+                  else
+                  {
+//                      NSLog(@"%@",HTTPResponse[@"response"][@"order"]);
+                      WeSelectPayViewController *payview=[[WeSelectPayViewController alloc]init];
+                      payview.order=HTTPResponse[@"response"][@"order"];
+                      payview.message=@"您已成功发起在线咨询申请";
+                      [self.navigationController pushViewController:payview animated:YES];
+                  }
                   return;
               }
               if ([result isEqualToString:@"2"]) {
@@ -315,7 +328,71 @@
      ];
     
 }
+-(void)changeOrderWithDic:(NSDictionary *)dic
+{
+    [sys_pendingView startAnimating];
+    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSLog(@"fundingLevelId\n %@ orderId \n%@",self.currentDoctor.fundingId,dic[@"id"]);
+    [manager POST:yijiarenUrl(@"patient", @"fundingConsult") parameters:@{
+                                                                      @"fundingLevelId":self.currentDoctor.fundingId,
+                                                                      @"orderId":dic[@"id"]
+                                                                      }
+          success:^(AFHTTPRequestOperation *operation, id HTTPResponse) {
+              [sys_pendingView stopAnimating];
+              NSString * errorMessage;
+              
+              NSString *result = [HTTPResponse objectForKey:@"result"];
+              result = [NSString stringWithFormat:@"%@", result];
+              if ([result isEqualToString:@"1"]) {
+                  NSLog(@"HTTPResponse\n%@",HTTPResponse);
+                  [WeAppDelegate updateFavorDoctorList];
+                  WeSelectPayViewController *payview=[[WeSelectPayViewController alloc]init];
+                  payview.order=HTTPResponse[@"response"];
+                  payview.message=@"您已成功发起在线咨询申请";
+                  [self.navigationController pushViewController:payview animated:YES];
+                  
+                  return;
+              }
+              if ([result isEqualToString:@"2"]) {
+                  NSDictionary *fields = [HTTPResponse objectForKey:@"fields"];
+                  NSEnumerator *enumerator = [fields keyEnumerator];
+                  id key;
+                  while ((key = [enumerator nextObject])) {
+                      NSString * tmp1 = [fields objectForKey:key];
+                      if (tmp1 != NULL) errorMessage = tmp1;
+                  }
+              }
+              if ([result isEqualToString:@"3"]) {
+                  errorMessage = [HTTPResponse objectForKey:@"info"];
+              }
+              if ([result isEqualToString:@"4"]) {
+                  errorMessage = [HTTPResponse objectForKey:@"info"];
+              }
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"发送信息失败"
+                                           message:errorMessage
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
 
+            
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [sys_pendingView stopAnimating];
+              NSLog(@"Error: %@", error);
+              UIAlertView *notPermitted = [[UIAlertView alloc]
+                                           initWithTitle:@"发送信息失败"
+                                           message:@"未能连接服务器，请重试"
+                                           delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:nil];
+              [notPermitted show];
+          }
+     ];
+
+}
 - (void)user_cancel_onPress:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -378,7 +455,17 @@
     [super viewWillAppear:animated];
     [sys_tableView reloadData];
 }
-
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView==isUseFunSupport && buttonIndex==1) {
+        isFunFlag=YES;
+    }
+    else
+    {
+        isFunFlag=NO;
+    }
+    [self addConsult:self];
+}
 
 /*
 #pragma mark - Navigation

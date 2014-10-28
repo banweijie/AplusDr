@@ -26,6 +26,11 @@
 @property(strong, nonatomic) NSString * maxResponseGap;
 @property(strong, nonatomic) NSString * plusPrice;
 @property(strong, nonatomic) NSString * languages;
+@property(strong,nonatomic)NSDictionary *Funding;
+@property(strong,nonatomic)NSString *fundingId;
+@property(strong,nonatomic)NSString *fundingPrice;
+
+
 
 @property(strong, nonatomic) WeFunding * currentFunding;
 @property(strong, nonatomic) NSMutableArray * finishedFundings;
