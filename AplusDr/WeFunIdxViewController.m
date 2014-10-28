@@ -502,6 +502,8 @@
     [refreshButton setHidden:YES];
     [sys_tableView setHidden:YES];
     [sys_pendingView startAnimating];
+    WeAppDelegate *app= (WeAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [app refreshInitialData];
     
     [WeAppDelegate postToServerWithField:@"data" action:@"listFunding"
                               parameters:parameters

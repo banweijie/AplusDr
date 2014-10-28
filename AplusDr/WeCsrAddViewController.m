@@ -271,6 +271,8 @@
         [sys_pendingView startAnimating];
         [self initialDoctorList:self];
     }
+    else
+        [self initialDoctorList:self];
 }
 
 
@@ -404,17 +406,25 @@
                      NSString * tmp1 = [fields objectForKey:key];
                      if (tmp1 != NULL) errorMessage = tmp1;
                  }
+                 [sys_pendingView stopAnimating];
+
              }
              if ([result isEqualToString:@"3"]) {
                  errorMessage = [HTTPResponse objectForKey:@"info"];
+                 [sys_pendingView stopAnimating];
+
              }
              if ([result isEqualToString:@"4"]) {
                  errorMessage = [HTTPResponse objectForKey:@"info"];
+                 [sys_pendingView stopAnimating];
+
              }
              MyLog(@"Response error: %@", errorMessage);
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              MyLog(@"Error: %@", error);
+             [sys_pendingView stopAnimating];
+
          }
      ];
 }

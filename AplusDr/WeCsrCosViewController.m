@@ -73,7 +73,8 @@
         }
         else
         {
-            isUseFunSupport=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"该医生有" delegate:self cancelButtonTitle:@"不使用" otherButtonTitles:@"使用", nil];
+            NSString *mes=[NSString stringWithFormat:@"您可以通过支持该医生的众筹项目‘%@’获得本次咨询机会\n支持金额为：%@元\n是否支持？",self.currentDoctor.Funding[@"title"],self.currentDoctor.fundingPrice];
+            isUseFunSupport=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:mes delegate:self cancelButtonTitle:@"不使用" otherButtonTitles:@"使用", nil];
             [isUseFunSupport show];
         }
     }
@@ -307,7 +308,7 @@
                   errorMessage = [HTTPResponse objectForKey:@"info"];
               }
               UIAlertView *notPermitted = [[UIAlertView alloc]
-                                           initWithTitle:@"发送信息失败"
+                                           initWithTitle:@"操作失败"
                                            message:errorMessage
                                            delegate:nil
                                            cancelButtonTitle:@"确定"
@@ -318,7 +319,7 @@
               [sys_pendingView stopAnimating];
               NSLog(@"Error: %@", error);
               UIAlertView *notPermitted = [[UIAlertView alloc]
-                                           initWithTitle:@"发送信息失败"
+                                           initWithTitle:@"操作失败"
                                            message:@"未能连接服务器，请重试"
                                            delegate:nil
                                            cancelButtonTitle:@"确定"
@@ -333,7 +334,7 @@
     [sys_pendingView startAnimating];
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSLog(@"fundingLevelId\n %@ orderId \n%@",self.currentDoctor.fundingId,dic[@"id"]);
+//    NSLog(@"fundingLevelId\n %@ orderId \n%@",self.currentDoctor.fundingId,dic[@"id"]);
     [manager POST:yijiarenUrl(@"patient", @"fundingConsult") parameters:@{
                                                                       @"fundingLevelId":self.currentDoctor.fundingId,
                                                                       @"orderId":dic[@"id"]
@@ -345,7 +346,7 @@
               NSString *result = [HTTPResponse objectForKey:@"result"];
               result = [NSString stringWithFormat:@"%@", result];
               if ([result isEqualToString:@"1"]) {
-                  NSLog(@"HTTPResponse\n%@",HTTPResponse);
+//                  NSLog(@"HTTPResponse\n%@",HTTPResponse);
                   [WeAppDelegate updateFavorDoctorList];
                   WeSelectPayViewController *payview=[[WeSelectPayViewController alloc]init];
                   payview.order=HTTPResponse[@"response"];
@@ -370,7 +371,7 @@
                   errorMessage = [HTTPResponse objectForKey:@"info"];
               }
               UIAlertView *notPermitted = [[UIAlertView alloc]
-                                           initWithTitle:@"发送信息失败"
+                                           initWithTitle:@"操作失败"
                                            message:errorMessage
                                            delegate:nil
                                            cancelButtonTitle:@"确定"
@@ -383,7 +384,7 @@
               [sys_pendingView stopAnimating];
               NSLog(@"Error: %@", error);
               UIAlertView *notPermitted = [[UIAlertView alloc]
-                                           initWithTitle:@"发送信息失败"
+                                           initWithTitle:@"操作失败"
                                            message:@"未能连接服务器，请重试"
                                            delegate:nil
                                            cancelButtonTitle:@"确定"

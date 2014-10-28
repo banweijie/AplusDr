@@ -76,6 +76,7 @@
 
 // apis
 + (void)updateFavorDoctorList;
+- (void)refreshInitialData;
 @end
 
 // 用于支付的回调
